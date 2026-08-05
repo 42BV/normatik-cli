@@ -1,0 +1,1199 @@
+[
+  {
+    "name": "ABSTRACT_PAGE_TYPE",
+    "status": 400,
+    "title": "Abstract page type",
+    "userMessage": "Pages cannot be created with an abstract page type. Abstract types are for structural purposes only.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "This page type is abstract and cannot hold pages. Use GET /public/v1/page-types and select entries where abstractType is false to find concrete page types."
+  },
+  {
+    "name": "ACCOUNT_NOT_ACTIVE",
+    "status": 401,
+    "title": "Account not active",
+    "userMessage": "Your account is no longer active. Please sign in again.",
+    "hintKind": "NO_HINT",
+    "exitCode": 4
+  },
+  {
+    "name": "API_KEY_EXPIRED",
+    "status": 401,
+    "title": "API key expired",
+    "userMessage": "API key has expired.",
+    "hintKind": "STATIC",
+    "exitCode": 4,
+    "staticHint": "This API key has expired. Create or renew a key in the Normatik UI under API keys."
+  },
+  {
+    "name": "API_KEY_INVALID",
+    "status": 401,
+    "title": "Invalid API key",
+    "userMessage": "The provided API key is not valid.",
+    "hintKind": "STATIC",
+    "exitCode": 4,
+    "staticHint": "Send the API key as 'Authorization: Bearer <key>'. Keys are managed in the Normatik UI under API keys."
+  },
+  {
+    "name": "API_KEY_LIMIT_EXCEEDED",
+    "status": 409,
+    "title": "API key limit exceeded",
+    "userMessage": "You have reached the maximum number of active API keys. Delete an existing key before creating a new one.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "API_KEY_NOT_FOUND",
+    "status": 404,
+    "title": "API key not found",
+    "userMessage": "The API key does not exist or has been deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "API_KEY_READ_ONLY",
+    "status": 403,
+    "title": "API key is read-only",
+    "userMessage": "This API key is read-only and cannot be used for write operations.",
+    "hintKind": "STATIC",
+    "exitCode": 5,
+    "staticHint": "This key is read-only. Use a FULL-access API key for write operations."
+  },
+  {
+    "name": "AUDIT_LOG_ENTRY_NOT_FOUND",
+    "status": 404,
+    "title": "Audit log entry not found",
+    "userMessage": "The audit log entry you're looking for doesn't exist.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "CANNOT_DELETE_SELF",
+    "status": 400,
+    "title": "Cannot delete your own account",
+    "userMessage": "You cannot delete your own account.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "CHILD_TYPE_PROPERTY_DESCRIPTOR_IN_USE",
+    "status": 409,
+    "title": "Child type property in use",
+    "userMessage": "This property is used to determine allowed child types and cannot be changed or deleted.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "CLI_AUTH_KEY_ALREADY_DELIVERED",
+    "status": 410,
+    "title": "CLI login key already delivered",
+    "userMessage": "This CLI login was approved and its API key was already delivered once. If your CLI did not receive it, a new key exists on the server: check your Profile and revoke it if unexpected.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "CLI_AUTH_NONCE_INVALID",
+    "status": 410,
+    "title": "CLI login code invalid",
+    "userMessage": "This CLI login code is invalid, has expired, or has already been used. Start a new login from the CLI.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "CONCURRENT_UPDATE",
+    "status": 409,
+    "title": "Concurrent update",
+    "userMessage": "This item was modified by someone else. Refresh and try again.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "CONTENT_MACRO_NOT_FOUND",
+    "status": 404,
+    "title": "Content macro not found",
+    "userMessage": "The content macro doesn't exist or its module is not enabled.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 6
+  },
+  {
+    "name": "CONTENT_VALIDATION_FAILED",
+    "status": 400,
+    "title": "Content validation failed",
+    "userMessage": "The content contains one or more validation errors. See diagnostics for details.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "CRYPTO_MISCONFIGURED",
+    "status": 500,
+    "title": "Crypto configuration invalid",
+    "userMessage": "The encryption configuration is invalid (non-hex salt or incompatible key/salt). Contact your administrator.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "CSP_REPORT_TOO_LARGE",
+    "status": 413,
+    "title": "CSP report too large",
+    "userMessage": "The CSP report payload exceeds the maximum allowed size.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "CYCLE_DETECTED",
+    "status": 400,
+    "title": "Invalid page type parent",
+    "userMessage": "A page type cannot be placed under itself or one of its descendants.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "Placing this page type under the selected parent would create a cycle. Use GET /public/v1/page-types to inspect the current hierarchy before retrying."
+  },
+  {
+    "name": "DATA_TYPE_CHANGE_NOT_ALLOWED",
+    "status": 409,
+    "title": "Data type change not allowed",
+    "userMessage": "The data type cannot be changed because values already exist for this property.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "The data type of a property descriptor cannot be changed once values exist. Create a new descriptor with the desired type instead."
+  },
+  {
+    "name": "DATE_TIME_FORMAT_INVALID",
+    "status": 400,
+    "title": "Invalid date-time format",
+    "userMessage": "The value must be in ZonedDateTime format with a bracketed IANA zone, e.g. '2026-05-19T22:00:00[Europe/Amsterdam]'.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "DATE_TIME_ZONE_UNKNOWN",
+    "status": 400,
+    "title": "Unknown time zone",
+    "userMessage": "The bracketed zone identifier is not a recognized IANA time zone ID.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "DESCRIPTOR_IN_USE",
+    "status": 409,
+    "title": "Descriptor referenced in formula",
+    "userMessage": "This descriptor cannot be deleted or changed because one or more CALCULATED descriptors reference it in their formula.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "DISPLAY_COLUMN_REQUIRES_PAGE_TYPE",
+    "status": 400,
+    "title": "Display columns require page type",
+    "userMessage": "Display columns can only be configured for PAGE type property descriptors.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "DUPLICATE_EMAIL",
+    "status": 400,
+    "title": "Email address already exists",
+    "userMessage": "A user with this email address already exists. Please choose a different email.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "DUPLICATE_GROUP_NAME",
+    "status": 400,
+    "title": "Group name already exists",
+    "userMessage": "A group with this name already exists. Please choose a different name.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "DUPLICATE_INTEGRATION_SETTING",
+    "status": 409,
+    "title": "Duplicate integration setting",
+    "userMessage": "A setting for this integration already exists.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "ENDPOINT_NOT_FOUND",
+    "status": 404,
+    "title": "Endpoint not found",
+    "userMessage": "The requested endpoint does not exist on this API.",
+    "hintKind": "STATIC",
+    "exitCode": 6,
+    "staticHint": "This endpoint does not exist. Public API resources live under /public/v1: pages, page-types, property-descriptors, domain-enums, users, groups, workflow, workflow-roles, work-item-types, content, content-macros, landing-settings, release-notes, admin/trash, admin/archive, admin/audit."
+  },
+  {
+    "name": "ENUM_CHANGE_NOT_ALLOWED",
+    "status": 409,
+    "title": "Enum change not allowed",
+    "userMessage": "The enum cannot be changed because values already exist for this property.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "The linked domain enum of a property descriptor cannot be changed once values exist. Create a new descriptor with the desired enum instead."
+  },
+  {
+    "name": "EXPAND_UNKNOWN_KEY",
+    "status": 400,
+    "title": "Unknown expand key",
+    "userMessage": "One or more expand keys are not recognized. Check the validKeys field for allowed values.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "FILE_ATTACHMENT_NOT_FOUND",
+    "status": 404,
+    "title": "File attachment not found",
+    "userMessage": "The file attachment you're looking for doesn't exist or has been deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "FILE_TOO_LARGE",
+    "status": 413,
+    "title": "File too large",
+    "userMessage": "The uploaded file exceeds the maximum allowed size.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "GOOGLE_DOMAIN_NOT_ALLOWED",
+    "status": 403,
+    "title": "Domain not allowed",
+    "userMessage": "Google login failed: the account's domain is not allowed for this instance.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
+  },
+  {
+    "name": "GOOGLE_DOMAIN_NOT_CONFIGURED",
+    "status": 403,
+    "title": "Domain not configured",
+    "userMessage": "Google login is disabled: no allowed domain has been configured for this instance.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
+  },
+  {
+    "name": "GOOGLE_LINK_ALREADY_LINKED",
+    "status": 409,
+    "title": "User already linked",
+    "userMessage": "Google login failed: this user account is already linked to a different Google identity.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "GOOGLE_LINK_EMAIL_NOT_VERIFIED",
+    "status": 401,
+    "title": "Email not verified",
+    "userMessage": "Google login failed: the email address is not verified by Google.",
+    "hintKind": "NO_HINT",
+    "exitCode": 4
+  },
+  {
+    "name": "GOOGLE_LINK_IDENTITY_MISMATCH",
+    "status": 401,
+    "title": "Identity mismatch",
+    "userMessage": "Google login failed: the Google account's email or domain no longer matches the linked local user.",
+    "hintKind": "NO_HINT",
+    "exitCode": 4
+  },
+  {
+    "name": "GOOGLE_LINK_NO_LOCAL_USER",
+    "status": 401,
+    "title": "No local user found",
+    "userMessage": "Google login failed: no local user account found for this email address.",
+    "hintKind": "NO_HINT",
+    "exitCode": 4
+  },
+  {
+    "name": "GOOGLE_LINK_USER_DELETED",
+    "status": 401,
+    "title": "User account deleted",
+    "userMessage": "Google login failed: the associated user account has been deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 4
+  },
+  {
+    "name": "IMAGE_NOT_FOUND",
+    "status": 404,
+    "title": "Image not found",
+    "userMessage": "The image you're looking for doesn't exist or has been deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "INSUFFICIENT_WORKFLOW_ROLE",
+    "status": 403,
+    "title": "Insufficient workflow role",
+    "userMessage": "You do not have the required workflow role to perform this action.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 5
+  },
+  {
+    "name": "INTEGRATION_DISABLED",
+    "status": 404,
+    "title": "Integration disabled",
+    "userMessage": "This feature is not available because the required integration is disabled.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "INTEGRATION_NOT_CONFIGURABLE",
+    "status": 400,
+    "title": "Integration not configurable",
+    "userMessage": "This integration cannot be configured. Only JIRA is configurable.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INTEGRATION_NOT_FOUND",
+    "status": 404,
+    "title": "Integration not found",
+    "userMessage": "The requested integration does not exist.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "INTERNAL_ERROR",
+    "status": 500,
+    "title": "Internal error",
+    "userMessage": "An unexpected error occurred. Please try again or contact support with the correlation ID.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "INVALID_CHAIN_LINK",
+    "status": 400,
+    "title": "Invalid chain link",
+    "userMessage": "One or more chain links in the PROPERTY_CHAIN configuration are invalid.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_CHILD_PAGE",
+    "status": 400,
+    "title": "Invalid child page",
+    "userMessage": "One or more of the provided page IDs are not children of the specified parent page.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "One or more provided IDs are not children of the given parent. Use GET /public/v1/pages/tree to inspect the correct child pages and their IDs."
+  },
+  {
+    "name": "INVALID_CHILD_TYPE_PROPERTY_DESCRIPTOR",
+    "status": 400,
+    "title": "Invalid child type property descriptor",
+    "userMessage": "The selected property descriptor is not valid for determining child types.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_COLOR_BAND",
+    "status": 400,
+    "title": "Invalid color band configuration",
+    "userMessage": "One or more color bands have invalid values: check hex format (#RRGGBB), from <= to, and no overlapping ranges.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_CONDITIONAL_ENUM_CONFIG",
+    "status": 400,
+    "title": "Invalid conditional enum configuration",
+    "userMessage": "The CONDITIONAL_ENUM property descriptor configuration is invalid.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_DISPLAY_COLUMN",
+    "status": 400,
+    "title": "Invalid display column",
+    "userMessage": "The specified display column descriptor is not valid for the configured page type.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_DISPLAY_COLUMN_SORT",
+    "status": 400,
+    "title": "Invalid display column sort",
+    "userMessage": "The provided display column ID list does not match the current display columns.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_DISPLAY_COLUMN_WIDTH",
+    "status": 400,
+    "title": "Invalid display column width",
+    "userMessage": "Display column widths must sum to 100%.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_FILE_TYPE",
+    "status": 400,
+    "title": "Invalid file type",
+    "userMessage": "This file type is not allowed or the file exceeds the maximum size of 50 MB.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_FORMULA",
+    "status": 400,
+    "title": "Invalid formula",
+    "userMessage": "The formula references an invalid descriptor. Only NUMBER descriptors on the same page type may be referenced; calc-to-calc and cross-type references are not allowed.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_IMAGE_TYPE",
+    "status": 400,
+    "title": "Invalid image type",
+    "userMessage": "Only JPG and PNG images are allowed with a maximum size of 10 MB.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_INCOMING_SOURCE_DESCRIPTOR",
+    "status": 400,
+    "title": "Invalid incoming source descriptor",
+    "userMessage": "The incomingSourceDescriptorId configuration for the PAGE_INCOMING property is invalid.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_PAGE_SELECTOR_CONFIG",
+    "status": 400,
+    "title": "Invalid page selector configuration",
+    "userMessage": "The PAGE_SELECTOR property descriptor configuration is invalid.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_PARENT_PAGE_TYPE",
+    "status": 400,
+    "title": "Invalid parent page type",
+    "userMessage": "This page type is not allowed as a child of the selected parent page.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "This page type is not allowed as a child of the selected parent. Use GET /public/v1/page-types to check allowedChildTypes on the parent type."
+  },
+  {
+    "name": "INVALID_REQUEST",
+    "status": 400,
+    "title": "Invalid request",
+    "userMessage": "The request could not be processed.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_SORT",
+    "status": 400,
+    "title": "Invalid sort key",
+    "userMessage": "The requested sort is not allowed for this endpoint.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_TRANSITION",
+    "status": 400,
+    "title": "Invalid status transition",
+    "userMessage": "The requested status transition is not allowed from the current status.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "JIRA_BAD_REQUEST",
+    "status": 400,
+    "title": "Jira request failed",
+    "userMessage": "The request to Jira failed. Please check your query and try again.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "JIRA_CONFIG_MISSING",
+    "status": 503,
+    "title": "Jira configuration missing",
+    "userMessage": "No Jira configuration found. Configure the Jira integration in the admin settings.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "JIRA_DECRYPT_FAILED",
+    "status": 500,
+    "title": "Jira secret decryption failed",
+    "userMessage": "A Jira secret could not be decrypted. The encryption key may be incorrect.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "JIRA_KEY_MISSING",
+    "status": 500,
+    "title": "Jira encryption key missing",
+    "userMessage": "The Jira encryption key is not configured. Contact your administrator.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "JIRA_NOT_FOUND",
+    "status": 404,
+    "title": "Jira resource not found",
+    "userMessage": "The requested Jira resource could not be found.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "JIRA_UNAVAILABLE",
+    "status": 503,
+    "title": "Jira unavailable",
+    "userMessage": "Jira is currently unavailable. Please try again later.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "METHOD_NOT_ALLOWED",
+    "status": 405,
+    "title": "Method not allowed",
+    "userMessage": "The HTTP method is not supported for this endpoint.",
+    "hintKind": "STATIC",
+    "exitCode": 1,
+    "staticHint": "This HTTP method is not supported here. Check the allowedMethods field in this response."
+  },
+  {
+    "name": "MIGRATE_PUBLISH_ALREADY_PUBLISHED",
+    "status": 409,
+    "title": "Already published",
+    "userMessage": "Cannot migrate-publish: a PUBLISHED revision already exists. The migrate-publish endpoint is intended for one-time migration of new content and cannot republish pages that have already been through a publishing cycle.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "MIGRATE_PUBLISH_NO_STORED_REVISION",
+    "status": 409,
+    "title": "No stored revision",
+    "userMessage": "Cannot migrate-publish: no STORED revision exists. The migrate-publish endpoint is intended for content migration only and operates outside the regular publishing workflow.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "MOVE_IMPACT_DIVERGED",
+    "status": 409,
+    "title": "Move impact diverged",
+    "userMessage": "The page type tree has changed since the impact preview was computed. Please refresh and retry.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Retry without the snapshot field - the server then performs an implicit impact preview before executing the move."
+  },
+  {
+    "name": "NOT_A_ROOT_PAGE",
+    "status": 400,
+    "title": "Not a root page",
+    "userMessage": "One or more of the provided page IDs are not root pages (they have a parent).",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "One or more provided IDs are not root pages. Use GET /public/v1/pages/tree to list all root pages and their IDs."
+  },
+  {
+    "name": "NUMBER_OUT_OF_RANGE",
+    "status": 400,
+    "title": "Number value out of range",
+    "userMessage": "The provided value falls outside the configured minimum or maximum for this property.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_ACCESS_CONFIGURATION_ERROR",
+    "status": 500,
+    "title": "Page access misconfiguration",
+    "userMessage": "A security check could not be completed due to a server configuration error.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "PAGE_ACCESS_DENIED",
+    "status": 403,
+    "title": "Access denied",
+    "userMessage": "You do not have access to this page.",
+    "hintKind": "STATIC",
+    "exitCode": 5,
+    "staticHint": "Your API key does not have read access to this page. Check restriction details via GET /public/v1/pages/{id}?expand=restriction (admin key required)."
+  },
+  {
+    "name": "PAGE_HAS_CHILDREN",
+    "status": 409,
+    "title": "Page has children",
+    "userMessage": "This page cannot be deleted because it has child pages. Delete the child pages first.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Move or delete the child pages first. Use GET /public/v1/pages/tree to list them in sort order."
+  },
+  {
+    "name": "PAGE_INCOMING_NOT_EDITABLE",
+    "status": 400,
+    "title": "Incoming page relation not editable",
+    "userMessage": "PAGE_INCOMING properties are read-only and must be managed from the linked outgoing property.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_NAME_EXISTS",
+    "status": 400,
+    "title": "Page name already exists",
+    "userMessage": "A page with this name already exists. Please choose a different name.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_NOT_ARCHIVED",
+    "status": 400,
+    "title": "Page not archived",
+    "userMessage": "This operation can only be performed on pages that are archived.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_NOT_FOUND",
+    "status": 404,
+    "title": "Page not found",
+    "userMessage": "The page you're looking for doesn't exist or has been deleted.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 6
+  },
+  {
+    "name": "PAGE_NOT_IN_TRASH",
+    "status": 400,
+    "title": "Page not in trash",
+    "userMessage": "This operation can only be performed on pages that are in the trash.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_PARENT_CYCLE",
+    "status": 400,
+    "title": "Invalid page parent",
+    "userMessage": "A page cannot be placed under itself or one of its descendants.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_RESTRICTION_ACCESS_ALREADY_EXISTS",
+    "status": 400,
+    "title": "Access entry already exists",
+    "userMessage": "This user already has an access entry for this page restriction.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_RESTRICTION_ACCESS_NOT_FOUND",
+    "status": 404,
+    "title": "Access entry not found",
+    "userMessage": "The access entry was not found.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "PAGE_RESTRICTION_ALREADY_EXISTS",
+    "status": 400,
+    "title": "Page restriction already exists",
+    "userMessage": "This page already has a restriction. A page can only have one restriction.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_RESTRICTION_CANNOT_ADD_USER",
+    "status": 400,
+    "title": "Cannot add user",
+    "userMessage": "This user is not eligible to be added to this restriction. Only users from the parent restriction can be invited.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_RESTRICTION_CANNOT_UPGRADE_ACCESS",
+    "status": 400,
+    "title": "Cannot upgrade access",
+    "userMessage": "Access level cannot be upgraded on a child restriction. Only downgrades are allowed.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_RESTRICTION_GROUP_ACCESS_ALREADY_EXISTS",
+    "status": 400,
+    "title": "Group access entry already exists",
+    "userMessage": "This group already has an access entry for this page restriction.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_RESTRICTION_NOT_FOUND",
+    "status": 404,
+    "title": "Restriction not found",
+    "userMessage": "No restriction is set on this page.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "PAGE_RESTRICTION_NOT_OWNER",
+    "status": 403,
+    "title": "Not the restriction owner",
+    "userMessage": "Only the restriction owner can perform this action.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
+  },
+  {
+    "name": "PAGE_TYPE_HAS_PAGES",
+    "status": 409,
+    "title": "Page type has pages",
+    "userMessage": "This page type cannot be marked as abstract because concrete pages of this type already exist.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "This page type has existing pages and cannot be made abstract. List all pages of this type via GET /public/v1/pages?pageTypeId={id}."
+  },
+  {
+    "name": "PAGE_TYPE_IN_USE",
+    "status": 409,
+    "title": "Page type in use",
+    "userMessage": "This page type cannot be deleted because it's being used by pages or as a parent type.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "This page type is referenced by existing pages or types and cannot be deleted. List all pages of this type via GET /public/v1/pages?pageTypeId={id}."
+  },
+  {
+    "name": "PAGE_TYPE_NAME_EXISTS",
+    "status": 400,
+    "title": "Page type name already exists",
+    "userMessage": "A page type with this name already exists. Please choose a different name.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PAGE_TYPE_NOT_FOUND",
+    "status": 404,
+    "title": "Page type not found",
+    "userMessage": "The page type doesn't exist or has been deleted.",
+    "hintKind": "STATIC",
+    "exitCode": 6,
+    "staticHint": "Page type not found. Use GET /public/v1/page-types to list all valid page type IDs."
+  },
+  {
+    "name": "PAGE_TYPE_PARENT_CHANGE_NOT_ALLOWED",
+    "status": 400,
+    "title": "Parent change not allowed",
+    "userMessage": "The parent of a page type cannot be changed via this endpoint. Use POST /api/page-types/{id}/move to reparent a page type.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "Use POST /public/v1/page-types/{id}/move to reparent a page type."
+  },
+  {
+    "name": "PAGE_WRITE_ACCESS_DENIED",
+    "status": 403,
+    "title": "Write access denied",
+    "userMessage": "You do not have write access to this page.",
+    "hintKind": "STATIC",
+    "exitCode": 5,
+    "staticHint": "Your API key does not have write access to this page. Check restriction details via GET /public/v1/pages/{id}?expand=restriction (admin key required)."
+  },
+  {
+    "name": "PARENT_PAGE_NOT_EDITABLE",
+    "status": 400,
+    "title": "Parent page not editable",
+    "userMessage": "PARENT_PAGE properties are read-only and cannot be created, updated or deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PASSWORD_RESET_TOKEN_INVALID",
+    "status": 410,
+    "title": "Password reset link invalid",
+    "userMessage": "This password reset link is invalid or has expired. Please request a new one.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
+    "name": "PASSWORD_TOO_WEAK",
+    "status": 400,
+    "title": "Password too weak",
+    "userMessage": "The chosen password does not meet the strength requirements.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_CONTAINS_THIS_PAGE_IN_USE",
+    "status": 409,
+    "title": "Property descriptor referenced as contains-this-page constraint",
+    "userMessage": "This property cannot be deleted because one or more PAGE_SELECTOR properties use it as a relational constraint.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_IN_USE",
+    "status": 409,
+    "title": "Property descriptor in use",
+    "userMessage": "This property cannot be deleted because it has values on existing pages.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_INCOMING_SOURCE_IN_USE",
+    "status": 409,
+    "title": "Property descriptor referenced by incoming relation",
+    "userMessage": "This property cannot be deleted because one or more PAGE_INCOMING properties depend on it.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_LAYOUT_INVALID",
+    "status": 400,
+    "title": "Property descriptor layout invalid",
+    "userMessage": "The provided layout is invalid: it must contain exactly the effective descriptor set without duplicates or nulls, and inherited descriptors may not be reordered.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_MISMATCH",
+    "status": 400,
+    "title": "Property descriptor mismatch",
+    "userMessage": "The property value does not match the selected property.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_NAME_EXISTS",
+    "status": 400,
+    "title": "Property name already exists",
+    "userMessage": "A property with this name already exists on this page type. Please choose a different name.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_NOT_AVAILABLE_FOR_PAGE",
+    "status": 400,
+    "title": "Property not available for page",
+    "userMessage": "The selected property does not belong to this page type.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "The property descriptor does not belong to this page type. Use GET /public/v1/page-types/{id}/available-property-descriptors to list valid descriptor IDs."
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_NOT_FOUND",
+    "status": 404,
+    "title": "Property descriptor not found",
+    "userMessage": "The property doesn't exist or has been deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_SORT_INVALID",
+    "status": 400,
+    "title": "Property descriptor sort invalid",
+    "userMessage": "The provided property descriptor list does not match the page type.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_SWAP_INVALID",
+    "status": 400,
+    "title": "Property descriptor swap invalid",
+    "userMessage": "The selected properties cannot be swapped because they belong to different page types.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_TYPE_SOURCE_IN_USE",
+    "status": 409,
+    "title": "Property descriptor referenced as type source",
+    "userMessage": "This property cannot be deleted because one or more PAGE_SELECTOR properties use it as a type source.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "PROPERTY_ENUM_IN_USE",
+    "status": 409,
+    "title": "Property enum in use",
+    "userMessage": "This enum cannot be deleted because it's being used by properties.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "This domain enum is referenced by property descriptors, work item types, or pages. Inspect its usages via GET /public/v1/domain-enums/{id}/usages before deleting."
+  },
+  {
+    "name": "PROPERTY_ENUM_NAME_EXISTS",
+    "status": 400,
+    "title": "Property enum name already exists",
+    "userMessage": "An enum with this name already exists. Please choose a different name.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_ENUM_NOT_FOUND",
+    "status": 404,
+    "title": "Property enum not found",
+    "userMessage": "The enum doesn't exist or has been deleted.",
+    "hintKind": "STATIC",
+    "exitCode": 6,
+    "staticHint": "Domain enum not found. Use GET /public/v1/domain-enums to list all available domain enums with their IDs."
+  },
+  {
+    "name": "PROPERTY_ENUM_VALUE_EXISTS",
+    "status": 400,
+    "title": "Enum value already exists",
+    "userMessage": "A value with this name already exists in this enum. Please choose a different name.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "PROPERTY_ENUM_VALUE_IN_USE",
+    "status": 409,
+    "title": "Enum value in use",
+    "userMessage": "This enum value cannot be removed because it's being used by pages.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "This enum value is used in published page property values. Inspect its usages via GET /public/v1/domain-enums/{id}/usages to see which pages reference it."
+  },
+  {
+    "name": "PROPERTY_ENUM_VALUE_USED_IN_TRIGGER",
+    "status": 409,
+    "title": "Enum value used in trigger",
+    "userMessage": "This enum value cannot be removed because it's referenced by a conditional enum trigger.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "PROPERTY_NOT_WRITABLE",
+    "status": 400,
+    "title": "Property not writable",
+    "userMessage": "This property has a read-only or computed data type and its value cannot be set.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "This property has a read-only or computed data type and cannot be set. Use GET /public/v1/page-types/{id} to inspect each property descriptor dataType and target only writable properties."
+  },
+  {
+    "name": "PROPERTY_VALUE_NOT_FOUND",
+    "status": 404,
+    "title": "Property value not found",
+    "userMessage": "The property value doesn't exist or has been deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "RATE_LIMIT_EXCEEDED",
+    "status": 429,
+    "title": "Too many requests",
+    "userMessage": "You've made too many requests recently. Please wait a minute before trying again.",
+    "hintKind": "STATIC",
+    "exitCode": 75,
+    "staticHint": "Rate limit reached. Wait the number of seconds given in retryAfterSeconds (also in the Retry-After header) before retrying."
+  },
+  {
+    "name": "RELEASE_NOTE_NOT_FOUND",
+    "status": 404,
+    "title": "Release note not found",
+    "userMessage": "The requested release note version does not exist.",
+    "hintKind": "STATIC",
+    "exitCode": 6,
+    "staticHint": "Use GET /public/v1/release-notes to list available release note versions."
+  },
+  {
+    "name": "REPLACEMENT_OWNER_CANNOT_BE_SELF",
+    "status": 422,
+    "title": "Cannot replace with self",
+    "userMessage": "The replacement owner cannot be the user being deleted.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "REPLACEMENT_OWNER_INVALID",
+    "status": 422,
+    "title": "Replacement owner invalid",
+    "userMessage": "The selected replacement owner doesn't exist or isn't active. Pick another user.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "The replacement owner does not exist or is not active. Refresh the candidate list via GET /public/v1/users/{id}/permanent-delete-replacements and choose a valid user."
+  },
+  {
+    "name": "REPLACEMENT_OWNER_NOT_ELIGIBLE",
+    "status": 422,
+    "title": "Replacement owner not eligible",
+    "userMessage": "The selected replacement owner is no longer eligible. Refresh the candidate list and try again.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "The selected replacement is no longer eligible (restrictions may have changed). Refresh the candidate list via GET /public/v1/users/{id}/permanent-delete-replacements and choose again."
+  },
+  {
+    "name": "REPLACEMENT_OWNER_REQUIRED",
+    "status": 422,
+    "title": "Replacement owner required",
+    "userMessage": "Permanent delete requires picking a replacement owner because this user locks one or more pages.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "This user owns page restrictions and requires a replacement owner. Fetch eligible candidates via GET /public/v1/users/{id}/permanent-delete-replacements."
+  },
+  {
+    "name": "REVISION_NOT_EDITABLE",
+    "status": 400,
+    "title": "Revision not editable",
+    "userMessage": "Only revisions in STORED status can be edited.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "The working revision is not in STORED status and cannot be edited. Use GET /public/v1/pages/{id}/revisions to check the current status, or POST /public/v1/pages/{id}/revisions/start to create a new STORED revision."
+  },
+  {
+    "name": "REVISION_NOT_FOUND",
+    "status": 404,
+    "title": "Revision not found",
+    "userMessage": "The requested revision does not exist.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "SORT_NOT_ALLOWED",
+    "status": 400,
+    "title": "Sort not allowed",
+    "userMessage": "Sorting is not enabled for children of this page. The parent page type does not have sortableChildPages enabled.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "Sorting is not enabled for this page type. Use GET /public/v1/page-types/{id} to check if sortableChildPages is enabled on the parent page type."
+  },
+  {
+    "name": "USER_GROUP_NOT_FOUND",
+    "status": 404,
+    "title": "User group not found",
+    "userMessage": "The user group you're looking for doesn't exist.",
+    "hintKind": "STATIC",
+    "exitCode": 6,
+    "staticHint": "Use GET /public/v1/groups to list all groups and verify the group ID."
+  },
+  {
+    "name": "USER_NOT_DELETED",
+    "status": 409,
+    "title": "User is not deleted",
+    "userMessage": "Permanent delete is only allowed on users that have been soft-deleted first.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "USER_NOT_FOUND",
+    "status": 404,
+    "title": "User not found",
+    "userMessage": "The user you're looking for doesn't exist or has been deleted.",
+    "hintKind": "STATIC",
+    "exitCode": 6,
+    "staticHint": "Use GET /public/v1/users to list all users and verify the user ID."
+  },
+  {
+    "name": "WORK_ITEM_NOT_FOUND",
+    "status": 404,
+    "title": "Work item not found",
+    "userMessage": "The work item you're looking for doesn't exist.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "WORK_ITEM_TRANSITION_DUPLICATE",
+    "status": 409,
+    "title": "Duplicate transition",
+    "userMessage": "A transition with this from/to combination already exists for this work item type.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "WORK_ITEM_TRANSITION_IN_USE",
+    "status": 409,
+    "title": "Work item transition in use",
+    "userMessage": "This transition cannot be deleted because existing work items would be left with no outgoing transitions.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "WORK_ITEM_TRANSITION_INVALID_VALUE",
+    "status": 400,
+    "title": "Invalid enum value for transition",
+    "userMessage": "The specified enum value does not belong to the domain enum of this work item type.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 3
+  },
+  {
+    "name": "WORK_ITEM_TRANSITION_NOT_FOUND",
+    "status": 404,
+    "title": "Work item transition not found",
+    "userMessage": "The work item transition you're looking for doesn't exist.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "WORK_ITEM_TYPE_DOMAIN_ENUM_LOCKED",
+    "status": 409,
+    "title": "Work item type domain enum locked by triggers",
+    "userMessage": "The domain enum cannot be changed because conditional enum triggers reference this work item type.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "WORK_ITEM_TYPE_IN_USE",
+    "status": 409,
+    "title": "Work item type in use",
+    "userMessage": "This work item type cannot be deleted because it has existing work items.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
+  },
+  {
+    "name": "WORK_ITEM_TYPE_NOT_FOUND",
+    "status": 404,
+    "title": "Work item type not found",
+    "userMessage": "The work item type you're looking for doesn't exist.",
+    "hintKind": "STATIC",
+    "exitCode": 6,
+    "staticHint": "Work item type not found. Use GET /public/v1/work-item-types to list all available work item types."
+  },
+  {
+    "name": "WORK_ITEM_TYPE_SLUG_EXISTS",
+    "status": 400,
+    "title": "Work item type slug already exists",
+    "userMessage": "A work item type with this slug already exists. Please choose a different slug.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "WORK_ITEM_TYPE_SLUG_IMMUTABLE",
+    "status": 400,
+    "title": "Work item type slug is immutable",
+    "userMessage": "The slug of a work item type cannot be changed after creation.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "WORK_ITEM_TYPE_SLUG_INVALID",
+    "status": 400,
+    "title": "Work item type slug invalid",
+    "userMessage": "The slug must be lowercase alphanumeric segments separated by single hyphens (e.g. my-work-item). Leading and trailing hyphens and consecutive hyphens are not allowed.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "WORKFLOW_BYPASS_NOT_ALLOWED",
+    "status": 409,
+    "title": "Workflow edit not allowed",
+    "userMessage": "This page has publishing workflow enabled. Use the revision endpoints to edit content.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "This page type has publishing workflow enabled. Use POST /public/v1/pages/{id}/revisions/start to create a working revision, then transition via POST /public/v1/pages/{id}/revisions/transition."
+  },
+  {
+    "name": "WORKFLOW_NOT_ENABLED",
+    "status": 400,
+    "title": "Workflow not enabled",
+    "userMessage": "Publishing workflow is not enabled for this page type.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "WORKING_REVISION_EXISTS",
+    "status": 409,
+    "title": "Working revision already exists",
+    "userMessage": "This page already has an active working revision. Complete or discard it before starting a new one.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "A working revision already exists for this page. Inspect it via GET /public/v1/pages/{id}/revisions/snapshot, or edit it directly via PUT /public/v1/pages/{id}."
+  },
+  {
+    "name": "WORKING_REVISION_NOT_DISCARDABLE",
+    "status": 409,
+    "title": "Working revision cannot be discarded",
+    "userMessage": "The working revision cannot be discarded in its current state. Workflow must be enabled, a STORED working revision must exist, and the page must not be in the trash.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  }
+]
