@@ -209,6 +209,14 @@ var synth = map[string]synthFunc{
 	"REVISION_NOT_EDITABLE": func(p *Problem, _ string) string {
 		return "normatik pages revisions start <id>   # create a STORED working revision, then retry"
 	},
+	// Server staticHint names the API field acknowledgePublished=true; the CLI
+	// surface is the boolean flag --acknowledge-published on cascade-archive/trash.
+	"PAGE_CASCADE_PUBLISHED_ACKNOWLEDGMENT_REQUIRED": func(p *Problem, base string) string {
+		if base != "" {
+			return base + " --acknowledge-published   # published pages in the cascade will go offline"
+		}
+		return "retry with --acknowledge-published   # published pages in the cascade will go offline"
+	},
 	// The wire problem carries validNames (bounded — the enabled directive
 	// macros) but NOT the requested name; that comes from the failing
 	// invocation ("normatik macros docs tok"), so the did-you-mean is a

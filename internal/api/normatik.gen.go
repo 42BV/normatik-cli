@@ -22,6 +22,27 @@ const (
 	BearerScopes bearerContextKey = "bearer.Scopes"
 )
 
+// Defines values for AllowedPageActionResultReason.
+const (
+	INSUFFICIENTROLE AllowedPageActionResultReason = "INSUFFICIENT_ROLE"
+	NOWRITEACCESS    AllowedPageActionResultReason = "NO_WRITE_ACCESS"
+	PAGEHASCHILDREN  AllowedPageActionResultReason = "PAGE_HAS_CHILDREN"
+)
+
+// Valid indicates whether the value is a known member of the AllowedPageActionResultReason enum.
+func (e AllowedPageActionResultReason) Valid() bool {
+	switch e {
+	case INSUFFICIENTROLE:
+		return true
+	case NOWRITEACCESS:
+		return true
+	case PAGEHASCHILDREN:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AllowedPageActionResultRequiredRole.
 const (
 	AllowedPageActionResultRequiredRoleCONTRIBUTOR AllowedPageActionResultRequiredRole = "CONTRIBUTOR"
@@ -82,6 +103,24 @@ func (e ApiKeyMetaAccessMode) Valid() bool {
 	case FULL:
 		return true
 	case READONLY:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuditActorResultStatus.
+const (
+	AuditActorResultStatusActive  AuditActorResultStatus = "active"
+	AuditActorResultStatusDeleted AuditActorResultStatus = "deleted"
+)
+
+// Valid indicates whether the value is a known member of the AuditActorResultStatus enum.
+func (e AuditActorResultStatus) Valid() bool {
+	switch e {
+	case AuditActorResultStatusActive:
+		return true
+	case AuditActorResultStatusDeleted:
 		return true
 	default:
 		return false
@@ -209,6 +248,7 @@ const (
 	INVALIDATTRIBUTETYPE      ContentDiagnosticCode = "INVALID_ATTRIBUTE_TYPE"
 	MACRONOTALLOWEDINCONTEXT  ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_CONTEXT"
 	MACRONOTALLOWEDINPROPERTY ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_PROPERTY"
+	MALFORMEDDIRECTIVELINE    ContentDiagnosticCode = "MALFORMED_DIRECTIVE_LINE"
 	MISSINGREQUIREDATTRIBUTE  ContentDiagnosticCode = "MISSING_REQUIRED_ATTRIBUTE"
 	MISSINGSTRUCTURALCHILDREN ContentDiagnosticCode = "MISSING_STRUCTURAL_CHILDREN"
 	UNKNOWNATTRIBUTE          ContentDiagnosticCode = "UNKNOWN_ATTRIBUTE"
@@ -228,6 +268,8 @@ func (e ContentDiagnosticCode) Valid() bool {
 	case MACRONOTALLOWEDINCONTEXT:
 		return true
 	case MACRONOTALLOWEDINPROPERTY:
+		return true
+	case MALFORMEDDIRECTIVELINE:
 		return true
 	case MISSINGREQUIREDATTRIBUTE:
 		return true
@@ -1063,6 +1105,24 @@ func (e TransitionFormTargetStatus) Valid() bool {
 	}
 }
 
+// Defines values for TrashedPageViewResultRestoreTarget.
+const (
+	TrashedPageViewResultRestoreTargetActive   TrashedPageViewResultRestoreTarget = "active"
+	TrashedPageViewResultRestoreTargetArchived TrashedPageViewResultRestoreTarget = "archived"
+)
+
+// Valid indicates whether the value is a known member of the TrashedPageViewResultRestoreTarget enum.
+func (e TrashedPageViewResultRestoreTarget) Valid() bool {
+	switch e {
+	case TrashedPageViewResultRestoreTargetActive:
+		return true
+	case TrashedPageViewResultRestoreTargetArchived:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for UserFormRole.
 const (
 	UserFormRoleADMIN UserFormRole = "ADMIN"
@@ -1471,6 +1531,60 @@ func (e GetPageTypeParamsExpand) Valid() bool {
 	}
 }
 
+// Defines values for PreviewAdminArchiveCascadeImpactParamsOperation.
+const (
+	PreviewAdminArchiveCascadeImpactParamsOperationARCHIVE         PreviewAdminArchiveCascadeImpactParamsOperation = "ARCHIVE"
+	PreviewAdminArchiveCascadeImpactParamsOperationPERMANENTDELETE PreviewAdminArchiveCascadeImpactParamsOperation = "PERMANENT_DELETE"
+	PreviewAdminArchiveCascadeImpactParamsOperationRESTORE         PreviewAdminArchiveCascadeImpactParamsOperation = "RESTORE"
+	PreviewAdminArchiveCascadeImpactParamsOperationTRASH           PreviewAdminArchiveCascadeImpactParamsOperation = "TRASH"
+	PreviewAdminArchiveCascadeImpactParamsOperationUNARCHIVE       PreviewAdminArchiveCascadeImpactParamsOperation = "UNARCHIVE"
+)
+
+// Valid indicates whether the value is a known member of the PreviewAdminArchiveCascadeImpactParamsOperation enum.
+func (e PreviewAdminArchiveCascadeImpactParamsOperation) Valid() bool {
+	switch e {
+	case PreviewAdminArchiveCascadeImpactParamsOperationARCHIVE:
+		return true
+	case PreviewAdminArchiveCascadeImpactParamsOperationPERMANENTDELETE:
+		return true
+	case PreviewAdminArchiveCascadeImpactParamsOperationRESTORE:
+		return true
+	case PreviewAdminArchiveCascadeImpactParamsOperationTRASH:
+		return true
+	case PreviewAdminArchiveCascadeImpactParamsOperationUNARCHIVE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PreviewAdminTrashCascadeImpactParamsOperation.
+const (
+	PreviewAdminTrashCascadeImpactParamsOperationARCHIVE         PreviewAdminTrashCascadeImpactParamsOperation = "ARCHIVE"
+	PreviewAdminTrashCascadeImpactParamsOperationPERMANENTDELETE PreviewAdminTrashCascadeImpactParamsOperation = "PERMANENT_DELETE"
+	PreviewAdminTrashCascadeImpactParamsOperationRESTORE         PreviewAdminTrashCascadeImpactParamsOperation = "RESTORE"
+	PreviewAdminTrashCascadeImpactParamsOperationTRASH           PreviewAdminTrashCascadeImpactParamsOperation = "TRASH"
+	PreviewAdminTrashCascadeImpactParamsOperationUNARCHIVE       PreviewAdminTrashCascadeImpactParamsOperation = "UNARCHIVE"
+)
+
+// Valid indicates whether the value is a known member of the PreviewAdminTrashCascadeImpactParamsOperation enum.
+func (e PreviewAdminTrashCascadeImpactParamsOperation) Valid() bool {
+	switch e {
+	case PreviewAdminTrashCascadeImpactParamsOperationARCHIVE:
+		return true
+	case PreviewAdminTrashCascadeImpactParamsOperationPERMANENTDELETE:
+		return true
+	case PreviewAdminTrashCascadeImpactParamsOperationRESTORE:
+		return true
+	case PreviewAdminTrashCascadeImpactParamsOperationTRASH:
+		return true
+	case PreviewAdminTrashCascadeImpactParamsOperationUNARCHIVE:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetPageParamsExpand.
 const (
 	Attachments GetPageParamsExpand = "attachments"
@@ -1495,6 +1609,33 @@ func (e GetPageParamsExpand) Valid() bool {
 	case WorkItems:
 		return true
 	case Workflow:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PreviewPageCascadeImpactParamsOperation.
+const (
+	ARCHIVE         PreviewPageCascadeImpactParamsOperation = "ARCHIVE"
+	PERMANENTDELETE PreviewPageCascadeImpactParamsOperation = "PERMANENT_DELETE"
+	RESTORE         PreviewPageCascadeImpactParamsOperation = "RESTORE"
+	TRASH           PreviewPageCascadeImpactParamsOperation = "TRASH"
+	UNARCHIVE       PreviewPageCascadeImpactParamsOperation = "UNARCHIVE"
+)
+
+// Valid indicates whether the value is a known member of the PreviewPageCascadeImpactParamsOperation enum.
+func (e PreviewPageCascadeImpactParamsOperation) Valid() bool {
+	switch e {
+	case ARCHIVE:
+		return true
+	case PERMANENTDELETE:
+		return true
+	case RESTORE:
+		return true
+	case TRASH:
+		return true
+	case UNARCHIVE:
 		return true
 	default:
 		return false
@@ -1571,9 +1712,13 @@ type AllowedPageActionResult struct {
 	ActionKey       *string                              `json:"actionKey,omitempty"`
 	Allowed         *bool                                `json:"allowed,omitempty"`
 	CommentRequired *bool                                `json:"commentRequired,omitempty"`
+	Reason          *AllowedPageActionResultReason       `json:"reason,omitempty"`
 	RequiredRole    *AllowedPageActionResultRequiredRole `json:"requiredRole,omitempty"`
 	TargetStatus    *AllowedPageActionResultTargetStatus `json:"targetStatus,omitempty"`
 }
+
+// AllowedPageActionResultReason defines model for AllowedPageActionResult.Reason.
+type AllowedPageActionResultReason string
 
 // AllowedPageActionResultRequiredRole defines model for AllowedPageActionResult.RequiredRole.
 type AllowedPageActionResultRequiredRole string
@@ -1599,11 +1744,12 @@ type ArchivePageForm struct {
 
 // ArchivedPageViewResult defines model for ArchivedPageViewResult.
 type ArchivedPageViewResult struct {
-	Archived       *bool       `json:"archived,omitempty"`
-	ArchivedAt     *time.Time  `json:"archivedAt,omitempty"`
-	ArchivedReason *string     `json:"archivedReason,omitempty"`
-	Page           *PageResult `json:"page,omitempty"`
-	ParentId       *int64      `json:"parentId,omitempty"`
+	Archived       *bool             `json:"archived,omitempty"`
+	ArchivedAt     *time.Time        `json:"archivedAt,omitempty"`
+	ArchivedBy     *AuditActorResult `json:"archivedBy,omitempty"`
+	ArchivedReason *string           `json:"archivedReason,omitempty"`
+	Page           *PageResult       `json:"page,omitempty"`
+	ParentId       *int64            `json:"parentId,omitempty"`
 }
 
 // ArchivedWithBreadcrumbResult defines model for ArchivedWithBreadcrumbResult.
@@ -1630,6 +1776,15 @@ type AssetSearchRequest struct {
 	PageSize   *int32  `json:"pageSize,omitempty"`
 }
 
+// AuditActorResult defines model for AuditActorResult.
+type AuditActorResult struct {
+	DisplayName string                  `json:"displayName"`
+	Status      *AuditActorResultStatus `json:"status,omitempty"`
+}
+
+// AuditActorResultStatus defines model for AuditActorResult.Status.
+type AuditActorResultStatus string
+
 // AuditLogQueryForm defines model for AuditLogQueryForm.
 type AuditLogQueryForm struct {
 	// ActionType Exact-match filter on the action type. Unknown values return an empty result set, not an error. Known values: PAGE_TYPE_CREATED, PAGE_TYPE_UPDATED, PAGE_TYPE_DELETED, PAGE_TYPE_REPARENTED, USER_UPDATED, USER_DELETED, USER_PERMANENTLY_DELETED, USER_REACTIVATED, PAGE_RESTRICTION_GRANTED, PAGE_RESTRICTION_UPDATED, PAGE_RESTRICTION_REVOKED, PAGE_RESTRICTION_OWNERSHIP_TRANSFERRED
@@ -1646,20 +1801,61 @@ type AuditLogQueryForm struct {
 
 // AvailablePropertyDescriptorResult defines model for AvailablePropertyDescriptorResult.
 type AvailablePropertyDescriptorResult struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Hidden *bool   `json:"hidden,omitempty"`
+	Id     *int64  `json:"id,omitempty"`
+	Name   *string `json:"name,omitempty"`
 }
 
 // BreadcrumbEntry defines model for BreadcrumbEntry.
 type BreadcrumbEntry struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Id     *int64  `json:"id,omitempty"`
+	Name   *string `json:"name,omitempty"`
+	Status *string `json:"status,omitempty"`
 }
 
 // BreadcrumbItemResult defines model for BreadcrumbItemResult.
 type BreadcrumbItemResult struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Id     *int64  `json:"id,omitempty"`
+	Name   *string `json:"name,omitempty"`
+	Status *string `json:"status,omitempty"`
+}
+
+// CascadeArchiveForm defines model for CascadeArchiveForm.
+type CascadeArchiveForm struct {
+	AcknowledgePublished *bool  `json:"acknowledgePublished,omitempty"`
+	Reason               string `json:"reason"`
+}
+
+// CascadeImpactPreviewResult defines model for CascadeImpactPreviewResult.
+type CascadeImpactPreviewResult struct {
+	ActiveCount             *int64 `json:"activeCount,omitempty"`
+	ArchivedCount           *int64 `json:"archivedCount,omitempty"`
+	HiddenAffectedPageCount *int64 `json:"hiddenAffectedPageCount,omitempty"`
+	PublishedCount          *int64 `json:"publishedCount,omitempty"`
+	TotalCount              *int64 `json:"totalCount,omitempty"`
+	TrashedCount            *int64 `json:"trashedCount,omitempty"`
+}
+
+// CascadeRestoreForm defines model for CascadeRestoreForm.
+type CascadeRestoreForm struct {
+	IncludeSubtree *bool   `json:"includeSubtree,omitempty"`
+	Reason         *string `json:"reason,omitempty"`
+}
+
+// CascadeResult defines model for CascadeResult.
+type CascadeResult struct {
+	AffectedPageIds *[]int64 `json:"affectedPageIds,omitempty"`
+	CorrelationId   *string  `json:"correlationId,omitempty"`
+}
+
+// CascadeSubtreeForm defines model for CascadeSubtreeForm.
+type CascadeSubtreeForm struct {
+	IncludeSubtree *bool `json:"includeSubtree,omitempty"`
+}
+
+// CascadeTrashForm defines model for CascadeTrashForm.
+type CascadeTrashForm struct {
+	AcknowledgePublished *bool `json:"acknowledgePublished,omitempty"`
 }
 
 // ChainLinkInput defines model for ChainLinkInput.
@@ -2168,6 +2364,7 @@ type PageEntry struct {
 type PageLinkData struct {
 	Id    *int64  `json:"id,omitempty"`
 	Slug  *string `json:"slug,omitempty"`
+	State *string `json:"state,omitempty"`
 	Title *string `json:"title,omitempty"`
 }
 
@@ -2766,7 +2963,7 @@ type ProblemDetail struct {
 	// RequestedValue Requested work item value that was rejected (INVALID_TRANSITION, work item variant).
 	RequestedValue *string `json:"requestedValue,omitempty"`
 
-	// RequiredRole Minimum workflow role required for the action (INSUFFICIENT_WORKFLOW_ROLE).
+	// RequiredRole Minimum workflow role required for the action (INSUFFICIENT_WORKFLOW_ROLE or INSUFFICIENT_ROLE).
 	RequiredRole *string `json:"requiredRole,omitempty"`
 
 	// RetryAfterSeconds Seconds to wait before retrying. Present on rate-limit (429) responses.
@@ -2864,6 +3061,8 @@ type PropertyDescriptorResult struct {
 	DomainEnumName                 *string                                             `json:"domainEnumName,omitempty"`
 	Editable                       *bool                                               `json:"editable,omitempty"`
 	Formula                        *string                                             `json:"formula,omitempty"`
+	Hidden                         *bool                                               `json:"hidden,omitempty"`
+	HiddenByPageTypeName           *string                                             `json:"hiddenByPageTypeName,omitempty"`
 	Id                             *int64                                              `json:"id,omitempty"`
 	IncomingSourceDescriptorId     *int64                                              `json:"incomingSourceDescriptorId,omitempty"`
 	IncomingSourceDescriptorName   *string                                             `json:"incomingSourceDescriptorName,omitempty"`
@@ -3202,6 +3401,11 @@ type ReleaseNoteSummaryResult struct {
 	Version *string             `json:"version,omitempty"`
 }
 
+// RestorePageForm defines model for RestorePageForm.
+type RestorePageForm struct {
+	Reason *string `json:"reason,omitempty"`
+}
+
 // RestoreResult defines model for RestoreResult.
 type RestoreResult struct {
 	Success  *bool     `json:"success,omitempty"`
@@ -3245,6 +3449,20 @@ type TrashWithBreadcrumbResult struct {
 	Name         *string            `json:"name,omitempty"`
 	PageTypeName *string            `json:"pageTypeName,omitempty"`
 }
+
+// TrashedPageViewResult defines model for TrashedPageViewResult.
+type TrashedPageViewResult struct {
+	CanDeletePermanently *bool                               `json:"canDeletePermanently,omitempty"`
+	CanRestore           *bool                               `json:"canRestore,omitempty"`
+	DeletedAt            *time.Time                          `json:"deletedAt,omitempty"`
+	Page                 *PageResult                         `json:"page,omitempty"`
+	ParentId             *int64                              `json:"parentId,omitempty"`
+	RestoreTarget        *TrashedPageViewResultRestoreTarget `json:"restoreTarget,omitempty"`
+	TrashedBy            *AuditActorResult                   `json:"trashedBy,omitempty"`
+}
+
+// TrashedPageViewResultRestoreTarget defines model for TrashedPageViewResult.RestoreTarget.
+type TrashedPageViewResultRestoreTarget string
 
 // UserForm defines model for UserForm.
 type UserForm struct {
@@ -3632,6 +3850,24 @@ type ListPagesParams struct {
 	Sort *[]string `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
+// PreviewAdminArchiveCascadeImpactParams defines parameters for PreviewAdminArchiveCascadeImpact.
+type PreviewAdminArchiveCascadeImpactParams struct {
+	Operation      *PreviewAdminArchiveCascadeImpactParamsOperation `form:"operation,omitempty" json:"operation,omitempty"`
+	IncludeSubtree *bool                                            `form:"includeSubtree,omitempty" json:"includeSubtree,omitempty"`
+}
+
+// PreviewAdminArchiveCascadeImpactParamsOperation defines parameters for PreviewAdminArchiveCascadeImpact.
+type PreviewAdminArchiveCascadeImpactParamsOperation string
+
+// PreviewAdminTrashCascadeImpactParams defines parameters for PreviewAdminTrashCascadeImpact.
+type PreviewAdminTrashCascadeImpactParams struct {
+	Operation      PreviewAdminTrashCascadeImpactParamsOperation `form:"operation" json:"operation"`
+	IncludeSubtree *bool                                         `form:"includeSubtree,omitempty" json:"includeSubtree,omitempty"`
+}
+
+// PreviewAdminTrashCascadeImpactParamsOperation defines parameters for PreviewAdminTrashCascadeImpact.
+type PreviewAdminTrashCascadeImpactParamsOperation string
+
 // SearchPagesParams defines parameters for SearchPages.
 type SearchPagesParams struct {
 	Query             string `form:"query" json:"query"`
@@ -3662,6 +3898,14 @@ type GetPageParams struct {
 
 // GetPageParamsExpand defines parameters for GetPage.
 type GetPageParamsExpand string
+
+// PreviewPageCascadeImpactParams defines parameters for PreviewPageCascadeImpact.
+type PreviewPageCascadeImpactParams struct {
+	Operation PreviewPageCascadeImpactParamsOperation `form:"operation" json:"operation"`
+}
+
+// PreviewPageCascadeImpactParamsOperation defines parameters for PreviewPageCascadeImpact.
+type PreviewPageCascadeImpactParamsOperation string
 
 // GetPageRevisionsParams defines parameters for GetPageRevisions.
 type GetPageRevisionsParams struct {
@@ -3848,6 +4092,15 @@ type SortPageTypePropertyDescriptorsJSONRequestBody = SortPageTypePropertyDescri
 // CreatePageJSONRequestBody defines body for CreatePage for application/json ContentType.
 type CreatePageJSONRequestBody = PageCreateForm
 
+// CascadeUnarchivePageJSONRequestBody defines body for CascadeUnarchivePage for application/json ContentType.
+type CascadeUnarchivePageJSONRequestBody = CascadeSubtreeForm
+
+// CascadeRestorePageFromTrashJSONRequestBody defines body for CascadeRestorePageFromTrash for application/json ContentType.
+type CascadeRestorePageFromTrashJSONRequestBody = CascadeRestoreForm
+
+// RestorePageFromTrashJSONRequestBody defines body for RestorePageFromTrash for application/json ContentType.
+type RestorePageFromTrashJSONRequestBody = RestorePageForm
+
 // MigrateSortRootPagesJSONRequestBody defines body for MigrateSortRootPages for application/json ContentType.
 type MigrateSortRootPagesJSONRequestBody = SortChildrenForm
 
@@ -3859,6 +4112,12 @@ type UpdatePageJSONRequestBody = PageEditForm
 
 // ArchivePageJSONRequestBody defines body for ArchivePage for application/json ContentType.
 type ArchivePageJSONRequestBody = ArchivePageForm
+
+// CascadeArchivePageJSONRequestBody defines body for CascadeArchivePage for application/json ContentType.
+type CascadeArchivePageJSONRequestBody = CascadeArchiveForm
+
+// CascadeTrashPageJSONRequestBody defines body for CascadeTrashPage for application/json ContentType.
+type CascadeTrashPageJSONRequestBody = CascadeTrashForm
 
 // MigrateMovePageJSONRequestBody defines body for MigrateMovePage for application/json ContentType.
 type MigrateMovePageJSONRequestBody = PageMoveForm
@@ -4174,14 +4433,38 @@ type ClientInterface interface {
 	// GetArchivedPage request
 	GetArchivedPage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// PreviewAdminArchiveCascadeImpact request
+	PreviewAdminArchiveCascadeImpact(ctx context.Context, pageId int64, params *PreviewAdminArchiveCascadeImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CascadeUnarchivePageWithBody request with any body
+	CascadeUnarchivePageWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CascadeUnarchivePage(ctx context.Context, pageId int64, body CascadeUnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UnarchivePage request
 	UnarchivePage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PermanentlyDeletePageFromTrash request
 	PermanentlyDeletePageFromTrash(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RestorePageFromTrash request
-	RestorePageFromTrash(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetTrashedPage request
+	GetTrashedPage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CascadePermanentlyDeleteFromTrash request
+	CascadePermanentlyDeleteFromTrash(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewAdminTrashCascadeImpact request
+	PreviewAdminTrashCascadeImpact(ctx context.Context, pageId int64, params *PreviewAdminTrashCascadeImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CascadeRestorePageFromTrashWithBody request with any body
+	CascadeRestorePageFromTrashWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CascadeRestorePageFromTrash(ctx context.Context, pageId int64, body CascadeRestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestorePageFromTrashWithBody request with any body
+	RestorePageFromTrashWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	RestorePageFromTrash(ctx context.Context, pageId int64, body RestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// MigrateSortRootPagesWithBody request with any body
 	MigrateSortRootPagesWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4214,6 +4497,19 @@ type ClientInterface interface {
 	ArchivePageWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	ArchivePage(ctx context.Context, id int64, body ArchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CascadeArchivePageWithBody request with any body
+	CascadeArchivePageWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CascadeArchivePage(ctx context.Context, id int64, body CascadeArchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewPageCascadeImpact request
+	PreviewPageCascadeImpact(ctx context.Context, id int64, params *PreviewPageCascadeImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CascadeTrashPageWithBody request with any body
+	CascadeTrashPageWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CascadeTrashPage(ctx context.Context, id int64, body CascadeTrashPageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// MigrateMovePageWithBody request with any body
 	MigrateMovePageWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5158,6 +5454,42 @@ func (c *Client) GetArchivedPage(ctx context.Context, pageId int64, reqEditors .
 	return c.Client.Do(req)
 }
 
+func (c *Client) PreviewAdminArchiveCascadeImpact(ctx context.Context, pageId int64, params *PreviewAdminArchiveCascadeImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewAdminArchiveCascadeImpactRequest(c.Server, pageId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeUnarchivePageWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeUnarchivePageRequestWithBody(c.Server, pageId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeUnarchivePage(ctx context.Context, pageId int64, body CascadeUnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeUnarchivePageRequest(c.Server, pageId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) UnarchivePage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUnarchivePageRequest(c.Server, pageId)
 	if err != nil {
@@ -5182,8 +5514,80 @@ func (c *Client) PermanentlyDeletePageFromTrash(ctx context.Context, pageId int6
 	return c.Client.Do(req)
 }
 
-func (c *Client) RestorePageFromTrash(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewRestorePageFromTrashRequest(c.Server, pageId)
+func (c *Client) GetTrashedPage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTrashedPageRequest(c.Server, pageId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadePermanentlyDeleteFromTrash(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadePermanentlyDeleteFromTrashRequest(c.Server, pageId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PreviewAdminTrashCascadeImpact(ctx context.Context, pageId int64, params *PreviewAdminTrashCascadeImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewAdminTrashCascadeImpactRequest(c.Server, pageId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeRestorePageFromTrashWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeRestorePageFromTrashRequestWithBody(c.Server, pageId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeRestorePageFromTrash(ctx context.Context, pageId int64, body CascadeRestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeRestorePageFromTrashRequest(c.Server, pageId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) RestorePageFromTrashWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestorePageFromTrashRequestWithBody(c.Server, pageId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) RestorePageFromTrash(ctx context.Context, pageId int64, body RestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestorePageFromTrashRequest(c.Server, pageId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5328,6 +5732,66 @@ func (c *Client) ArchivePageWithBody(ctx context.Context, id int64, contentType 
 
 func (c *Client) ArchivePage(ctx context.Context, id int64, body ArchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewArchivePageRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeArchivePageWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeArchivePageRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeArchivePage(ctx context.Context, id int64, body CascadeArchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeArchivePageRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PreviewPageCascadeImpact(ctx context.Context, id int64, params *PreviewPageCascadeImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewPageCascadeImpactRequest(c.Server, id, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeTrashPageWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeTrashPageRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CascadeTrashPage(ctx context.Context, id int64, body CascadeTrashPageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCascadeTrashPageRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8505,6 +8969,126 @@ func NewGetArchivedPageRequest(server string, pageId int64) (*http.Request, erro
 	return req, nil
 }
 
+// NewPreviewAdminArchiveCascadeImpactRequest generates requests for PreviewAdminArchiveCascadeImpact
+func NewPreviewAdminArchiveCascadeImpactRequest(server string, pageId int64, params *PreviewAdminArchiveCascadeImpactParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/admin/archive/%s/cascade-impact", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Operation != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "operation", *params.Operation, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.IncludeSubtree != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "includeSubtree", *params.IncludeSubtree, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCascadeUnarchivePageRequest calls the generic CascadeUnarchivePage builder with application/json body
+func NewCascadeUnarchivePageRequest(server string, pageId int64, body CascadeUnarchivePageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCascadeUnarchivePageRequestWithBody(server, pageId, "application/json", bodyReader)
+}
+
+// NewCascadeUnarchivePageRequestWithBody generates requests for CascadeUnarchivePage with any type of body
+func NewCascadeUnarchivePageRequestWithBody(server string, pageId int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/admin/archive/%s/cascade-unarchive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewUnarchivePageRequest generates requests for UnarchivePage
 func NewUnarchivePageRequest(server string, pageId int64) (*http.Request, error) {
 	var err error
@@ -8573,8 +9157,203 @@ func NewPermanentlyDeletePageFromTrashRequest(server string, pageId int64) (*htt
 	return req, nil
 }
 
-// NewRestorePageFromTrashRequest generates requests for RestorePageFromTrash
-func NewRestorePageFromTrashRequest(server string, pageId int64) (*http.Request, error) {
+// NewGetTrashedPageRequest generates requests for GetTrashedPage
+func NewGetTrashedPageRequest(server string, pageId int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/admin/trash/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCascadePermanentlyDeleteFromTrashRequest generates requests for CascadePermanentlyDeleteFromTrash
+func NewCascadePermanentlyDeleteFromTrashRequest(server string, pageId int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/admin/trash/%s/cascade", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewPreviewAdminTrashCascadeImpactRequest generates requests for PreviewAdminTrashCascadeImpact
+func NewPreviewAdminTrashCascadeImpactRequest(server string, pageId int64, params *PreviewAdminTrashCascadeImpactParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/admin/trash/%s/cascade-impact", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "operation", params.Operation, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if params.IncludeSubtree != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "includeSubtree", *params.IncludeSubtree, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCascadeRestorePageFromTrashRequest calls the generic CascadeRestorePageFromTrash builder with application/json body
+func NewCascadeRestorePageFromTrashRequest(server string, pageId int64, body CascadeRestorePageFromTrashJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCascadeRestorePageFromTrashRequestWithBody(server, pageId, "application/json", bodyReader)
+}
+
+// NewCascadeRestorePageFromTrashRequestWithBody generates requests for CascadeRestorePageFromTrash with any type of body
+func NewCascadeRestorePageFromTrashRequestWithBody(server string, pageId int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/admin/trash/%s/cascade-restore", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewRestorePageFromTrashRequest calls the generic RestorePageFromTrash builder with application/json body
+func NewRestorePageFromTrashRequest(server string, pageId int64, body RestorePageFromTrashJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRestorePageFromTrashRequestWithBody(server, pageId, "application/json", bodyReader)
+}
+
+// NewRestorePageFromTrashRequestWithBody generates requests for RestorePageFromTrash with any type of body
+func NewRestorePageFromTrashRequestWithBody(server string, pageId int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8599,10 +9378,12 @@ func NewRestorePageFromTrashRequest(server string, pageId int64) (*http.Request,
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -9016,6 +9797,157 @@ func NewArchivePageRequestWithBody(server string, id int64, contentType string, 
 	}
 
 	operationPath := fmt.Sprintf("/public/v1/pages/%s/archive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCascadeArchivePageRequest calls the generic CascadeArchivePage builder with application/json body
+func NewCascadeArchivePageRequest(server string, id int64, body CascadeArchivePageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCascadeArchivePageRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCascadeArchivePageRequestWithBody generates requests for CascadeArchivePage with any type of body
+func NewCascadeArchivePageRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/%s/cascade-archive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewPreviewPageCascadeImpactRequest generates requests for PreviewPageCascadeImpact
+func NewPreviewPageCascadeImpactRequest(server string, id int64, params *PreviewPageCascadeImpactParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/%s/cascade-impact", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "operation", params.Operation, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCascadeTrashPageRequest calls the generic CascadeTrashPage builder with application/json body
+func NewCascadeTrashPageRequest(server string, id int64, body CascadeTrashPageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCascadeTrashPageRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCascadeTrashPageRequestWithBody generates requests for CascadeTrashPage with any type of body
+func NewCascadeTrashPageRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/%s/cascade-trash", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -12315,14 +13247,38 @@ type ClientWithResponsesInterface interface {
 	// GetArchivedPageWithResponse request
 	GetArchivedPageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*GetArchivedPageResponse, error)
 
+	// PreviewAdminArchiveCascadeImpactWithResponse request
+	PreviewAdminArchiveCascadeImpactWithResponse(ctx context.Context, pageId int64, params *PreviewAdminArchiveCascadeImpactParams, reqEditors ...RequestEditorFn) (*PreviewAdminArchiveCascadeImpactResponse, error)
+
+	// CascadeUnarchivePageWithBodyWithResponse request with any body
+	CascadeUnarchivePageWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeUnarchivePageResponse, error)
+
+	CascadeUnarchivePageWithResponse(ctx context.Context, pageId int64, body CascadeUnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeUnarchivePageResponse, error)
+
 	// UnarchivePageWithResponse request
 	UnarchivePageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error)
 
 	// PermanentlyDeletePageFromTrashWithResponse request
 	PermanentlyDeletePageFromTrashWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*PermanentlyDeletePageFromTrashResponse, error)
 
-	// RestorePageFromTrashWithResponse request
-	RestorePageFromTrashWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*RestorePageFromTrashResponse, error)
+	// GetTrashedPageWithResponse request
+	GetTrashedPageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*GetTrashedPageResponse, error)
+
+	// CascadePermanentlyDeleteFromTrashWithResponse request
+	CascadePermanentlyDeleteFromTrashWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*CascadePermanentlyDeleteFromTrashResponse, error)
+
+	// PreviewAdminTrashCascadeImpactWithResponse request
+	PreviewAdminTrashCascadeImpactWithResponse(ctx context.Context, pageId int64, params *PreviewAdminTrashCascadeImpactParams, reqEditors ...RequestEditorFn) (*PreviewAdminTrashCascadeImpactResponse, error)
+
+	// CascadeRestorePageFromTrashWithBodyWithResponse request with any body
+	CascadeRestorePageFromTrashWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeRestorePageFromTrashResponse, error)
+
+	CascadeRestorePageFromTrashWithResponse(ctx context.Context, pageId int64, body CascadeRestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeRestorePageFromTrashResponse, error)
+
+	// RestorePageFromTrashWithBodyWithResponse request with any body
+	RestorePageFromTrashWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestorePageFromTrashResponse, error)
+
+	RestorePageFromTrashWithResponse(ctx context.Context, pageId int64, body RestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*RestorePageFromTrashResponse, error)
 
 	// MigrateSortRootPagesWithBodyWithResponse request with any body
 	MigrateSortRootPagesWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MigrateSortRootPagesResponse, error)
@@ -12355,6 +13311,19 @@ type ClientWithResponsesInterface interface {
 	ArchivePageWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchivePageResponse, error)
 
 	ArchivePageWithResponse(ctx context.Context, id int64, body ArchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchivePageResponse, error)
+
+	// CascadeArchivePageWithBodyWithResponse request with any body
+	CascadeArchivePageWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeArchivePageResponse, error)
+
+	CascadeArchivePageWithResponse(ctx context.Context, id int64, body CascadeArchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeArchivePageResponse, error)
+
+	// PreviewPageCascadeImpactWithResponse request
+	PreviewPageCascadeImpactWithResponse(ctx context.Context, id int64, params *PreviewPageCascadeImpactParams, reqEditors ...RequestEditorFn) (*PreviewPageCascadeImpactResponse, error)
+
+	// CascadeTrashPageWithBodyWithResponse request with any body
+	CascadeTrashPageWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeTrashPageResponse, error)
+
+	CascadeTrashPageWithResponse(ctx context.Context, id int64, body CascadeTrashPageJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeTrashPageResponse, error)
 
 	// MigrateMovePageWithBodyWithResponse request with any body
 	MigrateMovePageWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MigrateMovePageResponse, error)
@@ -14078,6 +15047,73 @@ func (r GetArchivedPageResponse) ContentType() string {
 	return ""
 }
 
+type PreviewAdminArchiveCascadeImpactResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewAdminArchiveCascadeImpactResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewAdminArchiveCascadeImpactResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewAdminArchiveCascadeImpactResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CascadeUnarchivePageResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CascadeUnarchivePageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CascadeUnarchivePageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CascadeUnarchivePageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UnarchivePageResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -14144,9 +15180,143 @@ func (r PermanentlyDeletePageFromTrashResponse) ContentType() string {
 	return ""
 }
 
+type GetTrashedPageResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTrashedPageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTrashedPageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTrashedPageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CascadePermanentlyDeleteFromTrashResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CascadePermanentlyDeleteFromTrashResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CascadePermanentlyDeleteFromTrashResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CascadePermanentlyDeleteFromTrashResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PreviewAdminTrashCascadeImpactResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewAdminTrashCascadeImpactResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewAdminTrashCascadeImpactResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewAdminTrashCascadeImpactResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CascadeRestorePageFromTrashResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CascadeRestorePageFromTrashResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CascadeRestorePageFromTrashResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CascadeRestorePageFromTrashResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type RestorePageFromTrashResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
 	ApplicationproblemJSON401 *ProblemDetail
 	ApplicationproblemJSON403 *ProblemDetail
 	ApplicationproblemJSON404 *ProblemDetail
@@ -14438,6 +15608,107 @@ func (r ArchivePageResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ArchivePageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CascadeArchivePageResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CascadeArchivePageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CascadeArchivePageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CascadeArchivePageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PreviewPageCascadeImpactResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewPageCascadeImpactResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewPageCascadeImpactResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewPageCascadeImpactResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CascadeTrashPageResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CascadeTrashPageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CascadeTrashPageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CascadeTrashPageResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -17022,6 +18293,32 @@ func (c *ClientWithResponses) GetArchivedPageWithResponse(ctx context.Context, p
 	return ParseGetArchivedPageResponse(rsp)
 }
 
+// PreviewAdminArchiveCascadeImpactWithResponse request returning *PreviewAdminArchiveCascadeImpactResponse
+func (c *ClientWithResponses) PreviewAdminArchiveCascadeImpactWithResponse(ctx context.Context, pageId int64, params *PreviewAdminArchiveCascadeImpactParams, reqEditors ...RequestEditorFn) (*PreviewAdminArchiveCascadeImpactResponse, error) {
+	rsp, err := c.PreviewAdminArchiveCascadeImpact(ctx, pageId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewAdminArchiveCascadeImpactResponse(rsp)
+}
+
+// CascadeUnarchivePageWithBodyWithResponse request with arbitrary body returning *CascadeUnarchivePageResponse
+func (c *ClientWithResponses) CascadeUnarchivePageWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeUnarchivePageResponse, error) {
+	rsp, err := c.CascadeUnarchivePageWithBody(ctx, pageId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeUnarchivePageResponse(rsp)
+}
+
+func (c *ClientWithResponses) CascadeUnarchivePageWithResponse(ctx context.Context, pageId int64, body CascadeUnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeUnarchivePageResponse, error) {
+	rsp, err := c.CascadeUnarchivePage(ctx, pageId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeUnarchivePageResponse(rsp)
+}
+
 // UnarchivePageWithResponse request returning *UnarchivePageResponse
 func (c *ClientWithResponses) UnarchivePageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error) {
 	rsp, err := c.UnarchivePage(ctx, pageId, reqEditors...)
@@ -17040,9 +18337,61 @@ func (c *ClientWithResponses) PermanentlyDeletePageFromTrashWithResponse(ctx con
 	return ParsePermanentlyDeletePageFromTrashResponse(rsp)
 }
 
-// RestorePageFromTrashWithResponse request returning *RestorePageFromTrashResponse
-func (c *ClientWithResponses) RestorePageFromTrashWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*RestorePageFromTrashResponse, error) {
-	rsp, err := c.RestorePageFromTrash(ctx, pageId, reqEditors...)
+// GetTrashedPageWithResponse request returning *GetTrashedPageResponse
+func (c *ClientWithResponses) GetTrashedPageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*GetTrashedPageResponse, error) {
+	rsp, err := c.GetTrashedPage(ctx, pageId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTrashedPageResponse(rsp)
+}
+
+// CascadePermanentlyDeleteFromTrashWithResponse request returning *CascadePermanentlyDeleteFromTrashResponse
+func (c *ClientWithResponses) CascadePermanentlyDeleteFromTrashWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*CascadePermanentlyDeleteFromTrashResponse, error) {
+	rsp, err := c.CascadePermanentlyDeleteFromTrash(ctx, pageId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadePermanentlyDeleteFromTrashResponse(rsp)
+}
+
+// PreviewAdminTrashCascadeImpactWithResponse request returning *PreviewAdminTrashCascadeImpactResponse
+func (c *ClientWithResponses) PreviewAdminTrashCascadeImpactWithResponse(ctx context.Context, pageId int64, params *PreviewAdminTrashCascadeImpactParams, reqEditors ...RequestEditorFn) (*PreviewAdminTrashCascadeImpactResponse, error) {
+	rsp, err := c.PreviewAdminTrashCascadeImpact(ctx, pageId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewAdminTrashCascadeImpactResponse(rsp)
+}
+
+// CascadeRestorePageFromTrashWithBodyWithResponse request with arbitrary body returning *CascadeRestorePageFromTrashResponse
+func (c *ClientWithResponses) CascadeRestorePageFromTrashWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeRestorePageFromTrashResponse, error) {
+	rsp, err := c.CascadeRestorePageFromTrashWithBody(ctx, pageId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeRestorePageFromTrashResponse(rsp)
+}
+
+func (c *ClientWithResponses) CascadeRestorePageFromTrashWithResponse(ctx context.Context, pageId int64, body CascadeRestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeRestorePageFromTrashResponse, error) {
+	rsp, err := c.CascadeRestorePageFromTrash(ctx, pageId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeRestorePageFromTrashResponse(rsp)
+}
+
+// RestorePageFromTrashWithBodyWithResponse request with arbitrary body returning *RestorePageFromTrashResponse
+func (c *ClientWithResponses) RestorePageFromTrashWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestorePageFromTrashResponse, error) {
+	rsp, err := c.RestorePageFromTrashWithBody(ctx, pageId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestorePageFromTrashResponse(rsp)
+}
+
+func (c *ClientWithResponses) RestorePageFromTrashWithResponse(ctx context.Context, pageId int64, body RestorePageFromTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*RestorePageFromTrashResponse, error) {
+	rsp, err := c.RestorePageFromTrash(ctx, pageId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -17151,6 +18500,49 @@ func (c *ClientWithResponses) ArchivePageWithResponse(ctx context.Context, id in
 		return nil, err
 	}
 	return ParseArchivePageResponse(rsp)
+}
+
+// CascadeArchivePageWithBodyWithResponse request with arbitrary body returning *CascadeArchivePageResponse
+func (c *ClientWithResponses) CascadeArchivePageWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeArchivePageResponse, error) {
+	rsp, err := c.CascadeArchivePageWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeArchivePageResponse(rsp)
+}
+
+func (c *ClientWithResponses) CascadeArchivePageWithResponse(ctx context.Context, id int64, body CascadeArchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeArchivePageResponse, error) {
+	rsp, err := c.CascadeArchivePage(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeArchivePageResponse(rsp)
+}
+
+// PreviewPageCascadeImpactWithResponse request returning *PreviewPageCascadeImpactResponse
+func (c *ClientWithResponses) PreviewPageCascadeImpactWithResponse(ctx context.Context, id int64, params *PreviewPageCascadeImpactParams, reqEditors ...RequestEditorFn) (*PreviewPageCascadeImpactResponse, error) {
+	rsp, err := c.PreviewPageCascadeImpact(ctx, id, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewPageCascadeImpactResponse(rsp)
+}
+
+// CascadeTrashPageWithBodyWithResponse request with arbitrary body returning *CascadeTrashPageResponse
+func (c *ClientWithResponses) CascadeTrashPageWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CascadeTrashPageResponse, error) {
+	rsp, err := c.CascadeTrashPageWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeTrashPageResponse(rsp)
+}
+
+func (c *ClientWithResponses) CascadeTrashPageWithResponse(ctx context.Context, id int64, body CascadeTrashPageJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeTrashPageResponse, error) {
+	rsp, err := c.CascadeTrashPage(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCascadeTrashPageResponse(rsp)
 }
 
 // MigrateMovePageWithBodyWithResponse request with arbitrary body returning *MigrateMovePageResponse
@@ -20032,6 +21424,107 @@ func ParseGetArchivedPageResponse(rsp *http.Response) (*GetArchivedPageResponse,
 	return response, nil
 }
 
+// ParsePreviewAdminArchiveCascadeImpactResponse parses an HTTP response from a PreviewAdminArchiveCascadeImpactWithResponse call
+func ParsePreviewAdminArchiveCascadeImpactResponse(rsp *http.Response) (*PreviewAdminArchiveCascadeImpactResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewAdminArchiveCascadeImpactResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCascadeUnarchivePageResponse parses an HTTP response from a CascadeUnarchivePageWithResponse call
+func ParseCascadeUnarchivePageResponse(rsp *http.Response) (*CascadeUnarchivePageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CascadeUnarchivePageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseUnarchivePageResponse parses an HTTP response from a UnarchivePageWithResponse call
 func ParseUnarchivePageResponse(rsp *http.Response) (*UnarchivePageResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -20126,6 +21619,201 @@ func ParsePermanentlyDeletePageFromTrashResponse(rsp *http.Response) (*Permanent
 	return response, nil
 }
 
+// ParseGetTrashedPageResponse parses an HTTP response from a GetTrashedPageWithResponse call
+func ParseGetTrashedPageResponse(rsp *http.Response) (*GetTrashedPageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTrashedPageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCascadePermanentlyDeleteFromTrashResponse parses an HTTP response from a CascadePermanentlyDeleteFromTrashWithResponse call
+func ParseCascadePermanentlyDeleteFromTrashResponse(rsp *http.Response) (*CascadePermanentlyDeleteFromTrashResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CascadePermanentlyDeleteFromTrashResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewAdminTrashCascadeImpactResponse parses an HTTP response from a PreviewAdminTrashCascadeImpactWithResponse call
+func ParsePreviewAdminTrashCascadeImpactResponse(rsp *http.Response) (*PreviewAdminTrashCascadeImpactResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewAdminTrashCascadeImpactResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCascadeRestorePageFromTrashResponse parses an HTTP response from a CascadeRestorePageFromTrashWithResponse call
+func ParseCascadeRestorePageFromTrashResponse(rsp *http.Response) (*CascadeRestorePageFromTrashResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CascadeRestorePageFromTrashResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseRestorePageFromTrashResponse parses an HTTP response from a RestorePageFromTrashWithResponse call
 func ParseRestorePageFromTrashResponse(rsp *http.Response) (*RestorePageFromTrashResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -20140,6 +21828,13 @@ func ParseRestorePageFromTrashResponse(rsp *http.Response) (*RestorePageFromTras
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest ProblemDetail
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -20525,6 +22220,161 @@ func ParseArchivePageResponse(rsp *http.Response) (*ArchivePageResponse, error) 
 	}
 
 	response := &ArchivePageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCascadeArchivePageResponse parses an HTTP response from a CascadeArchivePageWithResponse call
+func ParseCascadeArchivePageResponse(rsp *http.Response) (*CascadeArchivePageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CascadeArchivePageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewPageCascadeImpactResponse parses an HTTP response from a PreviewPageCascadeImpactWithResponse call
+func ParsePreviewPageCascadeImpactResponse(rsp *http.Response) (*PreviewPageCascadeImpactResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewPageCascadeImpactResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCascadeTrashPageResponse parses an HTTP response from a CascadeTrashPageWithResponse call
+func ParseCascadeTrashPageResponse(rsp *http.Response) (*CascadeTrashPageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CascadeTrashPageResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}

@@ -190,6 +190,44 @@ func (c *Client) GetArchivedPage(ctx context.Context, pageID int64) ([]byte, *AP
 	return c.DoRaw(func() (*http.Response, error) { return c.api.GetArchivedPage(ctx, pageID) })
 }
 
+// GetTrashedPage — GET /public/v1/pages/admin/trash/{pageId}: admin read view
+// of a single trashed page (TrashedPageViewResult with nested page detail).
+func (c *Client) GetTrashedPage(ctx context.Context, pageID int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.GetTrashedPage(ctx, pageID) })
+}
+
+// ---- Cascade impact previews ----
+
+func (c *Client) PreviewPageCascadeImpact(ctx context.Context, id int64, operation string) ([]byte, *APIError) {
+	params := &api.PreviewPageCascadeImpactParams{
+		Operation: api.PreviewPageCascadeImpactParamsOperation(operation),
+	}
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.PreviewPageCascadeImpact(ctx, id, params)
+	})
+}
+
+func (c *Client) PreviewAdminArchiveCascadeImpact(ctx context.Context, pageID int64, operation string, includeSubtree *bool) ([]byte, *APIError) {
+	params := &api.PreviewAdminArchiveCascadeImpactParams{IncludeSubtree: includeSubtree}
+	if operation != "" {
+		op := api.PreviewAdminArchiveCascadeImpactParamsOperation(operation)
+		params.Operation = &op
+	}
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.PreviewAdminArchiveCascadeImpact(ctx, pageID, params)
+	})
+}
+
+func (c *Client) PreviewAdminTrashCascadeImpact(ctx context.Context, pageID int64, operation string, includeSubtree *bool) ([]byte, *APIError) {
+	params := &api.PreviewAdminTrashCascadeImpactParams{
+		Operation:      api.PreviewAdminTrashCascadeImpactParamsOperation(operation),
+		IncludeSubtree: includeSubtree,
+	}
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.PreviewAdminTrashCascadeImpact(ctx, pageID, params)
+	})
+}
+
 func (c *Client) ListContentMacros(ctx context.Context, context string) ([]byte, *APIError) {
 	params := &api.ListContentMacrosParams{}
 	if context != "" {

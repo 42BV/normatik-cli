@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"net/http"
+	"strings"
 
 	"github.com/42BV/normatik-cli/internal/api"
 )
@@ -215,8 +216,13 @@ func (c *Client) PerformTransition(ctx context.Context, id int64, f api.Transiti
 func (c *Client) RestoreVersion(ctx context.Context, id int64, revisionNumber int32) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.RestorePageVersion(ctx, id, revisionNumber) })
 }
-func (c *Client) RestoreFromTrash(ctx context.Context, pageID int64) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.RestorePageFromTrash(ctx, pageID) })
+func (c *Client) RestoreFromTrash(ctx context.Context, pageID int64, reason string) ([]byte, *APIError) {
+	f := api.RestorePageForm{}
+	if strings.TrimSpace(reason) != "" {
+		r := reason
+		f.Reason = &r
+	}
+	return c.DoRaw(func() (*http.Response, error) { return c.api.RestorePageFromTrash(ctx, pageID, f) })
 }
 func (c *Client) PurgeFromTrash(ctx context.Context, pageID int64) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.PermanentlyDeletePageFromTrash(ctx, pageID) })
@@ -233,6 +239,25 @@ func (c *Client) UnarchivePage(ctx context.Context, pageID int64) ([]byte, *APIE
 func (c *Client) DeleteArchivedPage(ctx context.Context, pageID int64) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.DeleteArchivedPage(ctx, pageID) })
 }
+
+// ---- Cascade writes (page-cancellation hierarchy) ----
+
+func (c *Client) CascadeArchivePage(ctx context.Context, id int64, f api.CascadeArchiveForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadeArchivePage(ctx, id, f) })
+}
+func (c *Client) CascadeTrashPage(ctx context.Context, id int64, f api.CascadeTrashForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadeTrashPage(ctx, id, f) })
+}
+func (c *Client) CascadeUnarchivePage(ctx context.Context, pageID int64, f api.CascadeSubtreeForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadeUnarchivePage(ctx, pageID, f) })
+}
+func (c *Client) CascadeRestoreFromTrash(ctx context.Context, pageID int64, f api.CascadeRestoreForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadeRestorePageFromTrash(ctx, pageID, f) })
+}
+func (c *Client) CascadePermanentDeleteFromTrash(ctx context.Context, pageID int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadePermanentlyDeleteFromTrash(ctx, pageID) })
+}
+
 func (c *Client) DiscardWorkingRevision(ctx context.Context, id int64) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.DiscardPageWorkingRevision(ctx, id) })
 }

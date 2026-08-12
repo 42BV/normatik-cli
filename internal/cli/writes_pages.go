@@ -658,12 +658,30 @@ func newRestrictionAccessCmd(group bool) *cobra.Command {
 	return ac
 }
 
-// addTrashWrites extends the trash subtree with restore/purge.
+// addTrashWrites extends the trash subtree with restore/purge and cascade writes.
 func addTrashWrites(c *cobra.Command) {
-	restore := idWriteURL("restore <pageId>", "Restore a page from the trash", "normatik trash restore", "Page restored.", "none",
-		func(d *command.Deps, ctx context.Context, id int64) ([]byte, *client.APIError) {
-			return d.Client.RestoreFromTrash(ctx, id)
-		}, weburl.Page)
+	var restoreReason string
+	restore := &cobra.Command{
+		Use:   "restore <pageId>",
+		Short: "Restore a page from the trash (optional --reason when parent is archived)",
+		Args:  cobra.ExactArgs(1),
+		Example: "  normatik trash restore 42\n" +
+			"  normatik trash restore 42 --reason \"Nieuwe reden\"",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			return runWriteURL(cmd, "normatik trash restore", "Page restored.",
+				func(d *command.Deps) ([]byte, *client.APIError) {
+					return d.Client.RestoreFromTrash(cmd.Context(), id, restoreReason)
+				},
+				func([]byte) string { return weburl.Page(id) },
+			)
+		},
+	}
+	restore.Flags().StringVar(&restoreReason, "reason", "", "reason when restoring to archive (required by server if parent is archived)")
+	command.URLFlag(restore)
 	// Purge points at the bare trash list route (mapping table: "trash
 	// list / purge" -> /admin/trash), the same pattern as users delete.
 	purge := idWriteURL("purge <pageId>", "Delete a page PERMANENTLY from the trash (irreversible)", "normatik trash purge", "Page permanently deleted.", "hard",
@@ -671,9 +689,10 @@ func addTrashWrites(c *cobra.Command) {
 			return d.Client.PurgeFromTrash(ctx, id)
 		}, func(int64) string { return weburl.AdminTrash() })
 	addWriteCommands(c, restore, purge)
+	addTrashCascadeWrites(c)
 }
 
-// addArchiveWrites extends the archive subtree with restore and delete.
+// addArchiveWrites extends the archive subtree with restore, delete and cascade-unarchive.
 // Restore maps to server unarchive; delete moves the page to trash (soft).
 func addArchiveWrites(c *cobra.Command) {
 	restore := idWriteURL("restore <pageId>", "Restore an archived page (unarchive)", "normatik archive restore", "Page restored from the archive.", "none",
@@ -687,6 +706,7 @@ func addArchiveWrites(c *cobra.Command) {
 			return d.Client.DeleteArchivedPage(ctx, id)
 		}, func(int64) string { return weburl.AdminTrash() })
 	addWriteCommands(c, restore, del)
+	addArchiveCascadeWrites(c)
 }
 
 // newContentCmd builds the `content validate` command (READ_ONLY-safe dry-run).

@@ -477,7 +477,7 @@ func newLandingSettingsCmd() *cobra.Command {
 // ---- trash ----
 
 func newTrashCmd() *cobra.Command {
-	c := parent("trash", "Trash (list, restore, purge)")
+	c := parent("trash", "Trash (list, show, restore, purge, cascade-*)")
 	var pg paging
 	list := &cobra.Command{
 		Use: "list", Short: "List deleted pages (admin)",
@@ -489,14 +489,41 @@ func newTrashCmd() *cobra.Command {
 	}
 	addPaging(list, &pg)
 	command.URLFlag(list)
-	c.AddCommand(list)
+
+	show := &cobra.Command{
+		Use: "show <pageId>", Short: "Show a trashed page (admin read view)", Args: cobra.ExactArgs(1),
+		Example: "  normatik trash show 42\n  open $(normatik trash show 42 --url)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id, err := idArg(cmd, args[0])
+			if err != nil {
+				return command.Handled(2)
+			}
+			d, berr := command.Build(cmd)
+			if berr != nil {
+				return berr
+			}
+			body, apiErr := d.Client.GetTrashedPage(cmd.Context(), id)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik trash show")
+			}
+			if command.PrintURL(d, cmd, weburl.AdminTrashPage(id)) {
+				return nil
+			}
+			// Nested PageResult would render as "…" under Raw; dedicated flatten.
+			d.Printer.TrashedPageView(body)
+			return nil
+		},
+	}
+	command.URLFlag(show)
+	c.AddCommand(list, show)
+	c.AddCommand(newTrashCascadeImpactCmd())
 	return c
 }
 
 // ---- archive ----
 
 func newArchiveCmd() *cobra.Command {
-	c := parent("archive", "Archive (list, show, restore, delete)")
+	c := parent("archive", "Archive (list, show, restore, delete, cascade-*)")
 	var pg paging
 	list := &cobra.Command{
 		Use: "list", Short: "List archived pages (admin)",
@@ -538,6 +565,7 @@ func newArchiveCmd() *cobra.Command {
 	}
 	command.URLFlag(show)
 	c.AddCommand(list, show)
+	c.AddCommand(newArchiveCascadeImpactCmd())
 	return c
 }
 

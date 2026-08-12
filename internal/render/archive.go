@@ -11,6 +11,18 @@ import (
 // scalars. Nested page detail is "…" under Raw, so a dedicated renderer is
 // needed. JSON mode dumps the body verbatim.
 func (p *Printer) ArchivedPageView(body []byte) {
+	p.renderNestedPageView(body, []string{"archivedAt", "archivedReason", "parentId"})
+}
+
+// TrashedPageView renders GET /pages/admin/trash/{id} (TrashedPageViewResult)
+// in table mode: flattens the nested page object so name / page-type show as
+// scalars. Trash is reasonless — only deletedAt and parentId sit next to page.
+// JSON mode dumps the body verbatim.
+func (p *Printer) TrashedPageView(body []byte) {
+	p.renderNestedPageView(body, []string{"deletedAt", "parentId"})
+}
+
+func (p *Printer) renderNestedPageView(body []byte, metaKeys []string) {
 	if p.Mode == JSON {
 		p.rawDump(body)
 		return
@@ -33,7 +45,7 @@ func (p *Printer) ArchivedPageView(body []byte) {
 			fmt.Fprintf(tw, "pageTypeName\t%s\n", v)
 		}
 	}
-	for _, key := range []string{"archivedAt", "archivedReason", "parentId"} {
+	for _, key := range metaKeys {
 		if val, ok := m[key]; ok && val != nil {
 			fmt.Fprintf(tw, "%s\t%s\n", key, cell(val))
 		}

@@ -17,7 +17,7 @@ import (
 func newPagesCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "pages",
-		Short: "Work with pages (list, get, render, search, create, update, delete, move, sort-children, tree, describe-properties, revisions, images, attachments, restriction)",
+		Short: "Work with pages (list, get, render, search, create, update, delete, archive, cascade-*, move, sort-children, tree, describe-properties, revisions, images, attachments, restriction)",
 		Long:  "Commands for pages in the Normatik wiki. Every error carries an errorCode + hint.",
 		RunE:  command.UnknownSub,
 	}
@@ -32,7 +32,9 @@ func newPagesCmd() *cobra.Command {
 	cmd.AddCommand(newPagesImagesCmd())
 	cmd.AddCommand(newPagesAttachmentsCmd())
 	addWriteCommands(cmd, newPagesRestrictionCmd())
-	addPagesWrites(cmd) // update/delete/move/sort-children
+	addPagesWrites(cmd)        // update/delete/archive/move/sort-children
+	addPagesCascadeWrites(cmd) // cascade-archive / cascade-trash
+	cmd.AddCommand(newPagesCascadeImpactCmd())
 	return cmd
 }
 

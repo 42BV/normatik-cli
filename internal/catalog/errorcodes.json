@@ -320,6 +320,14 @@
     "exitCode": 6
   },
   {
+    "name": "INSUFFICIENT_ROLE",
+    "status": 403,
+    "title": "Insufficient role",
+    "userMessage": "You do not have the required role to perform this action.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 5
+  },
+  {
     "name": "INSUFFICIENT_WORKFLOW_ROLE",
     "status": 403,
     "title": "Insufficient workflow role",
@@ -614,6 +622,32 @@
     "staticHint": "Your API key does not have read access to this page. Check restriction details via GET /public/v1/pages/{id}?expand=restriction (admin key required)."
   },
   {
+    "name": "PAGE_ARCHIVE_BLOCKED_BY_CHILDREN",
+    "status": 409,
+    "title": "Page has active children",
+    "userMessage": "This page cannot be archived because it has active child pages. Archive or move the child pages first.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Archive or move the active child pages first. Use GET /public/v1/pages/tree to list them in sort order."
+  },
+  {
+    "name": "PAGE_CASCADE_PUBLISHED_ACKNOWLEDGMENT_REQUIRED",
+    "status": 409,
+    "title": "Published acknowledgment required",
+    "userMessage": "This cascade affects one or more published pages. Retry with acknowledgePublished=true to confirm they will go offline.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Retry the cascade with acknowledgePublished=true after confirming published pages may go offline."
+  },
+  {
+    "name": "PAGE_CASCADE_WRITE_ACCESS_DENIED",
+    "status": 403,
+    "title": "Cascade blocked by write access",
+    "userMessage": "The cascade cannot proceed because one or more pages lack write access. Visible blockers are listed; restricted pages are counted only.",
+    "hintKind": "DYNAMIC",
+    "exitCode": 5
+  },
+  {
     "name": "PAGE_HAS_CHILDREN",
     "status": 409,
     "title": "Page has children",
@@ -669,6 +703,15 @@
     "userMessage": "A page cannot be placed under itself or one of its descendants.",
     "hintKind": "NO_HINT",
     "exitCode": 3
+  },
+  {
+    "name": "PAGE_RESTORE_BLOCKED_BY_PARENT",
+    "status": 409,
+    "title": "Parent page is cancelled",
+    "userMessage": "This page cannot be restored because its parent is archived or in the trash. Restore the parent page first.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Restore the parent page first. Use GET /public/v1/pages/tree to inspect the hierarchy."
   },
   {
     "name": "PAGE_RESTRICTION_ACCESS_ALREADY_EXISTS",
@@ -735,6 +778,15 @@
     "exitCode": 5
   },
   {
+    "name": "PAGE_TRASH_BLOCKED_BY_CHILDREN",
+    "status": 409,
+    "title": "Page has child pages",
+    "userMessage": "This page cannot be moved to trash because it has child pages that are not in the trash. Move the child pages to trash first.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Move the non-trashed child pages to trash first. Use GET /public/v1/pages/tree to list them in sort order."
+  },
+  {
     "name": "PAGE_TYPE_HAS_PAGES",
     "status": 409,
     "title": "Page type has pages",
@@ -777,6 +829,15 @@
     "hintKind": "STATIC",
     "exitCode": 3,
     "staticHint": "Use POST /public/v1/page-types/{id}/move to reparent a page type."
+  },
+  {
+    "name": "PAGE_UNARCHIVE_BLOCKED_BY_PARENT",
+    "status": 409,
+    "title": "Parent page is cancelled",
+    "userMessage": "This page cannot be unarchived because its parent is archived or in the trash. Unarchive or restore the parent page first.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Unarchive or restore the parent page first. Use GET /public/v1/pages/tree to inspect the hierarchy."
   },
   {
     "name": "PAGE_WRITE_ACCESS_DENIED",
@@ -875,6 +936,14 @@
     "userMessage": "The property doesn't exist or has been deleted.",
     "hintKind": "NO_HINT",
     "exitCode": 6
+  },
+  {
+    "name": "PROPERTY_DESCRIPTOR_OWN_NOT_HIDEABLE",
+    "status": 400,
+    "title": "Own property descriptor not hideable",
+    "userMessage": "This property is declared directly on the page type and cannot be hidden or unhidden. Only inherited properties support visibility overrides.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
   },
   {
     "name": "PROPERTY_DESCRIPTOR_SORT_INVALID",

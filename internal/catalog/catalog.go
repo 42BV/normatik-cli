@@ -105,6 +105,7 @@ var authExit = map[string]bool{
 var forbiddenExit = map[string]bool{
 	"API_KEY_READ_ONLY": true, "INSUFFICIENT_WORKFLOW_ROLE": true,
 	"PAGE_ACCESS_DENIED": true, "PAGE_WRITE_ACCESS_DENIED": true, "PAGE_RESTRICTION_NOT_OWNER": true,
+	"PAGE_CASCADE_WRITE_ACCESS_DENIED": true,
 }
 
 // ExitFor is the single source of truth for mapping an (errorCode, httpStatus)

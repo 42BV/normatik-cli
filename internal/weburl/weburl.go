@@ -94,6 +94,10 @@ func AdminWorkItemTypes() string { return "/admin/work-item-types" }
 // AdminTrash returns the admin trash route (trash list/purge).
 func AdminTrash() string { return "/admin/trash" }
 
+// AdminTrashPage returns the trashed-page read view route
+// (trash show / future UI TrashedPageView).
+func AdminTrashPage(id int64) string { return fmt.Sprintf("/admin/trash/%d", id) }
+
 // AdminArchive returns the admin archive route (archive list).
 func AdminArchive() string { return "/admin/archive" }
 
