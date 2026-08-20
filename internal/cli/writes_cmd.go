@@ -502,6 +502,10 @@ func addGroupsWrites(c *cobra.Command) {
 
 // ---- page-types ----
 
+// pageTypesUpdateFileHelp is the per-command -f usage for page-types update.
+// It must not be copied onto the shared idFormFileWriteURL string.
+const pageTypesUpdateFileHelp = "JSON file with PageTypeForm; full replace via PUT — omitted templateContent, titleTemplate, allowedChildTypeIds and abstractType are cleared; parentId must be the current parent — change via page-types move. Templates do not inherit (set them on each concrete type). allowedChildTypes order is not a contract. titleTemplate supports only {{currentday}}"
+
 func addPageTypesWrites(c *cobra.Command) {
 	create := formFileWriteURL[api.PageTypeForm]("create", "Create a page type (-f form.json)", "normatik page-types create", "Page type created.",
 		func(d *command.Deps, ctx context.Context, f api.PageTypeForm) ([]byte, *client.APIError) {
@@ -511,6 +515,11 @@ func addPageTypesWrites(c *cobra.Command) {
 		func(d *command.Deps, ctx context.Context, id int64, f api.PageTypeForm) ([]byte, *client.APIError) {
 			return d.Client.UpdatePageType(ctx, id, f)
 		}, func(id int64, _ []byte) string { return weburl.PageType(id) })
+	// Per-command override: do not rewrite the shared idFormFileWriteURL
+	// string (domain-enums update keeps the generic form-file help).
+	if f := update.Flags().Lookup("file"); f != nil {
+		f.Usage = pageTypesUpdateFileHelp
+	}
 	// Delete points at the bare list route (mapping table): the detail page
 	// is gone after the delete.
 	del := idWriteURL("delete <id>", "Delete a page type", "normatik page-types delete", "Page type deleted.", "soft",
@@ -520,12 +529,16 @@ func addPageTypesWrites(c *cobra.Command) {
 
 	var newParent int64
 	var keepWf bool
+	var preview bool
 	move := &cobra.Command{
-		Use: "move <id>", Short: "Move a page type (--new-parent-id)", Args: cobra.ExactArgs(1),
+		Use: "move <id>", Short: "Move a page type (--new-parent-id or --root; omit = root)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id, perr := command.ParseID(args[0])
 			if perr != nil {
 				return command.Handled(2)
+			}
+			if preview {
+				return runPageTypeMovePreview(cmd, id, newParent)
 			}
 			f := api.PageTypeMoveForm{}
 			if cmd.Flags().Changed("new-parent-id") {
@@ -539,24 +552,78 @@ func addPageTypesWrites(c *cobra.Command) {
 			}, func([]byte) string { return weburl.PageType(id) })
 		},
 	}
-	move.Flags().Int64Var(&newParent, "new-parent-id", 0, "new parent page type id (empty = root)")
+	move.Flags().Int64Var(&newParent, "new-parent-id", 0, "new parent page type id (omit = root)")
+	move.Flags().Bool("root", false, "move to root (exclusive with --new-parent-id)")
+	move.MarkFlagsMutuallyExclusive("root", "new-parent-id")
 	move.Flags().BoolVar(&keepWf, "keep-workflow", false, "keep workflow via own flag")
+	move.Flags().BoolVar(&preview, "preview", false, "show move impact without writing")
 	command.URLFlag(move)
 
 	addWriteCommands(c, create, update, del, move)
 }
 
+// runPageTypeMovePreview calls POST /page-types/{id}/move/preview only.
+// It never POSTs /move and does not print a write success or --url.
+func runPageTypeMovePreview(cmd *cobra.Command, id, newParent int64) error {
+	d, err := command.Build(cmd)
+	if err != nil {
+		return err
+	}
+	if err := command.CheckURLDryRun(d, cmd); err != nil {
+		return err
+	}
+	req := api.PageTypeMovePreviewRequest{}
+	if cmd.Flags().Changed("new-parent-id") {
+		req.NewParentId = i64Ptr(newParent)
+	}
+	body, apiErr := d.Client.PreviewMovePageType(cmd.Context(), id, req)
+	if apiErr != nil {
+		return command.RenderError(d.Printer, apiErr, "normatik page-types move --preview")
+	}
+	d.Printer.PageTypeMoveImpact(body)
+	return nil
+}
+
 // ---- domain-enums ----
 
 func addDomainEnumsWrites(c *cobra.Command) {
-	create := formFileWriteURL[api.DomainEnumForm]("create", "Create a domain enum (-f form.json with values[])", "normatik domain-enums create", "Domain enum created.",
-		func(d *command.Deps, ctx context.Context, f api.DomainEnumForm) ([]byte, *client.APIError) {
-			return d.Client.CreateDomainEnum(ctx, f)
-		}, func(body []byte) string { return weburl.AdminDomainEnum(responseID(body)) })
-	update := idFormFileWriteURL[api.DomainEnumForm]("update <id>", "Update a domain enum (-f form.json)", "normatik domain-enums update", "Domain enum updated.",
-		func(d *command.Deps, ctx context.Context, id int64, f api.DomainEnumForm) ([]byte, *client.APIError) {
-			return d.Client.UpdateDomainEnum(ctx, id, f)
-		}, func(id int64, _ []byte) string { return weburl.AdminDomainEnum(id) })
+	var createFile string
+	var autoSort bool
+	create := &cobra.Command{
+		Use:   "create",
+		Short: "Create a domain enum (-f form.json with values[]; --auto-sort-order)",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			return runDomainEnumFormWrite(cmd, createFile, autoSort, "normatik domain-enums create", "Domain enum created.",
+				func(d *command.Deps, f api.DomainEnumForm) ([]byte, *client.APIError) {
+					return d.Client.CreateDomainEnum(cmd.Context(), f)
+				}, func(body []byte) string { return weburl.AdminDomainEnum(responseID(body)) })
+		},
+	}
+	create.Flags().StringVarP(&createFile, "file", "f", "", "JSON file containing the form (required)")
+	_ = create.MarkFlagRequired("file")
+	create.Flags().BoolVar(&autoSort, "auto-sort-order", false, "assign values[].sortOrder 0..n-1 in file order")
+	command.URLFlag(create)
+
+	var updateFile string
+	update := &cobra.Command{
+		Use:   "update <id>",
+		Short: "Update a domain enum (-f form.json)",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			return runDomainEnumFormWrite(cmd, updateFile, false, "normatik domain-enums update", "Domain enum updated.",
+				func(d *command.Deps, f api.DomainEnumForm) ([]byte, *client.APIError) {
+					return d.Client.UpdateDomainEnum(cmd.Context(), id, f)
+				}, func([]byte) string { return weburl.AdminDomainEnum(id) })
+		},
+	}
+	// P12: keep the generic -f usage; do not copy page-types full-replace help.
+	update.Flags().StringVarP(&updateFile, "file", "f", "", "JSON file containing the form (required)")
+	_ = update.MarkFlagRequired("file")
+	command.URLFlag(update)
 	// Delete points at the bare list route (mapping table): the detail page
 	// is gone after the delete.
 	del := idWriteURL("delete <id>", "Delete a domain enum", "normatik domain-enums delete", "Domain enum deleted.", "soft",

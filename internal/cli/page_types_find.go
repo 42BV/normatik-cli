@@ -74,7 +74,7 @@ func newPageTypesFindCmd() *cobra.Command {
 					if dym := closestName(upper, knownDataTypes); dym != "" {
 						extra = append([]string{fmt.Sprintf("did you mean '%s'?", dym)}, extra...)
 					}
-					return renderPropError(d, invalidRequest(fmt.Sprintf("unknown data-type %q", upper), extra...))
+					return renderPropError(d, invalidRequest(fmt.Sprintf("unknown data-type %q", upper), extra...), "normatik page-types find")
 				}
 				wanted = api.PropertyDescriptorResultDataType(upper)
 			}

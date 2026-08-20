@@ -13,6 +13,7 @@ import (
 	"github.com/42BV/normatik-cli/internal/client"
 	"github.com/42BV/normatik-cli/internal/command"
 	"github.com/42BV/normatik-cli/internal/config"
+	"github.com/42BV/normatik-cli/internal/httpx"
 	"github.com/42BV/normatik-cli/internal/render"
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
@@ -586,6 +587,19 @@ func runMethodMenu(p *render.Printer, read func() (string, error)) (loginMethod,
 	}
 }
 
+// normalizeLoginURL adds https:// when the input lacks any URL scheme.
+// Existing schemeful values stay unchanged, including explicit http://.
+func normalizeLoginURL(raw string) string {
+	s := strings.TrimSpace(raw)
+	if s == "" {
+		return s
+	}
+	if strings.Contains(s, "://") {
+		return s
+	}
+	return "https://" + s
+}
+
 // promptEnvURL asks for the environment URL in the Normatik house style: an
 // orange ◆ marker, a bold label, and — when resolvable — the current URL shown
 // dimmed as the default that Enter accepts. No example is shown (users know
@@ -621,7 +635,7 @@ var promptEnvURL = func(def string) (string, error) {
 // canonical site URL; transports add the /api context path.
 func resolveLoginURL(cmd *cobra.Command, p *render.Printer, urlFlag string) (string, error) {
 	if s := strings.TrimSpace(urlFlag); s != "" {
-		return s, nil
+		return normalizeLoginURL(s), nil
 	}
 	cfg, err := config.Load()
 	if err != nil {
@@ -631,14 +645,18 @@ func resolveLoginURL(cmd *cobra.Command, p *render.Printer, urlFlag string) (str
 	profileFlag, _ := cmd.Flags().GetString("profile")
 	resolved, resolveErr := auth.Resolve(cfg, profileFlag)
 	if resolveErr != nil {
-		p.Message("Error [CONFIG]: %v", resolveErr)
-		return "", command.Handled(78)
+		base := normalizeLoginURL(resolved.BaseURL)
+		if base == "" || httpx.ValidateBaseURL(base) != nil {
+			p.Message("Error [CONFIG]: %v", resolveErr)
+			return "", command.Handled(78)
+		}
+		resolved.BaseURL = base
 	}
 	base := resolved.BaseURL
 
 	if nonInteractive(cmd) {
 		if base != "" {
-			return base, nil // scripted/CI: use the resolved base, never prompt
+			return normalizeLoginURL(base), nil // scripted/CI: use the resolved base, never prompt
 		}
 		p.Message("Error [CONFIG]: no environment configured -- pass --url or set NORMATIK_BASE_URL (non-interactive: no prompt).")
 		return "", command.Handled(78)
@@ -647,7 +665,7 @@ func resolveLoginURL(cmd *cobra.Command, p *render.Printer, urlFlag string) (str
 	v, perr := promptEnvURL(base)
 	if perr != nil {
 		if base != "" {
-			return base, nil // could not read the TTY: fall back to the resolved base
+			return normalizeLoginURL(base), nil // could not read the TTY: fall back to the resolved base
 		}
 		p.Message("Error [USAGE]: --url required (or run interactively in a terminal)")
 		return "", command.Handled(2)
@@ -656,5 +674,5 @@ func resolveLoginURL(cmd *cobra.Command, p *render.Printer, urlFlag string) (str
 		p.Message("Error [USAGE]: an environment URL is required — pass --url or enter one at the prompt.")
 		return "", command.Handled(2)
 	}
-	return v, nil
+	return normalizeLoginURL(v), nil
 }

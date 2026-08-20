@@ -346,7 +346,9 @@ func newDomainEnumsCmd() *cobra.Command {
 	c := parent("domain-enums", "Domain enums (list, get, usages, create, update, delete)")
 	var expand []string
 	list := &cobra.Command{
-		Use: "list", Short: "List domain enums (--expand values)",
+		Use:   "list",
+		Short: "List domain enums (--expand values; JSON is a bare array)",
+		Long:  "JSON output is a bare array, not a paged envelope. Same shape as page-types list.",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runListURL(cmd, "normatik domain-enums list", weburl.AdminDomainEnums(), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.ListDomainEnums(cmd.Context(), expand)

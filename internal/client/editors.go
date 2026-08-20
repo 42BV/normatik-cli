@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/42BV/normatik-cli/internal/api"
 )
@@ -41,6 +42,25 @@ func expandEditor(sections []string) api.RequestEditorFn {
 			if s != "" {
 				q.Add("expand", s)
 			}
+		}
+		req.URL.RawQuery = q.Encode()
+		return nil
+	}
+}
+
+// pageIdsCSVEditor sets pageIds as one comma-separated query value (order-preserving).
+// The generated form+explode style would repeat the param; the bulk-read contract
+// and CLI tests expect pageIds=12,15,18.
+func pageIdsCSVEditor(ids []int64) api.RequestEditorFn {
+	return func(ctx context.Context, req *http.Request) error {
+		q := req.URL.Query()
+		q.Del("pageIds")
+		if len(ids) > 0 {
+			parts := make([]string, len(ids))
+			for i, id := range ids {
+				parts[i] = strconv.FormatInt(id, 10)
+			}
+			q.Set("pageIds", strings.Join(parts, ","))
 		}
 		req.URL.RawQuery = q.Encode()
 		return nil

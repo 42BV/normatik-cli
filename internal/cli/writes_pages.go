@@ -158,7 +158,7 @@ func addPagesWrites(parent *cobra.Command) {
 
 	var parentID int64
 	move := &cobra.Command{
-		Use: "move <id>", Short: "Move a page (--parent, empty = root)", Args: cobra.ExactArgs(1),
+		Use: "move <id>", Short: "Move a page (--parent or --root; omit = root)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id, perr := command.ParseID(args[0])
 			if perr != nil {
@@ -184,6 +184,8 @@ func addPagesWrites(parent *cobra.Command) {
 		},
 	}
 	move.Flags().Int64Var(&parentID, "parent", 0, "new parent page id (omit for root)")
+	move.Flags().Bool("root", false, "move to root (exclusive with --parent)")
+	move.MarkFlagsMutuallyExclusive("root", "parent")
 	command.URLFlag(move)
 
 	sortCh := &cobra.Command{
@@ -235,7 +237,7 @@ func buildPropertyPatch(cmd *cobra.Command, d *command.Deps, id int64, f api.Pag
 		cmd.Context(), derefEditValues(f.PropertyValues), props, unsets,
 		derefDescriptors(page.AvailablePropertyDescriptors), pd)
 	if pferr != nil {
-		return api.PagePatchForm{}, nil, renderPropError(d, pferr)
+		return api.PagePatchForm{}, nil, renderPropError(d, pferr, updateInvocation(id))
 	}
 
 	patch := api.PagePatchForm{Name: f.Name, Content: f.Content}

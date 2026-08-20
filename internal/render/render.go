@@ -48,6 +48,16 @@ func (p *Printer) json(w io.Writer, v any) {
 	_ = enc.Encode(v)
 }
 
+// JSONDocument writes a JSON document to stdout in both table and json mode.
+func (p *Printer) JSONDocument(body []byte) {
+	var v any
+	if json.Unmarshal(body, &v) == nil {
+		p.json(p.Out, v)
+		return
+	}
+	fmt.Fprintln(p.Out, terminalLine(string(body)))
+}
+
 // PageList renders a Page<PageListResult> as a table (or raw JSON). It keeps the
 // nicely-labelled default columns, but honours --fields (routing through the
 // generic, schema-aware List so projection + unknown-field warnings work) and
@@ -137,6 +147,19 @@ func (p *Printer) Problem(pr *problem.Problem, suggestion string) {
 	}
 	for _, d := range pr.Diagnostics {
 		fmt.Fprintf(p.Err, "  %d:%d %s %s: %s\n", d.Line, d.Column, terminalLine(d.Severity), terminalLine(d.Code), terminalLine(d.Message))
+	}
+	for _, e := range pr.Errors {
+		fmt.Fprintf(p.Err, "  %s\n", terminalLine(e.Line()))
+	}
+	if pr.UsageCount != nil {
+		fmt.Fprintf(p.Err, "  usageCount: %d\n", *pr.UsageCount)
+	}
+	// Scalar extras (e.g. conflictingPageId) as key: value; arrays/objects are
+	// JSON-only. Keys are server-controlled, so they are neutralized too.
+	for _, x := range pr.Extras() {
+		if txt, ok := x.ScalarText(); ok {
+			fmt.Fprintf(p.Err, "  %s: %s\n", terminalLine(x.Key), terminalLine(txt))
+		}
 	}
 	if suggestion != "" {
 		fmt.Fprintf(p.Err, "  Try:  %s\n", terminalLine(suggestion))
@@ -462,8 +485,38 @@ func envelope(pr *problem.Problem, suggestion string) map[string]any {
 	if pr.RetryAfterSeconds != nil {
 		put("retryAfterSeconds", *pr.RetryAfterSeconds)
 	}
+	if pr.UsageCount != nil {
+		put("usageCount", *pr.UsageCount)
+	}
+	if pr.RequestedAction != "" {
+		put("requestedAction", pr.RequestedAction)
+	}
+	if pr.ReceivedZone != "" {
+		put("receivedZone", pr.ReceivedZone)
+	}
+	if pr.EntityType != "" {
+		put("entityType", pr.EntityType)
+	}
+	if pr.InTrash {
+		put("inTrash", true)
+	}
 	if len(pr.Diagnostics) > 0 {
 		put("diagnostics", pr.Diagnostics)
+	}
+	if len(pr.Errors) > 0 {
+		lines := make([]string, 0, len(pr.Errors))
+		for _, e := range pr.Errors {
+			lines = append(lines, e.Line())
+		}
+		put("errors", lines)
+	}
+	// Untyped server members (conflictingPageId, blockingDescriptors, …) pass
+	// through verbatim so a new hint field never needs a CLI release. Typed keys
+	// win on a name clash; the RFC base members (type/instance) are never copied.
+	for _, x := range pr.Extras() {
+		if _, dup := e[x.Key]; !dup {
+			put(x.Key, x.Value)
+		}
 	}
 	if suggestion != "" {
 		put("nextCommand", suggestion)

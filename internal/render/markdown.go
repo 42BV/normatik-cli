@@ -95,11 +95,19 @@ var (
 	emphasisRe           = regexp.MustCompile(`(\*\*|__|\*|_|` + "`" + `)`)
 )
 
-// inlineToASCII flattens inline markdown: links become "text (url)", inline
-// text-directives become "[name]", and emphasis/code markers are stripped.
+// inlineToASCII flattens inline markdown: links become "text (url)", known
+// inline text-directives become "[name]", unknown ones stay literal, and
+// emphasis/code markers are stripped. The name is matched in full so a
+// prefix of a known name (enumeration, colorful, pagelinks) stays literal.
 func inlineToASCII(s string) string {
 	s = linkRe.ReplaceAllString(s, "$1 ($2)")
-	s = textDirectiveRe.ReplaceAllString(s, "[$1]")
+	s = textDirectiveRe.ReplaceAllStringFunc(s, func(m string) string {
+		name := textDirectiveRe.FindStringSubmatch(m)[1]
+		if inlineDirectiveNames[name] {
+			return "[" + name + "]"
+		}
+		return m
+	})
 	s = emphasisRe.ReplaceAllString(s, "")
 	return s
 }

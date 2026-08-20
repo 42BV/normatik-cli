@@ -15,7 +15,8 @@ type DirectiveCount struct {
 
 // inlineDirectiveScanRe matches an inline directive (:name[...] or :name{...}).
 // It REQUIRES a [label] or {attrs} suffix so a plain colon in prose ("Note:foo")
-// is not mistaken for a macro — stricter than textDirectiveRe used for rendering.
+// is not mistaken for a macro — stricter than textDirectiveRe used for
+// --plain rendering (that regex then keeps unknown names literal).
 var inlineDirectiveScanRe = regexp.MustCompile(`:([a-zA-Z][\w-]*)(?:\[[^\]]*\]|\{[^}]*\})`)
 
 // ScanDirectives counts content-macro usage in raw page markdown, by directive

@@ -243,17 +243,20 @@ func (e ConditionalEnumTriggerResultTriggerType) Valid() bool {
 
 // Defines values for ContentDiagnosticCode.
 const (
-	DISABLEDMODULEMACRO       ContentDiagnosticCode = "DISABLED_MODULE_MACRO"
-	ENTITYNOTFOUND            ContentDiagnosticCode = "ENTITY_NOT_FOUND"
-	INVALIDATTRIBUTETYPE      ContentDiagnosticCode = "INVALID_ATTRIBUTE_TYPE"
-	MACRONOTALLOWEDINCONTEXT  ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_CONTEXT"
-	MACRONOTALLOWEDINPROPERTY ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_PROPERTY"
-	MALFORMEDDIRECTIVELINE    ContentDiagnosticCode = "MALFORMED_DIRECTIVE_LINE"
-	MISSINGREQUIREDATTRIBUTE  ContentDiagnosticCode = "MISSING_REQUIRED_ATTRIBUTE"
-	MISSINGSTRUCTURALCHILDREN ContentDiagnosticCode = "MISSING_STRUCTURAL_CHILDREN"
-	UNKNOWNATTRIBUTE          ContentDiagnosticCode = "UNKNOWN_ATTRIBUTE"
-	UNKNOWNDIRECTIVE          ContentDiagnosticCode = "UNKNOWN_DIRECTIVE"
-	WRONGDIRECTIVEFORM        ContentDiagnosticCode = "WRONG_DIRECTIVE_FORM"
+	DISABLEDMODULEMACRO         ContentDiagnosticCode = "DISABLED_MODULE_MACRO"
+	ENTITYNOTFOUND              ContentDiagnosticCode = "ENTITY_NOT_FOUND"
+	INVALIDATTRIBUTETYPE        ContentDiagnosticCode = "INVALID_ATTRIBUTE_TYPE"
+	MACRONOTALLOWEDINCONTEXT    ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_CONTEXT"
+	MACRONOTALLOWEDINPROPERTY   ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_PROPERTY"
+	MALFORMEDDIRECTIVELINE      ContentDiagnosticCode = "MALFORMED_DIRECTIVE_LINE"
+	MISSINGREQUIREDATTRIBUTE    ContentDiagnosticCode = "MISSING_REQUIRED_ATTRIBUTE"
+	MISSINGSTRUCTURALCHILDREN   ContentDiagnosticCode = "MISSING_STRUCTURAL_CHILDREN"
+	UNKNOWNATTRIBUTE            ContentDiagnosticCode = "UNKNOWN_ATTRIBUTE"
+	UNKNOWNDIRECTIVE            ContentDiagnosticCode = "UNKNOWN_DIRECTIVE"
+	UNSUPPORTEDMARKDOWNFOOTNOTE ContentDiagnosticCode = "UNSUPPORTED_MARKDOWN_FOOTNOTE"
+	UNSUPPORTEDMARKDOWNTABLE    ContentDiagnosticCode = "UNSUPPORTED_MARKDOWN_TABLE"
+	UNSUPPORTEDMARKDOWNTASKLIST ContentDiagnosticCode = "UNSUPPORTED_MARKDOWN_TASK_LIST"
+	WRONGDIRECTIVEFORM          ContentDiagnosticCode = "WRONG_DIRECTIVE_FORM"
 )
 
 // Valid indicates whether the value is a known member of the ContentDiagnosticCode enum.
@@ -278,6 +281,12 @@ func (e ContentDiagnosticCode) Valid() bool {
 	case UNKNOWNATTRIBUTE:
 		return true
 	case UNKNOWNDIRECTIVE:
+		return true
+	case UNSUPPORTEDMARKDOWNFOOTNOTE:
+		return true
+	case UNSUPPORTEDMARKDOWNTABLE:
+		return true
+	case UNSUPPORTEDMARKDOWNTASKLIST:
 		return true
 	case WRONGDIRECTIVEFORM:
 		return true
@@ -523,6 +532,27 @@ func (e PageTypeMoveFormPropertyDecisions) Valid() bool {
 	}
 }
 
+// Defines values for PageTypeMoveImpactResultWorkflowDirection.
+const (
+	NOCHANGE PageTypeMoveImpactResultWorkflowDirection = "NO_CHANGE"
+	TURNSOFF PageTypeMoveImpactResultWorkflowDirection = "TURNS_OFF"
+	TURNSON  PageTypeMoveImpactResultWorkflowDirection = "TURNS_ON"
+)
+
+// Valid indicates whether the value is a known member of the PageTypeMoveImpactResultWorkflowDirection enum.
+func (e PageTypeMoveImpactResultWorkflowDirection) Valid() bool {
+	switch e {
+	case NOCHANGE:
+		return true
+	case TURNSOFF:
+		return true
+	case TURNSON:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PageTypeResultChildTypeMode.
 const (
 	PageTypeResultChildTypeModeALLOWEDLIST  PageTypeResultChildTypeMode = "ALLOWED_LIST"
@@ -535,6 +565,42 @@ func (e PageTypeResultChildTypeMode) Valid() bool {
 	case PageTypeResultChildTypeModeALLOWEDLIST:
 		return true
 	case PageTypeResultChildTypeModeFROMPROPERTY:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PageTypeUsageResultReason.
+const (
+	ALLOWEDCHILD                  PageTypeUsageResultReason = "ALLOWED_CHILD"
+	ALLOWEDPAGETYPE               PageTypeUsageResultReason = "ALLOWED_PAGE_TYPE"
+	CHAINLINKSOURCE               PageTypeUsageResultReason = "CHAIN_LINK_SOURCE"
+	PAGES                         PageTypeUsageResultReason = "PAGES"
+	PARENT                        PageTypeUsageResultReason = "PARENT"
+	PROPERTYVALUESELECTEDPAGETYPE PageTypeUsageResultReason = "PROPERTY_VALUE_SELECTED_PAGE_TYPE"
+	REVISIONSELECTEDPAGETYPE      PageTypeUsageResultReason = "REVISION_SELECTED_PAGE_TYPE"
+	VISIBILITYOVERRIDE            PageTypeUsageResultReason = "VISIBILITY_OVERRIDE"
+)
+
+// Valid indicates whether the value is a known member of the PageTypeUsageResultReason enum.
+func (e PageTypeUsageResultReason) Valid() bool {
+	switch e {
+	case ALLOWEDCHILD:
+		return true
+	case ALLOWEDPAGETYPE:
+		return true
+	case CHAINLINKSOURCE:
+		return true
+	case PAGES:
+		return true
+	case PARENT:
+		return true
+	case PROPERTYVALUESELECTEDPAGETYPE:
+		return true
+	case REVISIONSELECTEDPAGETYPE:
+		return true
+	case VISIBILITYOVERRIDE:
 		return true
 	default:
 		return false
@@ -841,6 +907,30 @@ func (e PropertyValueResultNumberFormat) Valid() bool {
 	}
 }
 
+// Defines values for PublicPagePropertyValuesResultRevisionStatus.
+const (
+	PublicPagePropertyValuesResultRevisionStatusAPPROVED  PublicPagePropertyValuesResultRevisionStatus = "APPROVED"
+	PublicPagePropertyValuesResultRevisionStatusINREVIEW  PublicPagePropertyValuesResultRevisionStatus = "IN_REVIEW"
+	PublicPagePropertyValuesResultRevisionStatusPUBLISHED PublicPagePropertyValuesResultRevisionStatus = "PUBLISHED"
+	PublicPagePropertyValuesResultRevisionStatusSTORED    PublicPagePropertyValuesResultRevisionStatus = "STORED"
+)
+
+// Valid indicates whether the value is a known member of the PublicPagePropertyValuesResultRevisionStatus enum.
+func (e PublicPagePropertyValuesResultRevisionStatus) Valid() bool {
+	switch e {
+	case PublicPagePropertyValuesResultRevisionStatusAPPROVED:
+		return true
+	case PublicPagePropertyValuesResultRevisionStatusINREVIEW:
+		return true
+	case PublicPagePropertyValuesResultRevisionStatusPUBLISHED:
+		return true
+	case PublicPagePropertyValuesResultRevisionStatusSTORED:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PublicPageTypeCompositeResultChildTypeMode.
 const (
 	ALLOWEDLIST  PublicPageTypeCompositeResultChildTypeMode = "ALLOWED_LIST"
@@ -1083,22 +1173,22 @@ func (e RedirectTargetKind) Valid() bool {
 
 // Defines values for TransitionFormTargetStatus.
 const (
-	TransitionFormTargetStatusAPPROVED  TransitionFormTargetStatus = "APPROVED"
-	TransitionFormTargetStatusINREVIEW  TransitionFormTargetStatus = "IN_REVIEW"
-	TransitionFormTargetStatusPUBLISHED TransitionFormTargetStatus = "PUBLISHED"
-	TransitionFormTargetStatusSTORED    TransitionFormTargetStatus = "STORED"
+	APPROVED  TransitionFormTargetStatus = "APPROVED"
+	INREVIEW  TransitionFormTargetStatus = "IN_REVIEW"
+	PUBLISHED TransitionFormTargetStatus = "PUBLISHED"
+	STORED    TransitionFormTargetStatus = "STORED"
 )
 
 // Valid indicates whether the value is a known member of the TransitionFormTargetStatus enum.
 func (e TransitionFormTargetStatus) Valid() bool {
 	switch e {
-	case TransitionFormTargetStatusAPPROVED:
+	case APPROVED:
 		return true
-	case TransitionFormTargetStatusINREVIEW:
+	case INREVIEW:
 		return true
-	case TransitionFormTargetStatusPUBLISHED:
+	case PUBLISHED:
 		return true
-	case TransitionFormTargetStatusSTORED:
+	case STORED:
 		return true
 	default:
 		return false
@@ -1776,6 +1866,16 @@ type AssetSearchRequest struct {
 	PageSize   *int32  `json:"pageSize,omitempty"`
 }
 
+// AtRiskDescriptorResult defines model for AtRiskDescriptorResult.
+type AtRiskDescriptorResult struct {
+	DescriptorName         *string `json:"descriptorName,omitempty"`
+	LinksAffected          *int32  `json:"linksAffected,omitempty"`
+	RevisionValuesAffected *int32  `json:"revisionValuesAffected,omitempty"`
+	Source                 *string `json:"source,omitempty"`
+	Type                   *string `json:"type,omitempty"`
+	ValuesAffected         *int32  `json:"valuesAffected,omitempty"`
+}
+
 // AuditActorResult defines model for AuditActorResult.
 type AuditActorResult struct {
 	DisplayName string                  `json:"displayName"`
@@ -1856,6 +1956,12 @@ type CascadeSubtreeForm struct {
 // CascadeTrashForm defines model for CascadeTrashForm.
 type CascadeTrashForm struct {
 	AcknowledgePublished *bool `json:"acknowledgePublished,omitempty"`
+}
+
+// ChainBreakResult defines model for ChainBreakResult.
+type ChainBreakResult struct {
+	Name   *string `json:"name,omitempty"`
+	Target *string `json:"target,omitempty"`
 }
 
 // ChainLinkInput defines model for ChainLinkInput.
@@ -2059,6 +2165,14 @@ type DomainEnumWithValuesListResult struct {
 	Name       *string                  `json:"name,omitempty"`
 	ValueCount *int32                   `json:"valueCount,omitempty"`
 	Values     *[]DomainEnumValueResult `json:"values,omitempty"`
+}
+
+// DraftPageResult defines model for DraftPageResult.
+type DraftPageResult struct {
+	Author   *string `json:"author,omitempty"`
+	LastEdit *string `json:"lastEdit,omitempty"`
+	PageId   *int64  `json:"pageId,omitempty"`
+	PageName *string `json:"pageName,omitempty"`
 }
 
 // EligibleUserResult defines model for EligibleUserResult.
@@ -2316,9 +2430,34 @@ type MacroScanResult struct {
 	Restricted *MacroScanRestrictedSummary `json:"restricted,omitempty"`
 }
 
+// MandatoryMergeResult defines model for MandatoryMergeResult.
+type MandatoryMergeResult struct {
+	Compatible             *bool   `json:"compatible,omitempty"`
+	DescriptorName         *string `json:"descriptorName,omitempty"`
+	FromType               *string `json:"fromType,omitempty"`
+	RevisionValuesAffected *int32  `json:"revisionValuesAffected,omitempty"`
+	ToType                 *string `json:"toType,omitempty"`
+	ValuesAffected         *int32  `json:"valuesAffected,omitempty"`
+}
+
 // MoveImpactSnapshotForm defines model for MoveImpactSnapshotForm.
 type MoveImpactSnapshotForm struct {
 	SnapshotKey string `json:"snapshotKey"`
+}
+
+// NewDescriptorResult defines model for NewDescriptorResult.
+type NewDescriptorResult struct {
+	Name   *string `json:"name,omitempty"`
+	Source *string `json:"source,omitempty"`
+	Type   *string `json:"type,omitempty"`
+}
+
+// OrphanedPlacementResult defines model for OrphanedPlacementResult.
+type OrphanedPlacementResult struct {
+	AnchorDescriptorName            *string `json:"anchorDescriptorName,omitempty"`
+	DescriptorName                  *string `json:"descriptorName,omitempty"`
+	PositionFallsBackToOwnBlockTail *bool   `json:"positionFallsBackToOwnBlockTail,omitempty"`
+	SubtypeName                     *string `json:"subtypeName,omitempty"`
 }
 
 // PageArchivedWithBreadcrumbResult defines model for PageArchivedWithBreadcrumbResult.
@@ -2338,7 +2477,10 @@ type PageArchivedWithBreadcrumbResult struct {
 
 // PageCreateForm defines model for PageCreateForm.
 type PageCreateForm struct {
-	Content        *string              `json:"content,omitempty"`
+	// Content Normatik markdown: CommonMark, GFM strikethrough and autolink literals, and Normatik directives. GFM pipe tables, footnotes and task lists are rejected (UNSUPPORTED_MARKDOWN_TABLE, UNSUPPORTED_MARKDOWN_FOOTNOTE, UNSUPPORTED_MARKDOWN_TASK_LIST); use the :::table macro for tables. See GET /public/v1/content-macros/docs.
+	Content *string `json:"content,omitempty"`
+
+	// Name Global, case-sensitive page name. Names in trash and archive count. A duplicate is rejected on create and rename, and also on publish or restore when the name already exists.
 	Name           string               `json:"name"`
 	PageTypeId     int64                `json:"pageTypeId"`
 	ParentId       *int64               `json:"parentId,omitempty"`
@@ -2348,6 +2490,7 @@ type PageCreateForm struct {
 
 // PageEditForm defines model for PageEditForm.
 type PageEditForm struct {
+	// Content Normatik markdown: CommonMark, GFM strikethrough and autolink literals, and Normatik directives. GFM pipe tables, footnotes and task lists are rejected (UNSUPPORTED_MARKDOWN_TABLE, UNSUPPORTED_MARKDOWN_FOOTNOTE, UNSUPPORTED_MARKDOWN_TASK_LIST); use the :::table macro for tables. See GET /public/v1/content-macros/docs.
 	Content        *string                  `json:"content,omitempty"`
 	Name           *string                  `json:"name,omitempty"`
 	PropertyValues *[]PropertyValueEditForm `json:"propertyValues,omitempty"`
@@ -2416,6 +2559,7 @@ type PagePageSearchResult struct {
 
 // PagePatchForm defines model for PagePatchForm.
 type PagePatchForm struct {
+	// Content Normatik markdown: CommonMark, GFM strikethrough and autolink literals, and Normatik directives. GFM pipe tables, footnotes and task lists are rejected (UNSUPPORTED_MARKDOWN_TABLE, UNSUPPORTED_MARKDOWN_FOOTNOTE, UNSUPPORTED_MARKDOWN_TASK_LIST); use the :::table macro for tables. See GET /public/v1/content-macros/docs.
 	Content                    *string                  `json:"content,omitempty"`
 	Name                       *string                  `json:"name,omitempty"`
 	PropertyValues             *[]PropertyValueEditForm `json:"propertyValues,omitempty"`
@@ -2670,6 +2814,32 @@ type PageTypeMoveForm struct {
 // PageTypeMoveFormPropertyDecisions defines model for PageTypeMoveForm.PropertyDecisions.
 type PageTypeMoveFormPropertyDecisions string
 
+// PageTypeMoveImpactResult defines model for PageTypeMoveImpactResult.
+type PageTypeMoveImpactResult struct {
+	AffectedPagesCount         *int32                                     `json:"affectedPagesCount,omitempty"`
+	AtRiskDescriptors          *[]AtRiskDescriptorResult                  `json:"atRiskDescriptors,omitempty"`
+	BrokenChains               *[]ChainBreakResult                        `json:"brokenChains,omitempty"`
+	DraftsBecomingPublic       *[]DraftPageResult                         `json:"draftsBecomingPublic,omitempty"`
+	MandatoryMerges            *[]MandatoryMergeResult                    `json:"mandatoryMerges,omitempty"`
+	NewlyInheritedDescriptors  *[]NewDescriptorResult                     `json:"newlyInheritedDescriptors,omitempty"`
+	OrphanedPlacements         *[]OrphanedPlacementResult                 `json:"orphanedPlacements,omitempty"`
+	PagesWithMultipleRevisions *int32                                     `json:"pagesWithMultipleRevisions,omitempty"`
+	PublishedPagesGoingToDraft *int32                                     `json:"publishedPagesGoingToDraft,omitempty"`
+	RevisionsToBeDeleted       *int32                                     `json:"revisionsToBeDeleted,omitempty"`
+	SnapshotKey                *string                                    `json:"snapshotKey,omitempty"`
+	UnchangedDescriptors       *[]UnchangedDescriptorResult               `json:"unchangedDescriptors,omitempty"`
+	WorkflowDirection          *PageTypeMoveImpactResultWorkflowDirection `json:"workflowDirection,omitempty"`
+	WorkflowFlippedPages       *int32                                     `json:"workflowFlippedPages,omitempty"`
+}
+
+// PageTypeMoveImpactResultWorkflowDirection defines model for PageTypeMoveImpactResult.WorkflowDirection.
+type PageTypeMoveImpactResultWorkflowDirection string
+
+// PageTypeMovePreviewRequest defines model for PageTypeMovePreviewRequest.
+type PageTypeMovePreviewRequest struct {
+	NewParentId *int64 `json:"newParentId,omitempty"`
+}
+
 // PageTypeResult defines model for PageTypeResult.
 type PageTypeResult struct {
 	AbstractType                    *bool                        `json:"abstractType,omitempty"`
@@ -2696,9 +2866,13 @@ type PageTypeResultChildTypeMode string
 
 // PageTypeUsageResult defines model for PageTypeUsageResult.
 type PageTypeUsageResult struct {
-	InUse     *bool  `json:"inUse,omitempty"`
-	PageCount *int64 `json:"pageCount,omitempty"`
+	InUse     *bool                      `json:"inUse,omitempty"`
+	PageCount *int64                     `json:"pageCount,omitempty"`
+	Reason    *PageTypeUsageResultReason `json:"reason,omitempty"`
 }
+
+// PageTypeUsageResultReason defines model for PageTypeUsageResult.Reason.
+type PageTypeUsageResultReason string
 
 // PageUserGroupResult defines model for PageUserGroupResult.
 type PageUserGroupResult struct {
@@ -2858,6 +3032,9 @@ type ProblemDetail struct {
 	// BlockingPageTypes Bounded list (max 10) of page types blocking the operation, with id and name (IN_USE family).
 	BlockingPageTypes *[]map[string]interface{} `json:"blockingPageTypes,omitempty"`
 
+	// ConflictingPageId Id of the existing page that owns this name (PAGE_NAME_EXISTS), only when that page is readable by the caller.
+	ConflictingPageId *int `json:"conflictingPageId,omitempty"`
+
 	// CurrentStatus Current revision status at the time of the rejected transition (INVALID_TRANSITION).
 	CurrentStatus *string `json:"currentStatus,omitempty"`
 
@@ -3015,6 +3192,8 @@ type PropertyDescriptorForm struct {
 	ContainsThisPageDescriptorId *int64                                            `json:"containsThisPageDescriptorId,omitempty"`
 	DataType                     PropertyDescriptorFormDataType                    `json:"dataType"`
 	Decimals                     *int32                                            `json:"decimals,omitempty"`
+	DefaultEnumValueId           *int64                                            `json:"defaultEnumValueId,omitempty"`
+	DefaultTextValue             *string                                           `json:"defaultTextValue,omitempty"`
 	Description                  *string                                           `json:"description,omitempty"`
 	DisplayColumns               *[]DisplayColumnInput                             `json:"displayColumns,omitempty"`
 	DomainEnumId                 *int64                                            `json:"domainEnumId,omitempty"`
@@ -3055,6 +3234,9 @@ type PropertyDescriptorResult struct {
 	Decimals                       *int32                                              `json:"decimals,omitempty"`
 	DeclaredOnPageTypeId           *int64                                              `json:"declaredOnPageTypeId,omitempty"`
 	DeclaredOnPageTypeName         *string                                             `json:"declaredOnPageTypeName,omitempty"`
+	DefaultEnumValueId             *int64                                              `json:"defaultEnumValueId,omitempty"`
+	DefaultEnumValueValue          *string                                             `json:"defaultEnumValueValue,omitempty"`
+	DefaultTextValue               *string                                             `json:"defaultTextValue,omitempty"`
 	Description                    *string                                             `json:"description,omitempty"`
 	DisplayColumns                 *[]DisplayColumnResult                              `json:"displayColumns,omitempty"`
 	DomainEnumId                   *int64                                              `json:"domainEnumId,omitempty"`
@@ -3197,10 +3379,12 @@ type PublicContentMacroResult struct {
 
 // PublicContentValidationForm defines model for PublicContentValidationForm.
 type PublicContentValidationForm struct {
-	BothTargetsSupplied *bool  `json:"bothTargetsSupplied,omitempty"`
-	Content             string `json:"content"`
-	TargetPageId        *int64 `json:"targetPageId,omitempty"`
-	TargetPageTypeId    *int64 `json:"targetPageTypeId,omitempty"`
+	BothTargetsSupplied *bool `json:"bothTargetsSupplied,omitempty"`
+
+	// Content Normatik markdown: CommonMark, GFM strikethrough and autolink literals, and Normatik directives. GFM pipe tables, footnotes and task lists are rejected (UNSUPPORTED_MARKDOWN_TABLE, UNSUPPORTED_MARKDOWN_FOOTNOTE, UNSUPPORTED_MARKDOWN_TASK_LIST); use the :::table macro for tables. See GET /public/v1/content-macros/docs.
+	Content          string `json:"content"`
+	TargetPageId     *int64 `json:"targetPageId,omitempty"`
+	TargetPageTypeId *int64 `json:"targetPageTypeId,omitempty"`
 }
 
 // PublicPageCompositeResult defines model for PublicPageCompositeResult.
@@ -3243,6 +3427,20 @@ type PublicPageCompositeResult struct {
 	WorkingRevision                 *PageRevisionResult          `json:"workingRevision,omitempty"`
 	WorkingRevisionAuthors          *[]string                    `json:"workingRevisionAuthors,omitempty"`
 }
+
+// PublicPagePropertyValuesResult defines model for PublicPagePropertyValuesResult.
+type PublicPagePropertyValuesResult struct {
+	PageId         *int64                                        `json:"pageId,omitempty"`
+	PageName       *string                                       `json:"pageName,omitempty"`
+	PageTypeId     *int64                                        `json:"pageTypeId,omitempty"`
+	PageTypeName   *string                                       `json:"pageTypeName,omitempty"`
+	PropertyValues *[]PropertyValueResult                        `json:"propertyValues,omitempty"`
+	RevisionNumber *int32                                        `json:"revisionNumber,omitempty"`
+	RevisionStatus *PublicPagePropertyValuesResultRevisionStatus `json:"revisionStatus,omitempty"`
+}
+
+// PublicPagePropertyValuesResultRevisionStatus defines model for PublicPagePropertyValuesResult.RevisionStatus.
+type PublicPagePropertyValuesResultRevisionStatus string
 
 // PublicPageRevisionCompositeResult defines model for PublicPageRevisionCompositeResult.
 type PublicPageRevisionCompositeResult struct {
@@ -3464,6 +3662,13 @@ type TrashedPageViewResult struct {
 // TrashedPageViewResultRestoreTarget defines model for TrashedPageViewResult.RestoreTarget.
 type TrashedPageViewResultRestoreTarget string
 
+// UnchangedDescriptorResult defines model for UnchangedDescriptorResult.
+type UnchangedDescriptorResult struct {
+	Name   *string `json:"name,omitempty"`
+	Source *string `json:"source,omitempty"`
+	Type   *string `json:"type,omitempty"`
+}
+
 // UserForm defines model for UserForm.
 type UserForm struct {
 	DisplayName  string                `json:"displayName"`
@@ -3605,10 +3810,10 @@ type WorkItemLogEntryLogType string
 
 // WorkItemTransitionCreateForm defines model for WorkItemTransitionCreateForm.
 type WorkItemTransitionCreateForm struct {
-	FromValueId int64   `json:"fromValueId"`
-	Label       *string `json:"label,omitempty"`
-	SortOrder   *int32  `json:"sortOrder,omitempty"`
-	ToValueId   int64   `json:"toValueId"`
+	FromValueId int64  `json:"fromValueId"`
+	Label       string `json:"label"`
+	SortOrder   *int32 `json:"sortOrder,omitempty"`
+	ToValueId   int64  `json:"toValueId"`
 }
 
 // WorkItemTransitionForm defines model for WorkItemTransitionForm.
@@ -3868,6 +4073,11 @@ type PreviewAdminTrashCascadeImpactParams struct {
 // PreviewAdminTrashCascadeImpactParamsOperation defines parameters for PreviewAdminTrashCascadeImpact.
 type PreviewAdminTrashCascadeImpactParamsOperation string
 
+// ListPagePropertyValuesParams defines parameters for ListPagePropertyValues.
+type ListPagePropertyValuesParams struct {
+	PageIds []int64 `form:"pageIds" json:"pageIds"`
+}
+
 // SearchPagesParams defines parameters for SearchPages.
 type SearchPagesParams struct {
 	Query             string `form:"query" json:"query"`
@@ -4082,6 +4292,9 @@ type UpdatePageTypeJSONRequestBody = PageTypeForm
 
 // MovePageTypeJSONRequestBody defines body for MovePageType for application/json ContentType.
 type MovePageTypeJSONRequestBody = PageTypeMoveForm
+
+// PreviewMovePageTypeJSONRequestBody defines body for PreviewMovePageType for application/json ContentType.
+type PreviewMovePageTypeJSONRequestBody = PageTypeMovePreviewRequest
 
 // CreatePropertyDescriptorJSONRequestBody defines body for CreatePropertyDescriptor for application/json ContentType.
 type CreatePropertyDescriptorJSONRequestBody = PropertyDescriptorForm
@@ -4409,6 +4622,11 @@ type ClientInterface interface {
 
 	MovePageType(ctx context.Context, id int64, body MovePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// PreviewMovePageTypeWithBody request with any body
+	PreviewMovePageTypeWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	PreviewMovePageType(ctx context.Context, id int64, body PreviewMovePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreatePropertyDescriptorWithBody request with any body
 	CreatePropertyDescriptorWithBody(ctx context.Context, pageTypeId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4470,6 +4688,9 @@ type ClientInterface interface {
 	MigrateSortRootPagesWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	MigrateSortRootPages(ctx context.Context, body MigrateSortRootPagesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListPagePropertyValues request
+	ListPagePropertyValues(ctx context.Context, params *ListPagePropertyValuesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SearchPages request
 	SearchPages(ctx context.Context, params *SearchPagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5346,6 +5567,30 @@ func (c *Client) MovePageType(ctx context.Context, id int64, body MovePageTypeJS
 	return c.Client.Do(req)
 }
 
+func (c *Client) PreviewMovePageTypeWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewMovePageTypeRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PreviewMovePageType(ctx context.Context, id int64, body PreviewMovePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewMovePageTypeRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) CreatePropertyDescriptorWithBody(ctx context.Context, pageTypeId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreatePropertyDescriptorRequestWithBody(c.Server, pageTypeId, contentType, body)
 	if err != nil {
@@ -5612,6 +5857,18 @@ func (c *Client) MigrateSortRootPagesWithBody(ctx context.Context, contentType s
 
 func (c *Client) MigrateSortRootPages(ctx context.Context, body MigrateSortRootPagesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewMigrateSortRootPagesRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListPagePropertyValues(ctx context.Context, params *ListPagePropertyValuesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListPagePropertyValuesRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -8677,6 +8934,53 @@ func NewMovePageTypeRequestWithBody(server string, id int64, contentType string,
 	return req, nil
 }
 
+// NewPreviewMovePageTypeRequest calls the generic PreviewMovePageType builder with application/json body
+func NewPreviewMovePageTypeRequest(server string, id int64, body PreviewMovePageTypeJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPreviewMovePageTypeRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewPreviewMovePageTypeRequestWithBody generates requests for PreviewMovePageType with any type of body
+func NewPreviewMovePageTypeRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/page-types/%s/move/preview", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewCreatePropertyDescriptorRequest calls the generic CreatePropertyDescriptor builder with application/json body
 func NewCreatePropertyDescriptorRequest(server string, pageTypeId int64, body CreatePropertyDescriptorJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -9424,6 +9728,60 @@ func NewMigrateSortRootPagesRequestWithBody(server string, contentType string, b
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListPagePropertyValuesRequest generates requests for ListPagePropertyValues
+func NewListPagePropertyValuesRequest(server string, params *ListPagePropertyValuesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/property-values")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.PageIds != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageIds", params.PageIds, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -13223,6 +13581,11 @@ type ClientWithResponsesInterface interface {
 
 	MovePageTypeWithResponse(ctx context.Context, id int64, body MovePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*MovePageTypeResponse, error)
 
+	// PreviewMovePageTypeWithBodyWithResponse request with any body
+	PreviewMovePageTypeWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PreviewMovePageTypeResponse, error)
+
+	PreviewMovePageTypeWithResponse(ctx context.Context, id int64, body PreviewMovePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*PreviewMovePageTypeResponse, error)
+
 	// CreatePropertyDescriptorWithBodyWithResponse request with any body
 	CreatePropertyDescriptorWithBodyWithResponse(ctx context.Context, pageTypeId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePropertyDescriptorResponse, error)
 
@@ -13284,6 +13647,9 @@ type ClientWithResponsesInterface interface {
 	MigrateSortRootPagesWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MigrateSortRootPagesResponse, error)
 
 	MigrateSortRootPagesWithResponse(ctx context.Context, body MigrateSortRootPagesJSONRequestBody, reqEditors ...RequestEditorFn) (*MigrateSortRootPagesResponse, error)
+
+	// ListPagePropertyValuesWithResponse request
+	ListPagePropertyValuesWithResponse(ctx context.Context, params *ListPagePropertyValuesParams, reqEditors ...RequestEditorFn) (*ListPagePropertyValuesResponse, error)
 
 	// SearchPagesWithResponse request
 	SearchPagesWithResponse(ctx context.Context, params *SearchPagesParams, reqEditors ...RequestEditorFn) (*SearchPagesResponse, error)
@@ -14848,6 +15214,40 @@ func (r MovePageTypeResponse) ContentType() string {
 	return ""
 }
 
+type PreviewMovePageTypeResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewMovePageTypeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewMovePageTypeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewMovePageTypeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreatePropertyDescriptorResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -15374,6 +15774,38 @@ func (r MigrateSortRootPagesResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r MigrateSortRootPagesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListPagePropertyValuesResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ListPagePropertyValuesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListPagePropertyValuesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListPagePropertyValuesResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -18215,6 +18647,23 @@ func (c *ClientWithResponses) MovePageTypeWithResponse(ctx context.Context, id i
 	return ParseMovePageTypeResponse(rsp)
 }
 
+// PreviewMovePageTypeWithBodyWithResponse request with arbitrary body returning *PreviewMovePageTypeResponse
+func (c *ClientWithResponses) PreviewMovePageTypeWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PreviewMovePageTypeResponse, error) {
+	rsp, err := c.PreviewMovePageTypeWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewMovePageTypeResponse(rsp)
+}
+
+func (c *ClientWithResponses) PreviewMovePageTypeWithResponse(ctx context.Context, id int64, body PreviewMovePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*PreviewMovePageTypeResponse, error) {
+	rsp, err := c.PreviewMovePageType(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewMovePageTypeResponse(rsp)
+}
+
 // CreatePropertyDescriptorWithBodyWithResponse request with arbitrary body returning *CreatePropertyDescriptorResponse
 func (c *ClientWithResponses) CreatePropertyDescriptorWithBodyWithResponse(ctx context.Context, pageTypeId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePropertyDescriptorResponse, error) {
 	rsp, err := c.CreatePropertyDescriptorWithBody(ctx, pageTypeId, contentType, body, reqEditors...)
@@ -18413,6 +18862,15 @@ func (c *ClientWithResponses) MigrateSortRootPagesWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseMigrateSortRootPagesResponse(rsp)
+}
+
+// ListPagePropertyValuesWithResponse request returning *ListPagePropertyValuesResponse
+func (c *ClientWithResponses) ListPagePropertyValuesWithResponse(ctx context.Context, params *ListPagePropertyValuesParams, reqEditors ...RequestEditorFn) (*ListPagePropertyValuesResponse, error) {
+	rsp, err := c.ListPagePropertyValues(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListPagePropertyValuesResponse(rsp)
 }
 
 // SearchPagesWithResponse request returning *SearchPagesResponse
@@ -21135,6 +21593,60 @@ func ParseMovePageTypeResponse(rsp *http.Response) (*MovePageTypeResponse, error
 	return response, nil
 }
 
+// ParsePreviewMovePageTypeResponse parses an HTTP response from a PreviewMovePageTypeWithResponse call
+func ParsePreviewMovePageTypeResponse(rsp *http.Response) (*PreviewMovePageTypeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewMovePageTypeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreatePropertyDescriptorResponse parses an HTTP response from a CreatePropertyDescriptorWithResponse call
 func ParseCreatePropertyDescriptorResponse(rsp *http.Response) (*CreatePropertyDescriptorResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -21889,6 +22401,46 @@ func ParseMigrateSortRootPagesResponse(rsp *http.Response) (*MigrateSortRootPage
 		}
 		response.ApplicationproblemJSON400 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListPagePropertyValuesResponse parses an HTTP response from a ListPagePropertyValuesWithResponse call
+func ParseListPagePropertyValuesResponse(rsp *http.Response) (*ListPagePropertyValuesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListPagePropertyValuesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest ProblemDetail
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {

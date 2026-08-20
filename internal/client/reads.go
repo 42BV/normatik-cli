@@ -5,9 +5,24 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/42BV/normatik-cli/internal/api"
 )
+
+// GetPublicApiSpec — GET /api/v3/api-docs/public-api. This is a SpringDoc
+// document, not a /public/v1 resource, so it is not on the generated client.
+func (c *Client) GetPublicApiSpec(ctx context.Context) ([]byte, *APIError) {
+	url := strings.TrimRight(c.apiBase, "/") + "/v3/api-docs/public-api"
+	return c.DoRaw(func() (*http.Response, error) {
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("Authorization", "Bearer "+c.apiKey)
+		return c.http.Do(req)
+	})
+}
 
 // ---- Users ----
 
@@ -270,6 +285,14 @@ func (c *Client) ListReleaseNotes(ctx context.Context, page, size int) ([]byte, 
 // note's detail (version + date + markdown body; 404 RELEASE_NOTE_NOT_FOUND).
 func (c *Client) GetReleaseNoteByVersion(ctx context.Context, version string) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.GetReleaseNoteByVersion(ctx, version) })
+}
+
+// ListPagePropertyValues — GET /public/v1/pages/property-values?pageIds=.
+// Raw body (verbatim JSON array). pageIds is sent as one comma-separated value.
+func (c *Client) ListPagePropertyValues(ctx context.Context, ids []int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.ListPagePropertyValues(ctx, &api.ListPagePropertyValuesParams{}, pageIdsCSVEditor(ids))
+	})
 }
 
 // ---- Audit log (flat query form via editor) ----

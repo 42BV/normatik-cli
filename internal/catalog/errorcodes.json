@@ -214,6 +214,14 @@
     "exitCode": 7
   },
   {
+    "name": "DUPLICATE_PROPERTY_TYPE_DEFAULT",
+    "status": 409,
+    "title": "Duplicate property type default",
+    "userMessage": "A default value row for this page type and property descriptor already exists.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
     "name": "ENDPOINT_NOT_FOUND",
     "status": 404,
     "title": "Endpoint not found",
@@ -405,6 +413,14 @@
     "status": 400,
     "title": "Invalid conditional enum configuration",
     "userMessage": "The CONDITIONAL_ENUM property descriptor configuration is invalid.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_DEFAULT_VALUE",
+    "status": 400,
+    "title": "Invalid default value",
+    "userMessage": "The default value configuration for this property descriptor is invalid.",
     "hintKind": "NO_HINT",
     "exitCode": 3
   },
@@ -655,6 +671,15 @@
     "hintKind": "STATIC",
     "exitCode": 7,
     "staticHint": "Move or delete the child pages first. Use GET /public/v1/pages/tree to list them in sort order."
+  },
+  {
+    "name": "PAGE_IDS_LIMIT_EXCEEDED",
+    "status": 400,
+    "title": "Too many page ids",
+    "userMessage": "At most 200 unique page ids per request",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "Split the ids into chunks of at most 200 and call the endpoint per chunk"
   },
   {
     "name": "PAGE_INCOMING_NOT_EDITABLE",

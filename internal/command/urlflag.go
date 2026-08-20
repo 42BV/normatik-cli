@@ -20,9 +20,9 @@ import (
 //     wrapped in JSON, because it bypasses the Printer's JSON/table branch
 //     entirely.
 //   - --url survives --quiet: PrintURL never consults Printer.Quiet.
-//   - --url + --dry-run is a conflict — a dry-run performs no write, so
-//     there is no resource id to build a URL from. CheckURLDryRun rejects it
-//     via the standard error envelope.
+//   - --url + --dry-run (or --preview) is a conflict — those modes perform
+//     no write, so there is no resource id to build a URL from.
+//     CheckURLDryRun rejects them via the standard error envelope.
 //   - Writes: perform the write first, then build the URL from the
 //     response's id and call PrintURL — never resolve --url before the
 //     write happened.
@@ -30,16 +30,24 @@ func URLFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool("url", false, "print only the frontend URL for this resource (suppresses normal output; wins over -o json and --quiet)")
 }
 
-// CheckURLDryRun rejects --url combined with --dry-run through the standard
-// error envelope (CR-besluit 5/6, C02): a dry-run never performs the write,
-// so there is no resource id to build a URL from. Safe to call
-// unconditionally right after Build(), even on commands that never register
-// --dry-run — GetBool then just reports false and this is a no-op.
+// CheckURLDryRun rejects --url combined with --dry-run or --preview through
+// the standard error envelope (CR-besluit 5/6, C02): those modes never
+// perform the write, so there is no resource id to build a URL from. Safe
+// to call unconditionally right after Build(), even on commands that never
+// register --dry-run or --preview — GetBool then just reports false.
 func CheckURLDryRun(d *Deps, cmd *cobra.Command) error {
 	url, _ := cmd.Flags().GetBool("url")
+	if !url {
+		return nil
+	}
 	dryRun, _ := cmd.Flags().GetBool("dry-run")
-	if url && dryRun {
+	preview, _ := cmd.Flags().GetBool("preview")
+	if dryRun {
 		d.Printer.Message("Error [USAGE]: --url cannot be combined with --dry-run (a dry-run performs no write, so there is no resource id to build a URL from)")
+		return Handled(2)
+	}
+	if preview {
+		d.Printer.Message("Error [USAGE]: --url cannot be combined with --preview (a preview performs no write, so there is no resource id to build a URL from)")
 		return Handled(2)
 	}
 	return nil

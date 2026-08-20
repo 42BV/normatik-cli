@@ -10,8 +10,10 @@
 package problem
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -25,6 +27,25 @@ type Diagnostic struct {
 	Column    int    `json:"column"`
 	EndColumn int    `json:"endColumn"`
 	Message   string `json:"message"`
+}
+
+// FieldError is one entry of a BindException-style errors[] array.
+// Field is the server path (e.g. "description" or "values[0].value"), not a CLI flag.
+type FieldError struct {
+	Field   string `json:"field"`
+	Message string `json:"message"`
+}
+
+// Line formats the field error as "field: message". Nested paths stay as-is.
+func (e FieldError) Line() string {
+	switch {
+	case e.Field == "":
+		return e.Message
+	case e.Message == "":
+		return e.Field
+	default:
+		return e.Field + ": " + e.Message
+	}
 }
 
 // Problem is a decoded ProblemDetail. Known fields are typed; Raw holds every
@@ -57,6 +78,7 @@ type Problem struct {
 	RetryAfterSeconds *int
 	InTrash           bool
 	Diagnostics       []Diagnostic
+	Errors            []FieldError
 	Raw               map[string]json.RawMessage
 }
 
@@ -101,7 +123,73 @@ func Decode(status int, body []byte) (*Problem, bool) {
 	if v, ok := raw["diagnostics"]; ok {
 		_ = json.Unmarshal(v, &p.Diagnostics)
 	}
+	if v, ok := raw["errors"]; ok {
+		_ = json.Unmarshal(v, &p.Errors)
+	}
 	return p, true
+}
+
+// typedKeys are the ProblemDetail members Decode lifts into typed fields, plus
+// the RFC 9457 base members (type/instance/status/title/detail). Every other
+// member the server sends is an "extra" (see Extras).
+var typedKeys = map[string]bool{
+	"type": true, "instance": true, "status": true, "title": true, "detail": true,
+	"errorCode": true, "hint": true, "reason": true,
+	"validKeys": true, "validNames": true, "invalidKeys": true, "unknownKeys": true,
+	"validValues": true, "allowedMethods": true, "currentStatus": true,
+	"requestedAction": true, "requiredRole": true, "field": true, "receivedValue": true,
+	"minValue": true, "maxValue": true, "receivedZone": true, "entityType": true,
+	"currentVersion": true, "usageCount": true, "retryAfterSeconds": true,
+	"inTrash": true, "diagnostics": true, "errors": true,
+}
+
+// Extra is one server-sent ProblemDetail member the CLI has no typed field
+// for (e.g. conflictingPageId, blockingDescriptors, totalCount). Value is the
+// verbatim JSON so nothing is lost or reinterpreted.
+type Extra struct {
+	Key   string
+	Value json.RawMessage
+}
+
+// Extras returns the untyped members of the decoded body in key order. This is
+// the forward-compatibility contract of Raw: a new server hint field surfaces
+// in the envelope (and, when scalar, in table mode) without a CLI release.
+func (p *Problem) Extras() []Extra {
+	if p == nil || len(p.Raw) == 0 {
+		return nil
+	}
+	keys := make([]string, 0, len(p.Raw))
+	for k := range p.Raw {
+		if !typedKeys[k] {
+			keys = append(keys, k)
+		}
+	}
+	sort.Strings(keys)
+	out := make([]Extra, 0, len(keys))
+	for _, k := range keys {
+		out = append(out, Extra{Key: k, Value: p.Raw[k]})
+	}
+	return out
+}
+
+// ScalarText renders a JSON scalar (string, number, bool) as plain text and
+// reports false for null, arrays and objects — table mode prints only scalars.
+func (e Extra) ScalarText() (string, bool) {
+	dec := json.NewDecoder(bytes.NewReader(e.Value))
+	dec.UseNumber()
+	var v any
+	if err := dec.Decode(&v); err != nil {
+		return "", false
+	}
+	switch t := v.(type) {
+	case string:
+		return t, true
+	case json.Number:
+		return t.String(), true
+	case bool:
+		return strconv.FormatBool(t), true
+	}
+	return "", false
 }
 
 func (p *Problem) Error() string {
@@ -251,6 +339,14 @@ var synth = map[string]synthFunc{
 		}
 		if sawUnknownDirective {
 			return "normatik macros docs   # list all enabled macros and their syntax"
+		}
+		for _, d := range p.Diagnostics {
+			if d.Code == "UNSUPPORTED_MARKDOWN_TABLE" {
+				return "normatik macros docs table   # :::table syntax"
+			}
+			if d.Code == "UNSUPPORTED_MARKDOWN_FOOTNOTE" || d.Code == "UNSUPPORTED_MARKDOWN_TASK_LIST" {
+				return "normatik macros docs   # supported markdown dialect"
+			}
 		}
 		// Other validation failures already carry their own diagnostics lines.
 		return ""

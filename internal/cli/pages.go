@@ -3,8 +3,11 @@ package cli
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"io"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/42BV/normatik-cli/internal/api"
 	"github.com/42BV/normatik-cli/internal/client"
@@ -17,11 +20,12 @@ import (
 func newPagesCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "pages",
-		Short: "Work with pages (list, get, render, search, create, update, delete, archive, cascade-*, move, sort-children, tree, describe-properties, revisions, images, attachments, restriction)",
+		Short: "Work with pages (list, get, property-values, render, search, create, update, delete, archive, cascade-*, move, sort-children, tree, describe-properties, revisions, images, attachments, restriction)",
 		Long:  "Commands for pages in the Normatik wiki. Every error carries an errorCode + hint.",
 		RunE:  command.UnknownSub,
 	}
 	cmd.AddCommand(newPagesListCmd())
+	cmd.AddCommand(newPagesPropertyValuesCmd())
 	cmd.AddCommand(newPagesGetCmd())
 	cmd.AddCommand(newPagesRenderCmd())
 	cmd.AddCommand(newPagesSearchCmd())
@@ -253,6 +257,8 @@ func newPagesCreateCmd() *cobra.Command {
 		Use:   "create",
 		Short: "Create a new page (flags, --property, or -f form.json with propertyValues[])",
 		Long: "Create a new page (flags, --property, or -f form.json with propertyValues[]).\n" +
+			"Page names are globally unique and case-sensitive. Names in trash and archive count.\n" +
+			"A duplicate is rejected (PAGE_NAME_EXISTS); the same rule also applies on publish and restore.\n" +
 			"--url performs the write first, then prints only the new page's frontend URL (built\n" +
 			"from the response id) instead of the normal output — not to be confused with\n" +
 			"`login --url` (the environment site URL used to authenticate; a different flag,\n" +
@@ -395,15 +401,35 @@ func resolveCreateProperties(cmd *cobra.Command, d *command.Deps, form api.PageC
 	pd := propertyDispatcher{lookup: newCachingLookup(newClientLookup(d.Client)), timezone: tz}
 	merged, perr := applyPropertyFlags(cmd.Context(), derefPropertyValues(form.PropertyValues), props, unsets, descriptors, pd)
 	if perr != nil {
-		return form, renderPropError(d, perr)
+		return form, renderPropError(d, perr, "normatik pages create")
 	}
 	form.PropertyValues = &merged
 	return form, nil
 }
 
 // renderPropError prints a client-side property-flag validation error (code +
-// detail + indented extra lines) and returns the carried exit code.
-func renderPropError(d *command.Deps, e *propFlagError) error {
+// detail + indented extra lines) and returns the carried exit code. A decoded
+// Problem (via errors.As on *client.APIError) is copied with the property name
+// folded into detail, then rendered only via RenderError so --output json stays
+// one envelope on stderr.
+func renderPropError(d *command.Deps, e *propFlagError, invocation string) error {
+	var apiErr *client.APIError
+	if e != nil && errors.As(e, &apiErr) && apiErr.Problem != nil {
+		wrapped := *apiErr
+		copied := *apiErr.Problem
+		if e.detail != "" {
+			if copied.Detail != "" {
+				copied.Detail = e.detail + ": " + copied.Detail
+			} else {
+				copied.Detail = e.detail
+			}
+		}
+		wrapped.Problem = &copied
+		if invocation == "" {
+			invocation = "normatik"
+		}
+		return command.RenderError(d.Printer, &wrapped, invocation)
+	}
 	d.Printer.Message("Error [%s]: %s", e.code, e.detail)
 	for _, l := range e.extra {
 		d.Printer.Message("  %s", l)
@@ -473,7 +499,14 @@ func newPagesDescribePropertiesCmd() *cobra.Command {
 			// Resolve enum values inline (cached: two props sharing a domain enum
 			// trigger one lookup) so the discovery output is self-contained.
 			lookup := newCachingLookup(newClientLookup(d.Client))
-			rows := describePropertyRows(cmd.Context(), descriptors, lookup)
+			rows, rowsErr := describePropertyRows(cmd.Context(), descriptors, lookup)
+			if rowsErr != nil {
+				var apiErr *client.APIError
+				if errors.As(rowsErr, &apiErr) {
+					return command.RenderError(d.Printer, apiErr, "normatik pages describe-properties")
+				}
+				return rowsErr
+			}
 			body, _ := json.Marshal(rows)
 			d.Printer.List(body, "name", "dataType", "writable", "lookupHint", "example")
 			return nil
@@ -509,11 +542,14 @@ type describePropertyRow struct {
 // allowed values through lookup (cached by the caller). Enum resolution degrades
 // gracefully: a failed lookup leaves enumValues empty and keeps the enum name in
 // the hint. Numeric config is surfaced verbatim from the descriptor.
-func describePropertyRows(ctx context.Context, descriptors []api.PropertyDescriptorResult, lookup propertyLookup) []describePropertyRow {
+func describePropertyRows(ctx context.Context, descriptors []api.PropertyDescriptorResult, lookup propertyLookup) ([]describePropertyRow, error) {
 	rows := make([]describePropertyRow, 0, len(descriptors))
 	for _, desc := range descriptors {
 		dt := derefDataType(desc.DataType)
-		enumValues := describeEnumValues(ctx, lookup, desc)
+		enumValues, err := describeEnumValues(ctx, lookup, desc)
+		if err != nil {
+			return nil, err
+		}
 		row := describePropertyRow{
 			Name:       derefStr(desc.Name),
 			DataType:   string(dt),
@@ -535,7 +571,7 @@ func describePropertyRows(ctx context.Context, descriptors []api.PropertyDescrip
 		}
 		rows = append(rows, row)
 	}
-	return rows
+	return rows, nil
 }
 
 func newPagesListCmd() *cobra.Command {
@@ -547,11 +583,13 @@ func newPagesListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List root pages, or all pages of a page type (--page-type-id)",
 		Long: "List pages (paginated). Without --page-type-id this lists the root pages; " +
-			"with --page-type-id it lists ALL pages of that page type (not just root pages).",
+			"with --page-type-id it lists ALL pages of that page type (not just root pages).\n" +
+			"For property values of many pages use: normatik pages property-values …",
 		Example: "  normatik pages list\n" +
 			"  normatik pages list --size 5 --sort name,asc\n" +
 			"  normatik pages list --page-type-id 3          # all pages of page type 3\n" +
-			"  normatik pages list --page-type-id 3 --output json",
+			"  normatik pages list --page-type-id 3 --output json\n" +
+			"  normatik pages property-values --page-type-id 3",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			d, err := command.Build(cmd)
 			if err != nil {
@@ -578,6 +616,132 @@ func newPagesListCmd() *cobra.Command {
 	cmd.Flags().Int64Var(&pageTypeID, "page-type-id", 0, "filter by page type (lists ALL pages of that type, not just root)")
 	command.URLFlag(cmd)
 	return cmd
+}
+
+func newPagesPropertyValuesCmd() *cobra.Command {
+	var ids []int64
+	var pageTypeID int64
+	var page, size int
+	cmd := &cobra.Command{
+		Use:   "property-values",
+		Short: "Get property values for up to 200 pages in one request",
+		Long: "Get property values for up to 200 unique page ids in one request.\n" +
+			"Use --ids for an explicit id list, or --page-type-id to take ids from one list page.\n" +
+			"JSON mode prints the API body; table mode prints PAGE ID, PAGE, PROPERTY, VALUE.\n" +
+			"Unknown, trashed, archived, or unreadable ids are omitted; --ids prints a stderr note.",
+		Example: "  normatik pages property-values --ids 12,15,18\n" +
+			"  normatik pages property-values --ids 12 --ids 15\n" +
+			"  normatik pages property-values --page-type-id 3\n" +
+			"  normatik pages property-values --page-type-id 3 --page 2 --size 200 -o json",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			var requested []int64
+			if cmd.Flags().Changed("ids") {
+				requested = dedupeIDs(ids)
+			} else {
+				list, apiErr := d.Client.ListPages(cmd.Context(), page, size, nil, &pageTypeID)
+				if apiErr != nil {
+					return command.RenderError(d.Printer, apiErr, "normatik pages property-values")
+				}
+				requested = pageListIDs(list)
+				if !d.Printer.Quiet {
+					if len(requested) == 0 {
+						d.Printer.Message("0 pages")
+					} else {
+						d.Printer.Message("page %d/%d · %d pages",
+							derefInt32(list.Number), derefInt32(list.TotalPages), len(requested))
+					}
+				}
+				if len(requested) == 0 {
+					d.Printer.PagePropertyValues([]byte("[]"))
+					return nil
+				}
+			}
+			body, apiErr := d.Client.ListPagePropertyValues(cmd.Context(), requested)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik pages property-values")
+			}
+			d.Printer.PagePropertyValues(body)
+			if cmd.Flags().Changed("ids") && !d.Printer.Quiet {
+				if omitted := omittedPageIDs(requested, body); len(omitted) > 0 {
+					d.Printer.Message("%d of %d requested pages returned; omitted: %s",
+						len(requested)-len(omitted), len(requested), joinIDs(omitted))
+				}
+			}
+			return nil
+		},
+	}
+	cmd.Flags().Int64SliceVar(&ids, "ids", nil, "page ids (comma-separated or repeated)")
+	cmd.Flags().Int64Var(&pageTypeID, "page-type-id", 0, "take page ids from one list page of this page type")
+	cmd.Flags().IntVar(&page, "page", 1, "list page number when using --page-type-id (one-based)")
+	cmd.Flags().IntVar(&size, "size", 200, "list page size when using --page-type-id")
+	cmd.MarkFlagsMutuallyExclusive("ids", "page-type-id")
+	cmd.MarkFlagsOneRequired("ids", "page-type-id")
+	return cmd
+}
+
+func dedupeIDs(ids []int64) []int64 {
+	seen := make(map[int64]struct{}, len(ids))
+	out := make([]int64, 0, len(ids))
+	for _, id := range ids {
+		if _, ok := seen[id]; ok {
+			continue
+		}
+		seen[id] = struct{}{}
+		out = append(out, id)
+	}
+	return out
+}
+
+func pageListIDs(list *api.PagePageListResult) []int64 {
+	if list == nil || list.Content == nil {
+		return nil
+	}
+	out := make([]int64, 0, len(*list.Content))
+	for _, it := range *list.Content {
+		if it.Id != nil {
+			out = append(out, *it.Id)
+		}
+	}
+	return out
+}
+
+func omittedPageIDs(requested []int64, body []byte) []int64 {
+	var rows []struct {
+		PageId int64 `json:"pageId"`
+	}
+	if json.Unmarshal(body, &rows) != nil {
+		return nil
+	}
+	got := make(map[int64]struct{}, len(rows))
+	for _, row := range rows {
+		got[row.PageId] = struct{}{}
+	}
+	var omitted []int64
+	for _, id := range requested {
+		if _, ok := got[id]; !ok {
+			omitted = append(omitted, id)
+		}
+	}
+	return omitted
+}
+
+func joinIDs(ids []int64) string {
+	parts := make([]string, len(ids))
+	for i, id := range ids {
+		parts[i] = strconv.FormatInt(id, 10)
+	}
+	return strings.Join(parts, ", ")
+}
+
+func derefInt32(p *int32) int32 {
+	if p == nil {
+		return 0
+	}
+	return *p
 }
 
 func newPagesGetCmd() *cobra.Command {

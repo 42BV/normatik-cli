@@ -37,9 +37,12 @@ type propFlagError struct {
 	detail string
 	extra  []string
 	exit   int
+	cause  error
 }
 
 func (e *propFlagError) Error() string { return e.code + ": " + e.detail }
+
+func (e *propFlagError) Unwrap() error { return e.cause }
 
 func usageError(detail string) *propFlagError {
 	return &propFlagError{code: "USAGE", detail: detail, exit: 2}
@@ -193,7 +196,7 @@ func (l *cachingLookup) UsersByEmail(ctx context.Context, email string) ([]named
 func (l *clientLookup) EnumValues(ctx context.Context, domainEnumID int64) ([]enumValue, error) {
 	body, apiErr := l.c.GetDomainEnum(ctx, domainEnumID)
 	if apiErr != nil {
-		return nil, errors.New(apiErr.Error())
+		return nil, apiErr
 	}
 	var de api.DomainEnumResult
 	if err := json.Unmarshal(body, &de); err != nil {
@@ -213,7 +216,7 @@ func (l *clientLookup) PagesByName(ctx context.Context, name string, allowedPage
 	// name match is never silently dropped beyond a small first page.
 	body, apiErr := l.c.SearchPages(ctx, name, 1, 200, allowedPageTypeID)
 	if apiErr != nil {
-		return nil, errors.New(apiErr.Error())
+		return nil, apiErr
 	}
 	var res api.PagePageSearchResult
 	if err := json.Unmarshal(body, &res); err != nil {
@@ -234,7 +237,7 @@ func (l *clientLookup) PageTypesByName(ctx context.Context, _ string) ([]namedRe
 	}
 	body, apiErr := l.c.ListPageTypes(ctx)
 	if apiErr != nil {
-		return nil, errors.New(apiErr.Error())
+		return nil, apiErr
 	}
 	var pts []api.PageTypeResult
 	if err := unmarshalList(body, &pts); err != nil {
@@ -251,7 +254,7 @@ func (l *clientLookup) PageTypesByName(ctx context.Context, _ string) ([]namedRe
 func (l *clientLookup) UsersByEmail(ctx context.Context, email string) ([]namedRef, error) {
 	body, apiErr := l.c.SearchUsers(ctx, email, 1, 200, nil)
 	if apiErr != nil {
-		return nil, errors.New(apiErr.Error())
+		return nil, apiErr
 	}
 	var users []api.UserResult
 	if err := unmarshalList(body, &users); err != nil {
@@ -378,21 +381,24 @@ func decimalsSuffix(desc api.PropertyDescriptorResult) string {
 // describeEnumValues resolves an ENUM descriptor's allowed display values for the
 // self-contained describe-properties output. It degrades to nil (no values) when
 // the descriptor is not an enum, carries no domain enum id, or the lookup fails
-// (e.g. a permission error) — the caller still shows the enum name from the hint
-// and never crashes on a failed lookup.
-func describeEnumValues(ctx context.Context, lookup propertyLookup, desc api.PropertyDescriptorResult) []string {
+// with a permission/transport error — the caller still shows the enum name from
+// the hint. A decoded 429 is returned so describe-properties cannot swallow it.
+func describeEnumValues(ctx context.Context, lookup propertyLookup, desc api.PropertyDescriptorResult) ([]string, error) {
 	if derefDataType(desc.DataType) != api.PropertyDescriptorResultDataTypeENUM || desc.DomainEnumId == nil {
-		return nil
+		return nil, nil
 	}
 	values, err := lookup.EnumValues(ctx, *desc.DomainEnumId)
 	if err != nil {
-		return nil
+		if isDecodedRateLimit(err) {
+			return nil, err
+		}
+		return nil, nil
 	}
 	out := make([]string, 0, len(values))
 	for _, v := range values {
 		out = append(out, v.value)
 	}
-	return out
+	return out, nil
 }
 
 // describeHint builds the human-readable lookup hint, folding the resolved enum
@@ -590,33 +596,73 @@ func (pd propertyDispatcher) buildNumber(desc api.PropertyDescriptorResult, name
 
 func (pd propertyDispatcher) buildPageOutgoing(ctx context.Context, desc api.PropertyDescriptorResult, name, rawValue string, form api.PropertyValueForm) (api.PropertyValueForm, *propFlagError) {
 	tokens := splitMulti(rawValue)
+	if tryRawValueFirst(tokens) {
+		return pd.buildPageOutgoingRawFirst(ctx, desc, name, rawValue, tokens, form)
+	}
+	ids, err := pd.resolvePageOutgoingTokens(ctx, desc, name, tokens)
+	if err != nil {
+		return form, err
+	}
+	form.PageReferenceIds = &ids
+	return form, nil
+}
+
+func (pd propertyDispatcher) buildPageOutgoingRawFirst(ctx context.Context, desc api.PropertyDescriptorResult, name, rawValue string, tokens []string, form api.PropertyValueForm) (api.PropertyValueForm, *propFlagError) {
+	whole := strings.TrimSpace(rawValue)
+	candidates, err := pd.lookup.PagesByName(ctx, whole, desc.AllowedPageTypeId)
+	if err != nil {
+		return form, lookupFailed(name, err)
+	}
+	exactWhole := filterExact(candidates, whole)
+	tokenIDs, tokenErr := pd.resolvePageOutgoingTokens(ctx, desc, name, tokens)
+	switch {
+	case len(exactWhole) == 1 && tokenErr == nil && len(tokenIDs) > 1:
+		return form, ambiguousWholeAndParts(name, whole, exactWhole[0].id)
+	case len(exactWhole) == 1:
+		if decodedLookupProblem(tokenErr) {
+			return form, tokenErr
+		}
+		ids := []int64{exactWhole[0].id}
+		form.PageReferenceIds = &ids
+		return form, nil
+	case len(exactWhole) > 1:
+		return form, ambiguous(name, whole, exactWhole)
+	default:
+		if tokenErr != nil {
+			return form, tokenErr
+		}
+		form.PageReferenceIds = &tokenIDs
+		return form, nil
+	}
+}
+
+func (pd propertyDispatcher) resolvePageOutgoingTokens(ctx context.Context, desc api.PropertyDescriptorResult, name string, tokens []string) ([]int64, *propFlagError) {
 	ids := make([]int64, 0, len(tokens))
 	for _, tok := range tokens {
 		prefix, rest := splitPrefix(tok)
 		if prefix == "id" {
 			id, err := strconv.ParseInt(rest, 10, 64)
 			if err != nil {
-				return form, invalidRequest(fmt.Sprintf("property '%s' id:%s is not a numeric page id", name, rest))
+				return nil, invalidRequest(fmt.Sprintf("property '%s' id:%s is not a numeric page id", name, rest))
 			}
 			ids = append(ids, id)
 			continue
 		}
 		candidates, err := pd.lookup.PagesByName(ctx, rest, desc.AllowedPageTypeId)
 		if err != nil {
-			return form, lookupFailed(name, err)
+			return nil, lookupFailed(name, err)
 		}
 		exact := filterExact(candidates, rest)
 		switch len(exact) {
 		case 1:
 			ids = append(ids, exact[0].id)
 		case 0:
-			return form, pageNotFound(name, rest, desc, candidates)
+			return nil, pageNotFound(name, rest, desc, candidates)
 		default:
-			return form, ambiguous(name, rest, exact)
+			return nil, ambiguous(name, rest, exact)
 		}
 	}
-	form.PageReferenceIds = &ids
-	return form, nil
+	return ids, nil
 }
 
 func (pd propertyDispatcher) buildPageType(ctx context.Context, name, rawValue string, form api.PropertyValueForm) (api.PropertyValueForm, *propFlagError) {
@@ -652,6 +698,48 @@ func (pd propertyDispatcher) buildPageType(ctx context.Context, name, rawValue s
 
 func (pd propertyDispatcher) buildUserList(ctx context.Context, name, rawValue string, form api.PropertyValueForm) (api.PropertyValueForm, *propFlagError) {
 	tokens := splitMulti(rawValue)
+	if tryRawValueFirst(tokens) {
+		return pd.buildUserListRawFirst(ctx, name, rawValue, tokens, form)
+	}
+	links, err := pd.resolveUserListTokens(ctx, name, tokens)
+	if err != nil {
+		return form, err
+	}
+	form.UserLinks = &links
+	return form, nil
+}
+
+func (pd propertyDispatcher) buildUserListRawFirst(ctx context.Context, name, rawValue string, tokens []string, form api.PropertyValueForm) (api.PropertyValueForm, *propFlagError) {
+	whole := strings.TrimSpace(rawValue)
+	candidates, err := pd.lookup.UsersByEmail(ctx, whole)
+	if err != nil {
+		return form, lookupFailed(name, err)
+	}
+	exactWhole := filterExact(candidates, whole)
+	tokenLinks, tokenErr := pd.resolveUserListTokens(ctx, name, tokens)
+	switch {
+	case len(exactWhole) == 1 && tokenErr == nil && len(tokenLinks) > 1:
+		return form, ambiguousWholeAndParts(name, whole, exactWhole[0].id)
+	case len(exactWhole) == 1:
+		if decodedLookupProblem(tokenErr) {
+			return form, tokenErr
+		}
+		id := exactWhole[0].id
+		links := []api.UserLinkForm{{UserId: &id}}
+		form.UserLinks = &links
+		return form, nil
+	case len(exactWhole) > 1:
+		return form, ambiguous(name, whole, exactWhole)
+	default:
+		if tokenErr != nil {
+			return form, tokenErr
+		}
+		form.UserLinks = &tokenLinks
+		return form, nil
+	}
+}
+
+func (pd propertyDispatcher) resolveUserListTokens(ctx context.Context, name string, tokens []string) ([]api.UserLinkForm, *propFlagError) {
 	links := make([]api.UserLinkForm, 0, len(tokens))
 	for _, tok := range tokens {
 		prefix, rest := splitPrefix(tok)
@@ -662,13 +750,13 @@ func (pd propertyDispatcher) buildUserList(ctx context.Context, name, rawValue s
 		case "id":
 			id, err := strconv.ParseInt(rest, 10, 64)
 			if err != nil {
-				return form, invalidRequest(fmt.Sprintf("property '%s' id:%s is not a numeric user id", name, rest))
+				return nil, invalidRequest(fmt.Sprintf("property '%s' id:%s is not a numeric user id", name, rest))
 			}
 			links = append(links, api.UserLinkForm{UserId: &id})
 		default: // "" or "email"
 			candidates, err := pd.lookup.UsersByEmail(ctx, rest)
 			if err != nil {
-				return form, lookupFailed(name, err)
+				return nil, lookupFailed(name, err)
 			}
 			exact := filterExact(candidates, rest)
 			switch len(exact) {
@@ -676,16 +764,15 @@ func (pd propertyDispatcher) buildUserList(ctx context.Context, name, rawValue s
 				id := exact[0].id
 				links = append(links, api.UserLinkForm{UserId: &id})
 			case 0:
-				return form, invalidRequest(
+				return nil, invalidRequest(
 					fmt.Sprintf("property '%s': no user with email %q", name, rest),
 					"use ext:<name> for an external (non-account) user")
 			default:
-				return form, ambiguous(name, rest, exact)
+				return nil, ambiguous(name, rest, exact)
 			}
 		}
 	}
-	form.UserLinks = &links
-	return form, nil
+	return links, nil
 }
 
 // ---- merge orchestrator --------------------------------------------------
@@ -876,8 +963,28 @@ func unknownProperty(name string, descriptors []api.PropertyDescriptorResult) *p
 // ---- shared formatting / utility helpers --------------------------------
 
 func lookupFailed(name string, err error) *propFlagError {
+	var apiErr *client.APIError
+	if errors.As(err, &apiErr) && apiErr.Problem != nil {
+		return &propFlagError{
+			code:   apiErr.Problem.ErrorCode,
+			detail: fmt.Sprintf("property '%s'", name),
+			exit:   apiErr.Problem.ExitCode(),
+			cause:  apiErr,
+		}
+	}
 	return &propFlagError{code: "LOOKUP_FAILED", exit: 1,
 		detail: fmt.Sprintf("could not resolve property '%s': %v", name, err)}
+}
+
+func isDecodedRateLimit(err error) bool {
+	var apiErr *client.APIError
+	if !errors.As(err, &apiErr) {
+		return false
+	}
+	if apiErr.Status == 429 {
+		return true
+	}
+	return apiErr.Problem != nil && apiErr.Problem.ErrorCode == "RATE_LIMIT_EXCEEDED"
 }
 
 func pageNotFound(name, value string, desc api.PropertyDescriptorResult, candidates []namedRef) *propFlagError {
@@ -890,6 +997,33 @@ func pageNotFound(name, value string, desc api.PropertyDescriptorResult, candida
 	}
 	extra = append(extra, "use id:<n> to reference a page by id")
 	return invalidRequest(fmt.Sprintf("property '%s': no page named %q", name, value), extra...)
+}
+
+func tryRawValueFirst(tokens []string) bool {
+	if len(tokens) < 2 {
+		return false
+	}
+	for _, tok := range tokens {
+		if prefix, _ := splitPrefix(tok); prefix != "" {
+			return false
+		}
+	}
+	return true
+}
+
+func decodedLookupProblem(err *propFlagError) bool {
+	if err == nil {
+		return false
+	}
+	var apiErr *client.APIError
+	return errors.As(err, &apiErr) && apiErr.Problem != nil
+}
+
+func ambiguousWholeAndParts(name, whole string, wholeID int64) *propFlagError {
+	return invalidRequest(
+		fmt.Sprintf("property '%s': %q matches both the whole value and its comma-separated parts", name, whole),
+		fmt.Sprintf("did you mean the whole value %q (id:%d)?", whole, wholeID),
+	)
 }
 
 func ambiguous(name, value string, matches []namedRef) *propFlagError {

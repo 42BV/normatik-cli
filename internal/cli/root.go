@@ -67,6 +67,7 @@ func newRoot() *cobra.Command {
 	root.AddCommand(newMacrosCmd())
 	root.AddCommand(newReleaseNotesCmd())
 	root.AddCommand(newWhoamiCmd())
+	root.AddCommand(newSpecCmd())
 	root.AddCommand(newExplainCmd())
 	root.AddCommand(newLoginCmd())
 	root.AddCommand(newLogoutCmd())

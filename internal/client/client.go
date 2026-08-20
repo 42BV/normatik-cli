@@ -18,7 +18,10 @@ import (
 )
 
 type Client struct {
-	api *api.ClientWithResponses
+	api     *api.ClientWithResponses
+	http    *http.Client
+	apiBase string
+	apiKey  string
 }
 
 // APIError carries either a decoded Problem or a malformed-response marker.
@@ -81,11 +84,12 @@ func New(baseURL, apiKey string) (*Client, error) {
 		req.Header.Set("Authorization", "Bearer "+apiKey)
 		return nil
 	}
-	c, err := api.NewClientWithResponses(httpx.APIBaseURL(baseURL), api.WithHTTPClient(hc), api.WithRequestEditorFn(auth))
+	apiBase := httpx.APIBaseURL(baseURL)
+	c, err := api.NewClientWithResponses(apiBase, api.WithHTTPClient(hc), api.WithRequestEditorFn(auth))
 	if err != nil {
 		return nil, err
 	}
-	return &Client{api: c}, nil
+	return &Client{api: c, http: hc, apiBase: apiBase, apiKey: apiKey}, nil
 }
 
 func fail(transport error) *APIError { return &APIError{Transport: transport} }

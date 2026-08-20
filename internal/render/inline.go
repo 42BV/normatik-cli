@@ -26,7 +26,6 @@ var (
 	inlineColorRe = regexp.MustCompile(`:color\[([^\]]*)\](\{[^}]*\})?`)
 	boldRe        = regexp.MustCompile(`\*\*([^*]+)\*\*`)
 	italicRe      = regexp.MustCompile(`\*([^*]+)\*`)
-	otherInlineRe = regexp.MustCompile(`:([a-zA-Z][\w-]*)(\[[^\]]*\])?(\{[^}]*\})?`)
 	mdLinkRe      = regexp.MustCompile(`\[([^\]]*)\]\(([^)]*)\)`)
 	sgrResetRe    = regexp.MustCompile("\x1b\\[0?m")
 )
@@ -36,7 +35,7 @@ func renderInline(s string, idx *macroIndex) string {
 	// cannot contain other marks and always nests innermost"): stash their
 	// content behind NUL placeholders before any other pass so no enum/
 	// pagelink/emphasis resolution happens inside, and restore them styled at
-	// the very end (after otherInlineRe).
+	// the very end (after the emphasis/strike passes).
 	var codeSpans []string
 	s = inlineCodeRe.ReplaceAllStringFunc(s, func(m string) string {
 		codeSpans = append(codeSpans, inlineCodeRe.FindStringSubmatch(m)[1])
@@ -67,7 +66,7 @@ func renderInline(s string, idx *macroIndex) string {
 	// INSIDE the emphasis span — canonical nesting per StrikeMacroDataResolver
 	// @MacroDoc: strike nests outside color. Running it after would let the
 	// strike pass tear the directive syntax apart per grapheme (leaking it as
-	// literal text), and otherInlineRe would mangle any survivor into "[color]".
+	// literal text).
 	s = inlineColorRe.ReplaceAllStringFunc(s, func(m string) string {
 		mm := inlineColorRe.FindStringSubmatch(m)
 		return colorLabel(mm[1], parseAttrs(mm[2])["color"])
@@ -87,8 +86,7 @@ func renderInline(s string, idx *macroIndex) string {
 		inner := sgrResetRe.ReplaceAllString(strikeRe.FindStringSubmatch(m)[1], "${0}\x1b[9m")
 		return "\x1b[9m" + inner + "\x1b[29m"
 	})
-	// any remaining unresolved inline directive → bracketed name
-	s = otherInlineRe.ReplaceAllString(s, "[$1]")
+	// Unknown inline :name sequences stay literal (same norm as the UI).
 	codeStyle := lipgloss.NewStyle().Faint(true)
 	for i, span := range codeSpans {
 		s = strings.Replace(s, "\x00"+strconv.Itoa(i)+"\x00", codeStyle.Render(span), 1)

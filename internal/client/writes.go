@@ -64,6 +64,9 @@ func (c *Client) DeletePageType(ctx context.Context, id int64) ([]byte, *APIErro
 func (c *Client) MovePageType(ctx context.Context, id int64, f api.PageTypeMoveForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.MovePageType(ctx, id, f) })
 }
+func (c *Client) PreviewMovePageType(ctx context.Context, id int64, f api.PageTypeMovePreviewRequest) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.PreviewMovePageType(ctx, id, f) })
+}
 
 // ---- Property descriptors ----
 
