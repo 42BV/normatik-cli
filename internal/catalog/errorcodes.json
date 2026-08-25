@@ -153,9 +153,8 @@
     "status": 409,
     "title": "Data type change not allowed",
     "userMessage": "The data type cannot be changed because values already exist for this property.",
-    "hintKind": "STATIC",
-    "exitCode": 7,
-    "staticHint": "The data type of a property descriptor cannot be changed once values exist. Create a new descriptor with the desired type instead."
+    "hintKind": "DYNAMIC",
+    "exitCode": 7
   },
   {
     "name": "DATE_TIME_FORMAT_INVALID",
@@ -854,6 +853,15 @@
     "hintKind": "STATIC",
     "exitCode": 3,
     "staticHint": "Use POST /public/v1/page-types/{id}/move to reparent a page type."
+  },
+  {
+    "name": "PAGE_TYPE_WORKFLOW_INHERITED",
+    "status": 409,
+    "title": "Publishing workflow is inherited",
+    "userMessage": "This page type inherits the publishing workflow from an ancestor. You cannot disable it here. Move the type out of the workflow branch, or disable the workflow on the ancestor that owns it.",
+    "hintKind": "STATIC",
+    "exitCode": 7,
+    "staticHint": "Move this type out of the workflow branch via POST /public/v1/page-types/{id}/move, or disable the workflow on the ancestor that owns it via PUT /public/v1/page-types/{id}."
   },
   {
     "name": "PAGE_UNARCHIVE_BLOCKED_BY_PARENT",

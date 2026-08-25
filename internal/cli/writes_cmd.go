@@ -504,7 +504,7 @@ func addGroupsWrites(c *cobra.Command) {
 
 // pageTypesUpdateFileHelp is the per-command -f usage for page-types update.
 // It must not be copied onto the shared idFormFileWriteURL string.
-const pageTypesUpdateFileHelp = "JSON file with PageTypeForm; full replace via PUT — omitted templateContent, titleTemplate, allowedChildTypeIds and abstractType are cleared; parentId must be the current parent — change via page-types move. Templates do not inherit (set them on each concrete type). allowedChildTypes order is not a contract. titleTemplate supports only {{currentday}}"
+const pageTypesUpdateFileHelp = "JSON file with PageTypeForm; full replace via PUT — omitted templateContent, titleTemplate, allowedChildTypeIds and abstractType are cleared; omitted publishingWorkflowEnabled is unchanged (keeps the existing own opt-in; exception to omit=clear); parentId must be the current parent — change via page-types move. Templates do not inherit (set them on each concrete type). allowedChildTypes order is not a contract. titleTemplate supports only {{currentday}}"
 
 func addPageTypesWrites(c *cobra.Command) {
 	create := formFileWriteURL[api.PageTypeForm]("create", "Create a page type (-f form.json)", "normatik page-types create", "Page type created.",

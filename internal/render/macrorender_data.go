@@ -14,29 +14,53 @@ import (
 // progressBarWidth is the cell width of the ::progress-ring ASCII bar.
 const progressBarWidth = 24
 
+// progressRingNoDataNote is the config/empty payload copy. Reserved for missing
+// data or total=0 with excludedUnpublished=0 — not for a valid draft-only count.
+const progressRingNoDataNote = "(no data available for this configuration)"
+
 // renderProgressRing renders ::progress-ring from its ProgressRingMacroData
-// (total/successCount/percentage/breakdown): an ASCII bar with the percentage
-// and success/total counts, plus one breakdown line per enum value. The
-// backend emits an empty payload (total=0) for both "no matching pages" and
-// config errors — rendered as the web's no-data note (ProgressRingRenderer.tsx).
+// (total/successCount/percentage/breakdown/excludedUnpublished): an ASCII bar
+// with the percentage and success/total counts, plus one breakdown line per
+// enum value. Configuration errors stay the no-data note. A valid selection
+// with only pages that lack an active revision (total=0, excludedUnpublished>0)
+// shows that exclusion instead of the config error. Mixed totals keep the bar
+// and append the same exclusion line.
 func renderProgressRing(n *dnode, idx *macroIndex, width int) string {
 	entry, ok := idx.entryFor("progressRings", n)
 	if !ok {
 		return renderUnknownMacro(n, idx, width)
 	}
 	total := gnum(entry, "total")
-	if total == 0 {
-		return ruleHeader("Progress Ring") + "\n(no data available for this configuration)"
+	excluded := int(gnum(entry, "excludedUnpublished"))
+	if total == 0 && excluded == 0 {
+		return ruleHeader("Progress Ring") + "\n" + progressRingNoDataNote
 	}
-	pct := int(gnum(entry, "percentage"))
 	var b strings.Builder
-	filled := progressBarWidth * pct / 100
-	filled = minInt(maxInt(filled, 0), progressBarWidth)
-	fmt.Fprintf(&b, "%s%s %d%% (%d/%d)",
-		strings.Repeat("█", filled), strings.Repeat("░", progressBarWidth-filled),
-		pct, int(gnum(entry, "successCount")), int(total))
-	b.WriteString(breakdownLines(garr(entry, "breakdown")))
+	if total == 0 {
+		b.WriteString(ruleHeader("Progress Ring"))
+	} else {
+		pct := int(gnum(entry, "percentage"))
+		filled := progressBarWidth * pct / 100
+		filled = minInt(maxInt(filled, 0), progressBarWidth)
+		fmt.Fprintf(&b, "%s%s %d%% (%d/%d)",
+			strings.Repeat("█", filled), strings.Repeat("░", progressBarWidth-filled),
+			pct, int(gnum(entry, "successCount")), int(total))
+		b.WriteString(breakdownLines(garr(entry, "breakdown")))
+	}
+	if excluded > 0 {
+		if b.Len() > 0 {
+			b.WriteByte('\n')
+		}
+		b.WriteString(excludedUnpublishedNote(excluded))
+	}
 	return b.String()
+}
+
+func excludedUnpublishedNote(n int) string {
+	if n == 1 {
+		return "1 page has no active revision"
+	}
+	return fmt.Sprintf("%d pages have no active revision", n)
 }
 
 // breakdownLines renders the per-enum-value legend below the progress bar:

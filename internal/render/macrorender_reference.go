@@ -34,7 +34,7 @@ func renderChildren(n *dnode, idx *macroIndex, width int) string {
 		return errorLine(fe)
 	}
 	if strings.EqualFold(gstr(entry, "mode"), "PROPERTIES") {
-		return renderReferenceTable(entry, "(no child pages found)")
+		return renderReferenceTable(entry, "(no child pages found)", idx)
 	}
 	pages := garr(entry, "pages")
 	if len(pages) == 0 {
@@ -82,15 +82,16 @@ func renderReferenceMacro(n *dnode, idx *macroIndex, width int, mapKey string) s
 	if fe := gstr(entry, "filterError"); fe != "" {
 		return errorLine(fe)
 	}
-	return renderReferenceTable(entry, "(no pages found)")
+	return renderReferenceTable(entry, "(no pages found)", idx)
 }
 
 // renderReferenceTable renders the shared reference-table shape: a header row
 // with the Name column plus the configured displayColumns (sorted by
 // sortOrder, like PageReferenceTable.tsx), and per pageReference a row with
-// the page name. The property VALUES per column are Tier B (the web fetches
-// them via a separate property-values call) — the CLI renders an em-dash.
-func renderReferenceTable(entry map[string]any, emptyNote string) string {
+// the page name. Display cells come from idx.values, matched on
+// propertyDescriptorName == column.name and formatted with propValue. A nil
+// lookup, missing page, missing property or empty value stays an em-dash.
+func renderReferenceTable(entry map[string]any, emptyNote string, idx *macroIndex) string {
 	refs := garr(entry, "pageReferences")
 	if len(refs) == 0 {
 		return emptyNote
@@ -116,12 +117,38 @@ func renderReferenceTable(entry map[string]any, emptyNote string) string {
 		}
 		row := make([]string, len(headers))
 		row[0] = firstStr(rm, "name", "title")
+		pageID := pageRefID(rm)
 		for i := 1; i < len(row); i++ {
-			row[i] = "—" // property value: Tier B, not in the composite
+			row[i] = referenceColumnValue(idx, pageID, gstr(cols[i-1], "name"))
 		}
 		rows = append(rows, row)
 	}
 	return asciiTable(headers, rows, nil)
+}
+
+func referenceColumnValue(idx *macroIndex, pageID int64, columnName string) string {
+	pv := lookupPropertyValue(idx, pageID, columnName)
+	if pv == nil {
+		return "—"
+	}
+	return propValue(pv)
+}
+
+// lookupPropertyValue returns the first property row on pageID whose
+// propertyDescriptorName equals columnName (SPA PageReferenceTable parity).
+// Duplicate names on one page are not a real response-contract case
+// (uk_property_descriptor_name is unique per page type, and a page has one
+// type); first-match is recorded, not a second disambiguation key.
+func lookupPropertyValue(idx *macroIndex, pageID int64, columnName string) map[string]any {
+	if idx == nil || idx.values == nil || pageID == 0 || columnName == "" {
+		return nil
+	}
+	for _, pv := range idx.values[pageID] {
+		if gstr(pv, "propertyDescriptorName") == columnName {
+			return pv
+		}
+	}
+	return nil
 }
 
 // --- toc (client-side heading scan) ------------------------------------------
@@ -237,7 +264,12 @@ func renderIncludeLike(n *dnode, idx *macroIndex, width int, mapKey, label, empt
 		return head + "\n" + emptyNote
 	}
 	root := parseDirectives(content)
-	nested := &macroIndex{raw: gmap(entry, "macroData"), root: root, depth: idx.depth + 1}
+	nested := &macroIndex{
+		raw:    gmap(entry, "macroData"),
+		root:   root,
+		depth:  idx.depth + 1,
+		values: idx.values,
+	}
 	return head + "\n" + renderNodes(root.kids, nested, width)
 }
 

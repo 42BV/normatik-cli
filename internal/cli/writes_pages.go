@@ -68,7 +68,8 @@ func addPagesWrites(parent *cobra.Command) {
 				// Combination rule: with --content we validate the markdown first
 				// (unchanged /content/validate behaviour); when there are property
 				// values — from --property flags OR from a -f form — we print the
-				// payload that would be sent. Never a write.
+				// payload that would be sent. Never a write. A -f preview is the
+				// PageEditForm as sent (PUT merge: omitted/null fields are kept).
 				if f.Content == nil && !hasProps && !hasFormProps {
 					d.Printer.Message("Error [USAGE]: --dry-run needs --content/-f content and/or --property/-f propertyValues to preview")
 					return command.Handled(2)
@@ -83,9 +84,10 @@ func addPagesWrites(parent *cobra.Command) {
 					return previewPageProperties(cmd, d, id, f, props, unsets, timezone)
 				}
 				if hasFormProps {
-					// A -f form (no flags) routes via PUT: preview the PageEditForm
-					// itself. The optimistic-lock version is auto-filled from the page
-					// at send when absent, so it may not appear in this preview.
+					// A -f form (no flags) routes via PUT merge: preview the PageEditForm
+					// itself. Omitted fields are kept by the backend. The optimistic-lock
+					// version is auto-filled from the page at send when absent, so it may
+					// not appear in this preview.
 					d.Printer.DryRun(f)
 				}
 				return nil
@@ -100,13 +102,13 @@ func addPagesWrites(parent *cobra.Command) {
 				return command.Handled(2)
 			}
 			// Route selection (both paths auto-fill the optimistic-lock version):
-			// a -f form without property flags is a deliberate full-form PUT
-			// replace; everything else — property flags OR a plain --name/--content
-			// change — routes via the non-destructive PATCH path. PATCH backfills
-			// untouched name/content and merges property values, whereas a
-			// full-replace PUT silently wipes the omitted fields
-			// (createRevisionForPage does no backfill), so a partial flag update
-			// must never take the PUT path.
+			// a -f form without property flags is a PUT with merge semantics
+			// (omitted/null name, content and propertyValues are kept). Everything
+			// else — property flags OR a plain --name/--content change — routes via
+			// PATCH. PATCH remains the only path that can unset properties. An
+			// explicit --version (or -f version) always wins; otherwise patchVersion
+			// fills Page.version for non-workflow/unknown and leaves version null on
+			// a confirmed workflow page.
 			if file != "" && !hasProps {
 				return updatePagePut(cmd, d, id, f)
 			}
@@ -116,7 +118,7 @@ func addPagesWrites(parent *cobra.Command) {
 	update.Flags().StringVar(&name, "name", "", "new name")
 	update.Flags().StringVar(&content, "content", "", "new markdown content")
 	update.Flags().Int64Var(&version, "version", 0, "expected version (optimistic locking)")
-	update.Flags().StringVarP(&file, "file", "f", "", "JSON file with PageEditForm (incl. propertyValues); full replace via PUT — omitted fields are cleared. Use --property for a non-destructive merge")
+	update.Flags().StringVarP(&file, "file", "f", "", "JSON file with PageEditForm (incl. propertyValues); PUT merge — omitted/null fields are kept, empty string is an explicit write. Use --property/--unset-property for PATCH (unset removes a property)")
 	update.Flags().StringArrayVar(&props, "property", nil, "set a property: \"name=value\" (repeatable; routes via PATCH; see `pages describe-properties`)")
 	update.Flags().StringArrayVar(&unsets, "unset-property", nil, "clear a property by name (repeatable; routes via PATCH)")
 	update.Flags().StringVar(&timezone, "timezone", "", "IANA zone for DATE_TIME properties (default: host local zone)")
@@ -251,15 +253,13 @@ func buildPropertyPatch(cmd *cobra.Command, d *command.Deps, id int64, f api.Pag
 	return patch, page, nil
 }
 
-// updatePagePut performs a deliberate full-form page update via PUT (the -f form
-// path only; plain --name/--content flag updates route via the non-destructive
-// PATCH path to avoid wiping omitted fields). When the caller passed no --version
-// it auto-fills the optimistic-lock version the same way the PATCH path does
-// (patchVersion): the backend PUT rejects a null version on a non-workflow page
-// (assertVersionMatches) yet validates a workflow page against PageRevision.version,
-// so a version-less PUT tripped a spurious 409 CONCURRENT_UPDATE. An explicit
-// --version (or -f version) always wins and skips the extra GET. PUT is
-// full-replace (no backfill): callers must supply the complete intended form.
+// updatePagePut performs a -f form page update via PUT. Plain --name/--content
+// flag updates route via PATCH. When the caller passed no --version it auto-fills
+// the optimistic-lock version the same way the PATCH path does (patchVersion):
+// Page.version for non-workflow/unknown, null for a confirmed workflow page. An
+// explicit --version (or -f version) always wins and skips the extra GET. PUT
+// merges omitted/null name, content and propertyValues; an empty string is an
+// explicit write. Removing a property is PATCH --unset-property only.
 func updatePagePut(cmd *cobra.Command, d *command.Deps, id int64, f api.PageEditForm) error {
 	if f.Version == nil {
 		page, apiErr := fetchPage(cmd.Context(), d.Client, id)

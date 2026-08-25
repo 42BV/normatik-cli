@@ -73,6 +73,17 @@ func asciiTable(headers []string, rows [][]string, colW []int) string {
 // honoured, and a real terminal keeps its detected color profile. JSON mode
 // stays the raw composite, untouched.
 func (p *Printer) PageRich(body []byte) {
+	p.pageRich(body, nil)
+}
+
+// PageRichWithValues is the same human-rich path as PageRich, with an optional
+// per-page property-values lookup for reference-table cells. JSON mode still
+// dumps the original composite and ignores the lookup.
+func (p *Printer) PageRichWithValues(body []byte, values map[int64][]map[string]any) {
+	p.pageRich(body, values)
+}
+
+func (p *Printer) pageRich(body []byte, values map[int64][]map[string]any) {
 	if p.Mode == JSON {
 		p.rawDump(body)
 		return
@@ -82,12 +93,13 @@ func (p *Printer) PageRich(body []byte) {
 		fmt.Fprintln(p.Out, terminalLine(string(body)))
 		return
 	}
-	fmt.Fprint(colorprofile.NewWriter(p.Out, os.Environ()), renderPageRich(m))
+	fmt.Fprint(colorprofile.NewWriter(p.Out, os.Environ()), renderPageRich(m, values))
 }
 
-func renderPageRich(m map[string]any) string {
+func renderPageRich(m map[string]any, values map[int64][]map[string]any) string {
 	var b strings.Builder
 	idx := newMacroIndex(m)
+	idx.values = values
 
 	// Title box + meta + breadcrumb + properties (reuse the existing helpers).
 	name := gstr(m, "name")

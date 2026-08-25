@@ -22,6 +22,9 @@ type macroIndex struct {
 	jiraEnabled bool           // true only when jiraMacros is present as an object
 	root        *dnode         // parsed tree of the content this macroData belongs to
 	depth       int            // include nesting depth (0 = top page)
+	// values is an optional per-page property-values lookup (pageId → rows).
+	// Nil means no injection: reference-table display cells stay em-dash.
+	values map[int64][]map[string]any
 }
 
 func newMacroIndex(m map[string]any) *macroIndex {

@@ -2490,9 +2490,13 @@ type PageCreateForm struct {
 
 // PageEditForm defines model for PageEditForm.
 type PageEditForm struct {
-	// Content Normatik markdown: CommonMark, GFM strikethrough and autolink literals, and Normatik directives. GFM pipe tables, footnotes and task lists are rejected (UNSUPPORTED_MARKDOWN_TABLE, UNSUPPORTED_MARKDOWN_FOOTNOTE, UNSUPPORTED_MARKDOWN_TASK_LIST); use the :::table macro for tables. See GET /public/v1/content-macros/docs.
-	Content        *string                  `json:"content,omitempty"`
-	Name           *string                  `json:"name,omitempty"`
+	// Content When null or omitted the existing content is kept. An empty string is an explicit write. Normatik markdown: CommonMark, GFM strikethrough and autolink literals, and Normatik directives. GFM pipe tables, footnotes and task lists are rejected (UNSUPPORTED_MARKDOWN_TABLE, UNSUPPORTED_MARKDOWN_FOOTNOTE, UNSUPPORTED_MARKDOWN_TASK_LIST); use the :::table macro for tables. See GET /public/v1/content-macros/docs.
+	Content *string `json:"content,omitempty"`
+
+	// Name When null or omitted the existing name is kept. An empty string is an explicit write.
+	Name *string `json:"name,omitempty"`
+
+	// PropertyValues When null or omitted, existing property values are kept. An empty list is a no-op. A non-empty list upserts the given descriptors by propertyDescriptorId; omitted descriptors stay unchanged. Removal is only via PATCH unsetPropertyDescriptorIds.
 	PropertyValues *[]PropertyValueEditForm `json:"propertyValues,omitempty"`
 	Version        *int64                   `json:"version,omitempty"`
 }
@@ -2781,10 +2785,12 @@ type PageTypeForm struct {
 	ChildTypePropertyDescriptorId *int64                     `json:"childTypePropertyDescriptorId,omitempty"`
 	Name                          string                     `json:"name"`
 	ParentId                      *int64                     `json:"parentId,omitempty"`
-	PublishingWorkflowEnabled     *bool                      `json:"publishingWorkflowEnabled,omitempty"`
-	SortableChildPages            *bool                      `json:"sortableChildPages,omitempty"`
-	TemplateContent               *string                    `json:"templateContent,omitempty"`
-	TitleTemplate                 *string                    `json:"titleTemplate,omitempty"`
+
+	// PublishingWorkflowEnabled Own publishing-workflow opt-in. Null or omitted: on create, no own opt-in (column false); on update, keep the existing own flag. Explicit false is rejected with 409 PAGE_TYPE_WORKFLOW_INHERITED when a workflow ancestor is present.
+	PublishingWorkflowEnabled *bool   `json:"publishingWorkflowEnabled,omitempty"`
+	SortableChildPages        *bool   `json:"sortableChildPages,omitempty"`
+	TemplateContent           *string `json:"templateContent,omitempty"`
+	TitleTemplate             *string `json:"titleTemplate,omitempty"`
 }
 
 // PageTypeFormChildTypeMode defines model for PageTypeForm.ChildTypeMode.
@@ -3170,10 +3176,11 @@ type ProblemDetail struct {
 
 // ProgressRingMacroData defines model for ProgressRingMacroData.
 type ProgressRingMacroData struct {
-	Breakdown    *[]EnumValueCount `json:"breakdown,omitempty"`
-	Percentage   *int32            `json:"percentage,omitempty"`
-	SuccessCount *int64            `json:"successCount,omitempty"`
-	Total        *int64            `json:"total,omitempty"`
+	Breakdown           *[]EnumValueCount `json:"breakdown,omitempty"`
+	ExcludedUnpublished *int64            `json:"excludedUnpublished,omitempty"`
+	Percentage          *int32            `json:"percentage,omitempty"`
+	SuccessCount        *int64            `json:"successCount,omitempty"`
+	Total               *int64            `json:"total,omitempty"`
 }
 
 // PropertyChainMacroData defines model for PropertyChainMacroData.

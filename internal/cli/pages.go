@@ -709,6 +709,10 @@ func pageListIDs(list *api.PagePageListResult) []int64 {
 	return out
 }
 
+const pagePropertyValuesChunkSize = 200
+
+var errNullPagePropertyValues = errors.New("property-values body is null")
+
 func omittedPageIDs(requested []int64, body []byte) []int64 {
 	var rows []struct {
 		PageId int64 `json:"pageId"`
@@ -727,6 +731,89 @@ func omittedPageIDs(requested []int64, body []byte) []int64 {
 		}
 	}
 	return omitted
+}
+
+func fetchRenderPropertyValues(ctx context.Context, d *command.Deps, body []byte) (map[int64][]map[string]any, []int64, []int64, error) {
+	var composite map[string]any
+	if json.Unmarshal(body, &composite) != nil {
+		return nil, nil, nil, nil
+	}
+	requested := render.CollectReferencePageIDs(composite)
+	if len(requested) == 0 {
+		return nil, nil, nil, nil
+	}
+	values := make(map[int64][]map[string]any)
+	returned := make(map[int64]struct{})
+	for _, chunk := range chunkIDs(requested, pagePropertyValuesChunkSize) {
+		raw, apiErr := d.Client.ListPagePropertyValues(ctx, chunk)
+		if apiErr != nil {
+			return nil, requested, nil, command.RenderError(d.Printer, apiErr, "normatik pages render")
+		}
+		rows, err := decodePagePropertyValues(raw)
+		if err != nil {
+			return nil, requested, nil, command.RenderError(d.Printer, &client.APIError{
+				Malformed: true,
+				Status:    200,
+				Body:      raw,
+			}, "normatik pages render")
+		}
+		for pageID, props := range rows {
+			values[pageID] = props
+			returned[pageID] = struct{}{}
+		}
+	}
+	var omitted []int64
+	for _, id := range requested {
+		if _, ok := returned[id]; !ok {
+			omitted = append(omitted, id)
+		}
+	}
+	return values, requested, omitted, nil
+}
+
+func decodePagePropertyValues(body []byte) (map[int64][]map[string]any, error) {
+	var rows []struct {
+		PageId         int64            `json:"pageId"`
+		PropertyValues []map[string]any `json:"propertyValues"`
+	}
+	if err := json.Unmarshal(body, &rows); err != nil {
+		return nil, err
+	}
+	// json.Unmarshal("null", &slice) succeeds with a nil slice. That must not
+	// look like an empty successful batch (which would omit every id at exit 0).
+	if rows == nil {
+		return nil, errNullPagePropertyValues
+	}
+	out := make(map[int64][]map[string]any, len(rows))
+	for _, row := range rows {
+		if row.PageId == 0 {
+			continue
+		}
+		props := row.PropertyValues
+		if props == nil {
+			props = []map[string]any{}
+		}
+		out[row.PageId] = props
+	}
+	return out, nil
+}
+
+func chunkIDs(ids []int64, size int) [][]int64 {
+	if len(ids) == 0 {
+		return nil
+	}
+	if size <= 0 {
+		size = pagePropertyValuesChunkSize
+	}
+	out := make([][]int64, 0, (len(ids)+size-1)/size)
+	for i := 0; i < len(ids); i += size {
+		end := i + size
+		if end > len(ids) {
+			end = len(ids)
+		}
+		out = append(out, ids[i:end])
+	}
+	return out
 }
 
 func joinIDs(ids []int64) string {
@@ -810,7 +897,12 @@ func newPagesRenderCmd() *cobra.Command {
 			"resolved from the composite's macroData (tables, enum pills, pagelinks, children/toc\n" +
 			"lists, progress rings). Colours are only emitted on a real terminal — piped or\n" +
 			"redirected output stays plain text, and NO_COLOR is honoured.\n" +
-			"Use --plain for the placeholder-only rendering ([macro: name], no macro resolution,\n" +
+			"Default human-rich output may make one extra bulk-read (GET /public/v1/pages/property-values)\n" +
+			"to fill reference-table columns. Ids are requested sequentially in chunks of at most\n" +
+			"200; nothing is silently truncated. A failed chunk aborts before stdout (no em-dash\n" +
+			"fallback). Ids the endpoint omits stay as em-dash cells with one stderr summary,\n" +
+			"suppressed by --quiet. --plain, --output json and --url never perform that extra call.\n" +
+			"Use --plain for placeholder-only rendering ([macro: name], no macro resolution,\n" +
 			"no styling). --output json returns the raw composite in both cases.",
 		Args: cobra.ExactArgs(1),
 		Example: "  normatik pages render 1\n" +
@@ -835,8 +927,20 @@ func newPagesRenderCmd() *cobra.Command {
 			}
 			if plain {
 				d.Printer.Page(body) // placeholder-only ([macro: name])
-			} else {
-				d.Printer.PageRich(body) // default: macros resolved from macroData
+				return nil
+			}
+			if d.Printer.Mode == render.JSON {
+				d.Printer.PageRich(body) // raw composite; no second call
+				return nil
+			}
+			values, requested, omitted, ferr := fetchRenderPropertyValues(cmd.Context(), d, body)
+			if ferr != nil {
+				return ferr
+			}
+			d.Printer.PageRichWithValues(body, values)
+			if !d.Printer.Quiet && len(omitted) > 0 {
+				d.Printer.Message("%d of %d requested pages returned; omitted: %s",
+					len(requested)-len(omitted), len(requested), joinIDs(omitted))
 			}
 			return nil
 		},
