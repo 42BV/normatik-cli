@@ -180,6 +180,7 @@ func init() {
 		"attachments":     renderAttachments,
 		"file":            renderFile,
 		"pdf":             renderPdf,
+		"slides":          renderSlides,
 		"image":           renderImage,
 		"jira-assets":     renderJiraAssets,
 		"jira-issues":     renderJiraIssues,

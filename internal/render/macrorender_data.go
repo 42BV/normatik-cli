@@ -259,6 +259,13 @@ func renderPdf(n *dnode, idx *macroIndex, width int) string {
 	return renderAttachmentLine(n, idx, width, "PDF · ")
 }
 
+// renderSlides renders ::slides{id=..} like ::file, labelled as SLIDES — the
+// CLI never embeds the browser-side slide viewer (no extra HTTP calls; the
+// web loads a JS library to render the pptx in the browser).
+func renderSlides(n *dnode, idx *macroIndex, width int) string {
+	return renderAttachmentLine(n, idx, width, "SLIDES · ")
+}
+
 // renderAttachmentLine is the shared ::file / ::pdf path: an id-keyed lookup
 // in fileAttachments → "📎 [PDF · ]filename (size)". A miss (unknown id) keeps
 // the existing labelled placeholder.

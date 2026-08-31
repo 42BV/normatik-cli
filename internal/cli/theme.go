@@ -8,9 +8,10 @@ import (
 )
 
 // normatikColorScheme is het fang-thema in de Normatik-huisstijl: kompas-oranje
-// als accent, terracotta voor commando's, plum-ink als basistekst. De
-// LightDarkFunc kiest per terminal-achtergrond een leesbare ink/muted-tint;
-// de brand-accenten (oranje/terracotta) lezen op zowel licht als donker.
+// als accent, terracotta voor commando's, muted plum-grey voor help-body en
+// descriptions. De LightDarkFunc kiest per terminal-achtergrond een leesbare
+// ink/muted-tint; de brand-accenten (oranje/terracotta) lezen op zowel licht
+// als donker.
 func normatikColorScheme(c lipgloss.LightDarkFunc) fang.ColorScheme {
 	orange := lipgloss.Color("#D97A54")    // kompas-naald
 	terra := lipgloss.Color("#A2543F")     // terracotta (knoppen / "NIS2")
@@ -20,7 +21,9 @@ func normatikColorScheme(c lipgloss.LightDarkFunc) fang.ColorScheme {
 	codeblock := c(lipgloss.Color("#F2E9E3"), lipgloss.Color("#2A2530")) // subtiele warme box-bg
 
 	return fang.ColorScheme{
-		Base:           ink,
+		// Base kleurt de Long-paragraaf boven usage (fang styles.Text).
+		// Zelfde muted als command-/flag-descriptions, niet de witte ink.
+		Base:           muted,
 		Title:          orange,
 		Description:    muted,
 		Codeblock:      codeblock,

@@ -44,7 +44,7 @@ func (e *APIError) Error() string {
 	if e.Transport != nil {
 		return e.Transport.Error()
 	}
-	return "request mislukt"
+	return "request failed"
 }
 
 var ErrResponseTooLarge = errors.New("response too large")

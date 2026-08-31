@@ -56,7 +56,7 @@ func newRoot() *cobra.Command {
 	}
 	root.PersistentFlags().StringP("output", "o", "table", "output format: table|json")
 	root.PersistentFlags().String("profile", "", "use a specific environment profile (otherwise the active profile)")
-	root.PersistentFlags().Bool("no-banner", false, "hide the ASCII banner on --help")
+	root.PersistentFlags().Bool("no-banner", false, "hide the banner on --help")
 	root.PersistentFlags().StringSlice("fields", nil, "select/order columns in table mode (e.g. --fields id,name)")
 	root.PersistentFlags().BoolP("quiet", "q", false, "compact output (no header/pagination footer)")
 	root.PersistentFlags().Bool("no-input", false, "non-interactive: destructive actions without --confirm fail with exit 2 (no prompt)")
