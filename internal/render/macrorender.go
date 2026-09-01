@@ -94,6 +94,7 @@ func (p *Printer) pageRich(body []byte, values map[int64][]map[string]any) {
 		return
 	}
 	fmt.Fprint(colorprofile.NewWriter(p.Out, os.Environ()), renderPageRich(m, values))
+	p.expandErrors(m)
 }
 
 func renderPageRich(m map[string]any, values map[int64][]map[string]any) string {

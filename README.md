@@ -44,7 +44,7 @@ explicit localhost-only development opt-in.
 
 ## Build from source
 
-Requirements: Go 1.26.5 or newer.
+Requirements: Go 1.26.7 or newer.
 
 ```bash
 go mod download

@@ -24,6 +24,7 @@ func (p *Printer) Page(body []byte) {
 		return
 	}
 	fmt.Fprint(p.Out, renderPageASCII(m))
+	p.expandErrors(m)
 }
 
 // PageGet renders the GET /public/v1/pages/{id} detail for `pages get`: the
@@ -80,6 +81,20 @@ func (p *Printer) PageGet(body []byte, working bool, humanFields ...string) {
 		b.WriteString("  (no property values)\n")
 	}
 	fmt.Fprint(p.Out, b.String())
+	p.expandErrors(m)
+}
+
+// expandErrors writes one diagnostic line per _errors section to stderr.
+// Not gated on Quiet: a partial expand failure is an error, not a header/footer.
+// JSON callers return before this helper. Empty or absent _errors is a no-op.
+func (p *Printer) expandErrors(m map[string]any) {
+	errs := gmap(m, "_errors")
+	if len(errs) == 0 {
+		return
+	}
+	for _, k := range sortedKeys(errs) {
+		fmt.Fprintf(p.Err, "Expand errors (partial): %s %s\n", terminalLine(k), summarizeError(errs[k]))
+	}
 }
 
 func renderPageASCII(m map[string]any) string {
@@ -144,13 +159,6 @@ func renderPageASCII(m map[string]any) string {
 		fmt.Fprintf(&b, "  %s\n", summarizeRestriction(r))
 	}
 
-	// Partial expand failures (_errors map) — surface so agents know data is incomplete.
-	if errs := gmap(m, "_errors"); len(errs) > 0 {
-		section(&b, "Expand errors (partial)")
-		for _, k := range sortedKeys(errs) {
-			fmt.Fprintf(&b, "  %-16s %s\n", k, summarizeError(errs[k]))
-		}
-	}
 	return b.String()
 }
 

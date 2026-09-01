@@ -347,6 +347,9 @@ var synth = map[string]synthFunc{
 			if d.Code == "UNSUPPORTED_MARKDOWN_FOOTNOTE" || d.Code == "UNSUPPORTED_MARKDOWN_TASK_LIST" {
 				return "normatik macros docs   # supported markdown dialect"
 			}
+			if d.Code == "INVALID_FILTER_SYNTAX" {
+				return "normatik macros docs   # filter syntax"
+			}
 		}
 		// Other validation failures already carry their own diagnostics lines.
 		return ""

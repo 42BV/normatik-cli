@@ -246,6 +246,7 @@ const (
 	DISABLEDMODULEMACRO         ContentDiagnosticCode = "DISABLED_MODULE_MACRO"
 	ENTITYNOTFOUND              ContentDiagnosticCode = "ENTITY_NOT_FOUND"
 	INVALIDATTRIBUTETYPE        ContentDiagnosticCode = "INVALID_ATTRIBUTE_TYPE"
+	INVALIDFILTERSYNTAX         ContentDiagnosticCode = "INVALID_FILTER_SYNTAX"
 	MACRONOTALLOWEDINCONTEXT    ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_CONTEXT"
 	MACRONOTALLOWEDINPROPERTY   ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_PROPERTY"
 	MALFORMEDDIRECTIVELINE      ContentDiagnosticCode = "MALFORMED_DIRECTIVE_LINE"
@@ -267,6 +268,8 @@ func (e ContentDiagnosticCode) Valid() bool {
 	case ENTITYNOTFOUND:
 		return true
 	case INVALIDATTRIBUTETYPE:
+		return true
+	case INVALIDFILTERSYNTAX:
 		return true
 	case MACRONOTALLOWEDINCONTEXT:
 		return true
@@ -2210,6 +2213,7 @@ type ExcerptIncludeData struct {
 
 // ExpandError defines model for ExpandError.
 type ExpandError struct {
+	// Code Known values: INTEGRATION_DISABLED, JIRA_UNAVAILABLE, FORBIDDEN, EXPAND_ERROR. Consumers must tolerate unknown values.
 	Code      *string `json:"code,omitempty"`
 	Fallback  *string `json:"fallback,omitempty"`
 	Message   *string `json:"message,omitempty"`
