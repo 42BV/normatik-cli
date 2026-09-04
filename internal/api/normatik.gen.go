@@ -1016,6 +1016,7 @@ func (e PublicUserCompositeResultRole) Valid() bool {
 const (
 	PublicUserCompositeResultStatusACTIVE  PublicUserCompositeResultStatus = "ACTIVE"
 	PublicUserCompositeResultStatusDELETED PublicUserCompositeResultStatus = "DELETED"
+	PublicUserCompositeResultStatusPENDING PublicUserCompositeResultStatus = "PENDING"
 )
 
 // Valid indicates whether the value is a known member of the PublicUserCompositeResultStatus enum.
@@ -1024,6 +1025,8 @@ func (e PublicUserCompositeResultStatus) Valid() bool {
 	case PublicUserCompositeResultStatusACTIVE:
 		return true
 	case PublicUserCompositeResultStatusDELETED:
+		return true
+	case PublicUserCompositeResultStatusPENDING:
 		return true
 	default:
 		return false
@@ -1118,6 +1121,7 @@ func (e PublicUserMeResultRole) Valid() bool {
 const (
 	PublicUserMeResultStatusACTIVE  PublicUserMeResultStatus = "ACTIVE"
 	PublicUserMeResultStatusDELETED PublicUserMeResultStatus = "DELETED"
+	PublicUserMeResultStatusPENDING PublicUserMeResultStatus = "PENDING"
 )
 
 // Valid indicates whether the value is a known member of the PublicUserMeResultStatus enum.
@@ -1126,6 +1130,8 @@ func (e PublicUserMeResultStatus) Valid() bool {
 	case PublicUserMeResultStatusACTIVE:
 		return true
 	case PublicUserMeResultStatusDELETED:
+		return true
+	case PublicUserMeResultStatusPENDING:
 		return true
 	default:
 		return false
@@ -1210,6 +1216,27 @@ func (e TrashedPageViewResultRestoreTarget) Valid() bool {
 	case TrashedPageViewResultRestoreTargetActive:
 		return true
 	case TrashedPageViewResultRestoreTargetArchived:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for UserFormCreationMode.
+const (
+	NOPASSWORD          UserFormCreationMode = "NO_PASSWORD"
+	SENDACTIVATIONEMAIL UserFormCreationMode = "SEND_ACTIVATION_EMAIL"
+	SETPASSWORD         UserFormCreationMode = "SET_PASSWORD"
+)
+
+// Valid indicates whether the value is a known member of the UserFormCreationMode enum.
+func (e UserFormCreationMode) Valid() bool {
+	switch e {
+	case NOPASSWORD:
+		return true
+	case SENDACTIVATIONEMAIL:
+		return true
+	case SETPASSWORD:
 		return true
 	default:
 		return false
@@ -1424,6 +1451,7 @@ func (e UserResultRole) Valid() bool {
 const (
 	UserResultStatusACTIVE  UserResultStatus = "ACTIVE"
 	UserResultStatusDELETED UserResultStatus = "DELETED"
+	UserResultStatusPENDING UserResultStatus = "PENDING"
 )
 
 // Valid indicates whether the value is a known member of the UserResultStatus enum.
@@ -1432,6 +1460,8 @@ func (e UserResultStatus) Valid() bool {
 	case UserResultStatusACTIVE:
 		return true
 	case UserResultStatusDELETED:
+		return true
+	case UserResultStatusPENDING:
 		return true
 	default:
 		return false
@@ -1739,6 +1769,7 @@ func (e PreviewPageCascadeImpactParamsOperation) Valid() bool {
 const (
 	ListUsersParamsStatusACTIVE  ListUsersParamsStatus = "ACTIVE"
 	ListUsersParamsStatusDELETED ListUsersParamsStatus = "DELETED"
+	ListUsersParamsStatusPENDING ListUsersParamsStatus = "PENDING"
 )
 
 // Valid indicates whether the value is a known member of the ListUsersParamsStatus enum.
@@ -1747,6 +1778,8 @@ func (e ListUsersParamsStatus) Valid() bool {
 	case ListUsersParamsStatusACTIVE:
 		return true
 	case ListUsersParamsStatusDELETED:
+		return true
+	case ListUsersParamsStatusPENDING:
 		return true
 	default:
 		return false
@@ -2678,36 +2711,40 @@ type PageRestrictionResult struct {
 
 // PageResult defines model for PageResult.
 type PageResult struct {
-	AvailablePropertyDescriptors    *[]PropertyDescriptorResult `json:"availablePropertyDescriptors,omitempty"`
-	Breadcrumbs                     *[]BreadcrumbItemResult     `json:"breadcrumbs,omitempty"`
-	CanDelete                       *bool                       `json:"canDelete,omitempty"`
-	Content                         *string                     `json:"content,omitempty"`
-	CurrentUserAccessLevel          *string                     `json:"currentUserAccessLevel,omitempty"`
-	Diagnostics                     *[]ContentDiagnostic        `json:"diagnostics,omitempty"`
-	EffectiveChildType              *AllowedChildTypeResult     `json:"effectiveChildType,omitempty"`
-	HasChildren                     *bool                       `json:"hasChildren,omitempty"`
-	HasOwnRestriction               *bool                       `json:"hasOwnRestriction,omitempty"`
-	HasRestriction                  *bool                       `json:"hasRestriction,omitempty"`
-	Id                              *int64                      `json:"id,omitempty"`
-	InTrash                         *bool                       `json:"inTrash,omitempty"`
-	LatestVersionAuthorDisplayNames *[]string                   `json:"latestVersionAuthorDisplayNames,omitempty"`
-	LatestVersionCreatedAt          *string                     `json:"latestVersionCreatedAt,omitempty"`
-	LatestVersionNumber             *int64                      `json:"latestVersionNumber,omitempty"`
-	MacroData                       *MacroData                  `json:"macroData,omitempty"`
-	Name                            *string                     `json:"name,omitempty"`
-	PageType                        *PageTypeResult             `json:"pageType,omitempty"`
-	ParentId                        *int64                      `json:"parentId,omitempty"`
-	ParentName                      *string                     `json:"parentName,omitempty"`
-	PropertyValues                  *[]PropertyValueResult      `json:"propertyValues,omitempty"`
-	PublishedRevision               *PageRevisionResult         `json:"publishedRevision,omitempty"`
-	PublishingWorkflowEnabled       *bool                       `json:"publishingWorkflowEnabled,omitempty"`
-	RequiresDiscardConfirmation     *bool                       `json:"requiresDiscardConfirmation,omitempty"`
-	ResolvedAllowedChildTypes       *[]AllowedChildTypeResult   `json:"resolvedAllowedChildTypes,omitempty"`
-	RestrictedByPageId              *int64                      `json:"restrictedByPageId,omitempty"`
-	Version                         *int64                      `json:"version,omitempty"`
-	WorkflowEnabled                 *bool                       `json:"workflowEnabled,omitempty"`
-	WorkingRevision                 *PageRevisionResult         `json:"workingRevision,omitempty"`
-	WorkingRevisionAuthors          *[]string                   `json:"workingRevisionAuthors,omitempty"`
+	AvailablePropertyDescriptors         *[]PropertyDescriptorResult `json:"availablePropertyDescriptors,omitempty"`
+	Breadcrumbs                          *[]BreadcrumbItemResult     `json:"breadcrumbs,omitempty"`
+	CanDelete                            *bool                       `json:"canDelete,omitempty"`
+	Content                              *string                     `json:"content,omitempty"`
+	CurrentUserAccessLevel               *string                     `json:"currentUserAccessLevel,omitempty"`
+	Diagnostics                          *[]ContentDiagnostic        `json:"diagnostics,omitempty"`
+	EffectiveChildType                   *AllowedChildTypeResult     `json:"effectiveChildType,omitempty"`
+	HasChildren                          *bool                       `json:"hasChildren,omitempty"`
+	HasOwnRestriction                    *bool                       `json:"hasOwnRestriction,omitempty"`
+	HasRestriction                       *bool                       `json:"hasRestriction,omitempty"`
+	Id                                   *int64                      `json:"id,omitempty"`
+	InTrash                              *bool                       `json:"inTrash,omitempty"`
+	LatestVersionAuthorDisplayNames      *[]string                   `json:"latestVersionAuthorDisplayNames,omitempty"`
+	LatestVersionCreatedAt               *string                     `json:"latestVersionCreatedAt,omitempty"`
+	LatestVersionLastEditedAt            *string                     `json:"latestVersionLastEditedAt,omitempty"`
+	LatestVersionLastEditorDisplayName   *string                     `json:"latestVersionLastEditorDisplayName,omitempty"`
+	LatestVersionNumber                  *int64                      `json:"latestVersionNumber,omitempty"`
+	MacroData                            *MacroData                  `json:"macroData,omitempty"`
+	Name                                 *string                     `json:"name,omitempty"`
+	PageType                             *PageTypeResult             `json:"pageType,omitempty"`
+	ParentId                             *int64                      `json:"parentId,omitempty"`
+	ParentName                           *string                     `json:"parentName,omitempty"`
+	PropertyValues                       *[]PropertyValueResult      `json:"propertyValues,omitempty"`
+	PublishedRevision                    *PageRevisionResult         `json:"publishedRevision,omitempty"`
+	PublishingWorkflowEnabled            *bool                       `json:"publishingWorkflowEnabled,omitempty"`
+	RequiresDiscardConfirmation          *bool                       `json:"requiresDiscardConfirmation,omitempty"`
+	ResolvedAllowedChildTypes            *[]AllowedChildTypeResult   `json:"resolvedAllowedChildTypes,omitempty"`
+	RestrictedByPageId                   *int64                      `json:"restrictedByPageId,omitempty"`
+	Version                              *int64                      `json:"version,omitempty"`
+	WorkflowEnabled                      *bool                       `json:"workflowEnabled,omitempty"`
+	WorkingRevision                      *PageRevisionResult         `json:"workingRevision,omitempty"`
+	WorkingRevisionAuthors               *[]string                   `json:"workingRevisionAuthors,omitempty"`
+	WorkingRevisionLastEditedAt          *string                     `json:"workingRevisionLastEditedAt,omitempty"`
+	WorkingRevisionLastEditorDisplayName *string                     `json:"workingRevisionLastEditorDisplayName,omitempty"`
 }
 
 // PageRevisionResult defines model for PageRevisionResult.
@@ -3400,43 +3437,47 @@ type PublicContentValidationForm struct {
 
 // PublicPageCompositeResult defines model for PublicPageCompositeResult.
 type PublicPageCompositeResult struct {
-	UnderscoreErrors                *map[string]ExpandError      `json:"_errors,omitempty"`
-	Attachments                     *[]FileAttachmentResult      `json:"attachments,omitempty"`
-	AvailablePropertyDescriptors    *[]PropertyDescriptorResult  `json:"availablePropertyDescriptors,omitempty"`
-	Breadcrumbs                     *[]BreadcrumbItemResult      `json:"breadcrumbs,omitempty"`
-	CanDelete                       *bool                        `json:"canDelete,omitempty"`
-	Content                         *string                      `json:"content,omitempty"`
-	CurrentUserAccessLevel          *string                      `json:"currentUserAccessLevel,omitempty"`
-	Diagnostics                     *[]ContentDiagnostic         `json:"diagnostics,omitempty"`
-	EffectiveChildType              *AllowedChildTypeResult      `json:"effectiveChildType,omitempty"`
-	HasChildren                     *bool                        `json:"hasChildren,omitempty"`
-	HasOwnRestriction               *bool                        `json:"hasOwnRestriction,omitempty"`
-	HasRestriction                  *bool                        `json:"hasRestriction,omitempty"`
-	Id                              *int64                       `json:"id,omitempty"`
-	Images                          *[]ImageResult               `json:"images,omitempty"`
-	InTrash                         *bool                        `json:"inTrash,omitempty"`
-	JiraMacros                      *JiraMacroDataResult         `json:"jiraMacros,omitempty"`
-	LatestVersionAuthorDisplayNames *[]string                    `json:"latestVersionAuthorDisplayNames,omitempty"`
-	LatestVersionCreatedAt          *string                      `json:"latestVersionCreatedAt,omitempty"`
-	LatestVersionNumber             *int64                       `json:"latestVersionNumber,omitempty"`
-	MacroData                       *MacroData                   `json:"macroData,omitempty"`
-	Name                            *string                      `json:"name,omitempty"`
-	PageType                        *PageTypeResult              `json:"pageType,omitempty"`
-	ParentId                        *int64                       `json:"parentId,omitempty"`
-	ParentName                      *string                      `json:"parentName,omitempty"`
-	PropertyValues                  *[]PropertyValueResult       `json:"propertyValues,omitempty"`
-	PublishedRevision               *PageRevisionResult          `json:"publishedRevision,omitempty"`
-	PublishingWorkflowEnabled       *bool                        `json:"publishingWorkflowEnabled,omitempty"`
-	RequiresDiscardConfirmation     *bool                        `json:"requiresDiscardConfirmation,omitempty"`
-	ResolvedAllowedChildTypes       *[]AllowedChildTypeResult    `json:"resolvedAllowedChildTypes,omitempty"`
-	RestrictedByPageId              *int64                       `json:"restrictedByPageId,omitempty"`
-	Restriction                     *PageRestrictionDetailResult `json:"restriction,omitempty"`
-	Version                         *int64                       `json:"version,omitempty"`
-	WorkItems                       *[]PageWorkItemResult        `json:"workItems,omitempty"`
-	Workflow                        *[]AllowedPageActionResult   `json:"workflow,omitempty"`
-	WorkflowEnabled                 *bool                        `json:"workflowEnabled,omitempty"`
-	WorkingRevision                 *PageRevisionResult          `json:"workingRevision,omitempty"`
-	WorkingRevisionAuthors          *[]string                    `json:"workingRevisionAuthors,omitempty"`
+	UnderscoreErrors                     *map[string]ExpandError      `json:"_errors,omitempty"`
+	Attachments                          *[]FileAttachmentResult      `json:"attachments,omitempty"`
+	AvailablePropertyDescriptors         *[]PropertyDescriptorResult  `json:"availablePropertyDescriptors,omitempty"`
+	Breadcrumbs                          *[]BreadcrumbItemResult      `json:"breadcrumbs,omitempty"`
+	CanDelete                            *bool                        `json:"canDelete,omitempty"`
+	Content                              *string                      `json:"content,omitempty"`
+	CurrentUserAccessLevel               *string                      `json:"currentUserAccessLevel,omitempty"`
+	Diagnostics                          *[]ContentDiagnostic         `json:"diagnostics,omitempty"`
+	EffectiveChildType                   *AllowedChildTypeResult      `json:"effectiveChildType,omitempty"`
+	HasChildren                          *bool                        `json:"hasChildren,omitempty"`
+	HasOwnRestriction                    *bool                        `json:"hasOwnRestriction,omitempty"`
+	HasRestriction                       *bool                        `json:"hasRestriction,omitempty"`
+	Id                                   *int64                       `json:"id,omitempty"`
+	Images                               *[]ImageResult               `json:"images,omitempty"`
+	InTrash                              *bool                        `json:"inTrash,omitempty"`
+	JiraMacros                           *JiraMacroDataResult         `json:"jiraMacros,omitempty"`
+	LatestVersionAuthorDisplayNames      *[]string                    `json:"latestVersionAuthorDisplayNames,omitempty"`
+	LatestVersionCreatedAt               *string                      `json:"latestVersionCreatedAt,omitempty"`
+	LatestVersionLastEditedAt            *string                      `json:"latestVersionLastEditedAt,omitempty"`
+	LatestVersionLastEditorDisplayName   *string                      `json:"latestVersionLastEditorDisplayName,omitempty"`
+	LatestVersionNumber                  *int64                       `json:"latestVersionNumber,omitempty"`
+	MacroData                            *MacroData                   `json:"macroData,omitempty"`
+	Name                                 *string                      `json:"name,omitempty"`
+	PageType                             *PageTypeResult              `json:"pageType,omitempty"`
+	ParentId                             *int64                       `json:"parentId,omitempty"`
+	ParentName                           *string                      `json:"parentName,omitempty"`
+	PropertyValues                       *[]PropertyValueResult       `json:"propertyValues,omitempty"`
+	PublishedRevision                    *PageRevisionResult          `json:"publishedRevision,omitempty"`
+	PublishingWorkflowEnabled            *bool                        `json:"publishingWorkflowEnabled,omitempty"`
+	RequiresDiscardConfirmation          *bool                        `json:"requiresDiscardConfirmation,omitempty"`
+	ResolvedAllowedChildTypes            *[]AllowedChildTypeResult    `json:"resolvedAllowedChildTypes,omitempty"`
+	RestrictedByPageId                   *int64                       `json:"restrictedByPageId,omitempty"`
+	Restriction                          *PageRestrictionDetailResult `json:"restriction,omitempty"`
+	Version                              *int64                       `json:"version,omitempty"`
+	WorkItems                            *[]PageWorkItemResult        `json:"workItems,omitempty"`
+	Workflow                             *[]AllowedPageActionResult   `json:"workflow,omitempty"`
+	WorkflowEnabled                      *bool                        `json:"workflowEnabled,omitempty"`
+	WorkingRevision                      *PageRevisionResult          `json:"workingRevision,omitempty"`
+	WorkingRevisionAuthors               *[]string                    `json:"workingRevisionAuthors,omitempty"`
+	WorkingRevisionLastEditedAt          *string                      `json:"workingRevisionLastEditedAt,omitempty"`
+	WorkingRevisionLastEditorDisplayName *string                      `json:"workingRevisionLastEditorDisplayName,omitempty"`
 }
 
 // PublicPagePropertyValuesResult defines model for PublicPagePropertyValuesResult.
@@ -3682,12 +3723,16 @@ type UnchangedDescriptorResult struct {
 
 // UserForm defines model for UserForm.
 type UserForm struct {
+	CreationMode *UserFormCreationMode `json:"creationMode,omitempty"`
 	DisplayName  string                `json:"displayName"`
 	Email        openapi_types.Email   `json:"email"`
 	Password     *string               `json:"password,omitempty"`
 	Role         UserFormRole          `json:"role"`
 	WorkflowRole *UserFormWorkflowRole `json:"workflowRole,omitempty"`
 }
+
+// UserFormCreationMode defines model for UserForm.CreationMode.
+type UserFormCreationMode string
 
 // UserFormRole defines model for UserForm.Role.
 type UserFormRole string

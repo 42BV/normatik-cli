@@ -9,12 +9,28 @@
     "staticHint": "This page type is abstract and cannot hold pages. Use GET /public/v1/page-types and select entries where abstractType is false to find concrete page types."
   },
   {
+    "name": "ACCOUNT_ACTIVATION_TOKEN_INVALID",
+    "status": 410,
+    "title": "Account activation link invalid",
+    "userMessage": "The activation link is invalid, expired, or already used. Ask an administrator to send a new activation email.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
     "name": "ACCOUNT_NOT_ACTIVE",
     "status": 401,
     "title": "Account not active",
     "userMessage": "Your account is no longer active. Please sign in again.",
     "hintKind": "NO_HINT",
     "exitCode": 4
+  },
+  {
+    "name": "ACTIVATION_MAIL_NOT_ALLOWED",
+    "status": 409,
+    "title": "Activation email not allowed",
+    "userMessage": "An activation email can only be sent to pending users or active users without a local password.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
   },
   {
     "name": "API_KEY_EXPIRED",
@@ -412,6 +428,14 @@
     "status": 400,
     "title": "Invalid conditional enum configuration",
     "userMessage": "The CONDITIONAL_ENUM property descriptor configuration is invalid.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "INVALID_CREATION_MODE",
+    "status": 400,
+    "title": "Invalid creation mode",
+    "userMessage": "The creation mode and password combination is invalid: SET_PASSWORD requires a password, the other modes forbid one.",
     "hintKind": "NO_HINT",
     "exitCode": 3
   },
