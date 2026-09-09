@@ -4,12 +4,17 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
+	"strings"
+	"time"
 )
 
 const (
-	jsonResponseLimit  int64 = 32 << 20
-	errorResponseLimit int64 = 1 << 20
-	downloadLimit      int64 = 64 << 20
+	jsonResponseLimit    int64 = 32 << 20
+	errorResponseLimit   int64 = 1 << 20
+	downloadLimit        int64 = 64 << 20
+	maxRateLimitAttempts       = 4
+	maxRateLimitRetries        = 3
 )
 
 // LowLevel is a thunk that performs exactly one generated low-level oapi call.
@@ -21,7 +26,7 @@ type LowLevel func() (*http.Response, error)
 // any non-2xx (incl. 3xx) → decodeError. Conditional GETs that must treat 304 as
 // a valid answer use DoConditional, not exec/DoRaw.
 func (c *Client) exec(call LowLevel) (body []byte, status int, apiErr *APIError) {
-	resp, err := call()
+	resp, err := c.withRateLimitRetry(call)
 	if err != nil {
 		return nil, 0, fail(err)
 	}
@@ -56,7 +61,7 @@ func (c *Client) DoRaw(call LowLevel) ([]byte, *APIError) {
 // DoConditional is for ETag/If-None-Match GETs: a 304 is returned as
 // notModified=true (NOT an error), 2xx as the body, other non-2xx as APIError.
 func (c *Client) DoConditional(call LowLevel) (body []byte, notModified bool, apiErr *APIError) {
-	resp, err := call()
+	resp, err := c.withRateLimitRetry(call)
 	if err != nil {
 		return nil, false, fail(err)
 	}
@@ -85,7 +90,7 @@ func (c *Client) DoConditional(call LowLevel) (body []byte, notModified bool, ap
 // 2xx response the caller owns and must close body. Every other path closes the
 // response body before returning.
 func (c *Client) DoDownload(call LowLevel) (body io.ReadCloser, notModified bool, apiErr *APIError) {
-	resp, err := call()
+	resp, err := c.withRateLimitRetry(call)
 	if err != nil {
 		return nil, false, fail(err)
 	}
@@ -114,6 +119,56 @@ func (c *Client) DoDownload(call LowLevel) (body io.ReadCloser, notModified bool
 		status:    resp.StatusCode,
 		limit:     downloadLimit,
 	}, false, nil
+}
+
+func (c *Client) withRateLimitRetry(call LowLevel) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+	for attempt := 1; attempt <= maxRateLimitAttempts; attempt++ {
+		resp, err = call()
+		if err != nil {
+			return nil, err
+		}
+		if resp.StatusCode != http.StatusTooManyRequests || attempt == maxRateLimitAttempts {
+			return resp, nil
+		}
+		wait := parseRetryAfter(resp.Header.Get("Retry-After"))
+		drainAndClose(resp.Body)
+		if c.OnRetry != nil {
+			c.OnRetry(wait, attempt)
+		}
+		c.wait(wait)
+	}
+	return resp, err
+}
+
+func (c *Client) wait(d time.Duration) {
+	fn := c.Sleep
+	if fn == nil {
+		fn = DefaultSleep
+	}
+	if fn != nil {
+		fn(d)
+	}
+}
+
+func parseRetryAfter(header string) time.Duration {
+	n, err := strconv.Atoi(strings.TrimSpace(header))
+	if err != nil || n < 1 {
+		return time.Second
+	}
+	if n > 60 {
+		n = 60
+	}
+	return time.Duration(n) * time.Second
+}
+
+func drainAndClose(body io.ReadCloser) {
+	if body == nil {
+		return
+	}
+	_, _ = io.Copy(io.Discard, io.LimitReader(body, errorResponseLimit+1))
+	_ = body.Close()
 }
 
 func readBounded(r io.Reader, limit int64, status int) ([]byte, error) {

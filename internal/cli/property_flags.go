@@ -1192,11 +1192,12 @@ func derefEditValues(p *[]api.PropertyValueEditForm) []api.PropertyValueEditForm
 	return *p
 }
 
-// fetchPage GETs a page and unmarshals the composite result. It is the update
-// path's metadata source: the response carries availablePropertyDescriptors,
-// workflowEnabled and version (no separate GetPageType round-trip needed).
+// fetchPage GETs a page (raw, resolveMacros=false) and unmarshals the composite
+// result. It is the update path's metadata source: the response carries
+// availablePropertyDescriptors, workflowEnabled and version (no separate
+// GetPageType round-trip needed).
 func fetchPage(ctx context.Context, c *client.Client, id int64) (*api.PublicPageCompositeResult, *client.APIError) {
-	body, apiErr := c.GetPage(ctx, id, nil)
+	body, apiErr := c.GetPage(ctx, id, nil, false)
 	if apiErr != nil {
 		return nil, apiErr
 	}

@@ -266,9 +266,16 @@ func renderSlides(n *dnode, idx *macroIndex, width int) string {
 	return renderAttachmentLine(n, idx, width, "SLIDES · ")
 }
 
-// renderAttachmentLine is the shared ::file / ::pdf path: an id-keyed lookup
-// in fileAttachments → "📎 [PDF · ]filename (size)". A miss (unknown id) keeps
-// the existing labelled placeholder.
+// renderSheet renders ::sheet{id=..} like ::file, labelled as SHEET — the CLI
+// never embeds the browser-side spreadsheet viewer (no extra HTTP calls; the
+// web loads a JS library to parse the xlsx in the browser).
+func renderSheet(n *dnode, idx *macroIndex, width int) string {
+	return renderAttachmentLine(n, idx, width, "SHEET · ")
+}
+
+// renderAttachmentLine is the shared ::file / ::pdf / ::slides / ::sheet path:
+// an id-keyed lookup in fileAttachments → "📎 [LABEL · ]filename (size)".
+// A miss (unknown id) keeps the existing labelled placeholder.
 func renderAttachmentLine(n *dnode, idx *macroIndex, width int, label string) string {
 	entry, ok := idx.entryFor("fileAttachments", n)
 	if !ok {

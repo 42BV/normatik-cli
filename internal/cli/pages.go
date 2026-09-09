@@ -834,10 +834,13 @@ func derefInt32(p *int32) int32 {
 func newPagesGetCmd() *cobra.Command {
 	var expand []string
 	var working bool
+	var resolveMacros bool
 	cmd := &cobra.Command{
 		Use:   "get <id>",
 		Short: "Fetch page detail (property values; --working for the unpublished working revision)",
 		Long: "Fetch page detail (property values; --working for the unpublished working revision).\n" +
+			"Default reads the raw page (no server-side macro resolution). --resolve-macros\n" +
+			"resolves macros server-side (slower; includes macroData in JSON).\n" +
 			"--url prints only this page's frontend URL instead of the normal output — not to be\n" +
 			"confused with `login --url` (the environment site URL used to authenticate; a different\n" +
 			"flag, different meaning).",
@@ -845,6 +848,7 @@ func newPagesGetCmd() *cobra.Command {
 		Example: "  normatik pages get 1\n" +
 			"  normatik pages get 1 --working   # the working-revision values (after `pages update` on a workflow page)\n" +
 			"  normatik pages get 1 --expand workflow,attachments --output json\n" +
+			"  normatik pages get 1 --resolve-macros --output json\n" +
 			"  open $(normatik pages get 1 --url)   # print only the frontend URL, piped straight into `open`",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			d, err := command.Build(cmd)
@@ -856,7 +860,7 @@ func newPagesGetCmd() *cobra.Command {
 				d.Printer.Message("Error [USAGE]: <id> must be a number, got %q", args[0])
 				return command.Handled(2)
 			}
-			body, apiErr := d.Client.GetPage(cmd.Context(), id, expand)
+			body, apiErr := d.Client.GetPage(cmd.Context(), id, expand, resolveMacros)
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik pages get")
 			}
@@ -884,6 +888,7 @@ func newPagesGetCmd() *cobra.Command {
 	}
 	cmd.Flags().StringSliceVar(&expand, "expand", nil, "sections: jira-macros,workflow,attachments,images,work-items,restriction")
 	cmd.Flags().BoolVar(&working, "working", false, "show the working-revision property values instead of the published ones (table mode only; JSON always includes .workingRevision)")
+	cmd.Flags().BoolVar(&resolveMacros, "resolve-macros", false, "resolve macros server-side (slower; includes macroData in JSON). Default reads the raw page.")
 	command.URLFlag(cmd)
 	return cmd
 }
@@ -918,7 +923,7 @@ func newPagesRenderCmd() *cobra.Command {
 				d.Printer.Message("Error [USAGE]: <id> must be a number, got %q", args[0])
 				return command.Handled(2)
 			}
-			body, apiErr := d.Client.GetPage(cmd.Context(), id, expandSections)
+			body, apiErr := d.Client.GetPage(cmd.Context(), id, expandSections, true)
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik pages render")
 			}

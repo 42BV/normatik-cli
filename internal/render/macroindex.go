@@ -124,10 +124,10 @@ func macroDataKey(n *dnode) string {
 			return id
 		}
 		return a["pageId"]
-	case "file", "pdf", "slides":
+	case "file", "pdf", "slides", "sheet":
 		// FileMacroDataResolver keys fileAttachments by the numeric id attr
-		// (all three directives share the same map; PdfMacroDataResolver and
-		// SlidesMacroDataResolver are NoOps).
+		// (all four directives share the same map; PdfMacroDataResolver,
+		// SlidesMacroDataResolver and SheetMacroDataResolver are NoOps).
 		return a["id"]
 	case "page-tasks":
 		// PageTasksMacroDataResolver keys pageTasks by the trimmed type slug

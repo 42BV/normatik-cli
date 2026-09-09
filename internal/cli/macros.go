@@ -85,8 +85,8 @@ func newMacrosUsageCmd() *cobra.Command {
 				d.Printer.Message("Error [USAGE]: <pageId> must be a number, got %q", args[0])
 				return command.Handled(2)
 			}
-			// Thin page GET (no expands) — content is enough to scan directives.
-			body, apiErr := d.Client.GetPage(cmd.Context(), id, nil)
+			// Thin raw page GET (no expands, no macro resolution) — content is enough to scan directives.
+			body, apiErr := d.Client.GetPage(cmd.Context(), id, nil, false)
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik macros usage")
 			}

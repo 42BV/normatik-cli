@@ -182,6 +182,7 @@ func init() {
 		"file":            renderFile,
 		"pdf":             renderPdf,
 		"slides":          renderSlides,
+		"sheet":           renderSheet,
 		"image":           renderImage,
 		"jira-assets":     renderJiraAssets,
 		"jira-issues":     renderJiraIssues,

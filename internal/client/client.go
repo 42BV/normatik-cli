@@ -17,11 +17,23 @@ import (
 	"github.com/42BV/normatik-cli/internal/problem"
 )
 
+// RateLimitRetryObserver is notified before each HTTP 429 retry. attempt is
+// 1..3. A nil observer (clients created outside command.Build) stays silent.
+type RateLimitRetryObserver func(wait time.Duration, attempt int)
+
+// DefaultSleep waits during 429 backoff when Client.Sleep is nil. Tests replace
+// this so command-level suites do not sleep for real.
+var DefaultSleep = time.Sleep
+
 type Client struct {
 	api     *api.ClientWithResponses
 	http    *http.Client
 	apiBase string
 	apiKey  string
+	// Sleep, if non-nil, replaces DefaultSleep during 429 backoff.
+	Sleep func(time.Duration)
+	// OnRetry, if non-nil, is called before each 429 retry.
+	OnRetry RateLimitRetryObserver
 }
 
 // APIError carries either a decoded Problem or a malformed-response marker.
@@ -141,10 +153,18 @@ func (c *Client) SearchPages(ctx context.Context, query string, page, size int, 
 	})
 }
 
-// GetPage — GET /public/v1/pages/{id} (?expand=). Raw composite body.
-func (c *Client) GetPage(ctx context.Context, id int64, expand []string) ([]byte, *APIError) {
+// GetPage — GET /public/v1/pages/{id} (?expand=, ?resolveMacros=). Raw composite body.
+// resolveMacros=false sends resolveMacros=false (WRITE_ACK). resolveMacros=true
+// omits the parameter so the server default (FULL) stays in effect; the query
+// never contains resolveMacros=true.
+func (c *Client) GetPage(ctx context.Context, id int64, expand []string, resolveMacros bool) ([]byte, *APIError) {
+	params := &api.GetPageParams{}
+	if !resolveMacros {
+		resolve := false
+		params.ResolveMacros = &resolve
+	}
 	return c.DoRaw(func() (*http.Response, error) {
-		return c.api.GetPage(ctx, id, &api.GetPageParams{}, expandEditor(expand))
+		return c.api.GetPage(ctx, id, params, expandEditor(expand))
 	})
 }
 
