@@ -2238,10 +2238,11 @@ type EnumValueCount struct {
 
 // ExcerptIncludeData defines model for ExcerptIncludeData.
 type ExcerptIncludeData struct {
-	Content   *string     `json:"content,omitempty"`
-	Id        *int64      `json:"id,omitempty"`
-	MacroData interface{} `json:"macroData,omitempty"`
-	Name      *string     `json:"name,omitempty"`
+	Content   *string    `json:"content,omitempty"`
+	Error     *string    `json:"error,omitempty"`
+	Id        *int64     `json:"id,omitempty"`
+	MacroData *MacroData `json:"macroData,omitempty"`
+	Name      *string    `json:"name,omitempty"`
 }
 
 // ExpandError defines model for ExpandError.
@@ -2308,10 +2309,11 @@ type ImageResult struct {
 
 // IncludePageData defines model for IncludePageData.
 type IncludePageData struct {
-	Content   *string     `json:"content,omitempty"`
-	Id        *int64      `json:"id,omitempty"`
-	MacroData interface{} `json:"macroData,omitempty"`
-	Name      *string     `json:"name,omitempty"`
+	Content   *string    `json:"content,omitempty"`
+	Error     *string    `json:"error,omitempty"`
+	Id        *int64     `json:"id,omitempty"`
+	MacroData *MacroData `json:"macroData,omitempty"`
+	Name      *string    `json:"name,omitempty"`
 }
 
 // JiraAsset defines model for JiraAsset.

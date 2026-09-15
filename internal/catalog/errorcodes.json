@@ -789,7 +789,7 @@
     "name": "PAGE_RESTRICTION_CANNOT_ADD_USER",
     "status": 400,
     "title": "Cannot add user",
-    "userMessage": "This user is not eligible to be added to this restriction. Only users from the parent restriction can be invited.",
+    "userMessage": "This user is not eligible to be added to this restriction. Only users from the parent restriction can be added.",
     "hintKind": "NO_HINT",
     "exitCode": 3
   },
