@@ -273,6 +273,22 @@ func renderSheet(n *dnode, idx *macroIndex, width int) string {
 	return renderAttachmentLine(n, idx, width, "SHEET · ")
 }
 
+// renderVideo renders ::video{url=.. title=..} as a one-liner with the title
+// and the author-supplied URL — in a terminal the URL is the useful part. No
+// macroData lookup: everything lives in the attributes. Without a title the
+// generic "YouTube video" label is used, mirroring the web renderer.
+func renderVideo(n *dnode, idx *macroIndex, width int) string {
+	url := n.attrs["url"]
+	if url == "" {
+		return renderUnknownMacro(n, idx, width)
+	}
+	title := n.attrs["title"]
+	if title == "" {
+		title = "YouTube video"
+	}
+	return "▶ Video: " + title + " (" + url + ")"
+}
+
 // renderAttachmentLine is the shared ::file / ::pdf / ::slides / ::sheet path:
 // an id-keyed lookup in fileAttachments → "📎 [LABEL · ]filename (size)".
 // A miss (unknown id) keeps the existing labelled placeholder.

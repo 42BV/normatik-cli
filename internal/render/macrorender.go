@@ -124,7 +124,7 @@ func renderPageRich(m map[string]any, values map[int64][]map[string]any) string 
 	}
 	var detail [][]string
 	if pt := pageTypeName(m); pt != "" {
-		detail = append(detail, []string{"Page Type", pt}) // page metadata, like the web
+		detail = append(detail, []string{"Page type", pt}) // page metadata, like the web
 	}
 	for _, it := range garr(m, "propertyValues") {
 		if pm, ok := it.(map[string]any); ok {
@@ -183,6 +183,7 @@ func init() {
 		"pdf":             renderPdf,
 		"slides":          renderSlides,
 		"sheet":           renderSheet,
+		"video":           renderVideo,
 		"image":           renderImage,
 		"jira-assets":     renderJiraAssets,
 		"jira-issues":     renderJiraIssues,

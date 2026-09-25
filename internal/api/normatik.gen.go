@@ -247,6 +247,7 @@ const (
 	ENTITYNOTFOUND              ContentDiagnosticCode = "ENTITY_NOT_FOUND"
 	INVALIDATTRIBUTETYPE        ContentDiagnosticCode = "INVALID_ATTRIBUTE_TYPE"
 	INVALIDFILTERSYNTAX         ContentDiagnosticCode = "INVALID_FILTER_SYNTAX"
+	INVALIDVIDEOURL             ContentDiagnosticCode = "INVALID_VIDEO_URL"
 	MACRONOTALLOWEDINCONTEXT    ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_CONTEXT"
 	MACRONOTALLOWEDINPROPERTY   ContentDiagnosticCode = "MACRO_NOT_ALLOWED_IN_PROPERTY"
 	MALFORMEDDIRECTIVELINE      ContentDiagnosticCode = "MALFORMED_DIRECTIVE_LINE"
@@ -270,6 +271,8 @@ func (e ContentDiagnosticCode) Valid() bool {
 	case INVALIDATTRIBUTETYPE:
 		return true
 	case INVALIDFILTERSYNTAX:
+		return true
+	case INVALIDVIDEOURL:
 		return true
 	case MACRONOTALLOWEDINCONTEXT:
 		return true

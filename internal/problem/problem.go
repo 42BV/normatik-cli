@@ -350,6 +350,9 @@ var synth = map[string]synthFunc{
 			if d.Code == "INVALID_FILTER_SYNTAX" {
 				return "normatik macros docs   # filter syntax"
 			}
+			if d.Code == "INVALID_VIDEO_URL" {
+				return "normatik macros docs video   # supported YouTube URL forms"
+			}
 		}
 		// Other validation failures already carry their own diagnostics lines.
 		return ""
