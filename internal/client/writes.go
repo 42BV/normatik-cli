@@ -16,6 +16,12 @@ import (
 func (c *Client) CreateExternalUser(ctx context.Context, f api.ExternalUserForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.CreateUser(ctx, f) })
 }
+func (c *Client) CreateInternalUser(ctx context.Context, f api.InternalUserForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.CreateInternalUser(ctx, f) })
+}
+func (c *Client) SendUserActivationEmail(ctx context.Context, id int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.SendUserActivationEmail(ctx, id) })
+}
 func (c *Client) UpdateUser(ctx context.Context, id int64, f api.UserForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.UpdateUser(ctx, id, f) })
 }
@@ -88,6 +94,21 @@ func (c *Client) SortPropertyDescriptors(ctx context.Context, pageTypeID int64, 
 func (c *Client) SortDisplayColumns(ctx context.Context, descriptorID int64, ids []int64) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) {
 		return c.api.SortPropertyDescriptorDisplayColumns(ctx, descriptorID, ids)
+	})
+}
+func (c *Client) SetPropertyDescriptorDefault(ctx context.Context, pageTypeID, descriptorID int64, f api.DefaultValueSetForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.SetPropertyDescriptorDefault(ctx, pageTypeID, descriptorID, f)
+	})
+}
+func (c *Client) ClearPropertyDescriptorDefault(ctx context.Context, pageTypeID, descriptorID int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.ClearPropertyDescriptorDefault(ctx, pageTypeID, descriptorID)
+	})
+}
+func (c *Client) SetPropertyDescriptorVisibilityOverride(ctx context.Context, pageTypeID, descriptorID int64, f api.PropertyDescriptorVisibilityForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.SetPropertyDescriptorVisibilityOverride(ctx, pageTypeID, descriptorID, f)
 	})
 }
 
@@ -185,6 +206,19 @@ func (c *Client) UpdateLandingSettings(ctx context.Context, f api.LandingSetting
 	return c.DoRaw(func() (*http.Response, error) { return c.api.UpdateLandingSettings(ctx, f) })
 }
 
+// ---- Environment (name/banner, Google login — admin only) ----
+
+func (c *Client) UpdateEnvironmentSettings(ctx context.Context, f api.EnvironmentSettingsForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.UpdateEnvironmentSettings(ctx, f) })
+}
+
+// DisableGoogleLogin turns off the GOOGLE integration toggle; idempotent (calling it
+// again on an already-disabled login is a no-op that still returns 200). There is no
+// matching enable operation on the public API — use the admin UI for that.
+func (c *Client) DisableGoogleLogin(ctx context.Context) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.DisableGoogleLogin(ctx) })
+}
+
 // ---- Pages: update/delete/move/sort-children ----
 
 func (c *Client) UpdatePage(ctx context.Context, id int64, f api.PageEditForm) ([]byte, *APIError) {
@@ -265,6 +299,10 @@ func (c *Client) DiscardWorkingRevision(ctx context.Context, id int64) ([]byte, 
 	return c.DoRaw(func() (*http.Response, error) { return c.api.DiscardPageWorkingRevision(ctx, id) })
 }
 
+func (c *Client) MigratePublish(ctx context.Context, id int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.MigratePublishPage(ctx, id) })
+}
+
 // ---- Image / attachment delete ----
 
 func (c *Client) DeleteImage(ctx context.Context, id int64) ([]byte, *APIError) {
@@ -280,4 +318,17 @@ func (c *Client) DeleteFileAttachment(ctx context.Context, id int64) ([]byte, *A
 
 func (c *Client) ValidateContent(ctx context.Context, f api.PublicContentValidationForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.ValidateContent(ctx, f) })
+}
+
+// ---- Environment seed (bootstrap-account-only lifecycle; see client.Bootstrap
+// for the anonymous, pre-key bootstrap call itself) ----
+
+func (c *Client) RegisterEnvironmentSeedTransferVerification(ctx context.Context, f api.TransferVerificationForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.RegisterEnvironmentSeedTransferVerification(ctx, f) })
+}
+func (c *Client) RevokeEnvironmentSeedTransferVerification(ctx context.Context) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.RevokeEnvironmentSeedTransferVerification(ctx) })
+}
+func (c *Client) CompleteEnvironmentSeed(ctx context.Context) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.CompleteEnvironmentSeed(ctx) })
 }

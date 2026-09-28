@@ -66,7 +66,17 @@ func multipartFile(path string) ([]byte, string, error) {
 	w := multipart.NewWriter(&buf)
 	// Set the part's Content-Type from the extension so image uploads pass the
 	// server's image-type validation (default would be application/octet-stream).
+	// mime.TypeByExtension includes a charset parameter for some types (e.g.
+	// "text/plain; charset=utf-8" for .txt, "text/csv; charset=utf-8" for
+	// .csv); the server compares against its allowlist with a full-string
+	// Set.contains, so the parameter made every .txt/.csv upload fail with
+	// UNSUPPORTED_TYPE (NORM-knxilyrm). ParseMediaType strips it down to the
+	// bare media type; an unknown extension (empty ct, ParseMediaType errors
+	// on "") falls through to the existing application/octet-stream default.
 	ct := mime.TypeByExtension(filepath.Ext(path))
+	if mediaType, _, err := mime.ParseMediaType(ct); err == nil {
+		ct = mediaType
+	}
 	if ct == "" {
 		ct = "application/octet-stream"
 	}

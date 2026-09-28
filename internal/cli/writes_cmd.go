@@ -286,9 +286,33 @@ func idFormFileWriteURL[T any](use, short, invocation, success string, fn func(*
 
 func addUsersWrites(c *cobra.Command) {
 	var dn, email string
+	var internal, external bool
+	var role, workflowRole string
 	create := &cobra.Command{
-		Use: "create", Short: "Create an external user", Example: "  normatik users create --display-name \"Jan\" --email jan@x.nl",
+		Use:   "create",
+		Short: "Create a user (external by default, or --internal with a role)",
+		Example: "  normatik users create --display-name \"Jan\" --email jan@x.nl\n" +
+			"  normatik users create --internal --display-name \"Jan\" --email jan@x.nl --role USER --workflow-role CONTRIBUTOR",
 		RunE: func(cmd *cobra.Command, _ []string) error {
+			if internal {
+				if email == "" || role == "" {
+					fmt.Fprintln(os.Stderr, "Error: --internal requires --email and --role")
+					return command.Handled(2)
+				}
+				f := api.InternalUserForm{
+					DisplayName:  dn,
+					Email:        openapi_types.Email(email),
+					Role:         api.InternalUserFormRole(role),
+					CreationMode: api.InternalUserFormCreationModeSENDACTIVATIONEMAIL,
+				}
+				if cmd.Flags().Changed("workflow-role") {
+					wr := api.InternalUserFormWorkflowRole(workflowRole)
+					f.WorkflowRole = &wr
+				}
+				return runWriteURL(cmd, "normatik users create", "User created.", func(d *command.Deps) ([]byte, *client.APIError) {
+					return d.Client.CreateInternalUser(cmd.Context(), f)
+				}, func(body []byte) string { return weburl.AdminUser(responseID(body)) }, "id", "displayName", "email", "role", "workflowRole", "status")
+			}
 			f := api.ExternalUserForm{DisplayName: dn}
 			if email != "" {
 				e := openapi_types.Email(email)
@@ -300,8 +324,13 @@ func addUsersWrites(c *cobra.Command) {
 		},
 	}
 	create.Flags().StringVar(&dn, "display-name", "", "display name (required)")
-	create.Flags().StringVar(&email, "email", "", "email address")
+	create.Flags().StringVar(&email, "email", "", "email address (required with --internal)")
+	create.Flags().BoolVar(&internal, "internal", false, "create an internal user with a role (PENDING; requests the activation email)")
+	create.Flags().BoolVar(&external, "external", false, "create an external user (default)")
+	create.Flags().StringVar(&role, "role", "", "role for --internal: USER|ADMIN (required with --internal)")
+	create.Flags().StringVar(&workflowRole, "workflow-role", "", "workflow role for --internal (optional): READER|CONTRIBUTOR|REVIEWER|PUBLISHER")
 	_ = create.MarkFlagRequired("display-name")
+	create.MarkFlagsMutuallyExclusive("internal", "external")
 	command.URLFlag(create)
 
 	var udn, uemail, urole, uwf string
@@ -383,7 +412,37 @@ func addUsersWrites(c *cobra.Command) {
 	}
 	perm.Flags().Int64Var(&replacement, "replacement-owner-id", 0, "replacement owner for orphaned resources")
 	addHardConfirm(perm)
-	addWriteCommands(c, create, update, del, react, perm)
+
+	// send-activation-email resolves its positional arg as an id first, falling
+	// back to an exact email lookup (GetUserByEmail, NORM-znuqrgfu) so a caller
+	// can request the mail again for an account it just created by address.
+	sendActivation := &cobra.Command{
+		Use:   "send-activation-email <id|email>",
+		Short: "(Re)send the account activation email for an existing user (admin)",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			id, perr := command.ParseID(args[0])
+			if perr != nil {
+				body, apiErr := d.Client.GetUserByEmail(cmd.Context(), args[0])
+				if apiErr != nil {
+					return command.RenderError(d.Printer, apiErr, "normatik users send-activation-email")
+				}
+				id = responseID(body)
+			}
+			body, apiErr := d.Client.SendUserActivationEmail(cmd.Context(), id)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik users send-activation-email")
+			}
+			writeResult(d, body, "Activation email requested.", "requestedAt", "expiresAt")
+			return nil
+		},
+	}
+
+	addWriteCommands(c, create, update, del, react, perm, sendActivation)
 }
 
 // ---- groups ----

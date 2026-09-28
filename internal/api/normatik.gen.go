@@ -355,6 +355,111 @@ func (e EligibleUserResultMaxAccessLevel) Valid() bool {
 	}
 }
 
+// Defines values for EnvironmentSeedReadinessResultStatus.
+const (
+	EnvironmentSeedReadinessResultStatusCOMPLETED        EnvironmentSeedReadinessResultStatus = "COMPLETED"
+	EnvironmentSeedReadinessResultStatusPENDING          EnvironmentSeedReadinessResultStatus = "PENDING"
+	EnvironmentSeedReadinessResultStatusTRANSFERVERIFIED EnvironmentSeedReadinessResultStatus = "TRANSFER_VERIFIED"
+)
+
+// Valid indicates whether the value is a known member of the EnvironmentSeedReadinessResultStatus enum.
+func (e EnvironmentSeedReadinessResultStatus) Valid() bool {
+	switch e {
+	case EnvironmentSeedReadinessResultStatusCOMPLETED:
+		return true
+	case EnvironmentSeedReadinessResultStatusPENDING:
+		return true
+	case EnvironmentSeedReadinessResultStatusTRANSFERVERIFIED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EnvironmentSeedStateResultStatus.
+const (
+	EnvironmentSeedStateResultStatusCOMPLETED        EnvironmentSeedStateResultStatus = "COMPLETED"
+	EnvironmentSeedStateResultStatusPENDING          EnvironmentSeedStateResultStatus = "PENDING"
+	EnvironmentSeedStateResultStatusTRANSFERVERIFIED EnvironmentSeedStateResultStatus = "TRANSFER_VERIFIED"
+)
+
+// Valid indicates whether the value is a known member of the EnvironmentSeedStateResultStatus enum.
+func (e EnvironmentSeedStateResultStatus) Valid() bool {
+	switch e {
+	case EnvironmentSeedStateResultStatusCOMPLETED:
+		return true
+	case EnvironmentSeedStateResultStatusPENDING:
+		return true
+	case EnvironmentSeedStateResultStatusTRANSFERVERIFIED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for InternalUserFormCreationMode.
+const (
+	InternalUserFormCreationModeNOPASSWORD          InternalUserFormCreationMode = "NO_PASSWORD"
+	InternalUserFormCreationModeSENDACTIVATIONEMAIL InternalUserFormCreationMode = "SEND_ACTIVATION_EMAIL"
+	InternalUserFormCreationModeSETPASSWORD         InternalUserFormCreationMode = "SET_PASSWORD"
+)
+
+// Valid indicates whether the value is a known member of the InternalUserFormCreationMode enum.
+func (e InternalUserFormCreationMode) Valid() bool {
+	switch e {
+	case InternalUserFormCreationModeNOPASSWORD:
+		return true
+	case InternalUserFormCreationModeSENDACTIVATIONEMAIL:
+		return true
+	case InternalUserFormCreationModeSETPASSWORD:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for InternalUserFormRole.
+const (
+	InternalUserFormRoleADMIN InternalUserFormRole = "ADMIN"
+	InternalUserFormRoleUSER  InternalUserFormRole = "USER"
+)
+
+// Valid indicates whether the value is a known member of the InternalUserFormRole enum.
+func (e InternalUserFormRole) Valid() bool {
+	switch e {
+	case InternalUserFormRoleADMIN:
+		return true
+	case InternalUserFormRoleUSER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for InternalUserFormWorkflowRole.
+const (
+	InternalUserFormWorkflowRoleCONTRIBUTOR InternalUserFormWorkflowRole = "CONTRIBUTOR"
+	InternalUserFormWorkflowRolePUBLISHER   InternalUserFormWorkflowRole = "PUBLISHER"
+	InternalUserFormWorkflowRoleREADER      InternalUserFormWorkflowRole = "READER"
+	InternalUserFormWorkflowRoleREVIEWER    InternalUserFormWorkflowRole = "REVIEWER"
+)
+
+// Valid indicates whether the value is a known member of the InternalUserFormWorkflowRole enum.
+func (e InternalUserFormWorkflowRole) Valid() bool {
+	switch e {
+	case InternalUserFormWorkflowRoleCONTRIBUTOR:
+		return true
+	case InternalUserFormWorkflowRolePUBLISHER:
+		return true
+	case InternalUserFormWorkflowRoleREADER:
+		return true
+	case InternalUserFormWorkflowRoleREVIEWER:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MacroAttributeSchemaType.
 const (
 	BOOLEAN      MacroAttributeSchemaType = "BOOLEAN"
@@ -613,6 +718,27 @@ func (e PageTypeUsageResultReason) Valid() bool {
 	}
 }
 
+// Defines values for PreparationReadinessResultSeedStatus.
+const (
+	PreparationReadinessResultSeedStatusCOMPLETED        PreparationReadinessResultSeedStatus = "COMPLETED"
+	PreparationReadinessResultSeedStatusPENDING          PreparationReadinessResultSeedStatus = "PENDING"
+	PreparationReadinessResultSeedStatusTRANSFERVERIFIED PreparationReadinessResultSeedStatus = "TRANSFER_VERIFIED"
+)
+
+// Valid indicates whether the value is a known member of the PreparationReadinessResultSeedStatus enum.
+func (e PreparationReadinessResultSeedStatus) Valid() bool {
+	switch e {
+	case PreparationReadinessResultSeedStatusCOMPLETED:
+		return true
+	case PreparationReadinessResultSeedStatusPENDING:
+		return true
+	case PreparationReadinessResultSeedStatusTRANSFERVERIFIED:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PropertyDescriptorFormDataType.
 const (
 	PropertyDescriptorFormDataTypeCALCULATED      PropertyDescriptorFormDataType = "CALCULATED"
@@ -811,6 +937,27 @@ func (e PropertyDescriptorResultPageReferenceSortDirection) Valid() bool {
 	case PropertyDescriptorResultPageReferenceSortDirectionASC:
 		return true
 	case PropertyDescriptorResultPageReferenceSortDirectionDESC:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PropertyTypeDefaultResultState.
+const (
+	EMPTY   PropertyTypeDefaultResultState = "EMPTY"
+	INHERIT PropertyTypeDefaultResultState = "INHERIT"
+	VALUE   PropertyTypeDefaultResultState = "VALUE"
+)
+
+// Valid indicates whether the value is a known member of the PropertyTypeDefaultResultState enum.
+func (e PropertyTypeDefaultResultState) Valid() bool {
+	switch e {
+	case EMPTY:
+		return true
+	case INHERIT:
+		return true
+	case VALUE:
 		return true
 	default:
 		return false
@@ -1227,19 +1374,19 @@ func (e TrashedPageViewResultRestoreTarget) Valid() bool {
 
 // Defines values for UserFormCreationMode.
 const (
-	NOPASSWORD          UserFormCreationMode = "NO_PASSWORD"
-	SENDACTIVATIONEMAIL UserFormCreationMode = "SEND_ACTIVATION_EMAIL"
-	SETPASSWORD         UserFormCreationMode = "SET_PASSWORD"
+	UserFormCreationModeNOPASSWORD          UserFormCreationMode = "NO_PASSWORD"
+	UserFormCreationModeSENDACTIVATIONEMAIL UserFormCreationMode = "SEND_ACTIVATION_EMAIL"
+	UserFormCreationModeSETPASSWORD         UserFormCreationMode = "SET_PASSWORD"
 )
 
 // Valid indicates whether the value is a known member of the UserFormCreationMode enum.
 func (e UserFormCreationMode) Valid() bool {
 	switch e {
-	case NOPASSWORD:
+	case UserFormCreationModeNOPASSWORD:
 		return true
-	case SENDACTIVATIONEMAIL:
+	case UserFormCreationModeSENDACTIVATIONEMAIL:
 		return true
-	case SETPASSWORD:
+	case UserFormCreationModeSETPASSWORD:
 		return true
 	default:
 		return false
@@ -1434,16 +1581,16 @@ func (e UserResultEffectiveWorkflowRole) Valid() bool {
 
 // Defines values for UserResultRole.
 const (
-	ADMIN UserResultRole = "ADMIN"
-	USER  UserResultRole = "USER"
+	UserResultRoleADMIN UserResultRole = "ADMIN"
+	UserResultRoleUSER  UserResultRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the UserResultRole enum.
 func (e UserResultRole) Valid() bool {
 	switch e {
-	case ADMIN:
+	case UserResultRoleADMIN:
 		return true
-	case USER:
+	case UserResultRoleUSER:
 		return true
 	default:
 		return false
@@ -1563,22 +1710,22 @@ func (e WorkflowRoleGroupResultWorkflowRole) Valid() bool {
 
 // Defines values for WorkflowRoleResultWorkflowRole.
 const (
-	CONTRIBUTOR WorkflowRoleResultWorkflowRole = "CONTRIBUTOR"
-	PUBLISHER   WorkflowRoleResultWorkflowRole = "PUBLISHER"
-	READER      WorkflowRoleResultWorkflowRole = "READER"
-	REVIEWER    WorkflowRoleResultWorkflowRole = "REVIEWER"
+	WorkflowRoleResultWorkflowRoleCONTRIBUTOR WorkflowRoleResultWorkflowRole = "CONTRIBUTOR"
+	WorkflowRoleResultWorkflowRolePUBLISHER   WorkflowRoleResultWorkflowRole = "PUBLISHER"
+	WorkflowRoleResultWorkflowRoleREADER      WorkflowRoleResultWorkflowRole = "READER"
+	WorkflowRoleResultWorkflowRoleREVIEWER    WorkflowRoleResultWorkflowRole = "REVIEWER"
 )
 
 // Valid indicates whether the value is a known member of the WorkflowRoleResultWorkflowRole enum.
 func (e WorkflowRoleResultWorkflowRole) Valid() bool {
 	switch e {
-	case CONTRIBUTOR:
+	case WorkflowRoleResultWorkflowRoleCONTRIBUTOR:
 		return true
-	case PUBLISHER:
+	case WorkflowRoleResultWorkflowRolePUBLISHER:
 		return true
-	case READER:
+	case WorkflowRoleResultWorkflowRoleREADER:
 		return true
-	case REVIEWER:
+	case WorkflowRoleResultWorkflowRoleREVIEWER:
 		return true
 	default:
 		return false
@@ -1770,19 +1917,19 @@ func (e PreviewPageCascadeImpactParamsOperation) Valid() bool {
 
 // Defines values for ListUsersParamsStatus.
 const (
-	ListUsersParamsStatusACTIVE  ListUsersParamsStatus = "ACTIVE"
-	ListUsersParamsStatusDELETED ListUsersParamsStatus = "DELETED"
-	ListUsersParamsStatusPENDING ListUsersParamsStatus = "PENDING"
+	ACTIVE  ListUsersParamsStatus = "ACTIVE"
+	DELETED ListUsersParamsStatus = "DELETED"
+	PENDING ListUsersParamsStatus = "PENDING"
 )
 
 // Valid indicates whether the value is a known member of the ListUsersParamsStatus enum.
 func (e ListUsersParamsStatus) Valid() bool {
 	switch e {
-	case ListUsersParamsStatusACTIVE:
+	case ACTIVE:
 		return true
-	case ListUsersParamsStatusDELETED:
+	case DELETED:
 		return true
-	case ListUsersParamsStatusPENDING:
+	case PENDING:
 		return true
 	default:
 		return false
@@ -2130,6 +2277,29 @@ type ContentValidationResult struct {
 	Diagnostics *[]ContentDiagnostic `json:"diagnostics,omitempty"`
 }
 
+// DefaultValuePayload defines model for DefaultValuePayload.
+type DefaultValuePayload struct {
+	DateValue          *string  `json:"dateValue,omitempty"`
+	EnumValueId        *int64   `json:"enumValueId,omitempty"`
+	NumericValue       *float32 `json:"numericValue,omitempty"`
+	PageIds            *[]int64 `json:"pageIds,omitempty"`
+	SelectedPageTypeId *int64   `json:"selectedPageTypeId,omitempty"`
+	TextValue          *string  `json:"textValue,omitempty"`
+	UserToken          *string  `json:"userToken,omitempty"`
+	Version            *int32   `json:"version,omitempty"`
+}
+
+// DefaultValueSetForm defines model for DefaultValueSetForm.
+type DefaultValueSetForm struct {
+	DateValue          *string  `json:"dateValue,omitempty"`
+	EnumValueId        *int64   `json:"enumValueId,omitempty"`
+	NumericValue       *float32 `json:"numericValue,omitempty"`
+	PageIds            *[]int64 `json:"pageIds,omitempty"`
+	SelectedPageTypeId *int64   `json:"selectedPageTypeId,omitempty"`
+	TextValue          *string  `json:"textValue,omitempty"`
+	UserToken          *string  `json:"userToken,omitempty"`
+}
+
 // DescriptorEntry defines model for DescriptorEntry.
 type DescriptorEntry struct {
 	Id           *int64  `json:"id,omitempty"`
@@ -2239,6 +2409,41 @@ type EnumValueCount struct {
 	Value      *string `json:"value,omitempty"`
 }
 
+// EnvironmentSeedReadinessResult defines model for EnvironmentSeedReadinessResult.
+type EnvironmentSeedReadinessResult struct {
+	HasEligibleReplacementAdmin *bool                                 `json:"hasEligibleReplacementAdmin,omitempty"`
+	Status                      *EnvironmentSeedReadinessResultStatus `json:"status,omitempty"`
+	TransferReportDigest        *string                               `json:"transferReportDigest,omitempty"`
+	TransferRunId               *string                               `json:"transferRunId,omitempty"`
+}
+
+// EnvironmentSeedReadinessResultStatus defines model for EnvironmentSeedReadinessResult.Status.
+type EnvironmentSeedReadinessResultStatus string
+
+// EnvironmentSeedStateResult defines model for EnvironmentSeedStateResult.
+type EnvironmentSeedStateResult struct {
+	CompletedAt          *time.Time                        `json:"completedAt,omitempty"`
+	Status               *EnvironmentSeedStateResultStatus `json:"status,omitempty"`
+	TransferReportDigest *string                           `json:"transferReportDigest,omitempty"`
+	TransferRunId        *string                           `json:"transferRunId,omitempty"`
+	TransferVerifiedAt   *time.Time                        `json:"transferVerifiedAt,omitempty"`
+}
+
+// EnvironmentSeedStateResultStatus defines model for EnvironmentSeedStateResult.Status.
+type EnvironmentSeedStateResultStatus string
+
+// EnvironmentSettingsForm defines model for EnvironmentSettingsForm.
+type EnvironmentSettingsForm struct {
+	Enabled *bool   `json:"enabled,omitempty"`
+	Name    *string `json:"name,omitempty"`
+}
+
+// EnvironmentSettingsResult defines model for EnvironmentSettingsResult.
+type EnvironmentSettingsResult struct {
+	Enabled *bool   `json:"enabled,omitempty"`
+	Name    *string `json:"name,omitempty"`
+}
+
 // ExcerptIncludeData defines model for ExcerptIncludeData.
 type ExcerptIncludeData struct {
 	Content   *string    `json:"content,omitempty"`
@@ -2288,6 +2493,12 @@ type FileAttachmentResult struct {
 	Width       *int32     `json:"width,omitempty"`
 }
 
+// GoogleLoginStatusResult defines model for GoogleLoginStatusResult.
+type GoogleLoginStatusResult struct {
+	CredentialsConfigured *bool `json:"credentialsConfigured,omitempty"`
+	Enabled               *bool `json:"enabled,omitempty"`
+}
+
 // ImageData defines model for ImageData.
 type ImageData struct {
 	Filename *string `json:"filename,omitempty"`
@@ -2318,6 +2529,24 @@ type IncludePageData struct {
 	MacroData *MacroData `json:"macroData,omitempty"`
 	Name      *string    `json:"name,omitempty"`
 }
+
+// InternalUserForm defines model for InternalUserForm.
+type InternalUserForm struct {
+	CreationMode InternalUserFormCreationMode  `json:"creationMode"`
+	DisplayName  string                        `json:"displayName"`
+	Email        openapi_types.Email           `json:"email"`
+	Role         InternalUserFormRole          `json:"role"`
+	WorkflowRole *InternalUserFormWorkflowRole `json:"workflowRole,omitempty"`
+}
+
+// InternalUserFormCreationMode defines model for InternalUserForm.CreationMode.
+type InternalUserFormCreationMode string
+
+// InternalUserFormRole defines model for InternalUserForm.Role.
+type InternalUserFormRole string
+
+// InternalUserFormWorkflowRole defines model for InternalUserForm.WorkflowRole.
+type InternalUserFormWorkflowRole string
 
 // JiraAsset defines model for JiraAsset.
 type JiraAsset struct {
@@ -2547,6 +2776,21 @@ type PageEditForm struct {
 type PageEntry struct {
 	Id   *int64  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
+}
+
+// PageFileAttachmentResult defines model for PageFileAttachmentResult.
+type PageFileAttachmentResult struct {
+	Content          *[]FileAttachmentResult `json:"content,omitempty"`
+	Empty            *bool                   `json:"empty,omitempty"`
+	First            *bool                   `json:"first,omitempty"`
+	Last             *bool                   `json:"last,omitempty"`
+	Number           *int32                  `json:"number,omitempty"`
+	NumberOfElements *int32                  `json:"numberOfElements,omitempty"`
+	Pageable         *PageableObject         `json:"pageable,omitempty"`
+	Size             *int32                  `json:"size,omitempty"`
+	Sort             *SortObject             `json:"sort,omitempty"`
+	TotalElements    *int64                  `json:"totalElements,omitempty"`
+	TotalPages       *int32                  `json:"totalPages,omitempty"`
 }
 
 // PageLinkData defines model for PageLinkData.
@@ -3070,6 +3314,27 @@ type PermanentDeleteForm struct {
 	ReplacementOwnerId *int64 `json:"replacementOwnerId,omitempty"`
 }
 
+// PreparationReadinessResult defines model for PreparationReadinessResult.
+type PreparationReadinessResult struct {
+	ActivePageCount         *int64                                `json:"activePageCount,omitempty"`
+	ArchivedPageCount       *int64                                `json:"archivedPageCount,omitempty"`
+	AttachmentCount         *int64                                `json:"attachmentCount,omitempty"`
+	DomainEnumCount         *int64                                `json:"domainEnumCount,omitempty"`
+	GroupCount              *int64                                `json:"groupCount,omitempty"`
+	ImageCount              *int64                                `json:"imageCount,omitempty"`
+	OtherApiKeyCount        *int64                                `json:"otherApiKeyCount,omitempty"`
+	OtherUserCount          *int64                                `json:"otherUserCount,omitempty"`
+	PageTypeCount           *int64                                `json:"pageTypeCount,omitempty"`
+	PropertyDescriptorCount *int64                                `json:"propertyDescriptorCount,omitempty"`
+	SeedStatus              *PreparationReadinessResultSeedStatus `json:"seedStatus,omitempty"`
+	TrashedPageCount        *int64                                `json:"trashedPageCount,omitempty"`
+	WorkItemCount           *int64                                `json:"workItemCount,omitempty"`
+	WorkItemTypeCount       *int64                                `json:"workItemTypeCount,omitempty"`
+}
+
+// PreparationReadinessResultSeedStatus defines model for PreparationReadinessResult.SeedStatus.
+type PreparationReadinessResultSeedStatus string
+
 // ProblemDetail defines model for ProblemDetail.
 type ProblemDetail struct {
 	// AffectedWorkItemCount Number of work items that would be stranded (WORK_ITEM_TRANSITION_IN_USE).
@@ -3330,6 +3595,26 @@ type PropertyDescriptorResultNumberFormat string
 // PropertyDescriptorResultPageReferenceSortDirection defines model for PropertyDescriptorResult.PageReferenceSortDirection.
 type PropertyDescriptorResultPageReferenceSortDirection string
 
+// PropertyDescriptorVisibilityForm defines model for PropertyDescriptorVisibilityForm.
+type PropertyDescriptorVisibilityForm struct {
+	Hidden bool `json:"hidden"`
+}
+
+// PropertyDescriptorVisibilityOverrideResult defines model for PropertyDescriptorVisibilityOverrideResult.
+type PropertyDescriptorVisibilityOverrideResult struct {
+	Hidden     *bool `json:"hidden,omitempty"`
+	Overridden *bool `json:"overridden,omitempty"`
+}
+
+// PropertyTypeDefaultResult defines model for PropertyTypeDefaultResult.
+type PropertyTypeDefaultResult struct {
+	Payload *DefaultValuePayload            `json:"payload,omitempty"`
+	State   *PropertyTypeDefaultResultState `json:"state,omitempty"`
+}
+
+// PropertyTypeDefaultResultState defines model for PropertyTypeDefaultResult.State.
+type PropertyTypeDefaultResultState string
+
 // PropertyValueEditForm defines model for PropertyValueEditForm.
 type PropertyValueEditForm struct {
 	DateTimeValue             *string               `json:"dateTimeValue,omitempty"`
@@ -3398,6 +3683,12 @@ type PropertyValueResultDataType string
 
 // PropertyValueResultNumberFormat defines model for PropertyValueResult.NumberFormat.
 type PropertyValueResultNumberFormat string
+
+// PublicActivationEmailSentResult defines model for PublicActivationEmailSentResult.
+type PublicActivationEmailSentResult struct {
+	ExpiresAt   *time.Time `json:"expiresAt,omitempty"`
+	RequestedAt *time.Time `json:"requestedAt,omitempty"`
+}
 
 // PublicAuditLogResult defines model for PublicAuditLogResult.
 type PublicAuditLogResult struct {
@@ -3685,6 +3976,12 @@ type SortObject struct {
 	Empty    *bool `json:"empty,omitempty"`
 	Sorted   *bool `json:"sorted,omitempty"`
 	Unsorted *bool `json:"unsorted,omitempty"`
+}
+
+// TransferVerificationForm defines model for TransferVerificationForm.
+type TransferVerificationForm struct {
+	ReportDigest string `json:"reportDigest"`
+	RunId        string `json:"runId"`
 }
 
 // TransitionForm defines model for TransitionForm.
@@ -4183,6 +4480,18 @@ type GetPageRevisionsParams struct {
 	Compare *string `form:"compare,omitempty" json:"compare,omitempty"`
 }
 
+// ListPageFileAttachmentsParams defines parameters for ListPageFileAttachments.
+type ListPageFileAttachmentsParams struct {
+	// Page Zero-based page index (0..N)
+	Page *int `form:"page,omitempty" json:"page,omitempty"`
+
+	// Size The size of the page to be returned
+	Size *int `form:"size,omitempty" json:"size,omitempty"`
+
+	// Sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+	Sort *[]string `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
 // UploadFileAttachmentMultipartBody defines parameters for UploadFileAttachment.
 type UploadFileAttachmentMultipartBody struct {
 	File openapi_types.File `json:"file"`
@@ -4229,6 +4538,11 @@ type ListUsersParams struct {
 
 // ListUsersParamsStatus defines parameters for ListUsers.
 type ListUsersParamsStatus string
+
+// GetUserByEmailParams defines parameters for GetUserByEmail.
+type GetUserByEmailParams struct {
+	Email string `form:"email" json:"email"`
+}
 
 // SearchUsersParams defines parameters for SearchUsers.
 type SearchUsersParams struct {
@@ -4330,6 +4644,12 @@ type CreateDomainEnumJSONRequestBody = DomainEnumForm
 // UpdateDomainEnumJSONRequestBody defines body for UpdateDomainEnum for application/json ContentType.
 type UpdateDomainEnumJSONRequestBody = DomainEnumForm
 
+// RegisterEnvironmentSeedTransferVerificationJSONRequestBody defines body for RegisterEnvironmentSeedTransferVerification for application/json ContentType.
+type RegisterEnvironmentSeedTransferVerificationJSONRequestBody = TransferVerificationForm
+
+// UpdateEnvironmentSettingsJSONRequestBody defines body for UpdateEnvironmentSettings for application/json ContentType.
+type UpdateEnvironmentSettingsJSONRequestBody = EnvironmentSettingsForm
+
 // CreateGroupJSONRequestBody defines body for CreateGroup for application/json ContentType.
 type CreateGroupJSONRequestBody = UserGroupForm
 
@@ -4362,6 +4682,12 @@ type CreatePropertyDescriptorJSONRequestBody = PropertyDescriptorForm
 
 // SortPageTypePropertyDescriptorsJSONRequestBody defines body for SortPageTypePropertyDescriptors for application/json ContentType.
 type SortPageTypePropertyDescriptorsJSONRequestBody = SortPageTypePropertyDescriptorsJSONBody
+
+// SetPropertyDescriptorDefaultJSONRequestBody defines body for SetPropertyDescriptorDefault for application/json ContentType.
+type SetPropertyDescriptorDefaultJSONRequestBody = DefaultValueSetForm
+
+// SetPropertyDescriptorVisibilityOverrideJSONRequestBody defines body for SetPropertyDescriptorVisibilityOverride for application/json ContentType.
+type SetPropertyDescriptorVisibilityOverrideJSONRequestBody = PropertyDescriptorVisibilityForm
 
 // CreatePageJSONRequestBody defines body for CreatePage for application/json ContentType.
 type CreatePageJSONRequestBody = PageCreateForm
@@ -4446,6 +4772,9 @@ type SortPropertyDescriptorDisplayColumnsJSONRequestBody = SortPropertyDescripto
 
 // CreateUserJSONRequestBody defines body for CreateUser for application/json ContentType.
 type CreateUserJSONRequestBody = ExternalUserForm
+
+// CreateInternalUserJSONRequestBody defines body for CreateInternalUser for application/json ContentType.
+type CreateInternalUserJSONRequestBody = InternalUserForm
 
 // UpdateUserJSONRequestBody defines body for UpdateUser for application/json ContentType.
 type UpdateUserJSONRequestBody = UserForm
@@ -4592,11 +4921,39 @@ type ClientInterface interface {
 	// GetDomainEnumUsages request
 	GetDomainEnumUsages(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetEnvironmentSeedReadiness request
+	GetEnvironmentSeedReadiness(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CompleteEnvironmentSeed request
+	CompleteEnvironmentSeed(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RevokeEnvironmentSeedTransferVerification request
+	RevokeEnvironmentSeedTransferVerification(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RegisterEnvironmentSeedTransferVerificationWithBody request with any body
+	RegisterEnvironmentSeedTransferVerificationWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	RegisterEnvironmentSeedTransferVerification(ctx context.Context, body RegisterEnvironmentSeedTransferVerificationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEnvironmentSettings request
+	GetEnvironmentSettings(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateEnvironmentSettingsWithBody request with any body
+	UpdateEnvironmentSettingsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateEnvironmentSettings(ctx context.Context, body UpdateEnvironmentSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteFileAttachment request
 	DeleteFileAttachment(ctx context.Context, id int64, params *DeleteFileAttachmentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DownloadFileAttachment request
 	DownloadFileAttachment(ctx context.Context, id int64, params *DownloadFileAttachmentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetGoogleLoginStatus request
+	GetGoogleLoginStatus(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DisableGoogleLogin request
+	DisableGoogleLogin(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListGroups request
 	ListGroups(ctx context.Context, params *ListGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4697,6 +5054,25 @@ type ClientInterface interface {
 	SortPageTypePropertyDescriptorsWithBody(ctx context.Context, pageTypeId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	SortPageTypePropertyDescriptors(ctx context.Context, pageTypeId int64, body SortPageTypePropertyDescriptorsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ClearPropertyDescriptorDefault request
+	ClearPropertyDescriptorDefault(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPropertyDescriptorDefault request
+	GetPropertyDescriptorDefault(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SetPropertyDescriptorDefaultWithBody request with any body
+	SetPropertyDescriptorDefaultWithBody(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	SetPropertyDescriptorDefault(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPropertyDescriptorVisibilityOverride request
+	GetPropertyDescriptorVisibilityOverride(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SetPropertyDescriptorVisibilityOverrideWithBody request with any body
+	SetPropertyDescriptorVisibilityOverrideWithBody(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	SetPropertyDescriptorVisibilityOverride(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorVisibilityOverrideJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPages request
 	ListPages(ctx context.Context, params *ListPagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4826,6 +5202,9 @@ type ClientInterface interface {
 	// RestorePageVersion request
 	RestorePageVersion(ctx context.Context, id int64, revisionNumber int32, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListPageFileAttachments request
+	ListPageFileAttachments(ctx context.Context, pageId int64, params *ListPageFileAttachmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UploadFileAttachmentWithBody request with any body
 	UploadFileAttachmentWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4912,6 +5291,9 @@ type ClientInterface interface {
 
 	SortPageChildren(ctx context.Context, parentId int64, body SortPageChildrenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetPreparationReadiness request
+	GetPreparationReadiness(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// SwapPropertyDescriptors request
 	SwapPropertyDescriptors(ctx context.Context, fromId int64, toId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4945,6 +5327,14 @@ type ClientInterface interface {
 
 	CreateUser(ctx context.Context, body CreateUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetUserByEmail request
+	GetUserByEmail(ctx context.Context, params *GetUserByEmailParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateInternalUserWithBody request with any body
+	CreateInternalUserWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateInternalUser(ctx context.Context, body CreateInternalUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetCurrentUser request
 	GetCurrentUser(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4972,6 +5362,9 @@ type ClientInterface interface {
 
 	// ReactivateUser request
 	ReactivateUser(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendUserActivationEmail request
+	SendUserActivationEmail(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListWorkItemTypes request
 	ListWorkItemTypes(ctx context.Context, params *ListWorkItemTypesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5232,6 +5625,102 @@ func (c *Client) GetDomainEnumUsages(ctx context.Context, id int64, reqEditors .
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetEnvironmentSeedReadiness(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEnvironmentSeedReadinessRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CompleteEnvironmentSeed(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCompleteEnvironmentSeedRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) RevokeEnvironmentSeedTransferVerification(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRevokeEnvironmentSeedTransferVerificationRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) RegisterEnvironmentSeedTransferVerificationWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRegisterEnvironmentSeedTransferVerificationRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) RegisterEnvironmentSeedTransferVerification(ctx context.Context, body RegisterEnvironmentSeedTransferVerificationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRegisterEnvironmentSeedTransferVerificationRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetEnvironmentSettings(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEnvironmentSettingsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateEnvironmentSettingsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateEnvironmentSettingsRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateEnvironmentSettings(ctx context.Context, body UpdateEnvironmentSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateEnvironmentSettingsRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) DeleteFileAttachment(ctx context.Context, id int64, params *DeleteFileAttachmentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteFileAttachmentRequest(c.Server, id, params)
 	if err != nil {
@@ -5246,6 +5735,30 @@ func (c *Client) DeleteFileAttachment(ctx context.Context, id int64, params *Del
 
 func (c *Client) DownloadFileAttachment(ctx context.Context, id int64, params *DownloadFileAttachmentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDownloadFileAttachmentRequest(c.Server, id, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetGoogleLoginStatus(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGoogleLoginStatusRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DisableGoogleLogin(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDisableGoogleLoginRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -5690,6 +6203,90 @@ func (c *Client) SortPageTypePropertyDescriptorsWithBody(ctx context.Context, pa
 
 func (c *Client) SortPageTypePropertyDescriptors(ctx context.Context, pageTypeId int64, body SortPageTypePropertyDescriptorsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSortPageTypePropertyDescriptorsRequest(c.Server, pageTypeId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ClearPropertyDescriptorDefault(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewClearPropertyDescriptorDefaultRequest(c.Server, pageTypeId, descriptorId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPropertyDescriptorDefault(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPropertyDescriptorDefaultRequest(c.Server, pageTypeId, descriptorId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SetPropertyDescriptorDefaultWithBody(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetPropertyDescriptorDefaultRequestWithBody(c.Server, pageTypeId, descriptorId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SetPropertyDescriptorDefault(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetPropertyDescriptorDefaultRequest(c.Server, pageTypeId, descriptorId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPropertyDescriptorVisibilityOverride(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPropertyDescriptorVisibilityOverrideRequest(c.Server, pageTypeId, descriptorId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SetPropertyDescriptorVisibilityOverrideWithBody(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetPropertyDescriptorVisibilityOverrideRequestWithBody(c.Server, pageTypeId, descriptorId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SetPropertyDescriptorVisibilityOverride(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorVisibilityOverrideJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetPropertyDescriptorVisibilityOverrideRequest(c.Server, pageTypeId, descriptorId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6264,6 +6861,18 @@ func (c *Client) RestorePageVersion(ctx context.Context, id int64, revisionNumbe
 	return c.Client.Do(req)
 }
 
+func (c *Client) ListPageFileAttachments(ctx context.Context, pageId int64, params *ListPageFileAttachmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListPageFileAttachmentsRequest(c.Server, pageId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) UploadFileAttachmentWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUploadFileAttachmentRequestWithBody(c.Server, pageId, contentType, body)
 	if err != nil {
@@ -6648,6 +7257,18 @@ func (c *Client) SortPageChildren(ctx context.Context, parentId int64, body Sort
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetPreparationReadiness(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPreparationReadinessRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) SwapPropertyDescriptors(ctx context.Context, fromId int64, toId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSwapPropertyDescriptorsRequest(c.Server, fromId, toId)
 	if err != nil {
@@ -6792,6 +7413,42 @@ func (c *Client) CreateUser(ctx context.Context, body CreateUserJSONRequestBody,
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetUserByEmail(ctx context.Context, params *GetUserByEmailParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUserByEmailRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateInternalUserWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateInternalUserRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateInternalUser(ctx context.Context, body CreateInternalUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateInternalUserRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetCurrentUser(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetCurrentUserRequest(c.Server)
 	if err != nil {
@@ -6902,6 +7559,18 @@ func (c *Client) GetUserPermanentDeleteReplacements(ctx context.Context, id int6
 
 func (c *Client) ReactivateUser(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewReactivateUserRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SendUserActivationEmail(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendUserActivationEmailRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -7838,6 +8507,194 @@ func NewGetDomainEnumUsagesRequest(server string, id int64) (*http.Request, erro
 	return req, nil
 }
 
+// NewGetEnvironmentSeedReadinessRequest generates requests for GetEnvironmentSeedReadiness
+func NewGetEnvironmentSeedReadinessRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/environment-seed")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCompleteEnvironmentSeedRequest generates requests for CompleteEnvironmentSeed
+func NewCompleteEnvironmentSeedRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/environment-seed/complete")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewRevokeEnvironmentSeedTransferVerificationRequest generates requests for RevokeEnvironmentSeedTransferVerification
+func NewRevokeEnvironmentSeedTransferVerificationRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/environment-seed/transfer-verification")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewRegisterEnvironmentSeedTransferVerificationRequest calls the generic RegisterEnvironmentSeedTransferVerification builder with application/json body
+func NewRegisterEnvironmentSeedTransferVerificationRequest(server string, body RegisterEnvironmentSeedTransferVerificationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRegisterEnvironmentSeedTransferVerificationRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewRegisterEnvironmentSeedTransferVerificationRequestWithBody generates requests for RegisterEnvironmentSeedTransferVerification with any type of body
+func NewRegisterEnvironmentSeedTransferVerificationRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/environment-seed/transfer-verification")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetEnvironmentSettingsRequest generates requests for GetEnvironmentSettings
+func NewGetEnvironmentSettingsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/environment-settings")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateEnvironmentSettingsRequest calls the generic UpdateEnvironmentSettings builder with application/json body
+func NewUpdateEnvironmentSettingsRequest(server string, body UpdateEnvironmentSettingsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateEnvironmentSettingsRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewUpdateEnvironmentSettingsRequestWithBody generates requests for UpdateEnvironmentSettings with any type of body
+func NewUpdateEnvironmentSettingsRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/environment-settings")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewDeleteFileAttachmentRequest generates requests for DeleteFileAttachment
 func NewDeleteFileAttachmentRequest(server string, id int64, params *DeleteFileAttachmentParams) (*http.Request, error) {
 	var err error
@@ -7939,6 +8796,60 @@ func NewDownloadFileAttachmentRequest(server string, id int64, params *DownloadF
 			req.Header.Set("If-None-Match", headerParam0)
 		}
 
+	}
+
+	return req, nil
+}
+
+// NewGetGoogleLoginStatusRequest generates requests for GetGoogleLoginStatus
+func NewGetGoogleLoginStatusRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/google/login")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewDisableGoogleLoginRequest generates requests for DisableGoogleLogin
+func NewDisableGoogleLoginRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/google/login/disable")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
 	}
 
 	return req, nil
@@ -9117,6 +10028,237 @@ func NewSortPageTypePropertyDescriptorsRequestWithBody(server string, pageTypeId
 	}
 
 	operationPath := fmt.Sprintf("/public/v1/page-types/%s/property-descriptors/sort", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewClearPropertyDescriptorDefaultRequest generates requests for ClearPropertyDescriptorDefault
+func NewClearPropertyDescriptorDefaultRequest(server string, pageTypeId int64, descriptorId int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageTypeId", pageTypeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "descriptorId", descriptorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/page-types/%s/property-descriptors/%s/default", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetPropertyDescriptorDefaultRequest generates requests for GetPropertyDescriptorDefault
+func NewGetPropertyDescriptorDefaultRequest(server string, pageTypeId int64, descriptorId int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageTypeId", pageTypeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "descriptorId", descriptorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/page-types/%s/property-descriptors/%s/default", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewSetPropertyDescriptorDefaultRequest calls the generic SetPropertyDescriptorDefault builder with application/json body
+func NewSetPropertyDescriptorDefaultRequest(server string, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorDefaultJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSetPropertyDescriptorDefaultRequestWithBody(server, pageTypeId, descriptorId, "application/json", bodyReader)
+}
+
+// NewSetPropertyDescriptorDefaultRequestWithBody generates requests for SetPropertyDescriptorDefault with any type of body
+func NewSetPropertyDescriptorDefaultRequestWithBody(server string, pageTypeId int64, descriptorId int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageTypeId", pageTypeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "descriptorId", descriptorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/page-types/%s/property-descriptors/%s/default", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetPropertyDescriptorVisibilityOverrideRequest generates requests for GetPropertyDescriptorVisibilityOverride
+func NewGetPropertyDescriptorVisibilityOverrideRequest(server string, pageTypeId int64, descriptorId int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageTypeId", pageTypeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "descriptorId", descriptorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/page-types/%s/property-descriptors/%s/visibility-override", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewSetPropertyDescriptorVisibilityOverrideRequest calls the generic SetPropertyDescriptorVisibilityOverride builder with application/json body
+func NewSetPropertyDescriptorVisibilityOverrideRequest(server string, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorVisibilityOverrideJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSetPropertyDescriptorVisibilityOverrideRequestWithBody(server, pageTypeId, descriptorId, "application/json", bodyReader)
+}
+
+// NewSetPropertyDescriptorVisibilityOverrideRequestWithBody generates requests for SetPropertyDescriptorVisibilityOverride with any type of body
+func NewSetPropertyDescriptorVisibilityOverrideRequestWithBody(server string, pageTypeId int64, descriptorId int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageTypeId", pageTypeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "descriptorId", descriptorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/page-types/%s/property-descriptors/%s/visibility-override", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -10765,6 +11907,91 @@ func NewRestorePageVersionRequest(server string, id int64, revisionNumber int32)
 	return req, nil
 }
 
+// NewListPageFileAttachmentsRequest generates requests for ListPageFileAttachments
+func NewListPageFileAttachmentsRequest(server string, pageId int64, params *ListPageFileAttachmentsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/%s/file-attachments", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Size != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "size", *params.Size, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewUploadFileAttachmentRequestWithBody generates requests for UploadFileAttachment with any type of body
 func NewUploadFileAttachmentRequestWithBody(server string, pageId int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -11744,6 +12971,33 @@ func NewSortPageChildrenRequestWithBody(server string, parentId int64, contentTy
 	return req, nil
 }
 
+// NewGetPreparationReadinessRequest generates requests for GetPreparationReadiness
+func NewGetPreparationReadinessRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/preparation-readiness")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewSwapPropertyDescriptorsRequest generates requests for SwapPropertyDescriptors
 func NewSwapPropertyDescriptorsRequest(server string, fromId int64, toId int64) (*http.Request, error) {
 	var err error
@@ -12189,6 +13443,96 @@ func NewCreateUserRequestWithBody(server string, contentType string, body io.Rea
 	return req, nil
 }
 
+// NewGetUserByEmailRequest generates requests for GetUserByEmail
+func NewGetUserByEmailRequest(server string, params *GetUserByEmailParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/users/by-email")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "email", params.Email, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateInternalUserRequest calls the generic CreateInternalUser builder with application/json body
+func NewCreateInternalUserRequest(server string, body CreateInternalUserJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateInternalUserRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateInternalUserRequestWithBody generates requests for CreateInternalUser with any type of body
+func NewCreateInternalUserRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/users/internal")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewGetCurrentUserRequest generates requests for GetCurrentUser
 func NewGetCurrentUserRequest(server string) (*http.Request, error) {
 	var err error
@@ -12542,6 +13886,40 @@ func NewReactivateUserRequest(server string, id int64) (*http.Request, error) {
 	}
 
 	operationPath := fmt.Sprintf("/public/v1/users/%s/reactivate", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewSendUserActivationEmailRequest generates requests for SendUserActivationEmail
+func NewSendUserActivationEmailRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/users/%s/send-activation-email", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -13551,11 +14929,39 @@ type ClientWithResponsesInterface interface {
 	// GetDomainEnumUsagesWithResponse request
 	GetDomainEnumUsagesWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GetDomainEnumUsagesResponse, error)
 
+	// GetEnvironmentSeedReadinessWithResponse request
+	GetEnvironmentSeedReadinessWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetEnvironmentSeedReadinessResponse, error)
+
+	// CompleteEnvironmentSeedWithResponse request
+	CompleteEnvironmentSeedWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CompleteEnvironmentSeedResponse, error)
+
+	// RevokeEnvironmentSeedTransferVerificationWithResponse request
+	RevokeEnvironmentSeedTransferVerificationWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*RevokeEnvironmentSeedTransferVerificationResponse, error)
+
+	// RegisterEnvironmentSeedTransferVerificationWithBodyWithResponse request with any body
+	RegisterEnvironmentSeedTransferVerificationWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RegisterEnvironmentSeedTransferVerificationResponse, error)
+
+	RegisterEnvironmentSeedTransferVerificationWithResponse(ctx context.Context, body RegisterEnvironmentSeedTransferVerificationJSONRequestBody, reqEditors ...RequestEditorFn) (*RegisterEnvironmentSeedTransferVerificationResponse, error)
+
+	// GetEnvironmentSettingsWithResponse request
+	GetEnvironmentSettingsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetEnvironmentSettingsResponse, error)
+
+	// UpdateEnvironmentSettingsWithBodyWithResponse request with any body
+	UpdateEnvironmentSettingsWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateEnvironmentSettingsResponse, error)
+
+	UpdateEnvironmentSettingsWithResponse(ctx context.Context, body UpdateEnvironmentSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateEnvironmentSettingsResponse, error)
+
 	// DeleteFileAttachmentWithResponse request
 	DeleteFileAttachmentWithResponse(ctx context.Context, id int64, params *DeleteFileAttachmentParams, reqEditors ...RequestEditorFn) (*DeleteFileAttachmentResponse, error)
 
 	// DownloadFileAttachmentWithResponse request
 	DownloadFileAttachmentWithResponse(ctx context.Context, id int64, params *DownloadFileAttachmentParams, reqEditors ...RequestEditorFn) (*DownloadFileAttachmentResponse, error)
+
+	// GetGoogleLoginStatusWithResponse request
+	GetGoogleLoginStatusWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetGoogleLoginStatusResponse, error)
+
+	// DisableGoogleLoginWithResponse request
+	DisableGoogleLoginWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DisableGoogleLoginResponse, error)
 
 	// ListGroupsWithResponse request
 	ListGroupsWithResponse(ctx context.Context, params *ListGroupsParams, reqEditors ...RequestEditorFn) (*ListGroupsResponse, error)
@@ -13656,6 +15062,25 @@ type ClientWithResponsesInterface interface {
 	SortPageTypePropertyDescriptorsWithBodyWithResponse(ctx context.Context, pageTypeId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SortPageTypePropertyDescriptorsResponse, error)
 
 	SortPageTypePropertyDescriptorsWithResponse(ctx context.Context, pageTypeId int64, body SortPageTypePropertyDescriptorsJSONRequestBody, reqEditors ...RequestEditorFn) (*SortPageTypePropertyDescriptorsResponse, error)
+
+	// ClearPropertyDescriptorDefaultWithResponse request
+	ClearPropertyDescriptorDefaultWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*ClearPropertyDescriptorDefaultResponse, error)
+
+	// GetPropertyDescriptorDefaultWithResponse request
+	GetPropertyDescriptorDefaultWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*GetPropertyDescriptorDefaultResponse, error)
+
+	// SetPropertyDescriptorDefaultWithBodyWithResponse request with any body
+	SetPropertyDescriptorDefaultWithBodyWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorDefaultResponse, error)
+
+	SetPropertyDescriptorDefaultWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorDefaultResponse, error)
+
+	// GetPropertyDescriptorVisibilityOverrideWithResponse request
+	GetPropertyDescriptorVisibilityOverrideWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*GetPropertyDescriptorVisibilityOverrideResponse, error)
+
+	// SetPropertyDescriptorVisibilityOverrideWithBodyWithResponse request with any body
+	SetPropertyDescriptorVisibilityOverrideWithBodyWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorVisibilityOverrideResponse, error)
+
+	SetPropertyDescriptorVisibilityOverrideWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorVisibilityOverrideJSONRequestBody, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorVisibilityOverrideResponse, error)
 
 	// ListPagesWithResponse request
 	ListPagesWithResponse(ctx context.Context, params *ListPagesParams, reqEditors ...RequestEditorFn) (*ListPagesResponse, error)
@@ -13785,6 +15210,9 @@ type ClientWithResponsesInterface interface {
 	// RestorePageVersionWithResponse request
 	RestorePageVersionWithResponse(ctx context.Context, id int64, revisionNumber int32, reqEditors ...RequestEditorFn) (*RestorePageVersionResponse, error)
 
+	// ListPageFileAttachmentsWithResponse request
+	ListPageFileAttachmentsWithResponse(ctx context.Context, pageId int64, params *ListPageFileAttachmentsParams, reqEditors ...RequestEditorFn) (*ListPageFileAttachmentsResponse, error)
+
 	// UploadFileAttachmentWithBodyWithResponse request with any body
 	UploadFileAttachmentWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadFileAttachmentResponse, error)
 
@@ -13871,6 +15299,9 @@ type ClientWithResponsesInterface interface {
 
 	SortPageChildrenWithResponse(ctx context.Context, parentId int64, body SortPageChildrenJSONRequestBody, reqEditors ...RequestEditorFn) (*SortPageChildrenResponse, error)
 
+	// GetPreparationReadinessWithResponse request
+	GetPreparationReadinessWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPreparationReadinessResponse, error)
+
 	// SwapPropertyDescriptorsWithResponse request
 	SwapPropertyDescriptorsWithResponse(ctx context.Context, fromId int64, toId int64, reqEditors ...RequestEditorFn) (*SwapPropertyDescriptorsResponse, error)
 
@@ -13904,6 +15335,14 @@ type ClientWithResponsesInterface interface {
 
 	CreateUserWithResponse(ctx context.Context, body CreateUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateUserResponse, error)
 
+	// GetUserByEmailWithResponse request
+	GetUserByEmailWithResponse(ctx context.Context, params *GetUserByEmailParams, reqEditors ...RequestEditorFn) (*GetUserByEmailResponse, error)
+
+	// CreateInternalUserWithBodyWithResponse request with any body
+	CreateInternalUserWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInternalUserResponse, error)
+
+	CreateInternalUserWithResponse(ctx context.Context, body CreateInternalUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInternalUserResponse, error)
+
 	// GetCurrentUserWithResponse request
 	GetCurrentUserWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetCurrentUserResponse, error)
 
@@ -13931,6 +15370,9 @@ type ClientWithResponsesInterface interface {
 
 	// ReactivateUserWithResponse request
 	ReactivateUserWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ReactivateUserResponse, error)
+
+	// SendUserActivationEmailWithResponse request
+	SendUserActivationEmailWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*SendUserActivationEmailResponse, error)
 
 	// ListWorkItemTypesWithResponse request
 	ListWorkItemTypesWithResponse(ctx context.Context, params *ListWorkItemTypesParams, reqEditors ...RequestEditorFn) (*ListWorkItemTypesResponse, error)
@@ -14448,6 +15890,200 @@ func (r GetDomainEnumUsagesResponse) ContentType() string {
 	return ""
 }
 
+type GetEnvironmentSeedReadinessResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEnvironmentSeedReadinessResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEnvironmentSeedReadinessResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetEnvironmentSeedReadinessResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CompleteEnvironmentSeedResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CompleteEnvironmentSeedResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CompleteEnvironmentSeedResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CompleteEnvironmentSeedResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RevokeEnvironmentSeedTransferVerificationResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r RevokeEnvironmentSeedTransferVerificationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RevokeEnvironmentSeedTransferVerificationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RevokeEnvironmentSeedTransferVerificationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RegisterEnvironmentSeedTransferVerificationResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r RegisterEnvironmentSeedTransferVerificationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RegisterEnvironmentSeedTransferVerificationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RegisterEnvironmentSeedTransferVerificationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetEnvironmentSettingsResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEnvironmentSettingsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEnvironmentSettingsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetEnvironmentSettingsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateEnvironmentSettingsResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateEnvironmentSettingsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateEnvironmentSettingsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateEnvironmentSettingsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type DeleteFileAttachmentResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -14508,6 +16144,70 @@ func (r DownloadFileAttachmentResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r DownloadFileAttachmentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetGoogleLoginStatusResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetGoogleLoginStatusResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetGoogleLoginStatusResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetGoogleLoginStatusResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DisableGoogleLoginResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r DisableGoogleLoginResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DisableGoogleLoginResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DisableGoogleLoginResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -15371,6 +17071,173 @@ func (r SortPageTypePropertyDescriptorsResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r SortPageTypePropertyDescriptorsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ClearPropertyDescriptorDefaultResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ClearPropertyDescriptorDefaultResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ClearPropertyDescriptorDefaultResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ClearPropertyDescriptorDefaultResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetPropertyDescriptorDefaultResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPropertyDescriptorDefaultResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPropertyDescriptorDefaultResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetPropertyDescriptorDefaultResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SetPropertyDescriptorDefaultResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r SetPropertyDescriptorDefaultResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SetPropertyDescriptorDefaultResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SetPropertyDescriptorDefaultResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetPropertyDescriptorVisibilityOverrideResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPropertyDescriptorVisibilityOverrideResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPropertyDescriptorVisibilityOverrideResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetPropertyDescriptorVisibilityOverrideResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SetPropertyDescriptorVisibilityOverrideResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r SetPropertyDescriptorVisibilityOverrideResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SetPropertyDescriptorVisibilityOverrideResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SetPropertyDescriptorVisibilityOverrideResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -16508,6 +18375,39 @@ func (r RestorePageVersionResponse) ContentType() string {
 	return ""
 }
 
+type ListPageFileAttachmentsResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ListPageFileAttachmentsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListPageFileAttachmentsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListPageFileAttachmentsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UploadFileAttachmentResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -17244,6 +19144,38 @@ func (r SortPageChildrenResponse) ContentType() string {
 	return ""
 }
 
+type GetPreparationReadinessResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPreparationReadinessResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPreparationReadinessResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetPreparationReadinessResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type SwapPropertyDescriptorsResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -17541,6 +19473,71 @@ func (r CreateUserResponse) ContentType() string {
 	return ""
 }
 
+type GetUserByEmailResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUserByEmailResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUserByEmailResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUserByEmailResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateInternalUserResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateInternalUserResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateInternalUserResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateInternalUserResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetCurrentUserResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -17801,6 +19798,39 @@ func (r ReactivateUserResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ReactivateUserResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SendUserActivationEmailResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r SendUserActivationEmailResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SendUserActivationEmailResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SendUserActivationEmailResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -18419,6 +20449,76 @@ func (c *ClientWithResponses) GetDomainEnumUsagesWithResponse(ctx context.Contex
 	return ParseGetDomainEnumUsagesResponse(rsp)
 }
 
+// GetEnvironmentSeedReadinessWithResponse request returning *GetEnvironmentSeedReadinessResponse
+func (c *ClientWithResponses) GetEnvironmentSeedReadinessWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetEnvironmentSeedReadinessResponse, error) {
+	rsp, err := c.GetEnvironmentSeedReadiness(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEnvironmentSeedReadinessResponse(rsp)
+}
+
+// CompleteEnvironmentSeedWithResponse request returning *CompleteEnvironmentSeedResponse
+func (c *ClientWithResponses) CompleteEnvironmentSeedWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CompleteEnvironmentSeedResponse, error) {
+	rsp, err := c.CompleteEnvironmentSeed(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCompleteEnvironmentSeedResponse(rsp)
+}
+
+// RevokeEnvironmentSeedTransferVerificationWithResponse request returning *RevokeEnvironmentSeedTransferVerificationResponse
+func (c *ClientWithResponses) RevokeEnvironmentSeedTransferVerificationWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*RevokeEnvironmentSeedTransferVerificationResponse, error) {
+	rsp, err := c.RevokeEnvironmentSeedTransferVerification(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRevokeEnvironmentSeedTransferVerificationResponse(rsp)
+}
+
+// RegisterEnvironmentSeedTransferVerificationWithBodyWithResponse request with arbitrary body returning *RegisterEnvironmentSeedTransferVerificationResponse
+func (c *ClientWithResponses) RegisterEnvironmentSeedTransferVerificationWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RegisterEnvironmentSeedTransferVerificationResponse, error) {
+	rsp, err := c.RegisterEnvironmentSeedTransferVerificationWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRegisterEnvironmentSeedTransferVerificationResponse(rsp)
+}
+
+func (c *ClientWithResponses) RegisterEnvironmentSeedTransferVerificationWithResponse(ctx context.Context, body RegisterEnvironmentSeedTransferVerificationJSONRequestBody, reqEditors ...RequestEditorFn) (*RegisterEnvironmentSeedTransferVerificationResponse, error) {
+	rsp, err := c.RegisterEnvironmentSeedTransferVerification(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRegisterEnvironmentSeedTransferVerificationResponse(rsp)
+}
+
+// GetEnvironmentSettingsWithResponse request returning *GetEnvironmentSettingsResponse
+func (c *ClientWithResponses) GetEnvironmentSettingsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetEnvironmentSettingsResponse, error) {
+	rsp, err := c.GetEnvironmentSettings(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEnvironmentSettingsResponse(rsp)
+}
+
+// UpdateEnvironmentSettingsWithBodyWithResponse request with arbitrary body returning *UpdateEnvironmentSettingsResponse
+func (c *ClientWithResponses) UpdateEnvironmentSettingsWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateEnvironmentSettingsResponse, error) {
+	rsp, err := c.UpdateEnvironmentSettingsWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateEnvironmentSettingsResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateEnvironmentSettingsWithResponse(ctx context.Context, body UpdateEnvironmentSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateEnvironmentSettingsResponse, error) {
+	rsp, err := c.UpdateEnvironmentSettings(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateEnvironmentSettingsResponse(rsp)
+}
+
 // DeleteFileAttachmentWithResponse request returning *DeleteFileAttachmentResponse
 func (c *ClientWithResponses) DeleteFileAttachmentWithResponse(ctx context.Context, id int64, params *DeleteFileAttachmentParams, reqEditors ...RequestEditorFn) (*DeleteFileAttachmentResponse, error) {
 	rsp, err := c.DeleteFileAttachment(ctx, id, params, reqEditors...)
@@ -18435,6 +20535,24 @@ func (c *ClientWithResponses) DownloadFileAttachmentWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseDownloadFileAttachmentResponse(rsp)
+}
+
+// GetGoogleLoginStatusWithResponse request returning *GetGoogleLoginStatusResponse
+func (c *ClientWithResponses) GetGoogleLoginStatusWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetGoogleLoginStatusResponse, error) {
+	rsp, err := c.GetGoogleLoginStatus(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetGoogleLoginStatusResponse(rsp)
+}
+
+// DisableGoogleLoginWithResponse request returning *DisableGoogleLoginResponse
+func (c *ClientWithResponses) DisableGoogleLoginWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DisableGoogleLoginResponse, error) {
+	rsp, err := c.DisableGoogleLogin(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDisableGoogleLoginResponse(rsp)
 }
 
 // ListGroupsWithResponse request returning *ListGroupsResponse
@@ -18757,6 +20875,67 @@ func (c *ClientWithResponses) SortPageTypePropertyDescriptorsWithResponse(ctx co
 		return nil, err
 	}
 	return ParseSortPageTypePropertyDescriptorsResponse(rsp)
+}
+
+// ClearPropertyDescriptorDefaultWithResponse request returning *ClearPropertyDescriptorDefaultResponse
+func (c *ClientWithResponses) ClearPropertyDescriptorDefaultWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*ClearPropertyDescriptorDefaultResponse, error) {
+	rsp, err := c.ClearPropertyDescriptorDefault(ctx, pageTypeId, descriptorId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseClearPropertyDescriptorDefaultResponse(rsp)
+}
+
+// GetPropertyDescriptorDefaultWithResponse request returning *GetPropertyDescriptorDefaultResponse
+func (c *ClientWithResponses) GetPropertyDescriptorDefaultWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*GetPropertyDescriptorDefaultResponse, error) {
+	rsp, err := c.GetPropertyDescriptorDefault(ctx, pageTypeId, descriptorId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPropertyDescriptorDefaultResponse(rsp)
+}
+
+// SetPropertyDescriptorDefaultWithBodyWithResponse request with arbitrary body returning *SetPropertyDescriptorDefaultResponse
+func (c *ClientWithResponses) SetPropertyDescriptorDefaultWithBodyWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorDefaultResponse, error) {
+	rsp, err := c.SetPropertyDescriptorDefaultWithBody(ctx, pageTypeId, descriptorId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetPropertyDescriptorDefaultResponse(rsp)
+}
+
+func (c *ClientWithResponses) SetPropertyDescriptorDefaultWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorDefaultResponse, error) {
+	rsp, err := c.SetPropertyDescriptorDefault(ctx, pageTypeId, descriptorId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetPropertyDescriptorDefaultResponse(rsp)
+}
+
+// GetPropertyDescriptorVisibilityOverrideWithResponse request returning *GetPropertyDescriptorVisibilityOverrideResponse
+func (c *ClientWithResponses) GetPropertyDescriptorVisibilityOverrideWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, reqEditors ...RequestEditorFn) (*GetPropertyDescriptorVisibilityOverrideResponse, error) {
+	rsp, err := c.GetPropertyDescriptorVisibilityOverride(ctx, pageTypeId, descriptorId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPropertyDescriptorVisibilityOverrideResponse(rsp)
+}
+
+// SetPropertyDescriptorVisibilityOverrideWithBodyWithResponse request with arbitrary body returning *SetPropertyDescriptorVisibilityOverrideResponse
+func (c *ClientWithResponses) SetPropertyDescriptorVisibilityOverrideWithBodyWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorVisibilityOverrideResponse, error) {
+	rsp, err := c.SetPropertyDescriptorVisibilityOverrideWithBody(ctx, pageTypeId, descriptorId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetPropertyDescriptorVisibilityOverrideResponse(rsp)
+}
+
+func (c *ClientWithResponses) SetPropertyDescriptorVisibilityOverrideWithResponse(ctx context.Context, pageTypeId int64, descriptorId int64, body SetPropertyDescriptorVisibilityOverrideJSONRequestBody, reqEditors ...RequestEditorFn) (*SetPropertyDescriptorVisibilityOverrideResponse, error) {
+	rsp, err := c.SetPropertyDescriptorVisibilityOverride(ctx, pageTypeId, descriptorId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetPropertyDescriptorVisibilityOverrideResponse(rsp)
 }
 
 // ListPagesWithResponse request returning *ListPagesResponse
@@ -19169,6 +21348,15 @@ func (c *ClientWithResponses) RestorePageVersionWithResponse(ctx context.Context
 	return ParseRestorePageVersionResponse(rsp)
 }
 
+// ListPageFileAttachmentsWithResponse request returning *ListPageFileAttachmentsResponse
+func (c *ClientWithResponses) ListPageFileAttachmentsWithResponse(ctx context.Context, pageId int64, params *ListPageFileAttachmentsParams, reqEditors ...RequestEditorFn) (*ListPageFileAttachmentsResponse, error) {
+	rsp, err := c.ListPageFileAttachments(ctx, pageId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListPageFileAttachmentsResponse(rsp)
+}
+
 // UploadFileAttachmentWithBodyWithResponse request with arbitrary body returning *UploadFileAttachmentResponse
 func (c *ClientWithResponses) UploadFileAttachmentWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadFileAttachmentResponse, error) {
 	rsp, err := c.UploadFileAttachmentWithBody(ctx, pageId, contentType, body, reqEditors...)
@@ -19447,6 +21635,15 @@ func (c *ClientWithResponses) SortPageChildrenWithResponse(ctx context.Context, 
 	return ParseSortPageChildrenResponse(rsp)
 }
 
+// GetPreparationReadinessWithResponse request returning *GetPreparationReadinessResponse
+func (c *ClientWithResponses) GetPreparationReadinessWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPreparationReadinessResponse, error) {
+	rsp, err := c.GetPreparationReadiness(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPreparationReadinessResponse(rsp)
+}
+
 // SwapPropertyDescriptorsWithResponse request returning *SwapPropertyDescriptorsResponse
 func (c *ClientWithResponses) SwapPropertyDescriptorsWithResponse(ctx context.Context, fromId int64, toId int64, reqEditors ...RequestEditorFn) (*SwapPropertyDescriptorsResponse, error) {
 	rsp, err := c.SwapPropertyDescriptors(ctx, fromId, toId, reqEditors...)
@@ -19552,6 +21749,32 @@ func (c *ClientWithResponses) CreateUserWithResponse(ctx context.Context, body C
 	return ParseCreateUserResponse(rsp)
 }
 
+// GetUserByEmailWithResponse request returning *GetUserByEmailResponse
+func (c *ClientWithResponses) GetUserByEmailWithResponse(ctx context.Context, params *GetUserByEmailParams, reqEditors ...RequestEditorFn) (*GetUserByEmailResponse, error) {
+	rsp, err := c.GetUserByEmail(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUserByEmailResponse(rsp)
+}
+
+// CreateInternalUserWithBodyWithResponse request with arbitrary body returning *CreateInternalUserResponse
+func (c *ClientWithResponses) CreateInternalUserWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInternalUserResponse, error) {
+	rsp, err := c.CreateInternalUserWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateInternalUserResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateInternalUserWithResponse(ctx context.Context, body CreateInternalUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInternalUserResponse, error) {
+	rsp, err := c.CreateInternalUser(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateInternalUserResponse(rsp)
+}
+
 // GetCurrentUserWithResponse request returning *GetCurrentUserResponse
 func (c *ClientWithResponses) GetCurrentUserWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetCurrentUserResponse, error) {
 	rsp, err := c.GetCurrentUser(ctx, reqEditors...)
@@ -19638,6 +21861,15 @@ func (c *ClientWithResponses) ReactivateUserWithResponse(ctx context.Context, id
 		return nil, err
 	}
 	return ParseReactivateUserResponse(rsp)
+}
+
+// SendUserActivationEmailWithResponse request returning *SendUserActivationEmailResponse
+func (c *ClientWithResponses) SendUserActivationEmailWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*SendUserActivationEmailResponse, error) {
+	rsp, err := c.SendUserActivationEmail(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendUserActivationEmailResponse(rsp)
 }
 
 // ListWorkItemTypesWithResponse request returning *ListWorkItemTypesResponse
@@ -20465,6 +22697,260 @@ func ParseGetDomainEnumUsagesResponse(rsp *http.Response) (*GetDomainEnumUsagesR
 	return response, nil
 }
 
+// ParseGetEnvironmentSeedReadinessResponse parses an HTTP response from a GetEnvironmentSeedReadinessWithResponse call
+func ParseGetEnvironmentSeedReadinessResponse(rsp *http.Response) (*GetEnvironmentSeedReadinessResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEnvironmentSeedReadinessResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCompleteEnvironmentSeedResponse parses an HTTP response from a CompleteEnvironmentSeedWithResponse call
+func ParseCompleteEnvironmentSeedResponse(rsp *http.Response) (*CompleteEnvironmentSeedResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CompleteEnvironmentSeedResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRevokeEnvironmentSeedTransferVerificationResponse parses an HTTP response from a RevokeEnvironmentSeedTransferVerificationWithResponse call
+func ParseRevokeEnvironmentSeedTransferVerificationResponse(rsp *http.Response) (*RevokeEnvironmentSeedTransferVerificationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RevokeEnvironmentSeedTransferVerificationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRegisterEnvironmentSeedTransferVerificationResponse parses an HTTP response from a RegisterEnvironmentSeedTransferVerificationWithResponse call
+func ParseRegisterEnvironmentSeedTransferVerificationResponse(rsp *http.Response) (*RegisterEnvironmentSeedTransferVerificationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RegisterEnvironmentSeedTransferVerificationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetEnvironmentSettingsResponse parses an HTTP response from a GetEnvironmentSettingsWithResponse call
+func ParseGetEnvironmentSettingsResponse(rsp *http.Response) (*GetEnvironmentSettingsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEnvironmentSettingsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateEnvironmentSettingsResponse parses an HTTP response from a UpdateEnvironmentSettingsWithResponse call
+func ParseUpdateEnvironmentSettingsResponse(rsp *http.Response) (*UpdateEnvironmentSettingsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateEnvironmentSettingsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteFileAttachmentResponse parses an HTTP response from a DeleteFileAttachmentWithResponse call
 func ParseDeleteFileAttachmentResponse(rsp *http.Response) (*DeleteFileAttachmentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -20546,6 +23032,86 @@ func ParseDownloadFileAttachmentResponse(rsp *http.Response) (*DownloadFileAttac
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetGoogleLoginStatusResponse parses an HTTP response from a GetGoogleLoginStatusWithResponse call
+func ParseGetGoogleLoginStatusResponse(rsp *http.Response) (*GetGoogleLoginStatusResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetGoogleLoginStatusResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDisableGoogleLoginResponse parses an HTTP response from a DisableGoogleLoginWithResponse call
+func ParseDisableGoogleLoginResponse(rsp *http.Response) (*DisableGoogleLoginResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DisableGoogleLoginResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest ProblemDetail
@@ -21771,6 +24337,255 @@ func ParseSortPageTypePropertyDescriptorsResponse(rsp *http.Response) (*SortPage
 	}
 
 	response := &SortPageTypePropertyDescriptorsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseClearPropertyDescriptorDefaultResponse parses an HTTP response from a ClearPropertyDescriptorDefaultWithResponse call
+func ParseClearPropertyDescriptorDefaultResponse(rsp *http.Response) (*ClearPropertyDescriptorDefaultResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ClearPropertyDescriptorDefaultResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetPropertyDescriptorDefaultResponse parses an HTTP response from a GetPropertyDescriptorDefaultWithResponse call
+func ParseGetPropertyDescriptorDefaultResponse(rsp *http.Response) (*GetPropertyDescriptorDefaultResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPropertyDescriptorDefaultResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSetPropertyDescriptorDefaultResponse parses an HTTP response from a SetPropertyDescriptorDefaultWithResponse call
+func ParseSetPropertyDescriptorDefaultResponse(rsp *http.Response) (*SetPropertyDescriptorDefaultResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SetPropertyDescriptorDefaultResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetPropertyDescriptorVisibilityOverrideResponse parses an HTTP response from a GetPropertyDescriptorVisibilityOverrideWithResponse call
+func ParseGetPropertyDescriptorVisibilityOverrideResponse(rsp *http.Response) (*GetPropertyDescriptorVisibilityOverrideResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPropertyDescriptorVisibilityOverrideResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSetPropertyDescriptorVisibilityOverrideResponse parses an HTTP response from a SetPropertyDescriptorVisibilityOverrideWithResponse call
+func ParseSetPropertyDescriptorVisibilityOverrideResponse(rsp *http.Response) (*SetPropertyDescriptorVisibilityOverrideResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SetPropertyDescriptorVisibilityOverrideResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -23477,6 +26292,53 @@ func ParseRestorePageVersionResponse(rsp *http.Response) (*RestorePageVersionRes
 	return response, nil
 }
 
+// ParseListPageFileAttachmentsResponse parses an HTTP response from a ListPageFileAttachmentsWithResponse call
+func ParseListPageFileAttachmentsResponse(rsp *http.Response) (*ListPageFileAttachmentsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListPageFileAttachmentsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseUploadFileAttachmentResponse parses an HTTP response from a UploadFileAttachmentWithResponse call
 func ParseUploadFileAttachmentResponse(rsp *http.Response) (*UploadFileAttachmentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -24581,6 +27443,46 @@ func ParseSortPageChildrenResponse(rsp *http.Response) (*SortPageChildrenRespons
 	return response, nil
 }
 
+// ParseGetPreparationReadinessResponse parses an HTTP response from a GetPreparationReadinessWithResponse call
+func ParseGetPreparationReadinessResponse(rsp *http.Response) (*GetPreparationReadinessResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPreparationReadinessResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseSwapPropertyDescriptorsResponse parses an HTTP response from a SwapPropertyDescriptorsWithResponse call
 func ParseSwapPropertyDescriptorsResponse(rsp *http.Response) (*SwapPropertyDescriptorsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -25004,6 +27906,93 @@ func ParseCreateUserResponse(rsp *http.Response) (*CreateUserResponse, error) {
 	return response, nil
 }
 
+// ParseGetUserByEmailResponse parses an HTTP response from a GetUserByEmailWithResponse call
+func ParseGetUserByEmailResponse(rsp *http.Response) (*GetUserByEmailResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUserByEmailResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateInternalUserResponse parses an HTTP response from a CreateInternalUserWithResponse call
+func ParseCreateInternalUserResponse(rsp *http.Response) (*CreateInternalUserResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateInternalUserResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetCurrentUserResponse parses an HTTP response from a GetCurrentUserWithResponse call
 func ParseGetCurrentUserResponse(rsp *http.Response) (*GetCurrentUserResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -25356,6 +28345,53 @@ func ParseReactivateUserResponse(rsp *http.Response) (*ReactivateUserResponse, e
 	}
 
 	response := &ReactivateUserResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSendUserActivationEmailResponse parses an HTTP response from a SendUserActivationEmailWithResponse call
+func ParseSendUserActivationEmailResponse(rsp *http.Response) (*SendUserActivationEmailResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SendUserActivationEmailResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}

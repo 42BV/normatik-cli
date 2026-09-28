@@ -255,6 +255,46 @@
     "staticHint": "The linked domain enum of a property descriptor cannot be changed once values exist. Create a new descriptor with the desired enum instead."
   },
   {
+    "name": "ENVIRONMENT_BOOTSTRAP_REJECTED",
+    "status": 403,
+    "title": "Environment bootstrap rejected",
+    "userMessage": "The bootstrap request was rejected. Verify the bootstrap secret and that the target environment is empty and awaiting its first account.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
+  },
+  {
+    "name": "ENVIRONMENT_SEED_ALREADY_COMPLETED",
+    "status": 409,
+    "title": "Environment seed already completed",
+    "userMessage": "The environment seed is already completed. This operation cannot be repeated.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "ENVIRONMENT_SEED_CALLER_NOT_BOOTSTRAP",
+    "status": 403,
+    "title": "Caller is not the bootstrap account",
+    "userMessage": "Only the temporary bootstrap account may perform this environment-seed operation.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
+  },
+  {
+    "name": "ENVIRONMENT_SEED_NO_ELIGIBLE_ADMIN",
+    "status": 409,
+    "title": "No eligible replacement admin",
+    "userMessage": "The environment seed cannot be completed because no other active user has a local password and effective ADMIN and PUBLISHER roles.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "ENVIRONMENT_SEED_TRANSFER_NOT_VERIFIED",
+    "status": 409,
+    "title": "Environment seed transfer not verified",
+    "userMessage": "The environment seed cannot be completed because no verified transfer has been registered yet.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
     "name": "EXPAND_UNKNOWN_KEY",
     "status": 400,
     "title": "Unknown expand key",

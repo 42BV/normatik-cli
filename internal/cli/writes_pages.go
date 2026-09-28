@@ -522,7 +522,12 @@ func addRevisionsWrites(rc *cobra.Command) {
 			return d.Client.DiscardWorkingRevision(ctx, id)
 		}, weburl.Page)
 
-	addWriteCommands(rc, start, transition, restore, discard)
+	migratePublish := idWriteURL("migrate-publish <id>", "Publish the STORED working revision of a page that was never published (one-time migration operation, PUBLISHER)", "normatik pages revisions migrate-publish", "Revision published.", "none",
+		func(d *command.Deps, ctx context.Context, id int64) ([]byte, *client.APIError) {
+			return d.Client.MigratePublish(ctx, id)
+		}, weburl.Page)
+
+	addWriteCommands(rc, start, transition, restore, discard, migratePublish)
 }
 
 // newPagesRestrictionCmd builds the `pages restriction` subtree.

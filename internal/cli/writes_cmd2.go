@@ -106,7 +106,132 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 			})
 		},
 	}
+	defaultGroup := &cobra.Command{
+		Use: "default", Short: "Local default-value row for a page type and descriptor (tri-state: get, set, clear)",
+		RunE: command.UnknownSub,
+	}
+	var defaultGetPageTypeID int64
+	defaultGet := &cobra.Command{
+		Use: "get <descriptorId>", Short: "Get the local default-value row (state INHERIT/VALUE/EMPTY)", Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			descID, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			return runObject(cmd, "normatik property-descriptors default get", func(d *command.Deps) ([]byte, *client.APIError) {
+				return d.Client.GetPropertyDescriptorDefault(cmd.Context(), defaultGetPageTypeID, descID)
+			}, "state", "payload")
+		},
+	}
+	defaultGet.Flags().Int64Var(&defaultGetPageTypeID, "page-type-id", 0, "page type id (required)")
+	_ = defaultGet.MarkFlagRequired("page-type-id")
+
+	var defaultSetPageTypeID int64
+	var defaultSetFile string
+	var defaultSetEmpty bool
+	defaultSet := &cobra.Command{
+		Use: "set <descriptorId> -f payload.json", Short: "Set the default value (-f payload.json), or explicitly clear it (--empty, state EMPTY)", Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			descID, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			var form api.DefaultValueSetForm
+			if !defaultSetEmpty {
+				if defaultSetFile == "" {
+					d.Printer.Message("Error [FORM]: -f is required unless --empty is set")
+					return command.Handled(2)
+				}
+				f, lerr := loadForm[api.DefaultValueSetForm](defaultSetFile)
+				if lerr != nil {
+					d.Printer.Message("Error [FORM]: could not read -f %q: %v", defaultSetFile, lerr)
+					return command.Handled(2)
+				}
+				form = f
+			}
+			return runWrite(cmd, "normatik property-descriptors default set", "Default value set.", func(d *command.Deps) ([]byte, *client.APIError) {
+				return d.Client.SetPropertyDescriptorDefault(cmd.Context(), defaultSetPageTypeID, descID, form)
+			})
+		},
+	}
+	defaultSet.Flags().Int64Var(&defaultSetPageTypeID, "page-type-id", 0, "page type id (required)")
+	_ = defaultSet.MarkFlagRequired("page-type-id")
+	defaultSet.Flags().StringVarP(&defaultSetFile, "file", "f", "", "JSON file with the payload (required unless --empty)")
+	defaultSet.Flags().BoolVar(&defaultSetEmpty, "empty", false, "explicitly clear the default (state EMPTY) instead of setting a value")
+
+	var defaultClearPageTypeID int64
+	defaultClear := &cobra.Command{
+		Use: "clear <descriptorId>", Short: "Revert the default value to inherit (state INHERIT)", Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			descID, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			return runWrite(cmd, "normatik property-descriptors default clear", "Default value reverted to inherit.", func(d *command.Deps) ([]byte, *client.APIError) {
+				return d.Client.ClearPropertyDescriptorDefault(cmd.Context(), defaultClearPageTypeID, descID)
+			})
+		},
+	}
+	defaultClear.Flags().Int64Var(&defaultClearPageTypeID, "page-type-id", 0, "page type id (required)")
+	_ = defaultClear.MarkFlagRequired("page-type-id")
+	// default get is a plain GET (state INHERIT/VALUE/EMPTY on an existing pair is
+	// always readable) — only set/clear mutate, so they alone are write-marked
+	// individually; markWriteTree on the group itself would over-mark get too (RO2,
+	// see commandtree.go).
+	markWriteTree(defaultSet)
+	markWriteTree(defaultClear)
+	defaultGroup.AddCommand(defaultGet, defaultSet, defaultClear)
+
+	visibilityGroup := &cobra.Command{
+		Use: "visibility-override", Short: "Local visibility-override row for a page type and descriptor (get, set)",
+		RunE: command.UnknownSub,
+	}
+	var voGetPageTypeID int64
+	voGet := &cobra.Command{
+		Use: "get <descriptorId>", Short: "Get the local visibility-override row", Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			descID, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			return runObject(cmd, "normatik property-descriptors visibility-override get", func(d *command.Deps) ([]byte, *client.APIError) {
+				return d.Client.GetPropertyDescriptorVisibilityOverride(cmd.Context(), voGetPageTypeID, descID)
+			}, "overridden", "hidden")
+		},
+	}
+	voGet.Flags().Int64Var(&voGetPageTypeID, "page-type-id", 0, "page type id (required)")
+	_ = voGet.MarkFlagRequired("page-type-id")
+
+	var voSetPageTypeID int64
+	var voHidden bool
+	voSet := &cobra.Command{
+		Use: "set <descriptorId> --hidden", Short: "Hide or unhide an inherited descriptor on a page type (--hidden=true|false)", Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			descID, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			return runWrite(cmd, "normatik property-descriptors visibility-override set", "Visibility override set.", func(d *command.Deps) ([]byte, *client.APIError) {
+				return d.Client.SetPropertyDescriptorVisibilityOverride(
+					cmd.Context(), voSetPageTypeID, descID, api.PropertyDescriptorVisibilityForm{Hidden: voHidden})
+			})
+		},
+	}
+	voSet.Flags().Int64Var(&voSetPageTypeID, "page-type-id", 0, "page type id (required)")
+	_ = voSet.MarkFlagRequired("page-type-id")
+	voSet.Flags().BoolVar(&voHidden, "hidden", false, "hide (true) or unhide (false) the descriptor on this page type (required)")
+	_ = voSet.MarkFlagRequired("hidden")
+	// visibility-override get is a plain GET; only set mutates — same RO2 reasoning
+	// as defaultGroup above.
+	markWriteTree(voSet)
+	visibilityGroup.AddCommand(voGet, voSet)
+
 	addWriteCommands(c, create, update, del, swap, sort, dcSort)
+	c.AddCommand(defaultGroup, visibilityGroup)
 }
 
 // ---- work items writes (--page-id from the parent persistent flag) ----

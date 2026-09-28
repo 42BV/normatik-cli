@@ -49,6 +49,15 @@ func (c *Client) GetUser(ctx context.Context, id int64, expand []string) ([]byte
 	})
 }
 
+// GetUserByEmail is an exact, admin-only lookup on the normalized email address
+// (NORM-znuqrgfu) — unlike SearchUsers it finds users of any status, including
+// PENDING, so `users send-activation-email` can resolve an email to an id.
+func (c *Client) GetUserByEmail(ctx context.Context, email string) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.GetUserByEmail(ctx, &api.GetUserByEmailParams{Email: email})
+	})
+}
+
 // ---- Groups ----
 
 func (c *Client) ListGroups(ctx context.Context, status string, page, size int, sort []string) ([]byte, *APIError) {
@@ -100,6 +109,18 @@ func (c *Client) GetChainLinkOptions(ctx context.Context, pageTypeID, pageID int
 
 func (c *Client) GetPropertyDescriptor(ctx context.Context, id int64) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.GetPropertyDescriptor(ctx, id) })
+}
+
+func (c *Client) GetPropertyDescriptorDefault(ctx context.Context, pageTypeID, descriptorID int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.GetPropertyDescriptorDefault(ctx, pageTypeID, descriptorID)
+	})
+}
+
+func (c *Client) GetPropertyDescriptorVisibilityOverride(ctx context.Context, pageTypeID, descriptorID int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.GetPropertyDescriptorVisibilityOverride(ctx, pageTypeID, descriptorID)
+	})
 }
 
 // ---- Work item types ----
@@ -183,6 +204,30 @@ func (c *Client) ListDraftsQueue(ctx context.Context, page, size int, sort []str
 
 func (c *Client) GetLandingSettings(ctx context.Context) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.GetLandingSettings(ctx) })
+}
+
+// ---- Environment (name/banner, Google login, preparation readiness — admin only) ----
+
+func (c *Client) GetEnvironmentSettings(ctx context.Context) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.GetEnvironmentSettings(ctx) })
+}
+
+// GetGoogleLoginStatus never surfaces clientId/clientSecret — only the enabled
+// toggle and a credentialsConfigured boolean (PublicGoogleLoginController).
+func (c *Client) GetGoogleLoginStatus(ctx context.Context) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.GetGoogleLoginStatus(ctx) })
+}
+
+func (c *Client) GetPreparationReadiness(ctx context.Context) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.GetPreparationReadiness(ctx) })
+}
+
+// GetEnvironmentSeedReadiness reads the environment-seed transfer state (bootstrap-account-only;
+// see writes.go for the mutating register/revoke/complete calls in the same lifecycle). Never
+// mutates anything and never exposes which user, or any password state, is behind
+// hasEligibleReplacementAdmin.
+func (c *Client) GetEnvironmentSeedReadiness(ctx context.Context) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) { return c.api.GetEnvironmentSeedReadiness(ctx) })
 }
 
 func (c *Client) ListTrash(ctx context.Context, page, size int, sort []string) ([]byte, *APIError) {
@@ -363,6 +408,12 @@ func (c *Client) GetRevisionSnapshot(ctx context.Context, id int64) ([]byte, *AP
 
 func (c *Client) ListPageImages(ctx context.Context, pageID int64) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.ListPageImages(ctx, pageID) })
+}
+
+func (c *Client) ListPageFileAttachments(ctx context.Context, pageID int64, page, size int, sort []string) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.ListPageFileAttachments(ctx, pageID, &api.ListPageFileAttachmentsParams{}, pageableEditor(page, size, sort))
+	})
 }
 
 func (c *Client) DownloadImage(ctx context.Context, id int64, ifNoneMatch string) (io.ReadCloser, bool, *APIError) {

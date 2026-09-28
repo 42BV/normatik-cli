@@ -28,11 +28,13 @@ func init() {
 	command.Register(withWrites(newDomainEnumsCmd, addDomainEnumsWrites))
 	command.Register(withWrites(newWorkflowRolesCmd, addWorkflowRolesWrites))
 	command.Register(withWrites(newLandingSettingsCmd, addLandingSettingsWrites))
+	command.Register(withWrites(newEnvironmentCmd, addEnvironmentWrites))
 	command.Register(withWrites(newTrashCmd, addTrashWrites))
 	command.Register(withWrites(newArchiveCmd, addArchiveWrites))
-	command.Register(newWorkflowCmd) // read-only
-	command.Register(newAuditCmd)    // read-only
-	command.Register(newContentCmd)  // content validate (dry-run)
+	command.Register(newWorkflowCmd)    // read-only
+	command.Register(newAuditCmd)       // read-only
+	command.Register(newContentCmd)     // content validate (dry-run)
+	command.Register(newAttachmentsCmd) // read-only (writes go through pages)
 }
 
 func parent(use, short string) *cobra.Command {
@@ -89,7 +91,7 @@ func runObjectURL(cmd *cobra.Command, invocation, urlPath string, fn func(*comma
 // ---- users ----
 
 func newUsersCmd() *cobra.Command {
-	c := parent("users", "Users (list, search, get, create, update, delete, reactivate, permanent-delete)")
+	c := parent("users", "Users (list, search, get, create, update, delete, reactivate, permanent-delete, send-activation-email)")
 	var status string
 	var pg paging
 	list := &cobra.Command{
@@ -247,7 +249,7 @@ func newPageTypesCmd() *cobra.Command {
 // ---- property-descriptors ----
 
 func newPropertyDescriptorsCmd() *cobra.Command {
-	c := parent("property-descriptors", "Property descriptors (get, create, update, delete, swap, sort, display-columns-sort)")
+	c := parent("property-descriptors", "Property descriptors (get, create, update, delete, swap, sort, display-columns-sort, default, visibility-override)")
 	get := &cobra.Command{
 		Use: "get <id>", Short: "Get a property descriptor", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -261,6 +263,28 @@ func newPropertyDescriptorsCmd() *cobra.Command {
 		},
 	}
 	c.AddCommand(get)
+	return c
+}
+
+// ---- attachments (read-only: file-attachment writes go through pages) ----
+
+func newAttachmentsCmd() *cobra.Command {
+	c := parent("attachments", "File attachments of a page (list)")
+	var pg paging
+	list := &cobra.Command{
+		Use: "list <pageId>", Short: "List file attachments of a page", Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			pageID, err := idArg(cmd, args[0])
+			if err != nil {
+				return command.Handled(2)
+			}
+			return runList(cmd, "normatik attachments list", func(d *command.Deps) ([]byte, *client.APIError) {
+				return d.Client.ListPageFileAttachments(cmd.Context(), pageID, pg.page, pg.size, pg.sort)
+			}, "id", "filename", "contentType", "size")
+		},
+	}
+	addPaging(list, &pg)
+	c.AddCommand(list)
 	return c
 }
 
