@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -64,6 +65,8 @@ func newEnvironmentCmd() *cobra.Command {
 		},
 	}
 	c.AddCommand(readiness)
+
+	c.AddCommand(newEnvironmentBootstrapStatusCmd())
 
 	seedStatus := &cobra.Command{
 		Use:   "seed-status",
@@ -200,6 +203,64 @@ func readBootstrapLine(r *bufio.Reader) (string, error) {
 		return "", err
 	}
 	return strings.TrimRight(line, "\r\n"), nil
+}
+
+// newEnvironmentBootstrapStatusCmd is the anonymous, read-only counterpart of
+// `environment bootstrap`: it lets a caller (normatik-envprep's dialog) find
+// out whether the target is a genuinely empty environment BEFORE any login
+// exists to ask via an authenticated command. Same anonymous shape as
+// bootstrap (--url required, no localhost default, no profile/key/keychain,
+// no Authorization header) but never mutates anything.
+func newEnvironmentBootstrapStatusCmd() *cobra.Command {
+	var url string
+	cmd := &cobra.Command{
+		Use:   "bootstrap-status",
+		Short: "Whether the one-time bootstrap would currently succeed (anonymous, read-only)",
+		Long: "Calls the anonymous GET /environment-seed/bootstrap-availability on --url. Read-only -- " +
+			"never mutates anything, never reads a profile, API key or keychain entry, and never sends " +
+			"an Authorization header.",
+		Example: "  normatik environment bootstrap-status --url https://wiki.example/",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			output, _ := cmd.Flags().GetString("output")
+			p := render.New(output)
+			site := normalizeLoginURL(strings.TrimSpace(url))
+			if site == "" {
+				p.Message("Error [USAGE]: --url is required.")
+				return command.Handled(2)
+			}
+			if err := httpx.ValidateBaseURL(site); err != nil {
+				p.Message("Error [USAGE]: %v", err)
+				return command.Handled(2)
+			}
+			result, apiErr := client.BootstrapAvailability(cmd.Context(), site)
+			if apiErr != nil {
+				return command.RenderError(p, apiErr, "normatik environment bootstrap-status")
+			}
+			if p.Mode == render.JSON {
+				body, merr := json.Marshal(result)
+				if merr != nil {
+					p.Message("Error [TRANSPORT]: could not encode the bootstrap-status result: %v", merr)
+					return command.Handled(1)
+				}
+				p.Raw(body, "available")
+				return nil
+			}
+			fmt.Fprintf(p.Out, "Bootstrap available: %s\n", yesNo(result.Available))
+			return nil
+		},
+	}
+	cmd.Flags().StringVar(&url, "url", "", "target environment site URL (required)")
+	_ = cmd.MarkFlagRequired("url")
+	return cmd
+}
+
+// yesNo renders a bool the same way table-mode boolean output already does
+// elsewhere in this package (e.g. render.Printer's own yes/no cells).
+func yesNo(v bool) string {
+	if v {
+		return "yes"
+	}
+	return "no"
 }
 
 func newEnvironmentBootstrapCmd() *cobra.Command {

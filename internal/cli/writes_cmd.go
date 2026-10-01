@@ -311,7 +311,7 @@ func addUsersWrites(c *cobra.Command) {
 				}
 				return runWriteURL(cmd, "normatik users create", "User created.", func(d *command.Deps) ([]byte, *client.APIError) {
 					return d.Client.CreateInternalUser(cmd.Context(), f)
-				}, func(body []byte) string { return weburl.AdminUser(responseID(body)) }, "id", "displayName", "email", "role", "workflowRole", "status")
+				}, func(body []byte) string { return weburl.AdminUser(responseID(body)) }, "id", "displayName", "email", "role", "workflowRole", "status", "activationEmailExpiresAt")
 			}
 			f := api.ExternalUserForm{DisplayName: dn}
 			if email != "" {

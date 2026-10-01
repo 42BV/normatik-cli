@@ -73,22 +73,21 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 			})
 		},
 	}
+	var sortPageTypeID int64
 	sort := &cobra.Command{
-		Use: "sort <pageTypeId> <id...>", Short: "Sort property descriptors of a page type", Args: cobra.MinimumNArgs(2),
+		Use: "sort --page-type-id <id> <descriptorId...>", Short: "Sort property descriptors of a page type", Args: cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ptID, perr := command.ParseID(args[0])
-			if perr != nil {
-				return command.Handled(2)
-			}
-			ids, ok := variadicIDs(args[1:])
+			ids, ok := variadicIDs(args)
 			if !ok {
 				return command.Handled(2)
 			}
 			return runWriteURL(cmd, "normatik property-descriptors sort", "Descriptors sorted.", func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.SortPropertyDescriptors(cmd.Context(), ptID, ids)
-			}, func([]byte) string { return weburl.PageType(ptID) })
+				return d.Client.SortPropertyDescriptors(cmd.Context(), sortPageTypeID, ids)
+			}, func([]byte) string { return weburl.PageType(sortPageTypeID) })
 		},
 	}
+	sort.Flags().Int64Var(&sortPageTypeID, "page-type-id", 0, "page type id (required)")
+	_ = sort.MarkFlagRequired("page-type-id")
 	command.URLFlag(sort)
 	dcSort := &cobra.Command{
 		Use: "display-columns-sort <descriptorId> <id...>", Short: "Sort display-columns of a descriptor", Args: cobra.MinimumNArgs(2),
@@ -130,7 +129,7 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 	var defaultSetFile string
 	var defaultSetEmpty bool
 	defaultSet := &cobra.Command{
-		Use: "set <descriptorId> -f payload.json", Short: "Set the default value (-f payload.json), or explicitly clear it (--empty, state EMPTY)", Args: cobra.ExactArgs(1),
+		Use: "set <descriptorId> -f payload.json", Short: "Set the default value (-f payload.json), or set \"Explicitly no default\" (--empty, state EMPTY)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			descID, perr := command.ParseID(args[0])
 			if perr != nil {
@@ -161,11 +160,11 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 	defaultSet.Flags().Int64Var(&defaultSetPageTypeID, "page-type-id", 0, "page type id (required)")
 	_ = defaultSet.MarkFlagRequired("page-type-id")
 	defaultSet.Flags().StringVarP(&defaultSetFile, "file", "f", "", "JSON file with the payload (required unless --empty)")
-	defaultSet.Flags().BoolVar(&defaultSetEmpty, "empty", false, "explicitly clear the default (state EMPTY) instead of setting a value")
+	defaultSet.Flags().BoolVar(&defaultSetEmpty, "empty", false, "set \"Explicitly no default\" (state EMPTY) instead of a value: new pages of this page type start empty")
 
 	var defaultClearPageTypeID int64
 	defaultClear := &cobra.Command{
-		Use: "clear <descriptorId>", Short: "Revert the default value to inherit (state INHERIT)", Args: cobra.ExactArgs(1),
+		Use: "clear <descriptorId>", Short: "Remove this page type's own default so it inherits (state INHERIT, not allowed on the declaring page type)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			descID, perr := command.ParseID(args[0])
 			if perr != nil {

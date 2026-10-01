@@ -18,6 +18,14 @@ type EnvironmentBootstrapResult struct {
 	Email  *string `json:"email,omitempty"`
 }
 
+// EnvironmentBootstrapAvailabilityResult mirrors the backend's minimal,
+// read-only answer to GET /environment-seed/bootstrap-availability: whether a
+// POST to /environment-seed/bootstrap would currently succeed, aside from the
+// secret, rate limit and password strength.
+type EnvironmentBootstrapAvailabilityResult struct {
+	Available bool `json:"available"`
+}
+
 // bootstrapTimeout bounds the one-time, unauthenticated bootstrap call — no
 // retries, this is not meant to be a hot path.
 const bootstrapTimeout = 30 * time.Second
@@ -35,6 +43,7 @@ func Bootstrap(ctx context.Context, site, secret, email, password string) (*Envi
 	if err := httpx.ValidateBaseURL(site); err != nil {
 		return nil, fail(err)
 	}
+	// #nosec G117 -- the bootstrap secret is the request payload itself; it is sent only to the validated site.
 	reqBody, err := json.Marshal(struct {
 		Secret   string `json:"secret"`
 		Email    string `json:"email"`
@@ -71,6 +80,51 @@ func Bootstrap(ctx context.Context, site, secret, email, password string) (*Envi
 		return nil, decodeError(resp.StatusCode, body)
 	}
 	var out EnvironmentBootstrapResult
+	if len(body) > 0 {
+		if jerr := json.Unmarshal(body, &out); jerr != nil {
+			return nil, &APIError{Status: resp.StatusCode, Body: body, Malformed: true}
+		}
+	}
+	return &out, nil
+}
+
+// BootstrapAvailability performs the anonymous, read-only GET
+// /environment-seed/bootstrap-availability on site. Deliberately a
+// package-level function, not a *Client method, for the same reason as
+// Bootstrap itself: this precedes any API key, so there is no *Client to
+// build. Reuses the same exec/decodeError shape so a rejection (e.g.
+// RATE_LIMIT_EXCEEDED) renders through the normal command.RenderError path.
+func BootstrapAvailability(ctx context.Context, site string) (*EnvironmentBootstrapAvailabilityResult, *APIError) {
+	if err := httpx.ValidateBaseURL(site); err != nil {
+		return nil, fail(err)
+	}
+	endpoint := httpx.APIBaseURL(site) + "/environment-seed/bootstrap-availability"
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
+	if err != nil {
+		return nil, fail(err)
+	}
+	hc := httpx.NewClient(bootstrapTimeout)
+	resp, err := hc.Do(req)
+	if err != nil {
+		return nil, fail(err)
+	}
+	defer func() { _ = resp.Body.Close() }()
+
+	limit := errorResponseLimit
+	if resp.StatusCode/100 == 2 {
+		limit = jsonResponseLimit
+	}
+	body, rerr := readBounded(resp.Body, limit, resp.StatusCode)
+	if rerr != nil {
+		if apiErr := APIErrorFromRead(rerr); apiErr != nil {
+			return nil, apiErr
+		}
+		return nil, fail(rerr)
+	}
+	if resp.StatusCode/100 != 2 {
+		return nil, decodeError(resp.StatusCode, body)
+	}
+	var out EnvironmentBootstrapAvailabilityResult
 	if len(body) > 0 {
 		if jerr := json.Unmarshal(body, &out); jerr != nil {
 			return nil, &APIError{Status: resp.StatusCode, Body: body, Malformed: true}

@@ -1060,6 +1060,111 @@ func (e PropertyValueResultNumberFormat) Valid() bool {
 	}
 }
 
+// Defines values for PublicInternalUserCreatedResultEffectiveRole.
+const (
+	PublicInternalUserCreatedResultEffectiveRoleADMIN PublicInternalUserCreatedResultEffectiveRole = "ADMIN"
+	PublicInternalUserCreatedResultEffectiveRoleUSER  PublicInternalUserCreatedResultEffectiveRole = "USER"
+)
+
+// Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultEffectiveRole enum.
+func (e PublicInternalUserCreatedResultEffectiveRole) Valid() bool {
+	switch e {
+	case PublicInternalUserCreatedResultEffectiveRoleADMIN:
+		return true
+	case PublicInternalUserCreatedResultEffectiveRoleUSER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PublicInternalUserCreatedResultEffectiveWorkflowRole.
+const (
+	PublicInternalUserCreatedResultEffectiveWorkflowRoleCONTRIBUTOR PublicInternalUserCreatedResultEffectiveWorkflowRole = "CONTRIBUTOR"
+	PublicInternalUserCreatedResultEffectiveWorkflowRolePUBLISHER   PublicInternalUserCreatedResultEffectiveWorkflowRole = "PUBLISHER"
+	PublicInternalUserCreatedResultEffectiveWorkflowRoleREADER      PublicInternalUserCreatedResultEffectiveWorkflowRole = "READER"
+	PublicInternalUserCreatedResultEffectiveWorkflowRoleREVIEWER    PublicInternalUserCreatedResultEffectiveWorkflowRole = "REVIEWER"
+)
+
+// Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultEffectiveWorkflowRole enum.
+func (e PublicInternalUserCreatedResultEffectiveWorkflowRole) Valid() bool {
+	switch e {
+	case PublicInternalUserCreatedResultEffectiveWorkflowRoleCONTRIBUTOR:
+		return true
+	case PublicInternalUserCreatedResultEffectiveWorkflowRolePUBLISHER:
+		return true
+	case PublicInternalUserCreatedResultEffectiveWorkflowRoleREADER:
+		return true
+	case PublicInternalUserCreatedResultEffectiveWorkflowRoleREVIEWER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PublicInternalUserCreatedResultRole.
+const (
+	PublicInternalUserCreatedResultRoleADMIN PublicInternalUserCreatedResultRole = "ADMIN"
+	PublicInternalUserCreatedResultRoleUSER  PublicInternalUserCreatedResultRole = "USER"
+)
+
+// Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultRole enum.
+func (e PublicInternalUserCreatedResultRole) Valid() bool {
+	switch e {
+	case PublicInternalUserCreatedResultRoleADMIN:
+		return true
+	case PublicInternalUserCreatedResultRoleUSER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PublicInternalUserCreatedResultStatus.
+const (
+	PublicInternalUserCreatedResultStatusACTIVE  PublicInternalUserCreatedResultStatus = "ACTIVE"
+	PublicInternalUserCreatedResultStatusDELETED PublicInternalUserCreatedResultStatus = "DELETED"
+	PublicInternalUserCreatedResultStatusPENDING PublicInternalUserCreatedResultStatus = "PENDING"
+)
+
+// Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultStatus enum.
+func (e PublicInternalUserCreatedResultStatus) Valid() bool {
+	switch e {
+	case PublicInternalUserCreatedResultStatusACTIVE:
+		return true
+	case PublicInternalUserCreatedResultStatusDELETED:
+		return true
+	case PublicInternalUserCreatedResultStatusPENDING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PublicInternalUserCreatedResultWorkflowRole.
+const (
+	PublicInternalUserCreatedResultWorkflowRoleCONTRIBUTOR PublicInternalUserCreatedResultWorkflowRole = "CONTRIBUTOR"
+	PublicInternalUserCreatedResultWorkflowRolePUBLISHER   PublicInternalUserCreatedResultWorkflowRole = "PUBLISHER"
+	PublicInternalUserCreatedResultWorkflowRoleREADER      PublicInternalUserCreatedResultWorkflowRole = "READER"
+	PublicInternalUserCreatedResultWorkflowRoleREVIEWER    PublicInternalUserCreatedResultWorkflowRole = "REVIEWER"
+)
+
+// Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultWorkflowRole enum.
+func (e PublicInternalUserCreatedResultWorkflowRole) Valid() bool {
+	switch e {
+	case PublicInternalUserCreatedResultWorkflowRoleCONTRIBUTOR:
+		return true
+	case PublicInternalUserCreatedResultWorkflowRolePUBLISHER:
+		return true
+	case PublicInternalUserCreatedResultWorkflowRoleREADER:
+		return true
+	case PublicInternalUserCreatedResultWorkflowRoleREVIEWER:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PublicPagePropertyValuesResultRevisionStatus.
 const (
 	PublicPagePropertyValuesResultRevisionStatusAPPROVED  PublicPagePropertyValuesResultRevisionStatus = "APPROVED"
@@ -1917,19 +2022,19 @@ func (e PreviewPageCascadeImpactParamsOperation) Valid() bool {
 
 // Defines values for ListUsersParamsStatus.
 const (
-	ACTIVE  ListUsersParamsStatus = "ACTIVE"
-	DELETED ListUsersParamsStatus = "DELETED"
-	PENDING ListUsersParamsStatus = "PENDING"
+	ListUsersParamsStatusACTIVE  ListUsersParamsStatus = "ACTIVE"
+	ListUsersParamsStatusDELETED ListUsersParamsStatus = "DELETED"
+	ListUsersParamsStatusPENDING ListUsersParamsStatus = "PENDING"
 )
 
 // Valid indicates whether the value is a known member of the ListUsersParamsStatus enum.
 func (e ListUsersParamsStatus) Valid() bool {
 	switch e {
-	case ACTIVE:
+	case ListUsersParamsStatusACTIVE:
 		return true
-	case DELETED:
+	case ListUsersParamsStatusDELETED:
 		return true
-	case PENDING:
+	case ListUsersParamsStatusPENDING:
 		return true
 	default:
 		return false
@@ -2073,12 +2178,12 @@ type AuditActorResultStatus string
 
 // AuditLogQueryForm defines model for AuditLogQueryForm.
 type AuditLogQueryForm struct {
-	// ActionType Exact-match filter on the action type. Unknown values return an empty result set, not an error. Known values: PAGE_TYPE_CREATED, PAGE_TYPE_UPDATED, PAGE_TYPE_DELETED, PAGE_TYPE_REPARENTED, USER_UPDATED, USER_DELETED, USER_PERMANENTLY_DELETED, USER_REACTIVATED, PAGE_RESTRICTION_GRANTED, PAGE_RESTRICTION_UPDATED, PAGE_RESTRICTION_REVOKED, PAGE_RESTRICTION_OWNERSHIP_TRANSFERRED
+	// ActionType Exact-match, case-sensitive filter on the action type. An unknown value returns 400 INVALID_REQUEST; the response lists the allowed values in validValues. Values that only occur in older audit entries remain valid.
 	ActionType *string `json:"actionType,omitempty"`
 	Actor      *string `json:"actor,omitempty"`
 	EntityId   *int64  `json:"entityId,omitempty"`
 
-	// EntityType Exact-match filter on the entity type. Known values: Page, PageType, UserAccount
+	// EntityType Exact-match, case-sensitive filter on the entity type, for example Page or PageType. An unknown value returns 400 INVALID_REQUEST; the response lists the allowed values in validValues. Values that only occur in older audit entries remain valid.
 	EntityType *string             `json:"entityType,omitempty"`
 	From       *openapi_types.Date `json:"from,omitempty"`
 	Search     *string             `json:"search,omitempty"`
@@ -3695,6 +3800,7 @@ type PublicAuditLogResult struct {
 	ActionType    *string                 `json:"actionType,omitempty"`
 	ActorId       *int64                  `json:"actorId,omitempty"`
 	ActorUsername *string                 `json:"actorUsername,omitempty"`
+	ApiKeyId      *int64                  `json:"apiKeyId,omitempty"`
 	Changes       *map[string]interface{} `json:"changes,omitempty"`
 	EntityId      *int64                  `json:"entityId,omitempty"`
 	EntityType    *string                 `json:"entityType,omitempty"`
@@ -3730,6 +3836,36 @@ type PublicContentValidationForm struct {
 	TargetPageId     *int64 `json:"targetPageId,omitempty"`
 	TargetPageTypeId *int64 `json:"targetPageTypeId,omitempty"`
 }
+
+// PublicInternalUserCreatedResult defines model for PublicInternalUserCreatedResult.
+type PublicInternalUserCreatedResult struct {
+	// ActivationEmailExpiresAt Expiry of the activation token that was issued with the activation email. Null when no activation email was sent (creationMode other than SEND_ACTIVATION_EMAIL).
+	ActivationEmailExpiresAt *time.Time                                            `json:"activationEmailExpiresAt,omitempty"`
+	Authenticated            *bool                                                 `json:"authenticated,omitempty"`
+	DisplayName              *string                                               `json:"displayName,omitempty"`
+	EffectiveRole            *PublicInternalUserCreatedResultEffectiveRole         `json:"effectiveRole,omitempty"`
+	EffectiveWorkflowRole    *PublicInternalUserCreatedResultEffectiveWorkflowRole `json:"effectiveWorkflowRole,omitempty"`
+	Email                    *string                                               `json:"email,omitempty"`
+	Id                       *int64                                                `json:"id,omitempty"`
+	Role                     *PublicInternalUserCreatedResultRole                  `json:"role,omitempty"`
+	Status                   *PublicInternalUserCreatedResultStatus                `json:"status,omitempty"`
+	WorkflowRole             *PublicInternalUserCreatedResultWorkflowRole          `json:"workflowRole,omitempty"`
+}
+
+// PublicInternalUserCreatedResultEffectiveRole defines model for PublicInternalUserCreatedResult.EffectiveRole.
+type PublicInternalUserCreatedResultEffectiveRole string
+
+// PublicInternalUserCreatedResultEffectiveWorkflowRole defines model for PublicInternalUserCreatedResult.EffectiveWorkflowRole.
+type PublicInternalUserCreatedResultEffectiveWorkflowRole string
+
+// PublicInternalUserCreatedResultRole defines model for PublicInternalUserCreatedResult.Role.
+type PublicInternalUserCreatedResultRole string
+
+// PublicInternalUserCreatedResultStatus defines model for PublicInternalUserCreatedResult.Status.
+type PublicInternalUserCreatedResultStatus string
+
+// PublicInternalUserCreatedResultWorkflowRole defines model for PublicInternalUserCreatedResult.WorkflowRole.
+type PublicInternalUserCreatedResultWorkflowRole string
 
 // PublicPageCompositeResult defines model for PublicPageCompositeResult.
 type PublicPageCompositeResult struct {
@@ -15464,6 +15600,7 @@ func (r ListArchiveResponse) ContentType() string {
 type ListAuditLogResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
 	ApplicationproblemJSON401 *ProblemDetail
 	ApplicationproblemJSON403 *ProblemDetail
 	ApplicationproblemJSON429 *ProblemDetail
@@ -22100,6 +22237,13 @@ func ParseListAuditLogResponse(rsp *http.Response) (*ListAuditLogResponse, error
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest ProblemDetail
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {

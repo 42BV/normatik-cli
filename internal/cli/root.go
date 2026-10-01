@@ -15,8 +15,10 @@ import (
 	"io"
 	"os"
 	"runtime/debug"
+	"strings"
 
 	"github.com/42BV/normatik-cli/internal/command"
+	"github.com/42BV/normatik-cli/internal/httpx"
 	"github.com/charmbracelet/fang"
 	"github.com/spf13/cobra"
 )
@@ -32,6 +34,13 @@ var version = developmentVersion
 func init() {
 	info, ok := debug.ReadBuildInfo()
 	version = resolvedVersion(version, info, ok)
+	httpx.SetUserAgent(userAgentFor(version))
+}
+
+// userAgentFor formats the product token. Exactly one leading "v" is removed
+// so a linker value of v1.2.0 is sent as normatik-cli/1.2.0; vv1 stays v1.
+func userAgentFor(version string) string {
+	return "normatik-cli/" + strings.TrimPrefix(version, "v")
 }
 
 func resolvedVersion(linked string, info *debug.BuildInfo, buildInfoAvailable bool) string {

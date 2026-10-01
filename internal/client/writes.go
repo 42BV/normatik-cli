@@ -241,6 +241,16 @@ func (c *Client) SortChildren(ctx context.Context, parentID int64, childIDs []in
 		return c.api.SortPageChildren(ctx, parentID, api.SortChildrenForm{ChildIds: childIDs})
 	})
 }
+func (c *Client) MigrateSortRootPages(ctx context.Context, pageIDs []int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.MigrateSortRootPages(ctx, api.SortChildrenForm{ChildIds: pageIDs})
+	})
+}
+func (c *Client) MigrateSortChildren(ctx context.Context, parentID int64, childIDs []int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.MigrateSortPageChildren(ctx, parentID, api.SortChildrenForm{ChildIds: childIDs})
+	})
+}
 
 // ---- Revisions / workflow transitions / trash / archive ----
 

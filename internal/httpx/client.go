@@ -79,10 +79,12 @@ func isLoopbackHost(host string) bool {
 }
 
 // NewClient creates an HTTP client that follows redirects only within the
-// exact original origin (scheme, hostname and effective port).
+// exact original origin (scheme, hostname and effective port). The transport
+// is DefaultTransport wrapped so every request carries the process User-Agent.
 func NewClient(timeout time.Duration) *http.Client {
 	return &http.Client{
 		Timeout:       timeout,
+		Transport:     &userAgentTransport{base: http.DefaultTransport},
 		CheckRedirect: sameOriginRedirect,
 	}
 }

@@ -217,7 +217,60 @@ func addPagesWrites(parent *cobra.Command) {
 		},
 	}
 	command.URLFlag(sortCh)
-	addWriteCommands(parent, update, del, archive, move, sortCh)
+
+	migrateSortRoot := &cobra.Command{
+		Use: "migrate-sort-root <pageId...>", Short: "Set the order of root pages, bypassing sortableChildPages validation (migration)", Args: cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ids, ok := variadicIDs(args)
+			if !ok {
+				return command.Handled(2)
+			}
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			body, apiErr := d.Client.MigrateSortRootPages(cmd.Context(), ids)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik pages migrate-sort-root")
+			}
+			if command.PrintURL(d, cmd, weburl.Pages()) {
+				return nil
+			}
+			writeResult(d, body, "Root pages sorted.")
+			return nil
+		},
+	}
+	command.URLFlag(migrateSortRoot)
+
+	migrateSortChildren := &cobra.Command{
+		Use: "migrate-sort-children <parentId> <childId...>", Short: "Set the order of a page's children, bypassing sortableChildPages validation (migration)", Args: cobra.MinimumNArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			pid, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			ids, ok := variadicIDs(args[1:])
+			if !ok {
+				return command.Handled(2)
+			}
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			body, apiErr := d.Client.MigrateSortChildren(cmd.Context(), pid, ids)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik pages migrate-sort-children")
+			}
+			if command.PrintURL(d, cmd, weburl.PageSortChildren(pid)) {
+				return nil
+			}
+			writeResult(d, body, "Children sorted.")
+			return nil
+		},
+	}
+	command.URLFlag(migrateSortChildren)
+
+	addWriteCommands(parent, update, del, archive, move, sortCh, migrateSortRoot, migrateSortChildren)
 }
 
 // buildPropertyPatch resolves --property / --unset-property against the page's

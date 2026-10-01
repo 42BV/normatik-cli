@@ -603,11 +603,11 @@ func newAuditCmd() *cobra.Command {
 	var pg paging
 	search := &cobra.Command{
 		Use: "search", Short: "Search audit-log entries (admin)",
-		Example: "  normatik audit search --actor alice --from 2026-01-01\n  normatik audit search --entity-type PAGE --entity-id 36",
+		Example: "  normatik audit search --actor alice --from 2026-01-01\n  normatik audit search --entity-type Page --entity-id 36",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runListURL(cmd, "normatik audit search", weburl.AdminAudit(), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.SearchAuditLog(cmd.Context(), f, pg.page, pg.size, pg.sort)
-			})
+			}, "id", "performedAt", "actorUsername", "actionType", "entityType", "entityId", "apiKeyId", "summary")
 		},
 	}
 	addPaging(search, &pg)
