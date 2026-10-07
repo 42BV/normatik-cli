@@ -26,9 +26,11 @@ func variadicIDs(args []string) ([]int64, bool) {
 // ---- property descriptors writes ----
 
 func addPropertyDescriptorWrites(c *cobra.Command) {
+	const createPagesAllowedHelp = "allow creating new pages from this reference property (true/false); overrides the form; omit to keep the form's value"
 	var pageTypeID int64
+	var createCreatePagesAllowed bool
 	create := &cobra.Command{
-		Use: "create -f form.json", Short: "Add a property descriptor (--page-type-id, -f form.json)",
+		Use: "create -f form.json", Short: "Add a property descriptor (--page-type-id, -f form.json, --create-pages-allowed)",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			d, err := command.Build(cmd)
 			if err != nil {
@@ -40,6 +42,9 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 				d.Printer.Message("Error [FORM]: could not read -f %q: %v", file, lerr)
 				return command.Handled(2)
 			}
+			if v := changedBool(cmd, "create-pages-allowed", createCreatePagesAllowed); v != nil {
+				form.CreatePagesAllowed = v
+			}
 			return runWriteURL(cmd, "normatik property-descriptors create", "Property descriptor created.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.CreatePropertyDescriptor(cmd.Context(), pageTypeID, form)
 			}, func([]byte) string { return weburl.PageType(pageTypeID) }, "id", "name", "dataType")
@@ -47,14 +52,43 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 	}
 	create.Flags().Int64Var(&pageTypeID, "page-type-id", 0, "page type id (required)")
 	create.Flags().StringP("file", "f", "", "JSON file with the form (required)")
+	create.Flags().BoolVar(&createCreatePagesAllowed, "create-pages-allowed", false, createPagesAllowedHelp)
 	_ = create.MarkFlagRequired("page-type-id")
 	_ = create.MarkFlagRequired("file")
 	command.URLFlag(create)
 
-	update := idFormFileWrite[api.PropertyDescriptorForm]("update <id>", "Update a property descriptor (-f form.json)", "normatik property-descriptors update", "Property descriptor updated.",
-		func(d *command.Deps, ctx context.Context, id int64, f api.PropertyDescriptorForm) ([]byte, *client.APIError) {
-			return d.Client.UpdatePropertyDescriptor(ctx, id, f)
-		})
+	var updateCreatePagesAllowed bool
+	update := &cobra.Command{
+		Use: "update <id>", Short: "Update a property descriptor (-f form.json, --create-pages-allowed)", Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			file, _ := cmd.Flags().GetString("file")
+			form, lerr := loadForm[api.PropertyDescriptorForm](file)
+			if lerr != nil {
+				d.Printer.Message("Error [FORM]: could not read -f %q: %v", file, lerr)
+				return command.Handled(2)
+			}
+			if v := changedBool(cmd, "create-pages-allowed", updateCreatePagesAllowed); v != nil {
+				form.CreatePagesAllowed = v
+			}
+			body, apiErr := d.Client.UpdatePropertyDescriptor(cmd.Context(), id, form)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik property-descriptors update")
+			}
+			writeResult(d, body, "Property descriptor updated.")
+			return nil
+		},
+	}
+	update.Flags().StringP("file", "f", "", "JSON file containing the form (required)")
+	update.Flags().BoolVar(&updateCreatePagesAllowed, "create-pages-allowed", false, createPagesAllowedHelp)
+	_ = update.MarkFlagRequired("file")
 	del := idWrite("delete <id>", "Delete a property descriptor", "normatik property-descriptors delete", "Property descriptor deleted.", "soft",
 		func(d *command.Deps, ctx context.Context, id int64) ([]byte, *client.APIError) {
 			return d.Client.DeletePropertyDescriptor(ctx, id)
@@ -238,13 +272,16 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 func addWorkItemsWrites(c *cobra.Command) {
 	pageID := func(cmd *cobra.Command) int64 { v, _ := cmd.Flags().GetInt64("page-id"); return v }
 
-	var typeSlug, desc string
+	var typeSlug, desc, identifier string
 	create := &cobra.Command{
-		Use: "create", Short: "Create a work item (--type-slug, --description)",
+		Use: "create", Short: "Create a work item (--type-slug, --description, --identifier)",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			f := api.WorkItemCreateForm{TypeSlug: typeSlug}
 			if cmd.Flags().Changed("description") {
 				f.Description = strPtr(desc)
+			}
+			if cmd.Flags().Changed("identifier") {
+				f.Identifier = strPtr(identifier)
 			}
 			return runWriteURL(cmd, "normatik work-items create", "Work item created.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.CreateWorkItem(cmd.Context(), pageID(cmd), f)
@@ -253,12 +290,13 @@ func addWorkItemsWrites(c *cobra.Command) {
 	}
 	create.Flags().StringVar(&typeSlug, "type-slug", "", "work-item-type slug (required)")
 	create.Flags().StringVar(&desc, "description", "", "description")
+	create.Flags().StringVar(&identifier, "identifier", "", "task ID (optional, unique across all tasks)")
 	_ = create.MarkFlagRequired("type-slug")
 	command.URLFlag(create)
 
-	var edesc string
+	var edesc, eidentifier string
 	edit := &cobra.Command{
-		Use: "edit <workItemId>", Short: "Update a work item (--description)", Args: cobra.ExactArgs(1),
+		Use: "edit <workItemId>", Short: "Update a work item (--description, --identifier)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wid, perr := command.ParseID(args[0])
 			if perr != nil {
@@ -268,12 +306,16 @@ func addWorkItemsWrites(c *cobra.Command) {
 			if cmd.Flags().Changed("description") {
 				f.Description = strPtr(edesc)
 			}
+			if cmd.Flags().Changed("identifier") {
+				f.Identifier = strPtr(eidentifier)
+			}
 			return runWriteURL(cmd, "normatik work-items edit", "Work item updated.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.EditWorkItem(cmd.Context(), pageID(cmd), wid, f)
 			}, func([]byte) string { return weburl.Page(pageID(cmd)) })
 		},
 	}
 	edit.Flags().StringVar(&edesc, "description", "", "new description")
+	edit.Flags().StringVar(&eidentifier, "identifier", "", "task ID (optional, unique across all tasks; empty removes it)")
 	command.URLFlag(edit)
 
 	del := &cobra.Command{

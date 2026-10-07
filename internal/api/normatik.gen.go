@@ -127,6 +127,27 @@ func (e AuditActorResultStatus) Valid() bool {
 	}
 }
 
+// Defines values for BreadcrumbItemResultStatus.
+const (
+	BreadcrumbItemResultStatusActive   BreadcrumbItemResultStatus = "active"
+	BreadcrumbItemResultStatusArchived BreadcrumbItemResultStatus = "archived"
+	BreadcrumbItemResultStatusTrashed  BreadcrumbItemResultStatus = "trashed"
+)
+
+// Valid indicates whether the value is a known member of the BreadcrumbItemResultStatus enum.
+func (e BreadcrumbItemResultStatus) Valid() bool {
+	switch e {
+	case BreadcrumbItemResultStatusActive:
+		return true
+	case BreadcrumbItemResultStatusArchived:
+		return true
+	case BreadcrumbItemResultStatusTrashed:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ChainLinkInputSourceType.
 const (
 	ChainLinkInputSourceTypeCHILDPAGES ChainLinkInputSourceType = "CHILD_PAGES"
@@ -337,6 +358,63 @@ func (e DiscardResultOutcome) Valid() bool {
 	}
 }
 
+// Defines values for DisplayColumnResultDataType.
+const (
+	DisplayColumnResultDataTypeCALCULATED      DisplayColumnResultDataType = "CALCULATED"
+	DisplayColumnResultDataTypeCONDITIONALENUM DisplayColumnResultDataType = "CONDITIONAL_ENUM"
+	DisplayColumnResultDataTypeDATE            DisplayColumnResultDataType = "DATE"
+	DisplayColumnResultDataTypeDATETIME        DisplayColumnResultDataType = "DATE_TIME"
+	DisplayColumnResultDataTypeENUM            DisplayColumnResultDataType = "ENUM"
+	DisplayColumnResultDataTypeMARKDOWN        DisplayColumnResultDataType = "MARKDOWN"
+	DisplayColumnResultDataTypeNUMBER          DisplayColumnResultDataType = "NUMBER"
+	DisplayColumnResultDataTypePAGEINCOMING    DisplayColumnResultDataType = "PAGE_INCOMING"
+	DisplayColumnResultDataTypePAGEOUTGOING    DisplayColumnResultDataType = "PAGE_OUTGOING"
+	DisplayColumnResultDataTypePAGESELECTOR    DisplayColumnResultDataType = "PAGE_SELECTOR"
+	DisplayColumnResultDataTypePAGETYPE        DisplayColumnResultDataType = "PAGE_TYPE"
+	DisplayColumnResultDataTypePARENTPAGE      DisplayColumnResultDataType = "PARENT_PAGE"
+	DisplayColumnResultDataTypePROPERTYCHAIN   DisplayColumnResultDataType = "PROPERTY_CHAIN"
+	DisplayColumnResultDataTypeTEXT            DisplayColumnResultDataType = "TEXT"
+	DisplayColumnResultDataTypeUSERLIST        DisplayColumnResultDataType = "USER_LIST"
+)
+
+// Valid indicates whether the value is a known member of the DisplayColumnResultDataType enum.
+func (e DisplayColumnResultDataType) Valid() bool {
+	switch e {
+	case DisplayColumnResultDataTypeCALCULATED:
+		return true
+	case DisplayColumnResultDataTypeCONDITIONALENUM:
+		return true
+	case DisplayColumnResultDataTypeDATE:
+		return true
+	case DisplayColumnResultDataTypeDATETIME:
+		return true
+	case DisplayColumnResultDataTypeENUM:
+		return true
+	case DisplayColumnResultDataTypeMARKDOWN:
+		return true
+	case DisplayColumnResultDataTypeNUMBER:
+		return true
+	case DisplayColumnResultDataTypePAGEINCOMING:
+		return true
+	case DisplayColumnResultDataTypePAGEOUTGOING:
+		return true
+	case DisplayColumnResultDataTypePAGESELECTOR:
+		return true
+	case DisplayColumnResultDataTypePAGETYPE:
+		return true
+	case DisplayColumnResultDataTypePARENTPAGE:
+		return true
+	case DisplayColumnResultDataTypePROPERTYCHAIN:
+		return true
+	case DisplayColumnResultDataTypeTEXT:
+		return true
+	case DisplayColumnResultDataTypeUSERLIST:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for EligibleUserResultMaxAccessLevel.
 const (
 	EligibleUserResultMaxAccessLevelREAD      EligibleUserResultMaxAccessLevel = "READ"
@@ -487,6 +565,27 @@ func (e MacroAttributeSchemaType) Valid() bool {
 	}
 }
 
+// Defines values for PageLinkDataState.
+const (
+	PageLinkDataStateActive   PageLinkDataState = "active"
+	PageLinkDataStateArchived PageLinkDataState = "archived"
+	PageLinkDataStateTrashed  PageLinkDataState = "trashed"
+)
+
+// Valid indicates whether the value is a known member of the PageLinkDataState enum.
+func (e PageLinkDataState) Valid() bool {
+	switch e {
+	case PageLinkDataStateActive:
+		return true
+	case PageLinkDataStateArchived:
+		return true
+	case PageLinkDataStateTrashed:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PageRestrictionAccessFormAccessLevel.
 const (
 	PageRestrictionAccessFormAccessLevelREAD      PageRestrictionAccessFormAccessLevel = "READ"
@@ -543,16 +642,37 @@ func (e PageRestrictionGroupAccessFormAccessLevel) Valid() bool {
 
 // Defines values for PageRestrictionGroupAccessResultAccessLevel.
 const (
-	READ      PageRestrictionGroupAccessResultAccessLevel = "READ"
-	READWRITE PageRestrictionGroupAccessResultAccessLevel = "READ_WRITE"
+	PageRestrictionGroupAccessResultAccessLevelREAD      PageRestrictionGroupAccessResultAccessLevel = "READ"
+	PageRestrictionGroupAccessResultAccessLevelREADWRITE PageRestrictionGroupAccessResultAccessLevel = "READ_WRITE"
 )
 
 // Valid indicates whether the value is a known member of the PageRestrictionGroupAccessResultAccessLevel enum.
 func (e PageRestrictionGroupAccessResultAccessLevel) Valid() bool {
 	switch e {
-	case READ:
+	case PageRestrictionGroupAccessResultAccessLevelREAD:
 		return true
-	case READWRITE:
+	case PageRestrictionGroupAccessResultAccessLevelREADWRITE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PageResultCurrentUserAccessLevel.
+const (
+	PageResultCurrentUserAccessLevelOWNER     PageResultCurrentUserAccessLevel = "OWNER"
+	PageResultCurrentUserAccessLevelREAD      PageResultCurrentUserAccessLevel = "READ"
+	PageResultCurrentUserAccessLevelREADWRITE PageResultCurrentUserAccessLevel = "READ_WRITE"
+)
+
+// Valid indicates whether the value is a known member of the PageResultCurrentUserAccessLevel enum.
+func (e PageResultCurrentUserAccessLevel) Valid() bool {
+	switch e {
+	case PageResultCurrentUserAccessLevelOWNER:
+		return true
+	case PageResultCurrentUserAccessLevelREAD:
+		return true
+	case PageResultCurrentUserAccessLevelREADWRITE:
 		return true
 	default:
 		return false
@@ -712,6 +832,30 @@ func (e PageTypeUsageResultReason) Valid() bool {
 	case REVISIONSELECTEDPAGETYPE:
 		return true
 	case VISIBILITYOVERRIDE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PageWorkItemAssigneeResultStatus.
+const (
+	PageWorkItemAssigneeResultStatusActive   PageWorkItemAssigneeResultStatus = "active"
+	PageWorkItemAssigneeResultStatusDeleted  PageWorkItemAssigneeResultStatus = "deleted"
+	PageWorkItemAssigneeResultStatusExternal PageWorkItemAssigneeResultStatus = "external"
+	PageWorkItemAssigneeResultStatusPending  PageWorkItemAssigneeResultStatus = "pending"
+)
+
+// Valid indicates whether the value is a known member of the PageWorkItemAssigneeResultStatus enum.
+func (e PageWorkItemAssigneeResultStatus) Valid() bool {
+	switch e {
+	case PageWorkItemAssigneeResultStatusActive:
+		return true
+	case PageWorkItemAssigneeResultStatusDeleted:
+		return true
+	case PageWorkItemAssigneeResultStatusExternal:
+		return true
+	case PageWorkItemAssigneeResultStatusPending:
 		return true
 	default:
 		return false
@@ -1044,16 +1188,16 @@ func (e PropertyValueResultDataType) Valid() bool {
 
 // Defines values for PropertyValueResultNumberFormat.
 const (
-	PropertyValueResultNumberFormatNUMBER     PropertyValueResultNumberFormat = "NUMBER"
-	PropertyValueResultNumberFormatPERCENTAGE PropertyValueResultNumberFormat = "PERCENTAGE"
+	NUMBER     PropertyValueResultNumberFormat = "NUMBER"
+	PERCENTAGE PropertyValueResultNumberFormat = "PERCENTAGE"
 )
 
 // Valid indicates whether the value is a known member of the PropertyValueResultNumberFormat enum.
 func (e PropertyValueResultNumberFormat) Valid() bool {
 	switch e {
-	case PropertyValueResultNumberFormatNUMBER:
+	case NUMBER:
 		return true
-	case PropertyValueResultNumberFormatPERCENTAGE:
+	case PERCENTAGE:
 		return true
 	default:
 		return false
@@ -1159,6 +1303,27 @@ func (e PublicInternalUserCreatedResultWorkflowRole) Valid() bool {
 	case PublicInternalUserCreatedResultWorkflowRoleREADER:
 		return true
 	case PublicInternalUserCreatedResultWorkflowRoleREVIEWER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PublicPageCompositeResultCurrentUserAccessLevel.
+const (
+	OWNER     PublicPageCompositeResultCurrentUserAccessLevel = "OWNER"
+	READ      PublicPageCompositeResultCurrentUserAccessLevel = "READ"
+	READWRITE PublicPageCompositeResultCurrentUserAccessLevel = "READ_WRITE"
+)
+
+// Valid indicates whether the value is a known member of the PublicPageCompositeResultCurrentUserAccessLevel enum.
+func (e PublicPageCompositeResultCurrentUserAccessLevel) Valid() bool {
+	switch e {
+	case OWNER:
+		return true
+	case READ:
+		return true
+	case READWRITE:
 		return true
 	default:
 		return false
@@ -1642,6 +1807,30 @@ func (e UserGroupResultWorkflowRole) Valid() bool {
 	}
 }
 
+// Defines values for UserLinkResultStatus.
+const (
+	UserLinkResultStatusActive   UserLinkResultStatus = "active"
+	UserLinkResultStatusDeleted  UserLinkResultStatus = "deleted"
+	UserLinkResultStatusExternal UserLinkResultStatus = "external"
+	UserLinkResultStatusPending  UserLinkResultStatus = "pending"
+)
+
+// Valid indicates whether the value is a known member of the UserLinkResultStatus enum.
+func (e UserLinkResultStatus) Valid() bool {
+	switch e {
+	case UserLinkResultStatusActive:
+		return true
+	case UserLinkResultStatusDeleted:
+		return true
+	case UserLinkResultStatusExternal:
+		return true
+	case UserLinkResultStatusPending:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for UserResultEffectiveRole.
 const (
 	UserResultEffectiveRoleADMIN UserResultEffectiveRole = "ADMIN"
@@ -1749,14 +1938,17 @@ func (e UserResultWorkflowRole) Valid() bool {
 
 // Defines values for WorkItemLogEntryLogType.
 const (
-	COMMENT    WorkItemLogEntryLogType = "COMMENT"
-	TRANSITION WorkItemLogEntryLogType = "TRANSITION"
+	COMMENT          WorkItemLogEntryLogType = "COMMENT"
+	IDENTIFIERCHANGE WorkItemLogEntryLogType = "IDENTIFIER_CHANGE"
+	TRANSITION       WorkItemLogEntryLogType = "TRANSITION"
 )
 
 // Valid indicates whether the value is a known member of the WorkItemLogEntryLogType enum.
 func (e WorkItemLogEntryLogType) Valid() bool {
 	switch e {
 	case COMMENT:
+		return true
+	case IDENTIFIERCHANGE:
 		return true
 	case TRANSITION:
 		return true
@@ -2084,18 +2276,18 @@ type AddMemberForm struct {
 
 // AllowedChildTypeResult defines model for AllowedChildTypeResult.
 type AllowedChildTypeResult struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
 }
 
 // AllowedPageActionResult defines model for AllowedPageActionResult.
 type AllowedPageActionResult struct {
-	ActionKey       *string                              `json:"actionKey,omitempty"`
-	Allowed         *bool                                `json:"allowed,omitempty"`
-	CommentRequired *bool                                `json:"commentRequired,omitempty"`
-	Reason          *AllowedPageActionResultReason       `json:"reason,omitempty"`
-	RequiredRole    *AllowedPageActionResultRequiredRole `json:"requiredRole,omitempty"`
-	TargetStatus    *AllowedPageActionResultTargetStatus `json:"targetStatus,omitempty"`
+	ActionKey       string                               `json:"actionKey"`
+	Allowed         bool                                 `json:"allowed"`
+	CommentRequired bool                                 `json:"commentRequired"`
+	Reason          *AllowedPageActionResultReason       `json:"reason"`
+	RequiredRole    AllowedPageActionResultRequiredRole  `json:"requiredRole"`
+	TargetStatus    *AllowedPageActionResultTargetStatus `json:"targetStatus"`
 }
 
 // AllowedPageActionResultReason defines model for AllowedPageActionResult.Reason.
@@ -2109,10 +2301,10 @@ type AllowedPageActionResultTargetStatus string
 
 // ApiKeyMeta defines model for ApiKeyMeta.
 type ApiKeyMeta struct {
-	AccessMode     *ApiKeyMetaAccessMode `json:"accessMode,omitempty"`
-	ExpirationDate *openapi_types.Date   `json:"expirationDate,omitempty"`
-	Id             *int64                `json:"id,omitempty"`
-	KeyPrefix      *string               `json:"keyPrefix,omitempty"`
+	AccessMode     ApiKeyMetaAccessMode `json:"accessMode"`
+	ExpirationDate *openapi_types.Date  `json:"expirationDate,omitempty"`
+	Id             int64                `json:"id"`
+	KeyPrefix      string               `json:"keyPrefix"`
 }
 
 // ApiKeyMetaAccessMode defines model for ApiKeyMeta.AccessMode.
@@ -2125,28 +2317,28 @@ type ArchivePageForm struct {
 
 // ArchivedPageViewResult defines model for ArchivedPageViewResult.
 type ArchivedPageViewResult struct {
-	Archived       *bool             `json:"archived,omitempty"`
-	ArchivedAt     *time.Time        `json:"archivedAt,omitempty"`
+	Archived       bool              `json:"archived"`
+	ArchivedAt     time.Time         `json:"archivedAt"`
 	ArchivedBy     *AuditActorResult `json:"archivedBy,omitempty"`
-	ArchivedReason *string           `json:"archivedReason,omitempty"`
-	Page           *PageResult       `json:"page,omitempty"`
-	ParentId       *int64            `json:"parentId,omitempty"`
+	ArchivedReason string            `json:"archivedReason"`
+	Page           PageResult        `json:"page"`
+	ParentId       *int64            `json:"parentId"`
 }
 
 // ArchivedWithBreadcrumbResult defines model for ArchivedWithBreadcrumbResult.
 type ArchivedWithBreadcrumbResult struct {
-	ArchivedAt   *time.Time         `json:"archivedAt,omitempty"`
-	Breadcrumbs  *[]BreadcrumbEntry `json:"breadcrumbs,omitempty"`
-	Id           *int64             `json:"id,omitempty"`
-	Name         *string            `json:"name,omitempty"`
-	PageTypeName *string            `json:"pageTypeName,omitempty"`
-	Reason       *string            `json:"reason,omitempty"`
+	ArchivedAt   time.Time         `json:"archivedAt"`
+	Breadcrumbs  []BreadcrumbEntry `json:"breadcrumbs"`
+	Id           int64             `json:"id"`
+	Name         string            `json:"name"`
+	PageTypeName *string           `json:"pageTypeName"`
+	Reason       string            `json:"reason"`
 }
 
 // AssetAttributeMetadata defines model for AssetAttributeMetadata.
 type AssetAttributeMetadata struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
 }
 
 // AssetSearchRequest defines model for AssetSearchRequest.
@@ -2159,12 +2351,12 @@ type AssetSearchRequest struct {
 
 // AtRiskDescriptorResult defines model for AtRiskDescriptorResult.
 type AtRiskDescriptorResult struct {
-	DescriptorName         *string `json:"descriptorName,omitempty"`
-	LinksAffected          *int32  `json:"linksAffected,omitempty"`
-	RevisionValuesAffected *int32  `json:"revisionValuesAffected,omitempty"`
-	Source                 *string `json:"source,omitempty"`
-	Type                   *string `json:"type,omitempty"`
-	ValuesAffected         *int32  `json:"valuesAffected,omitempty"`
+	DescriptorName         string `json:"descriptorName"`
+	LinksAffected          int32  `json:"linksAffected"`
+	RevisionValuesAffected int32  `json:"revisionValuesAffected"`
+	Source                 string `json:"source"`
+	Type                   string `json:"type"`
+	ValuesAffected         int32  `json:"valuesAffected"`
 }
 
 // AuditActorResult defines model for AuditActorResult.
@@ -2192,24 +2384,27 @@ type AuditLogQueryForm struct {
 
 // AvailablePropertyDescriptorResult defines model for AvailablePropertyDescriptorResult.
 type AvailablePropertyDescriptorResult struct {
-	Hidden *bool   `json:"hidden,omitempty"`
-	Id     *int64  `json:"id,omitempty"`
-	Name   *string `json:"name,omitempty"`
+	Hidden bool   `json:"hidden"`
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
 }
 
 // BreadcrumbEntry defines model for BreadcrumbEntry.
 type BreadcrumbEntry struct {
-	Id     *int64  `json:"id,omitempty"`
-	Name   *string `json:"name,omitempty"`
-	Status *string `json:"status,omitempty"`
+	Id     int64   `json:"id"`
+	Name   string  `json:"name"`
+	Status *string `json:"status"`
 }
 
 // BreadcrumbItemResult defines model for BreadcrumbItemResult.
 type BreadcrumbItemResult struct {
-	Id     *int64  `json:"id,omitempty"`
-	Name   *string `json:"name,omitempty"`
-	Status *string `json:"status,omitempty"`
+	Id     *int64                      `json:"id,omitempty"`
+	Name   string                      `json:"name"`
+	Status *BreadcrumbItemResultStatus `json:"status,omitempty"`
 }
+
+// BreadcrumbItemResultStatus defines model for BreadcrumbItemResult.Status.
+type BreadcrumbItemResultStatus string
 
 // CascadeArchiveForm defines model for CascadeArchiveForm.
 type CascadeArchiveForm struct {
@@ -2219,12 +2414,12 @@ type CascadeArchiveForm struct {
 
 // CascadeImpactPreviewResult defines model for CascadeImpactPreviewResult.
 type CascadeImpactPreviewResult struct {
-	ActiveCount             *int64 `json:"activeCount,omitempty"`
-	ArchivedCount           *int64 `json:"archivedCount,omitempty"`
-	HiddenAffectedPageCount *int64 `json:"hiddenAffectedPageCount,omitempty"`
-	PublishedCount          *int64 `json:"publishedCount,omitempty"`
-	TotalCount              *int64 `json:"totalCount,omitempty"`
-	TrashedCount            *int64 `json:"trashedCount,omitempty"`
+	ActiveCount             int64 `json:"activeCount"`
+	ArchivedCount           int64 `json:"archivedCount"`
+	HiddenAffectedPageCount int64 `json:"hiddenAffectedPageCount"`
+	PublishedCount          int64 `json:"publishedCount"`
+	TotalCount              int64 `json:"totalCount"`
+	TrashedCount            int64 `json:"trashedCount"`
 }
 
 // CascadeRestoreForm defines model for CascadeRestoreForm.
@@ -2235,8 +2430,8 @@ type CascadeRestoreForm struct {
 
 // CascadeResult defines model for CascadeResult.
 type CascadeResult struct {
-	AffectedPageIds *[]int64 `json:"affectedPageIds,omitempty"`
-	CorrelationId   *string  `json:"correlationId,omitempty"`
+	AffectedPageIds []int64 `json:"affectedPageIds"`
+	CorrelationId   string  `json:"correlationId"`
 }
 
 // CascadeSubtreeForm defines model for CascadeSubtreeForm.
@@ -2251,8 +2446,8 @@ type CascadeTrashForm struct {
 
 // ChainBreakResult defines model for ChainBreakResult.
 type ChainBreakResult struct {
-	Name   *string `json:"name,omitempty"`
-	Target *string `json:"target,omitempty"`
+	Name   string `json:"name"`
+	Target string `json:"target"`
 }
 
 // ChainLinkInput defines model for ChainLinkInput.
@@ -2269,11 +2464,11 @@ type ChainLinkInputSourceType string
 
 // ChainLinkOptionResult defines model for ChainLinkOptionResult.
 type ChainLinkOptionResult struct {
-	ResolvedPageTypeId   *int64                           `json:"resolvedPageTypeId,omitempty"`
-	ResolvedPageTypeName *string                          `json:"resolvedPageTypeName,omitempty"`
-	SourceId             *int64                           `json:"sourceId,omitempty"`
-	SourceName           *string                          `json:"sourceName,omitempty"`
-	SourceType           *ChainLinkOptionResultSourceType `json:"sourceType,omitempty"`
+	ResolvedPageTypeId   int64                           `json:"resolvedPageTypeId"`
+	ResolvedPageTypeName string                          `json:"resolvedPageTypeName"`
+	SourceId             int64                           `json:"sourceId"`
+	SourceName           string                          `json:"sourceName"`
+	SourceType           ChainLinkOptionResultSourceType `json:"sourceType"`
 }
 
 // ChainLinkOptionResultSourceType defines model for ChainLinkOptionResult.SourceType.
@@ -2281,15 +2476,15 @@ type ChainLinkOptionResultSourceType string
 
 // ChainLinkResult defines model for ChainLinkResult.
 type ChainLinkResult struct {
-	Filters                      *string                    `json:"filters,omitempty"`
-	Id                           *int64                     `json:"id,omitempty"`
-	ResolvedPageTypeName         *string                    `json:"resolvedPageTypeName,omitempty"`
-	SortOrder                    *int32                     `json:"sortOrder,omitempty"`
-	SourcePageTypeId             *int64                     `json:"sourcePageTypeId,omitempty"`
-	SourcePageTypeName           *string                    `json:"sourcePageTypeName,omitempty"`
-	SourcePropertyDescriptorId   *int64                     `json:"sourcePropertyDescriptorId,omitempty"`
-	SourcePropertyDescriptorName *string                    `json:"sourcePropertyDescriptorName,omitempty"`
-	SourceType                   *ChainLinkResultSourceType `json:"sourceType,omitempty"`
+	Filters                      *string                   `json:"filters"`
+	Id                           int64                     `json:"id"`
+	ResolvedPageTypeName         *string                   `json:"resolvedPageTypeName"`
+	SortOrder                    int32                     `json:"sortOrder"`
+	SourcePageTypeId             *int64                    `json:"sourcePageTypeId"`
+	SourcePageTypeName           *string                   `json:"sourcePageTypeName"`
+	SourcePropertyDescriptorId   *int64                    `json:"sourcePropertyDescriptorId"`
+	SourcePropertyDescriptorName *string                   `json:"sourcePropertyDescriptorName"`
+	SourceType                   ChainLinkResultSourceType `json:"sourceType"`
 }
 
 // ChainLinkResultSourceType defines model for ChainLinkResult.SourceType.
@@ -2297,22 +2492,22 @@ type ChainLinkResultSourceType string
 
 // ChildPageData defines model for ChildPageData.
 type ChildPageData struct {
-	Content   *string    `json:"content,omitempty"`
-	Id        *int64     `json:"id,omitempty"`
-	MacroData *MacroData `json:"macroData,omitempty"`
-	Slug      *string    `json:"slug,omitempty"`
-	Summary   *string    `json:"summary,omitempty"`
-	Title     *string    `json:"title,omitempty"`
+	Content   *string   `json:"content"`
+	Id        int64     `json:"id"`
+	MacroData MacroData `json:"macroData"`
+	Slug      string    `json:"slug"`
+	Summary   *string   `json:"summary"`
+	Title     string    `json:"title"`
 }
 
 // ChildrenInstanceData defines model for ChildrenInstanceData.
 type ChildrenInstanceData struct {
-	DisplayColumns            *[]DisplayColumnResult    `json:"displayColumns,omitempty"`
-	FilterError               *string                   `json:"filterError,omitempty"`
-	Mode                      *ChildrenInstanceDataMode `json:"mode,omitempty"`
-	NameColumnWidthPercentage *int32                    `json:"nameColumnWidthPercentage,omitempty"`
-	PageReferences            *[]PageReference          `json:"pageReferences,omitempty"`
-	Pages                     *[]ChildPageData          `json:"pages,omitempty"`
+	DisplayColumns            []DisplayColumnResult    `json:"displayColumns"`
+	FilterError               *string                  `json:"filterError"`
+	Mode                      ChildrenInstanceDataMode `json:"mode"`
+	NameColumnWidthPercentage *int32                   `json:"nameColumnWidthPercentage"`
+	PageReferences            []PageReference          `json:"pageReferences"`
+	Pages                     []ChildPageData          `json:"pages"`
 }
 
 // ChildrenInstanceDataMode defines model for ChildrenInstanceData.Mode.
@@ -2327,9 +2522,9 @@ type ColorBandInput struct {
 
 // ColorBandResult defines model for ColorBandResult.
 type ColorBandResult struct {
-	ColorHex *string  `json:"colorHex,omitempty"`
-	From     *float32 `json:"from,omitempty"`
-	To       *float32 `json:"to,omitempty"`
+	ColorHex *string  `json:"colorHex"`
+	From     *float32 `json:"from"`
+	To       *float32 `json:"to"`
 }
 
 // ConditionalEnumTriggerInput defines model for ConditionalEnumTriggerInput.
@@ -2344,11 +2539,11 @@ type ConditionalEnumTriggerInputTriggerType string
 
 // ConditionalEnumTriggerResult defines model for ConditionalEnumTriggerResult.
 type ConditionalEnumTriggerResult struct {
-	Id              *int64                                   `json:"id,omitempty"`
-	ResultEnumValue *DomainEnumValueResult                   `json:"resultEnumValue,omitempty"`
-	SortOrder       *int32                                   `json:"sortOrder,omitempty"`
-	SourceStatuses  *[]DomainEnumValueResult                 `json:"sourceStatuses,omitempty"`
-	TriggerType     *ConditionalEnumTriggerResultTriggerType `json:"triggerType,omitempty"`
+	Id              int64                                   `json:"id"`
+	ResultEnumValue DomainEnumValueResult                   `json:"resultEnumValue"`
+	SortOrder       int32                                   `json:"sortOrder"`
+	SourceStatuses  []DomainEnumValueResult                 `json:"sourceStatuses"`
+	TriggerType     ConditionalEnumTriggerResultTriggerType `json:"triggerType"`
 }
 
 // ConditionalEnumTriggerResultTriggerType defines model for ConditionalEnumTriggerResult.TriggerType.
@@ -2356,19 +2551,19 @@ type ConditionalEnumTriggerResultTriggerType string
 
 // ConfluencePageLink defines model for ConfluencePageLink.
 type ConfluencePageLink struct {
-	Title *string `json:"title,omitempty"`
-	Url   *string `json:"url,omitempty"`
+	Title *string `json:"title"`
+	Url   string  `json:"url"`
 }
 
 // ContentDiagnostic defines model for ContentDiagnostic.
 type ContentDiagnostic struct {
-	Code                   *ContentDiagnosticCode     `json:"code,omitempty"`
-	Column                 *int32                     `json:"column,omitempty"`
-	EndColumn              *int32                     `json:"endColumn,omitempty"`
-	Line                   *int32                     `json:"line,omitempty"`
-	Message                *string                    `json:"message,omitempty"`
-	PropertyDescriptorName *string                    `json:"propertyDescriptorName,omitempty"`
-	Severity               *ContentDiagnosticSeverity `json:"severity,omitempty"`
+	Code                   ContentDiagnosticCode     `json:"code"`
+	Column                 int32                     `json:"column"`
+	EndColumn              int32                     `json:"endColumn"`
+	Line                   int32                     `json:"line"`
+	Message                string                    `json:"message"`
+	PropertyDescriptorName *string                   `json:"propertyDescriptorName"`
+	Severity               ContentDiagnosticSeverity `json:"severity"`
 }
 
 // ContentDiagnosticCode defines model for ContentDiagnostic.Code.
@@ -2379,7 +2574,7 @@ type ContentDiagnosticSeverity string
 
 // ContentValidationResult defines model for ContentValidationResult.
 type ContentValidationResult struct {
-	Diagnostics *[]ContentDiagnostic `json:"diagnostics,omitempty"`
+	Diagnostics []ContentDiagnostic `json:"diagnostics"`
 }
 
 // DefaultValuePayload defines model for DefaultValuePayload.
@@ -2391,7 +2586,7 @@ type DefaultValuePayload struct {
 	SelectedPageTypeId *int64   `json:"selectedPageTypeId,omitempty"`
 	TextValue          *string  `json:"textValue,omitempty"`
 	UserToken          *string  `json:"userToken,omitempty"`
-	Version            *int32   `json:"version,omitempty"`
+	Version            int32    `json:"version"`
 }
 
 // DefaultValueSetForm defines model for DefaultValueSetForm.
@@ -2407,16 +2602,16 @@ type DefaultValueSetForm struct {
 
 // DescriptorEntry defines model for DescriptorEntry.
 type DescriptorEntry struct {
-	Id           *int64  `json:"id,omitempty"`
-	Name         *string `json:"name,omitempty"`
-	PageTypeName *string `json:"pageTypeName,omitempty"`
+	Id           int64  `json:"id"`
+	Name         string `json:"name"`
+	PageTypeName string `json:"pageTypeName"`
 }
 
 // DiscardResult defines model for DiscardResult.
 type DiscardResult struct {
-	HeadRevisionNumber *int64                `json:"headRevisionNumber,omitempty"`
-	Outcome            *DiscardResultOutcome `json:"outcome,omitempty"`
-	RedirectTarget     *RedirectTarget       `json:"redirectTarget,omitempty"`
+	HeadRevisionNumber *int64               `json:"headRevisionNumber,omitempty"`
+	Outcome            DiscardResultOutcome `json:"outcome"`
+	RedirectTarget     *RedirectTarget      `json:"redirectTarget,omitempty"`
 }
 
 // DiscardResultOutcome defines model for DiscardResult.Outcome.
@@ -2430,11 +2625,16 @@ type DisplayColumnInput struct {
 
 // DisplayColumnResult defines model for DisplayColumnResult.
 type DisplayColumnResult struct {
-	Id              *int64  `json:"id,omitempty"`
-	Name            *string `json:"name,omitempty"`
-	SortOrder       *int32  `json:"sortOrder,omitempty"`
-	WidthPercentage *int32  `json:"widthPercentage,omitempty"`
+	// DataType Data type of the bound display property descriptor
+	DataType        DisplayColumnResultDataType `json:"dataType"`
+	Id              int64                       `json:"id"`
+	Name            string                      `json:"name"`
+	SortOrder       int32                       `json:"sortOrder"`
+	WidthPercentage int32                       `json:"widthPercentage"`
 }
+
+// DisplayColumnResultDataType Data type of the bound display property descriptor
+type DisplayColumnResultDataType string
 
 // DomainEnumForm defines model for DomainEnumForm.
 type DomainEnumForm struct {
@@ -2444,17 +2644,17 @@ type DomainEnumForm struct {
 
 // DomainEnumResult defines model for DomainEnumResult.
 type DomainEnumResult struct {
-	Id     *int64                   `json:"id,omitempty"`
-	Name   *string                  `json:"name,omitempty"`
-	Values *[]DomainEnumValueResult `json:"values,omitempty"`
+	Id     int64                   `json:"id"`
+	Name   string                  `json:"name"`
+	Values []DomainEnumValueResult `json:"values"`
 }
 
 // DomainEnumUsagesResult defines model for DomainEnumUsagesResult.
 type DomainEnumUsagesResult struct {
-	Pages               *[]PageEntry         `json:"pages,omitempty"`
-	PropertyDescriptors *[]DescriptorEntry   `json:"propertyDescriptors,omitempty"`
-	TriggerDescriptors  *[]DescriptorEntry   `json:"triggerDescriptors,omitempty"`
-	WorkItemTypes       *[]WorkItemTypeEntry `json:"workItemTypes,omitempty"`
+	Pages               []PageEntry         `json:"pages"`
+	PropertyDescriptors []DescriptorEntry   `json:"propertyDescriptors"`
+	TriggerDescriptors  []DescriptorEntry   `json:"triggerDescriptors"`
+	WorkItemTypes       []WorkItemTypeEntry `json:"workItemTypes"`
 }
 
 // DomainEnumValueForm defines model for DomainEnumValueForm.
@@ -2467,32 +2667,32 @@ type DomainEnumValueForm struct {
 
 // DomainEnumValueResult defines model for DomainEnumValueResult.
 type DomainEnumValueResult struct {
-	Color     *string `json:"color,omitempty"`
-	Id        *int64  `json:"id,omitempty"`
-	SortOrder *int32  `json:"sortOrder,omitempty"`
-	Value     *string `json:"value,omitempty"`
+	Color     *string `json:"color"`
+	Id        int64   `json:"id"`
+	SortOrder int32   `json:"sortOrder"`
+	Value     string  `json:"value"`
 }
 
 // DomainEnumWithValuesListResult defines model for DomainEnumWithValuesListResult.
 type DomainEnumWithValuesListResult struct {
-	Id         *int64                   `json:"id,omitempty"`
-	Name       *string                  `json:"name,omitempty"`
-	ValueCount *int32                   `json:"valueCount,omitempty"`
+	Id         int64                    `json:"id"`
+	Name       string                   `json:"name"`
+	ValueCount int32                    `json:"valueCount"`
 	Values     *[]DomainEnumValueResult `json:"values,omitempty"`
 }
 
 // DraftPageResult defines model for DraftPageResult.
 type DraftPageResult struct {
-	Author   *string `json:"author,omitempty"`
-	LastEdit *string `json:"lastEdit,omitempty"`
-	PageId   *int64  `json:"pageId,omitempty"`
-	PageName *string `json:"pageName,omitempty"`
+	Author   *string `json:"author"`
+	LastEdit string  `json:"lastEdit"`
+	PageId   int64   `json:"pageId"`
+	PageName string  `json:"pageName"`
 }
 
 // EligibleUserResult defines model for EligibleUserResult.
 type EligibleUserResult struct {
-	MaxAccessLevel *EligibleUserResultMaxAccessLevel `json:"maxAccessLevel,omitempty"`
-	User           *UserResult                       `json:"user,omitempty"`
+	MaxAccessLevel EligibleUserResultMaxAccessLevel `json:"maxAccessLevel"`
+	User           UserResult                       `json:"user"`
 }
 
 // EligibleUserResultMaxAccessLevel defines model for EligibleUserResult.MaxAccessLevel.
@@ -2500,26 +2700,26 @@ type EligibleUserResultMaxAccessLevel string
 
 // EnumMacroData defines model for EnumMacroData.
 type EnumMacroData struct {
-	Color     *string `json:"color,omitempty"`
-	EnumName  *string `json:"enumName,omitempty"`
-	Value     *string `json:"value,omitempty"`
-	ValueName *string `json:"valueName,omitempty"`
+	Color     *string `json:"color"`
+	EnumName  string  `json:"enumName"`
+	Value     string  `json:"value"`
+	ValueName string  `json:"valueName"`
 }
 
 // EnumValueCount defines model for EnumValueCount.
 type EnumValueCount struct {
-	ColorClass *string `json:"colorClass,omitempty"`
-	Count      *int64  `json:"count,omitempty"`
-	IsSuccess  *bool   `json:"isSuccess,omitempty"`
-	Value      *string `json:"value,omitempty"`
+	ColorClass *string `json:"colorClass"`
+	Count      int64   `json:"count"`
+	IsSuccess  bool    `json:"isSuccess"`
+	Value      string  `json:"value"`
 }
 
 // EnvironmentSeedReadinessResult defines model for EnvironmentSeedReadinessResult.
 type EnvironmentSeedReadinessResult struct {
-	HasEligibleReplacementAdmin *bool                                 `json:"hasEligibleReplacementAdmin,omitempty"`
-	Status                      *EnvironmentSeedReadinessResultStatus `json:"status,omitempty"`
-	TransferReportDigest        *string                               `json:"transferReportDigest,omitempty"`
-	TransferRunId               *string                               `json:"transferRunId,omitempty"`
+	HasEligibleReplacementAdmin bool                                 `json:"hasEligibleReplacementAdmin"`
+	Status                      EnvironmentSeedReadinessResultStatus `json:"status"`
+	TransferReportDigest        string                               `json:"transferReportDigest"`
+	TransferRunId               string                               `json:"transferRunId"`
 }
 
 // EnvironmentSeedReadinessResultStatus defines model for EnvironmentSeedReadinessResult.Status.
@@ -2527,11 +2727,11 @@ type EnvironmentSeedReadinessResultStatus string
 
 // EnvironmentSeedStateResult defines model for EnvironmentSeedStateResult.
 type EnvironmentSeedStateResult struct {
-	CompletedAt          *time.Time                        `json:"completedAt,omitempty"`
-	Status               *EnvironmentSeedStateResultStatus `json:"status,omitempty"`
-	TransferReportDigest *string                           `json:"transferReportDigest,omitempty"`
-	TransferRunId        *string                           `json:"transferRunId,omitempty"`
-	TransferVerifiedAt   *time.Time                        `json:"transferVerifiedAt,omitempty"`
+	CompletedAt          time.Time                        `json:"completedAt"`
+	Status               EnvironmentSeedStateResultStatus `json:"status"`
+	TransferReportDigest string                           `json:"transferReportDigest"`
+	TransferRunId        string                           `json:"transferRunId"`
+	TransferVerifiedAt   time.Time                        `json:"transferVerifiedAt"`
 }
 
 // EnvironmentSeedStateResultStatus defines model for EnvironmentSeedStateResult.Status.
@@ -2545,26 +2745,26 @@ type EnvironmentSettingsForm struct {
 
 // EnvironmentSettingsResult defines model for EnvironmentSettingsResult.
 type EnvironmentSettingsResult struct {
-	Enabled *bool   `json:"enabled,omitempty"`
-	Name    *string `json:"name,omitempty"`
+	Enabled bool    `json:"enabled"`
+	Name    *string `json:"name"`
 }
 
 // ExcerptIncludeData defines model for ExcerptIncludeData.
 type ExcerptIncludeData struct {
-	Content   *string    `json:"content,omitempty"`
-	Error     *string    `json:"error,omitempty"`
-	Id        *int64     `json:"id,omitempty"`
-	MacroData *MacroData `json:"macroData,omitempty"`
-	Name      *string    `json:"name,omitempty"`
+	Content   *string   `json:"content"`
+	Error     *string   `json:"error"`
+	Id        int64     `json:"id"`
+	MacroData MacroData `json:"macroData"`
+	Name      string    `json:"name"`
 }
 
 // ExpandError defines model for ExpandError.
 type ExpandError struct {
 	// Code Known values: INTEGRATION_DISABLED, JIRA_UNAVAILABLE, FORBIDDEN, EXPAND_ERROR. Consumers must tolerate unknown values.
-	Code      *string `json:"code,omitempty"`
-	Fallback  *string `json:"fallback,omitempty"`
-	Message   *string `json:"message,omitempty"`
-	Retryable *bool   `json:"retryable,omitempty"`
+	Code      string  `json:"code"`
+	Fallback  *string `json:"fallback"`
+	Message   string  `json:"message"`
+	Retryable bool    `json:"retryable"`
 }
 
 // ExternalUserForm defines model for ExternalUserForm.
@@ -2575,64 +2775,64 @@ type ExternalUserForm struct {
 
 // FileAttachmentData defines model for FileAttachmentData.
 type FileAttachmentData struct {
-	ContentType *string `json:"contentType,omitempty"`
-	Filename    *string `json:"filename,omitempty"`
-	Height      *int32  `json:"height,omitempty"`
-	Id          *int64  `json:"id,omitempty"`
-	Size        *int64  `json:"size,omitempty"`
-	Url         *string `json:"url,omitempty"`
-	Width       *int32  `json:"width,omitempty"`
+	ContentType string `json:"contentType"`
+	Filename    string `json:"filename"`
+	Height      *int32 `json:"height"`
+	Id          int64  `json:"id"`
+	Size        int64  `json:"size"`
+	Url         string `json:"url"`
+	Width       *int32 `json:"width"`
 }
 
 // FileAttachmentResult defines model for FileAttachmentResult.
 type FileAttachmentResult struct {
-	ContentHash *string    `json:"contentHash,omitempty"`
-	ContentType *string    `json:"contentType,omitempty"`
-	Created     *time.Time `json:"created,omitempty"`
-	Filename    *string    `json:"filename,omitempty"`
-	Height      *int32     `json:"height,omitempty"`
-	Id          *int64     `json:"id,omitempty"`
-	Size        *int64     `json:"size,omitempty"`
-	Url         *string    `json:"url,omitempty"`
-	Version     *int64     `json:"version,omitempty"`
-	Width       *int32     `json:"width,omitempty"`
+	ContentHash *string   `json:"contentHash"`
+	ContentType string    `json:"contentType"`
+	Created     time.Time `json:"created"`
+	Filename    string    `json:"filename"`
+	Height      *int32    `json:"height"`
+	Id          int64     `json:"id"`
+	Size        int64     `json:"size"`
+	Url         string    `json:"url"`
+	Version     int64     `json:"version"`
+	Width       *int32    `json:"width"`
 }
 
 // GoogleLoginStatusResult defines model for GoogleLoginStatusResult.
 type GoogleLoginStatusResult struct {
-	CredentialsConfigured *bool `json:"credentialsConfigured,omitempty"`
-	Enabled               *bool `json:"enabled,omitempty"`
+	CredentialsConfigured bool `json:"credentialsConfigured"`
+	Enabled               bool `json:"enabled"`
 }
 
 // ImageData defines model for ImageData.
 type ImageData struct {
-	Filename *string `json:"filename,omitempty"`
-	Id       *int64  `json:"id,omitempty"`
-	Url      *string `json:"url,omitempty"`
+	Filename string `json:"filename"`
+	Id       int64  `json:"id"`
+	Url      string `json:"url"`
 }
 
 // ImageResult defines model for ImageResult.
 type ImageResult struct {
 	// ContentHash SHA-256 content hash of the image file. Use this as a stable cache key or ETag surrogate: if contentHash matches your cached copy, the file bytes are identical and a re-download can be skipped.
-	ContentHash *string    `json:"contentHash,omitempty"`
-	ContentType *string    `json:"contentType,omitempty"`
-	Created     *time.Time `json:"created,omitempty"`
-	Filename    *string    `json:"filename,omitempty"`
-	Height      *int32     `json:"height,omitempty"`
-	Id          *int64     `json:"id,omitempty"`
-	Size        *int64     `json:"size,omitempty"`
-	Url         *string    `json:"url,omitempty"`
-	Version     *int64     `json:"version,omitempty"`
-	Width       *int32     `json:"width,omitempty"`
+	ContentHash *string   `json:"contentHash"`
+	ContentType string    `json:"contentType"`
+	Created     time.Time `json:"created"`
+	Filename    string    `json:"filename"`
+	Height      *int32    `json:"height"`
+	Id          int64     `json:"id"`
+	Size        int64     `json:"size"`
+	Url         string    `json:"url"`
+	Version     int64     `json:"version"`
+	Width       *int32    `json:"width"`
 }
 
 // IncludePageData defines model for IncludePageData.
 type IncludePageData struct {
-	Content   *string    `json:"content,omitempty"`
-	Error     *string    `json:"error,omitempty"`
-	Id        *int64     `json:"id,omitempty"`
-	MacroData *MacroData `json:"macroData,omitempty"`
-	Name      *string    `json:"name,omitempty"`
+	Content   *string   `json:"content"`
+	Error     *string   `json:"error"`
+	Id        int64     `json:"id"`
+	MacroData MacroData `json:"macroData"`
+	Name      *string   `json:"name"`
 }
 
 // InternalUserForm defines model for InternalUserForm.
@@ -2655,72 +2855,72 @@ type InternalUserFormWorkflowRole string
 
 // JiraAsset defines model for JiraAsset.
 type JiraAsset struct {
-	Attributes *[]JiraAssetAttribute `json:"attributes,omitempty"`
-	Id         *int64                `json:"id,omitempty"`
-	Label      *string               `json:"label,omitempty"`
-	ObjectKey  *string               `json:"objectKey,omitempty"`
-	ObjectType *string               `json:"objectType,omitempty"`
+	Attributes []JiraAssetAttribute `json:"attributes"`
+	Id         int64                `json:"id"`
+	Label      string               `json:"label"`
+	ObjectKey  string               `json:"objectKey"`
+	ObjectType string               `json:"objectType"`
 }
 
 // JiraAssetAttribute defines model for JiraAssetAttribute.
 type JiraAssetAttribute struct {
-	ConfluencePageLinks *[]ConfluencePageLink `json:"confluencePageLinks,omitempty"`
-	Id                  *int64                `json:"id,omitempty"`
-	Name                *string               `json:"name,omitempty"`
-	ReferencedAssets    *[]ReferencedAsset    `json:"referencedAssets,omitempty"`
-	Values              *[]string             `json:"values,omitempty"`
+	ConfluencePageLinks []ConfluencePageLink `json:"confluencePageLinks"`
+	Id                  int64                `json:"id"`
+	Name                string               `json:"name"`
+	ReferencedAssets    []ReferencedAsset    `json:"referencedAssets"`
+	Values              []string             `json:"values"`
 }
 
 // JiraAssetSearchResult defines model for JiraAssetSearchResult.
 type JiraAssetSearchResult struct {
-	Assets *[]JiraAsset `json:"assets,omitempty"`
-	Total  *int32       `json:"total,omitempty"`
+	Assets []JiraAsset `json:"assets"`
+	Total  int32       `json:"total"`
 }
 
 // JiraAssetsMacroData defines model for JiraAssetsMacroData.
 type JiraAssetsMacroData struct {
-	Assets       *[]JiraAsset `json:"assets,omitempty"`
-	ColumnNames  *[]string    `json:"columnNames,omitempty"`
-	ErrorMessage *string      `json:"errorMessage,omitempty"`
-	ObjectType   *string      `json:"objectType,omitempty"`
-	TotalCount   *int32       `json:"totalCount,omitempty"`
+	Assets       []JiraAsset `json:"assets"`
+	ColumnNames  []string    `json:"columnNames"`
+	ErrorMessage *string     `json:"errorMessage"`
+	ObjectType   *string     `json:"objectType"`
+	TotalCount   int32       `json:"totalCount"`
 }
 
 // JiraIssue defines model for JiraIssue.
 type JiraIssue struct {
-	Fields  *map[string]JiraIssueField `json:"fields,omitempty"`
-	Key     *string                    `json:"key,omitempty"`
-	Status  *JiraIssueStatus           `json:"status,omitempty"`
-	Summary *string                    `json:"summary,omitempty"`
+	Fields  map[string]JiraIssueField `json:"fields"`
+	Key     string                    `json:"key"`
+	Status  JiraIssueStatus           `json:"status"`
+	Summary *string                   `json:"summary"`
 }
 
 // JiraIssueField defines model for JiraIssueField.
 type JiraIssueField struct {
-	DisplayName *string `json:"displayName,omitempty"`
-	FieldId     *string `json:"fieldId,omitempty"`
-	Value       *string `json:"value,omitempty"`
+	DisplayName string  `json:"displayName"`
+	FieldId     string  `json:"fieldId"`
+	Value       *string `json:"value"`
 }
 
 // JiraIssueStatus defines model for JiraIssueStatus.
 type JiraIssueStatus struct {
-	Category *string `json:"category,omitempty"`
-	Name     *string `json:"name,omitempty"`
+	Category string `json:"category"`
+	Name     string `json:"name"`
 }
 
 // JiraIssuesMacroData defines model for JiraIssuesMacroData.
 type JiraIssuesMacroData struct {
-	FieldNames *map[string]string `json:"fieldNames,omitempty"`
-	Issues     *[]JiraIssue       `json:"issues,omitempty"`
-	TotalCount *int32             `json:"totalCount,omitempty"`
+	FieldNames map[string]string `json:"fieldNames"`
+	Issues     []JiraIssue       `json:"issues"`
+	TotalCount int32             `json:"totalCount"`
 }
 
 // JiraMacroDataResult defines model for JiraMacroDataResult.
 type JiraMacroDataResult struct {
-	JiraAssets            *map[string]JiraAssetsMacroData `json:"jiraAssets,omitempty"`
-	JiraAssetsByKey       *map[string]JiraAsset           `json:"jiraAssetsByKey,omitempty"`
-	JiraIssues            *map[string]JiraIssuesMacroData `json:"jiraIssues,omitempty"`
-	JiraIssuesByKey       *map[string]JiraIssue           `json:"jiraIssuesByKey,omitempty"`
-	PropertyJiraMacroData *map[string]JiraMacroDataResult `json:"propertyJiraMacroData,omitempty"`
+	JiraAssets            map[string]JiraAssetsMacroData `json:"jiraAssets"`
+	JiraAssetsByKey       map[string]JiraAsset           `json:"jiraAssetsByKey"`
+	JiraIssues            map[string]JiraIssuesMacroData `json:"jiraIssues"`
+	JiraIssuesByKey       map[string]JiraIssue           `json:"jiraIssuesByKey"`
+	PropertyJiraMacroData map[string]JiraMacroDataResult `json:"propertyJiraMacroData"`
 }
 
 // LandingSettingsForm defines model for LandingSettingsForm.
@@ -2731,18 +2931,18 @@ type LandingSettingsForm struct {
 
 // LandingSettingsResult defines model for LandingSettingsResult.
 type LandingSettingsResult struct {
-	Active    *bool      `json:"active,omitempty"`
-	Content   *string    `json:"content,omitempty"`
-	MacroData *MacroData `json:"macroData,omitempty"`
+	Active    bool      `json:"active"`
+	Content   *string   `json:"content"`
+	MacroData MacroData `json:"macroData"`
 }
 
 // MacroAttributeDocResult defines model for MacroAttributeDocResult.
 type MacroAttributeDocResult struct {
-	Def      *string `json:"def,omitempty"`
-	Doc      *string `json:"doc,omitempty"`
-	Name     *string `json:"name,omitempty"`
-	Required *bool   `json:"required,omitempty"`
-	Type     *string `json:"type,omitempty"`
+	Def      *string `json:"def"`
+	Doc      string  `json:"doc"`
+	Name     string  `json:"name"`
+	Required bool    `json:"required"`
+	Type     string  `json:"type"`
 }
 
 // MacroAttributeSchema defines model for MacroAttributeSchema.
@@ -2750,7 +2950,7 @@ type MacroAttributeSchema struct {
 	Max      *int32                    `json:"max,omitempty"`
 	Min      *int32                    `json:"min,omitempty"`
 	Name     *string                   `json:"name,omitempty"`
-	Required *bool                     `json:"required,omitempty"`
+	Required bool                      `json:"required"`
 	Type     *MacroAttributeSchemaType `json:"type,omitempty"`
 }
 
@@ -2759,61 +2959,61 @@ type MacroAttributeSchemaType string
 
 // MacroData defines model for MacroData.
 type MacroData struct {
-	ChildrenInstances *map[string]ChildrenInstanceData   `json:"childrenInstances,omitempty"`
-	Enums             *map[string]EnumMacroData          `json:"enums,omitempty"`
-	ExcerptIncludes   *map[string]ExcerptIncludeData     `json:"excerptIncludes,omitempty"`
-	FileAttachments   *map[string]FileAttachmentData     `json:"fileAttachments,omitempty"`
-	Images            *map[string]ImageData              `json:"images,omitempty"`
-	IncludePages      *map[string]IncludePageData        `json:"includePages,omitempty"`
-	JiraAssets        *map[string]JiraAssetsMacroData    `json:"jiraAssets,omitempty"`
-	JiraAssetsByKey   *map[string]JiraAsset              `json:"jiraAssetsByKey,omitempty"`
-	JiraIssues        *map[string]JiraIssuesMacroData    `json:"jiraIssues,omitempty"`
-	JiraIssuesByKey   *map[string]JiraIssue              `json:"jiraIssuesByKey,omitempty"`
-	PageSelector      *map[string]PageSelectorMacroData  `json:"pageSelector,omitempty"`
-	PageTasks         *map[string]PageTasksMacroData     `json:"pageTasks,omitempty"`
-	PageWorkItems     *map[string][]PageWorkItemResult   `json:"pageWorkItems,omitempty"`
-	Pagelinks         *map[string]PageLinkData           `json:"pagelinks,omitempty"`
-	ProgressRings     *map[string]ProgressRingMacroData  `json:"progressRings,omitempty"`
-	PropertyChains    *map[string]PropertyChainMacroData `json:"propertyChains,omitempty"`
+	ChildrenInstances map[string]ChildrenInstanceData   `json:"childrenInstances"`
+	Enums             map[string]EnumMacroData          `json:"enums"`
+	ExcerptIncludes   map[string]ExcerptIncludeData     `json:"excerptIncludes"`
+	FileAttachments   map[string]FileAttachmentData     `json:"fileAttachments"`
+	Images            map[string]ImageData              `json:"images"`
+	IncludePages      map[string]IncludePageData        `json:"includePages"`
+	JiraAssets        map[string]JiraAssetsMacroData    `json:"jiraAssets"`
+	JiraAssetsByKey   map[string]JiraAsset              `json:"jiraAssetsByKey"`
+	JiraIssues        map[string]JiraIssuesMacroData    `json:"jiraIssues"`
+	JiraIssuesByKey   map[string]JiraIssue              `json:"jiraIssuesByKey"`
+	PageSelector      map[string]PageSelectorMacroData  `json:"pageSelector"`
+	PageTasks         map[string]PageTasksMacroData     `json:"pageTasks"`
+	PageWorkItems     map[string][]PageWorkItemResult   `json:"pageWorkItems"`
+	Pagelinks         map[string]PageLinkData           `json:"pagelinks"`
+	ProgressRings     map[string]ProgressRingMacroData  `json:"progressRings"`
+	PropertyChains    map[string]PropertyChainMacroData `json:"propertyChains"`
 }
 
 // MacroDocResult defines model for MacroDocResult.
 type MacroDocResult struct {
-	Attributes    *[]MacroAttributeDocResult `json:"attributes,omitempty"`
-	DirectiveName *string                    `json:"directiveName,omitempty"`
-	Examples      *[]string                  `json:"examples,omitempty"`
-	Form          *string                    `json:"form,omitempty"`
-	Module        *string                    `json:"module,omitempty"`
-	Summary       *string                    `json:"summary,omitempty"`
+	Attributes    []MacroAttributeDocResult `json:"attributes"`
+	DirectiveName string                    `json:"directiveName"`
+	Examples      []string                  `json:"examples"`
+	Form          string                    `json:"form"`
+	Module        string                    `json:"module"`
+	Summary       string                    `json:"summary"`
 }
 
 // MacroScanPageResult defines model for MacroScanPageResult.
 type MacroScanPageResult struct {
-	Count  *int32  `json:"count,omitempty"`
-	Name   *string `json:"name,omitempty"`
-	PageId *int64  `json:"pageId,omitempty"`
+	Count  int32  `json:"count"`
+	Name   string `json:"name"`
+	PageId int64  `json:"pageId"`
 }
 
 // MacroScanRestrictedSummary defines model for MacroScanRestrictedSummary.
 type MacroScanRestrictedSummary struct {
-	MacroCount *int32 `json:"macroCount,omitempty"`
-	PageCount  *int32 `json:"pageCount,omitempty"`
+	MacroCount int32 `json:"macroCount"`
+	PageCount  int32 `json:"pageCount"`
 }
 
 // MacroScanResult defines model for MacroScanResult.
 type MacroScanResult struct {
-	Accessible *[]MacroScanPageResult      `json:"accessible,omitempty"`
-	Restricted *MacroScanRestrictedSummary `json:"restricted,omitempty"`
+	Accessible []MacroScanPageResult      `json:"accessible"`
+	Restricted MacroScanRestrictedSummary `json:"restricted"`
 }
 
 // MandatoryMergeResult defines model for MandatoryMergeResult.
 type MandatoryMergeResult struct {
-	Compatible             *bool   `json:"compatible,omitempty"`
-	DescriptorName         *string `json:"descriptorName,omitempty"`
-	FromType               *string `json:"fromType,omitempty"`
-	RevisionValuesAffected *int32  `json:"revisionValuesAffected,omitempty"`
-	ToType                 *string `json:"toType,omitempty"`
-	ValuesAffected         *int32  `json:"valuesAffected,omitempty"`
+	Compatible             bool   `json:"compatible"`
+	DescriptorName         string `json:"descriptorName"`
+	FromType               string `json:"fromType"`
+	RevisionValuesAffected int32  `json:"revisionValuesAffected"`
+	ToType                 string `json:"toType"`
+	ValuesAffected         int32  `json:"valuesAffected"`
 }
 
 // MoveImpactSnapshotForm defines model for MoveImpactSnapshotForm.
@@ -2823,17 +3023,17 @@ type MoveImpactSnapshotForm struct {
 
 // NewDescriptorResult defines model for NewDescriptorResult.
 type NewDescriptorResult struct {
-	Name   *string `json:"name,omitempty"`
-	Source *string `json:"source,omitempty"`
-	Type   *string `json:"type,omitempty"`
+	Name   string `json:"name"`
+	Source string `json:"source"`
+	Type   string `json:"type"`
 }
 
 // OrphanedPlacementResult defines model for OrphanedPlacementResult.
 type OrphanedPlacementResult struct {
-	AnchorDescriptorName            *string `json:"anchorDescriptorName,omitempty"`
-	DescriptorName                  *string `json:"descriptorName,omitempty"`
-	PositionFallsBackToOwnBlockTail *bool   `json:"positionFallsBackToOwnBlockTail,omitempty"`
-	SubtypeName                     *string `json:"subtypeName,omitempty"`
+	AnchorDescriptorName            string `json:"anchorDescriptorName"`
+	DescriptorName                  string `json:"descriptorName"`
+	PositionFallsBackToOwnBlockTail bool   `json:"positionFallsBackToOwnBlockTail"`
+	SubtypeName                     string `json:"subtypeName"`
 }
 
 // PageArchivedWithBreadcrumbResult defines model for PageArchivedWithBreadcrumbResult.
@@ -2874,13 +3074,15 @@ type PageEditForm struct {
 
 	// PropertyValues When null or omitted, existing property values are kept. An empty list is a no-op. A non-empty list upserts the given descriptors by propertyDescriptorId; omitted descriptors stay unchanged. Removal is only via PATCH unsetPropertyDescriptorIds.
 	PropertyValues *[]PropertyValueEditForm `json:"propertyValues,omitempty"`
-	Version        *int64                   `json:"version,omitempty"`
+
+	// Version Required optimistic-lock token. Send the lockVersion read from the page tree or page detail unchanged. Missing yields 428 UPDATE_PRECONDITION_REQUIRED; a stale value yields 409 CONCURRENT_UPDATE. A token read before another save or a workflow transition is stale; read the page again instead of reusing it.
+	Version int64 `json:"version"`
 }
 
 // PageEntry defines model for PageEntry.
 type PageEntry struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
 }
 
 // PageFileAttachmentResult defines model for PageFileAttachmentResult.
@@ -2900,21 +3102,24 @@ type PageFileAttachmentResult struct {
 
 // PageLinkData defines model for PageLinkData.
 type PageLinkData struct {
-	Id    *int64  `json:"id,omitempty"`
-	Slug  *string `json:"slug,omitempty"`
-	State *string `json:"state,omitempty"`
-	Title *string `json:"title,omitempty"`
+	Id    int64             `json:"id"`
+	Slug  string            `json:"slug"`
+	State PageLinkDataState `json:"state"`
+	Title string            `json:"title"`
 }
+
+// PageLinkDataState defines model for PageLinkData.State.
+type PageLinkDataState string
 
 // PageListResult defines model for PageListResult.
 type PageListResult struct {
-	HasChildren                *bool   `json:"hasChildren,omitempty"`
-	Id                         *int64  `json:"id,omitempty"`
-	Name                       *string `json:"name,omitempty"`
-	PageTypeId                 *int64  `json:"pageTypeId,omitempty"`
-	PageTypeName               *string `json:"pageTypeName,omitempty"`
-	PageTypeSortableChildPages *bool   `json:"pageTypeSortableChildPages,omitempty"`
-	ParentId                   *int64  `json:"parentId,omitempty"`
+	HasChildren                bool   `json:"hasChildren"`
+	Id                         int64  `json:"id"`
+	Name                       string `json:"name"`
+	PageTypeId                 int64  `json:"pageTypeId"`
+	PageTypeName               string `json:"pageTypeName"`
+	PageTypeSortableChildPages bool   `json:"pageTypeSortableChildPages"`
+	ParentId                   *int64 `json:"parentId"`
 }
 
 // PageMoveForm defines model for PageMoveForm.
@@ -2959,7 +3164,9 @@ type PagePatchForm struct {
 	Name                       *string                  `json:"name,omitempty"`
 	PropertyValues             *[]PropertyValueEditForm `json:"propertyValues,omitempty"`
 	UnsetPropertyDescriptorIds *[]int64                 `json:"unsetPropertyDescriptorIds,omitempty"`
-	Version                    *int64                   `json:"version,omitempty"`
+
+	// Version Required optimistic-lock token. Send the lockVersion read from the page tree or page detail unchanged. Missing yields 428 UPDATE_PRECONDITION_REQUIRED; a stale value yields 409 CONCURRENT_UPDATE. A token read before another save or a workflow transition is stale; read the page again instead of reusing it.
+	Version int64 `json:"version"`
 }
 
 // PagePublicAuditLogResult defines model for PagePublicAuditLogResult.
@@ -2979,14 +3186,14 @@ type PagePublicAuditLogResult struct {
 
 // PageReference defines model for PageReference.
 type PageReference struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
 }
 
 // PageReferenceResult defines model for PageReferenceResult.
 type PageReferenceResult struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
 }
 
 // PageReleaseNoteSummaryResult defines model for PageReleaseNoteSummaryResult.
@@ -3015,9 +3222,9 @@ type PageRestrictionAccessFormAccessLevel string
 
 // PageRestrictionAccessResult defines model for PageRestrictionAccessResult.
 type PageRestrictionAccessResult struct {
-	AccessLevel *PageRestrictionAccessResultAccessLevel `json:"accessLevel,omitempty"`
-	Id          *int64                                  `json:"id,omitempty"`
-	User        UserResult                              `json:"user"`
+	AccessLevel PageRestrictionAccessResultAccessLevel `json:"accessLevel"`
+	Id          int64                                  `json:"id"`
+	User        UserResult                             `json:"user"`
 }
 
 // PageRestrictionAccessResultAccessLevel defines model for PageRestrictionAccessResult.AccessLevel.
@@ -3025,11 +3232,11 @@ type PageRestrictionAccessResultAccessLevel string
 
 // PageRestrictionDetailResult defines model for PageRestrictionDetailResult.
 type PageRestrictionDetailResult struct {
-	CanManage              *bool                        `json:"canManage,omitempty"`
-	EligibleUsers          *[]EligibleUserResult        `json:"eligibleUsers,omitempty"`
-	HasAncestorRestriction *bool                        `json:"hasAncestorRestriction,omitempty"`
-	Hierarchy              *[]RestrictionHierarchyEntry `json:"hierarchy,omitempty"`
-	Restriction            *PageRestrictionResult       `json:"restriction,omitempty"`
+	CanManage              bool                        `json:"canManage"`
+	EligibleUsers          []EligibleUserResult        `json:"eligibleUsers"`
+	HasAncestorRestriction bool                        `json:"hasAncestorRestriction"`
+	Hierarchy              []RestrictionHierarchyEntry `json:"hierarchy"`
+	Restriction            PageRestrictionResult       `json:"restriction"`
 }
 
 // PageRestrictionGroupAccessForm defines model for PageRestrictionGroupAccessForm.
@@ -3043,10 +3250,10 @@ type PageRestrictionGroupAccessFormAccessLevel string
 
 // PageRestrictionGroupAccessResult defines model for PageRestrictionGroupAccessResult.
 type PageRestrictionGroupAccessResult struct {
-	AccessLevel *PageRestrictionGroupAccessResultAccessLevel `json:"accessLevel,omitempty"`
-	GroupId     *int64                                       `json:"groupId,omitempty"`
-	GroupName   *string                                      `json:"groupName,omitempty"`
-	Id          *int64                                       `json:"id,omitempty"`
+	AccessLevel PageRestrictionGroupAccessResultAccessLevel `json:"accessLevel"`
+	GroupId     int64                                       `json:"groupId"`
+	GroupName   string                                      `json:"groupName"`
+	Id          int64                                       `json:"id"`
 }
 
 // PageRestrictionGroupAccessResultAccessLevel defines model for PageRestrictionGroupAccessResult.AccessLevel.
@@ -3054,66 +3261,72 @@ type PageRestrictionGroupAccessResultAccessLevel string
 
 // PageRestrictionResult defines model for PageRestrictionResult.
 type PageRestrictionResult struct {
-	AccessEntries       *[]PageRestrictionAccessResult      `json:"accessEntries,omitempty"`
-	GroupAccessEntries  *[]PageRestrictionGroupAccessResult `json:"groupAccessEntries,omitempty"`
-	Id                  *int64                              `json:"id,omitempty"`
-	LockedByCurrentUser *bool                               `json:"lockedByCurrentUser,omitempty"`
-	LockedByUser        *UserResult                         `json:"lockedByUser,omitempty"`
-	PageId              *int64                              `json:"pageId,omitempty"`
-	PageName            *string                             `json:"pageName,omitempty"`
+	AccessEntries       []PageRestrictionAccessResult      `json:"accessEntries"`
+	GroupAccessEntries  []PageRestrictionGroupAccessResult `json:"groupAccessEntries"`
+	Id                  int64                              `json:"id"`
+	LockedByCurrentUser bool                               `json:"lockedByCurrentUser"`
+	LockedByUser        UserResult                         `json:"lockedByUser"`
+	PageId              int64                              `json:"pageId"`
+	PageName            string                             `json:"pageName"`
 }
 
 // PageResult defines model for PageResult.
 type PageResult struct {
-	AvailablePropertyDescriptors         *[]PropertyDescriptorResult `json:"availablePropertyDescriptors,omitempty"`
-	Breadcrumbs                          *[]BreadcrumbItemResult     `json:"breadcrumbs,omitempty"`
-	CanDelete                            *bool                       `json:"canDelete,omitempty"`
-	Content                              *string                     `json:"content,omitempty"`
-	CurrentUserAccessLevel               *string                     `json:"currentUserAccessLevel,omitempty"`
-	Diagnostics                          *[]ContentDiagnostic        `json:"diagnostics,omitempty"`
-	EffectiveChildType                   *AllowedChildTypeResult     `json:"effectiveChildType,omitempty"`
-	HasChildren                          *bool                       `json:"hasChildren,omitempty"`
-	HasOwnRestriction                    *bool                       `json:"hasOwnRestriction,omitempty"`
-	HasRestriction                       *bool                       `json:"hasRestriction,omitempty"`
-	Id                                   *int64                      `json:"id,omitempty"`
-	InTrash                              *bool                       `json:"inTrash,omitempty"`
-	LatestVersionAuthorDisplayNames      *[]string                   `json:"latestVersionAuthorDisplayNames,omitempty"`
-	LatestVersionCreatedAt               *string                     `json:"latestVersionCreatedAt,omitempty"`
-	LatestVersionLastEditedAt            *string                     `json:"latestVersionLastEditedAt,omitempty"`
-	LatestVersionLastEditorDisplayName   *string                     `json:"latestVersionLastEditorDisplayName,omitempty"`
-	LatestVersionNumber                  *int64                      `json:"latestVersionNumber,omitempty"`
-	MacroData                            *MacroData                  `json:"macroData,omitempty"`
-	Name                                 *string                     `json:"name,omitempty"`
-	PageType                             *PageTypeResult             `json:"pageType,omitempty"`
-	ParentId                             *int64                      `json:"parentId,omitempty"`
-	ParentName                           *string                     `json:"parentName,omitempty"`
-	PropertyValues                       *[]PropertyValueResult      `json:"propertyValues,omitempty"`
-	PublishedRevision                    *PageRevisionResult         `json:"publishedRevision,omitempty"`
-	PublishingWorkflowEnabled            *bool                       `json:"publishingWorkflowEnabled,omitempty"`
-	RequiresDiscardConfirmation          *bool                       `json:"requiresDiscardConfirmation,omitempty"`
-	ResolvedAllowedChildTypes            *[]AllowedChildTypeResult   `json:"resolvedAllowedChildTypes,omitempty"`
-	RestrictedByPageId                   *int64                      `json:"restrictedByPageId,omitempty"`
-	Version                              *int64                      `json:"version,omitempty"`
-	WorkflowEnabled                      *bool                       `json:"workflowEnabled,omitempty"`
-	WorkingRevision                      *PageRevisionResult         `json:"workingRevision,omitempty"`
-	WorkingRevisionAuthors               *[]string                   `json:"workingRevisionAuthors,omitempty"`
-	WorkingRevisionLastEditedAt          *string                     `json:"workingRevisionLastEditedAt,omitempty"`
-	WorkingRevisionLastEditorDisplayName *string                     `json:"workingRevisionLastEditorDisplayName,omitempty"`
+	AvailablePropertyDescriptors       []PropertyDescriptorResult        `json:"availablePropertyDescriptors"`
+	Breadcrumbs                        []BreadcrumbItemResult            `json:"breadcrumbs"`
+	CanDelete                          bool                              `json:"canDelete"`
+	Content                            *string                           `json:"content"`
+	CurrentUserAccessLevel             *PageResultCurrentUserAccessLevel `json:"currentUserAccessLevel"`
+	Diagnostics                        *[]ContentDiagnostic              `json:"diagnostics"`
+	EffectiveChildType                 AllowedChildTypeResult            `json:"effectiveChildType"`
+	HasChildren                        bool                              `json:"hasChildren"`
+	HasOwnRestriction                  bool                              `json:"hasOwnRestriction"`
+	HasRestriction                     bool                              `json:"hasRestriction"`
+	Id                                 int64                             `json:"id"`
+	InTrash                            bool                              `json:"inTrash"`
+	LatestVersionAuthorDisplayNames    *[]string                         `json:"latestVersionAuthorDisplayNames"`
+	LatestVersionCreatedAt             *string                           `json:"latestVersionCreatedAt"`
+	LatestVersionLastEditedAt          *string                           `json:"latestVersionLastEditedAt"`
+	LatestVersionLastEditorDisplayName *string                           `json:"latestVersionLastEditorDisplayName"`
+	LatestVersionNumber                *int64                            `json:"latestVersionNumber"`
+
+	// LockVersion Opaque optimistic-lock token for updating this page. Send it unchanged as version in PUT/PATCH. It changes on every save and on every workflow transition (submit, return, approve, publish, start, discard, restore), so a token read before such a change is stale. Null when the current user has no editable target (no editable working revision, or no write access).
+	LockVersion                          *int64                   `json:"lockVersion"`
+	MacroData                            MacroData                `json:"macroData"`
+	Name                                 string                   `json:"name"`
+	PageType                             PageTypeResult           `json:"pageType"`
+	ParentId                             *int64                   `json:"parentId"`
+	ParentName                           *string                  `json:"parentName"`
+	PropertyValues                       []PropertyValueResult    `json:"propertyValues"`
+	PublishedRevision                    PageRevisionResult       `json:"publishedRevision"`
+	PublishingWorkflowEnabled            bool                     `json:"publishingWorkflowEnabled"`
+	RequiresDiscardConfirmation          bool                     `json:"requiresDiscardConfirmation"`
+	ResolvedAllowedChildTypes            []AllowedChildTypeResult `json:"resolvedAllowedChildTypes"`
+	RestrictedByPageId                   *int64                   `json:"restrictedByPageId"`
+	Version                              int64                    `json:"version"`
+	WorkflowEnabled                      bool                     `json:"workflowEnabled"`
+	WorkingRevision                      PageRevisionResult       `json:"workingRevision"`
+	WorkingRevisionAuthors               *[]string                `json:"workingRevisionAuthors"`
+	WorkingRevisionLastEditedAt          *string                  `json:"workingRevisionLastEditedAt"`
+	WorkingRevisionLastEditorDisplayName *string                  `json:"workingRevisionLastEditorDisplayName"`
 }
+
+// PageResultCurrentUserAccessLevel defines model for PageResult.CurrentUserAccessLevel.
+type PageResultCurrentUserAccessLevel string
 
 // PageRevisionResult defines model for PageRevisionResult.
 type PageRevisionResult struct {
-	AuthorDisplayNames *[]string                 `json:"authorDisplayNames,omitempty"`
-	Content            *string                   `json:"content,omitempty"`
-	Created            *string                   `json:"created,omitempty"`
-	Id                 *int64                    `json:"id,omitempty"`
-	MacroData          *MacroData                `json:"macroData,omitempty"`
-	Name               *string                   `json:"name,omitempty"`
-	PropertyValues     *[]PropertyValueResult    `json:"propertyValues,omitempty"`
-	RevisionNumber     *int32                    `json:"revisionNumber,omitempty"`
-	Status             *PageRevisionResultStatus `json:"status,omitempty"`
-	Updated            *string                   `json:"updated,omitempty"`
-	Version            *int64                    `json:"version,omitempty"`
+	AuthorDisplayNames []string                 `json:"authorDisplayNames"`
+	Content            *string                  `json:"content"`
+	Created            string                   `json:"created"`
+	Id                 int64                    `json:"id"`
+	MacroData          MacroData                `json:"macroData"`
+	Name               string                   `json:"name"`
+	PropertyValues     []PropertyValueResult    `json:"propertyValues"`
+	RevisionNumber     int32                    `json:"revisionNumber"`
+	Status             PageRevisionResultStatus `json:"status"`
+	Updated            string                   `json:"updated"`
+	Version            int64                    `json:"version"`
 }
 
 // PageRevisionResultStatus defines model for PageRevisionResult.Status.
@@ -3121,22 +3334,22 @@ type PageRevisionResultStatus string
 
 // PageSearchResult defines model for PageSearchResult.
 type PageSearchResult struct {
-	Id           *int64  `json:"id,omitempty"`
-	Name         *string `json:"name,omitempty"`
-	PageTypeName *string `json:"pageTypeName,omitempty"`
+	Id           int64   `json:"id"`
+	Name         string  `json:"name"`
+	PageTypeName *string `json:"pageTypeName"`
 }
 
 // PageSelectorMacroData defines model for PageSelectorMacroData.
 type PageSelectorMacroData struct {
-	DisplayColumns            *[]DisplayColumnResult `json:"displayColumns,omitempty"`
-	FilterError               *string                `json:"filterError,omitempty"`
-	NameColumnWidthPercentage *int32                 `json:"nameColumnWidthPercentage,omitempty"`
-	PageReferences            *[]PageReference       `json:"pageReferences,omitempty"`
+	DisplayColumns            []DisplayColumnResult `json:"displayColumns"`
+	FilterError               *string               `json:"filterError"`
+	NameColumnWidthPercentage *int32                `json:"nameColumnWidthPercentage"`
+	PageReferences            []PageReference       `json:"pageReferences"`
 }
 
 // PageTasksMacroData defines model for PageTasksMacroData.
 type PageTasksMacroData struct {
-	Items *[]PageWorkItemResult `json:"items,omitempty"`
+	Items []PageWorkItemResult `json:"items"`
 }
 
 // PageTrashWithBreadcrumbResult defines model for PageTrashWithBreadcrumbResult.
@@ -3156,17 +3369,20 @@ type PageTrashWithBreadcrumbResult struct {
 
 // PageTreeNodeResult defines model for PageTreeNodeResult.
 type PageTreeNodeResult struct {
-	Children              *[]PageTreeNodeResult                    `json:"children,omitempty"`
-	HasOwnRestriction     *bool                                    `json:"hasOwnRestriction,omitempty"`
-	HasPublishedVersion   *bool                                    `json:"hasPublishedVersion,omitempty"`
-	HasRestriction        *bool                                    `json:"hasRestriction,omitempty"`
-	HasWorkingRevision    *bool                                    `json:"hasWorkingRevision,omitempty"`
-	Id                    *int64                                   `json:"id,omitempty"`
-	InTrash               *bool                                    `json:"inTrash,omitempty"`
-	Name                  *string                                  `json:"name,omitempty"`
-	SortableChildPages    *bool                                    `json:"sortableChildPages,omitempty"`
-	WorkflowEnabled       *bool                                    `json:"workflowEnabled,omitempty"`
-	WorkingRevisionStatus *PageTreeNodeResultWorkingRevisionStatus `json:"workingRevisionStatus,omitempty"`
+	Children            []PageTreeNodeResult `json:"children"`
+	HasOwnRestriction   bool                 `json:"hasOwnRestriction"`
+	HasPublishedVersion bool                 `json:"hasPublishedVersion"`
+	HasRestriction      bool                 `json:"hasRestriction"`
+	HasWorkingRevision  bool                 `json:"hasWorkingRevision"`
+	Id                  int64                `json:"id"`
+	InTrash             bool                 `json:"inTrash"`
+
+	// LockVersion Opaque optimistic-lock token for updating this page. Send it unchanged as version in PUT/PATCH. It changes on every save and on every workflow transition (submit, return, approve, publish, start, discard, restore), so a token read before such a change is stale. Null when the current user has no editable target (no editable working revision, or no write access).
+	LockVersion           *int64                                   `json:"lockVersion"`
+	Name                  string                                   `json:"name"`
+	SortableChildPages    bool                                     `json:"sortableChildPages"`
+	WorkflowEnabled       bool                                     `json:"workflowEnabled"`
+	WorkingRevisionStatus *PageTreeNodeResultWorkingRevisionStatus `json:"workingRevisionStatus"`
 }
 
 // PageTreeNodeResultWorkingRevisionStatus defines model for PageTreeNodeResult.WorkingRevisionStatus.
@@ -3193,15 +3409,15 @@ type PageTypeFormChildTypeMode string
 
 // PageTypeListResult defines model for PageTypeListResult.
 type PageTypeListResult struct {
-	AbstractType              *bool   `json:"abstractType,omitempty"`
-	Id                        *int64  `json:"id,omitempty"`
-	Name                      *string `json:"name,omitempty"`
-	ParentId                  *int64  `json:"parentId,omitempty"`
-	ParentName                *string `json:"parentName,omitempty"`
-	PublishingWorkflowEnabled *bool   `json:"publishingWorkflowEnabled,omitempty"`
-	SortableChildPages        *bool   `json:"sortableChildPages,omitempty"`
-	TemplateContent           *string `json:"templateContent,omitempty"`
-	TitleTemplate             *string `json:"titleTemplate,omitempty"`
+	AbstractType              bool    `json:"abstractType"`
+	Id                        int64   `json:"id"`
+	Name                      string  `json:"name"`
+	ParentId                  *int64  `json:"parentId"`
+	ParentName                *string `json:"parentName"`
+	PublishingWorkflowEnabled bool    `json:"publishingWorkflowEnabled"`
+	SortableChildPages        bool    `json:"sortableChildPages"`
+	TemplateContent           *string `json:"templateContent"`
+	TitleTemplate             *string `json:"titleTemplate"`
 }
 
 // PageTypeMoveForm defines model for PageTypeMoveForm.
@@ -3217,20 +3433,20 @@ type PageTypeMoveFormPropertyDecisions string
 
 // PageTypeMoveImpactResult defines model for PageTypeMoveImpactResult.
 type PageTypeMoveImpactResult struct {
-	AffectedPagesCount         *int32                                     `json:"affectedPagesCount,omitempty"`
-	AtRiskDescriptors          *[]AtRiskDescriptorResult                  `json:"atRiskDescriptors,omitempty"`
-	BrokenChains               *[]ChainBreakResult                        `json:"brokenChains,omitempty"`
-	DraftsBecomingPublic       *[]DraftPageResult                         `json:"draftsBecomingPublic,omitempty"`
-	MandatoryMerges            *[]MandatoryMergeResult                    `json:"mandatoryMerges,omitempty"`
-	NewlyInheritedDescriptors  *[]NewDescriptorResult                     `json:"newlyInheritedDescriptors,omitempty"`
-	OrphanedPlacements         *[]OrphanedPlacementResult                 `json:"orphanedPlacements,omitempty"`
-	PagesWithMultipleRevisions *int32                                     `json:"pagesWithMultipleRevisions,omitempty"`
-	PublishedPagesGoingToDraft *int32                                     `json:"publishedPagesGoingToDraft,omitempty"`
-	RevisionsToBeDeleted       *int32                                     `json:"revisionsToBeDeleted,omitempty"`
-	SnapshotKey                *string                                    `json:"snapshotKey,omitempty"`
-	UnchangedDescriptors       *[]UnchangedDescriptorResult               `json:"unchangedDescriptors,omitempty"`
-	WorkflowDirection          *PageTypeMoveImpactResultWorkflowDirection `json:"workflowDirection,omitempty"`
-	WorkflowFlippedPages       *int32                                     `json:"workflowFlippedPages,omitempty"`
+	AffectedPagesCount         int32                                     `json:"affectedPagesCount"`
+	AtRiskDescriptors          []AtRiskDescriptorResult                  `json:"atRiskDescriptors"`
+	BrokenChains               []ChainBreakResult                        `json:"brokenChains"`
+	DraftsBecomingPublic       []DraftPageResult                         `json:"draftsBecomingPublic"`
+	MandatoryMerges            []MandatoryMergeResult                    `json:"mandatoryMerges"`
+	NewlyInheritedDescriptors  []NewDescriptorResult                     `json:"newlyInheritedDescriptors"`
+	OrphanedPlacements         []OrphanedPlacementResult                 `json:"orphanedPlacements"`
+	PagesWithMultipleRevisions int32                                     `json:"pagesWithMultipleRevisions"`
+	PublishedPagesGoingToDraft int32                                     `json:"publishedPagesGoingToDraft"`
+	RevisionsToBeDeleted       int32                                     `json:"revisionsToBeDeleted"`
+	SnapshotKey                string                                    `json:"snapshotKey"`
+	UnchangedDescriptors       []UnchangedDescriptorResult               `json:"unchangedDescriptors"`
+	WorkflowDirection          PageTypeMoveImpactResultWorkflowDirection `json:"workflowDirection"`
+	WorkflowFlippedPages       int32                                     `json:"workflowFlippedPages"`
 }
 
 // PageTypeMoveImpactResultWorkflowDirection defines model for PageTypeMoveImpactResult.WorkflowDirection.
@@ -3243,23 +3459,23 @@ type PageTypeMovePreviewRequest struct {
 
 // PageTypeResult defines model for PageTypeResult.
 type PageTypeResult struct {
-	AbstractType                    *bool                        `json:"abstractType,omitempty"`
-	AllowedChildTypes               *[]AllowedChildTypeResult    `json:"allowedChildTypes,omitempty"`
-	Breadcrumbs                     *[]BreadcrumbItemResult      `json:"breadcrumbs,omitempty"`
-	ChildTypeMode                   *PageTypeResultChildTypeMode `json:"childTypeMode,omitempty"`
-	ChildTypePropertyDescriptorId   *int64                       `json:"childTypePropertyDescriptorId,omitempty"`
-	ChildTypePropertyDescriptorName *string                      `json:"childTypePropertyDescriptorName,omitempty"`
-	Diagnostics                     *[]ContentDiagnostic         `json:"diagnostics,omitempty"`
-	Id                              *int64                       `json:"id,omitempty"`
-	Name                            *string                      `json:"name,omitempty"`
-	ParentId                        *int64                       `json:"parentId,omitempty"`
-	ParentName                      *string                      `json:"parentName,omitempty"`
-	PropertyDescriptors             *[]PropertyDescriptorResult  `json:"propertyDescriptors,omitempty"`
-	PublishingWorkflowEnabled       *bool                        `json:"publishingWorkflowEnabled,omitempty"`
-	PublishingWorkflowInherited     *bool                        `json:"publishingWorkflowInherited,omitempty"`
-	SortableChildPages              *bool                        `json:"sortableChildPages,omitempty"`
-	TemplateContent                 *string                      `json:"templateContent,omitempty"`
-	TitleTemplate                   *string                      `json:"titleTemplate,omitempty"`
+	AbstractType                    bool                        `json:"abstractType"`
+	AllowedChildTypes               []AllowedChildTypeResult    `json:"allowedChildTypes"`
+	Breadcrumbs                     []BreadcrumbItemResult      `json:"breadcrumbs"`
+	ChildTypeMode                   PageTypeResultChildTypeMode `json:"childTypeMode"`
+	ChildTypePropertyDescriptorId   *int64                      `json:"childTypePropertyDescriptorId"`
+	ChildTypePropertyDescriptorName *string                     `json:"childTypePropertyDescriptorName"`
+	Diagnostics                     *[]ContentDiagnostic        `json:"diagnostics"`
+	Id                              int64                       `json:"id"`
+	Name                            string                      `json:"name"`
+	ParentId                        *int64                      `json:"parentId"`
+	ParentName                      *string                     `json:"parentName"`
+	PropertyDescriptors             []PropertyDescriptorResult  `json:"propertyDescriptors"`
+	PublishingWorkflowEnabled       bool                        `json:"publishingWorkflowEnabled"`
+	PublishingWorkflowInherited     bool                        `json:"publishingWorkflowInherited"`
+	SortableChildPages              bool                        `json:"sortableChildPages"`
+	TemplateContent                 *string                     `json:"templateContent"`
+	TitleTemplate                   *string                     `json:"titleTemplate"`
 }
 
 // PageTypeResultChildTypeMode defines model for PageTypeResult.ChildTypeMode.
@@ -3267,9 +3483,9 @@ type PageTypeResultChildTypeMode string
 
 // PageTypeUsageResult defines model for PageTypeUsageResult.
 type PageTypeUsageResult struct {
-	InUse     *bool                      `json:"inUse,omitempty"`
-	PageCount *int64                     `json:"pageCount,omitempty"`
-	Reason    *PageTypeUsageResultReason `json:"reason,omitempty"`
+	InUse     bool                       `json:"inUse"`
+	PageCount int64                      `json:"pageCount"`
+	Reason    *PageTypeUsageResultReason `json:"reason"`
 }
 
 // PageTypeUsageResultReason defines model for PageTypeUsageResult.Reason.
@@ -3307,41 +3523,45 @@ type PageUserResult struct {
 
 // PageVersionDetailResult defines model for PageVersionDetailResult.
 type PageVersionDetailResult struct {
-	AuthorDisplayNames         *[]string  `json:"authorDisplayNames,omitempty"`
-	Content                    *string    `json:"content,omitempty"`
-	CreatedAt                  *time.Time `json:"createdAt,omitempty"`
-	Name                       *string    `json:"name,omitempty"`
-	PropertyValuesSnapshot     *string    `json:"propertyValuesSnapshot,omitempty"`
-	RestoredFromRevisionNumber *int32     `json:"restoredFromRevisionNumber,omitempty"`
-	VersionNumber              *int64     `json:"versionNumber,omitempty"`
+	AuthorDisplayNames         []string  `json:"authorDisplayNames"`
+	Content                    string    `json:"content"`
+	CreatedAt                  time.Time `json:"createdAt"`
+	Name                       string    `json:"name"`
+	PropertyValuesSnapshot     string    `json:"propertyValuesSnapshot"`
+	RestoredFromRevisionNumber *int32    `json:"restoredFromRevisionNumber"`
+	VersionNumber              int64     `json:"versionNumber"`
 }
 
 // PageVersionListResult defines model for PageVersionListResult.
 type PageVersionListResult struct {
-	AuthorDisplayNames         *[]string  `json:"authorDisplayNames,omitempty"`
-	CreatedAt                  *time.Time `json:"createdAt,omitempty"`
-	RestoredFromRevisionNumber *int32     `json:"restoredFromRevisionNumber,omitempty"`
-	VersionNumber              *int64     `json:"versionNumber,omitempty"`
+	AuthorDisplayNames         []string  `json:"authorDisplayNames"`
+	CreatedAt                  time.Time `json:"createdAt"`
+	RestoredFromRevisionNumber *int32    `json:"restoredFromRevisionNumber"`
+	VersionNumber              int64     `json:"versionNumber"`
 }
 
 // PageWorkItemAssigneeResult defines model for PageWorkItemAssigneeResult.
 type PageWorkItemAssigneeResult struct {
-	DisplayName *string `json:"displayName,omitempty"`
-	Id          *int64  `json:"id,omitempty"`
-	Status      *string `json:"status,omitempty"`
-	UserId      *int64  `json:"userId,omitempty"`
+	DisplayName string                           `json:"displayName"`
+	Id          int64                            `json:"id"`
+	Status      PageWorkItemAssigneeResultStatus `json:"status"`
+	UserId      *int64                           `json:"userId"`
 }
+
+// PageWorkItemAssigneeResultStatus defines model for PageWorkItemAssigneeResult.Status.
+type PageWorkItemAssigneeResultStatus string
 
 // PageWorkItemResult defines model for PageWorkItemResult.
 type PageWorkItemResult struct {
-	Assignees          *[]PageWorkItemAssigneeResult `json:"assignees,omitempty"`
-	CurrentStatusColor *string                       `json:"currentStatusColor,omitempty"`
-	CurrentStatusLabel *string                       `json:"currentStatusLabel,omitempty"`
-	Description        *string                       `json:"description,omitempty"`
-	DueDate            *openapi_types.Date           `json:"dueDate,omitempty"`
-	Id                 *int64                        `json:"id,omitempty"`
-	LogEntries         *[]WorkItemLogEntry           `json:"logEntries,omitempty"`
-	TypeSlug           *string                       `json:"typeSlug,omitempty"`
+	Assignees          []PageWorkItemAssigneeResult `json:"assignees"`
+	CurrentStatusColor *string                      `json:"currentStatusColor"`
+	CurrentStatusLabel *string                      `json:"currentStatusLabel"`
+	Description        *string                      `json:"description"`
+	DueDate            *openapi_types.Date          `json:"dueDate"`
+	Id                 int64                        `json:"id"`
+	Identifier         *string                      `json:"identifier"`
+	LogEntries         []WorkItemLogEntry           `json:"logEntries"`
+	TypeSlug           string                       `json:"typeSlug"`
 }
 
 // PageWorkItemTypeResult defines model for PageWorkItemTypeResult.
@@ -3406,12 +3626,12 @@ type PageWorkflowRoleResult struct {
 
 // PageableObject defines model for PageableObject.
 type PageableObject struct {
-	Offset     *int64      `json:"offset,omitempty"`
-	PageNumber *int32      `json:"pageNumber,omitempty"`
-	PageSize   *int32      `json:"pageSize,omitempty"`
-	Paged      *bool       `json:"paged,omitempty"`
-	Sort       *SortObject `json:"sort,omitempty"`
-	Unpaged    *bool       `json:"unpaged,omitempty"`
+	Offset     int64      `json:"offset"`
+	PageNumber int32      `json:"pageNumber"`
+	PageSize   int32      `json:"pageSize"`
+	Paged      bool       `json:"paged"`
+	Sort       SortObject `json:"sort"`
+	Unpaged    bool       `json:"unpaged"`
 }
 
 // PermanentDeleteForm defines model for PermanentDeleteForm.
@@ -3421,20 +3641,20 @@ type PermanentDeleteForm struct {
 
 // PreparationReadinessResult defines model for PreparationReadinessResult.
 type PreparationReadinessResult struct {
-	ActivePageCount         *int64                                `json:"activePageCount,omitempty"`
-	ArchivedPageCount       *int64                                `json:"archivedPageCount,omitempty"`
-	AttachmentCount         *int64                                `json:"attachmentCount,omitempty"`
-	DomainEnumCount         *int64                                `json:"domainEnumCount,omitempty"`
-	GroupCount              *int64                                `json:"groupCount,omitempty"`
-	ImageCount              *int64                                `json:"imageCount,omitempty"`
-	OtherApiKeyCount        *int64                                `json:"otherApiKeyCount,omitempty"`
-	OtherUserCount          *int64                                `json:"otherUserCount,omitempty"`
-	PageTypeCount           *int64                                `json:"pageTypeCount,omitempty"`
-	PropertyDescriptorCount *int64                                `json:"propertyDescriptorCount,omitempty"`
-	SeedStatus              *PreparationReadinessResultSeedStatus `json:"seedStatus,omitempty"`
-	TrashedPageCount        *int64                                `json:"trashedPageCount,omitempty"`
-	WorkItemCount           *int64                                `json:"workItemCount,omitempty"`
-	WorkItemTypeCount       *int64                                `json:"workItemTypeCount,omitempty"`
+	ActivePageCount         int64                                `json:"activePageCount"`
+	ArchivedPageCount       int64                                `json:"archivedPageCount"`
+	AttachmentCount         int64                                `json:"attachmentCount"`
+	DomainEnumCount         int64                                `json:"domainEnumCount"`
+	GroupCount              int64                                `json:"groupCount"`
+	ImageCount              int64                                `json:"imageCount"`
+	OtherApiKeyCount        int64                                `json:"otherApiKeyCount"`
+	OtherUserCount          int64                                `json:"otherUserCount"`
+	PageTypeCount           int64                                `json:"pageTypeCount"`
+	PropertyDescriptorCount int64                                `json:"propertyDescriptorCount"`
+	SeedStatus              PreparationReadinessResultSeedStatus `json:"seedStatus"`
+	TrashedPageCount        int64                                `json:"trashedPageCount"`
+	WorkItemCount           int64                                `json:"workItemCount"`
+	WorkItemTypeCount       int64                                `json:"workItemTypeCount"`
 }
 
 // PreparationReadinessResultSeedStatus defines model for PreparationReadinessResult.SeedStatus.
@@ -3592,46 +3812,51 @@ type ProblemDetail struct {
 
 // ProgressRingMacroData defines model for ProgressRingMacroData.
 type ProgressRingMacroData struct {
-	Breakdown           *[]EnumValueCount `json:"breakdown,omitempty"`
-	ExcludedUnpublished *int64            `json:"excludedUnpublished,omitempty"`
-	Percentage          *int32            `json:"percentage,omitempty"`
-	SuccessCount        *int64            `json:"successCount,omitempty"`
-	Total               *int64            `json:"total,omitempty"`
+	Breakdown           []EnumValueCount `json:"breakdown"`
+	ExcludedUnpublished int64            `json:"excludedUnpublished"`
+	Percentage          int32            `json:"percentage"`
+	SuccessCount        int64            `json:"successCount"`
+	Total               int64            `json:"total"`
 }
 
 // PropertyChainMacroData defines model for PropertyChainMacroData.
 type PropertyChainMacroData struct {
-	DisplayColumns            *[]DisplayColumnResult `json:"displayColumns,omitempty"`
-	FilterError               *string                `json:"filterError,omitempty"`
-	NameColumnWidthPercentage *int32                 `json:"nameColumnWidthPercentage,omitempty"`
-	PageReferences            *[]PageReference       `json:"pageReferences,omitempty"`
+	DisplayColumns            []DisplayColumnResult `json:"displayColumns"`
+	FilterError               *string               `json:"filterError"`
+	NameColumnWidthPercentage *int32                `json:"nameColumnWidthPercentage"`
+	PageReferences            []PageReference       `json:"pageReferences"`
 }
 
 // PropertyDescriptorForm defines model for PropertyDescriptorForm.
 type PropertyDescriptorForm struct {
-	AllowedPageTypeId            *int64                                            `json:"allowedPageTypeId,omitempty"`
-	ChainLinks                   *[]ChainLinkInput                                 `json:"chainLinks,omitempty"`
-	ColorBands                   *[]ColorBandInput                                 `json:"colorBands,omitempty"`
-	ContainsThisPageDescriptorId *int64                                            `json:"containsThisPageDescriptorId,omitempty"`
-	DataType                     PropertyDescriptorFormDataType                    `json:"dataType"`
-	Decimals                     *int32                                            `json:"decimals,omitempty"`
-	DefaultEnumValueId           *int64                                            `json:"defaultEnumValueId,omitempty"`
-	DefaultTextValue             *string                                           `json:"defaultTextValue,omitempty"`
-	Description                  *string                                           `json:"description,omitempty"`
-	DisplayColumns               *[]DisplayColumnInput                             `json:"displayColumns,omitempty"`
-	DomainEnumId                 *int64                                            `json:"domainEnumId,omitempty"`
-	Formula                      *string                                           `json:"formula,omitempty"`
-	IncomingSourceDescriptorId   *int64                                            `json:"incomingSourceDescriptorId,omitempty"`
-	MaxValue                     *float32                                          `json:"maxValue,omitempty"`
-	MinValue                     *float32                                          `json:"minValue,omitempty"`
-	Name                         string                                            `json:"name"`
-	NameColumnWidthPercentage    *int32                                            `json:"nameColumnWidthPercentage,omitempty"`
-	NumberFormat                 *PropertyDescriptorFormNumberFormat               `json:"numberFormat,omitempty"`
-	PageReferenceLimit           *int32                                            `json:"pageReferenceLimit,omitempty"`
-	PageReferenceSortDirection   *PropertyDescriptorFormPageReferenceSortDirection `json:"pageReferenceSortDirection,omitempty"`
-	SourceWorkItemTypeId         *int64                                            `json:"sourceWorkItemTypeId,omitempty"`
-	Triggers                     *[]ConditionalEnumTriggerInput                    `json:"triggers,omitempty"`
-	TypeSourceDescriptorId       *int64                                            `json:"typeSourceDescriptorId,omitempty"`
+	AllowedPageTypeId            *int64            `json:"allowedPageTypeId,omitempty"`
+	ChainLinks                   *[]ChainLinkInput `json:"chainLinks,omitempty"`
+	ColorBands                   *[]ColorBandInput `json:"colorBands,omitempty"`
+	ContainsThisPageDescriptorId *int64            `json:"containsThisPageDescriptorId,omitempty"`
+
+	// CreatePagesAllowed Whether pages can be created from this reference property. Null or omitted: on create true, on update keep the existing value. Only meaningful for PAGE_OUTGOING, PAGE_INCOMING, PAGE_SELECTOR and PROPERTY_CHAIN.
+	CreatePagesAllowed         *bool                               `json:"createPagesAllowed,omitempty"`
+	DataType                   PropertyDescriptorFormDataType      `json:"dataType"`
+	Decimals                   *int32                              `json:"decimals,omitempty"`
+	DefaultEnumValueId         *int64                              `json:"defaultEnumValueId,omitempty"`
+	DefaultTextValue           *string                             `json:"defaultTextValue,omitempty"`
+	Description                *string                             `json:"description,omitempty"`
+	DisplayColumns             *[]DisplayColumnInput               `json:"displayColumns,omitempty"`
+	DomainEnumId               *int64                              `json:"domainEnumId,omitempty"`
+	Formula                    *string                             `json:"formula,omitempty"`
+	IncomingSourceDescriptorId *int64                              `json:"incomingSourceDescriptorId,omitempty"`
+	MaxValue                   *float32                            `json:"maxValue,omitempty"`
+	MinValue                   *float32                            `json:"minValue,omitempty"`
+	Name                       string                              `json:"name"`
+	NameColumnWidthPercentage  *int32                              `json:"nameColumnWidthPercentage,omitempty"`
+	NumberFormat               *PropertyDescriptorFormNumberFormat `json:"numberFormat,omitempty"`
+
+	// PageReferenceLimit Maximum number of referenced pages shown in tables. PAGE_OUTGOING values are not cut by this limit; for PAGE_INCOMING, PAGE_SELECTOR and PROPERTY_CHAIN the value holds the first N.
+	PageReferenceLimit         *int32                                            `json:"pageReferenceLimit,omitempty"`
+	PageReferenceSortDirection *PropertyDescriptorFormPageReferenceSortDirection `json:"pageReferenceSortDirection,omitempty"`
+	SourceWorkItemTypeId       *int64                                            `json:"sourceWorkItemTypeId,omitempty"`
+	Triggers                   *[]ConditionalEnumTriggerInput                    `json:"triggers,omitempty"`
+	TypeSourceDescriptorId     *int64                                            `json:"typeSourceDescriptorId,omitempty"`
 }
 
 // PropertyDescriptorFormDataType defines model for PropertyDescriptorForm.DataType.
@@ -3645,47 +3870,50 @@ type PropertyDescriptorFormPageReferenceSortDirection string
 
 // PropertyDescriptorResult defines model for PropertyDescriptorResult.
 type PropertyDescriptorResult struct {
-	AllowedPageTypeId              *int64                                              `json:"allowedPageTypeId,omitempty"`
-	AllowedPageTypeName            *string                                             `json:"allowedPageTypeName,omitempty"`
-	Category                       *PropertyDescriptorResultCategory                   `json:"category,omitempty"`
-	ChainLinks                     *[]ChainLinkResult                                  `json:"chainLinks,omitempty"`
-	Chainable                      *bool                                               `json:"chainable,omitempty"`
-	ColorBands                     *[]ColorBandResult                                  `json:"colorBands,omitempty"`
-	ContainsThisPageDescriptorId   *int64                                              `json:"containsThisPageDescriptorId,omitempty"`
-	ContainsThisPageDescriptorName *string                                             `json:"containsThisPageDescriptorName,omitempty"`
-	DataType                       *PropertyDescriptorResultDataType                   `json:"dataType,omitempty"`
-	Decimals                       *int32                                              `json:"decimals,omitempty"`
-	DeclaredOnPageTypeId           *int64                                              `json:"declaredOnPageTypeId,omitempty"`
-	DeclaredOnPageTypeName         *string                                             `json:"declaredOnPageTypeName,omitempty"`
-	DefaultEnumValueId             *int64                                              `json:"defaultEnumValueId,omitempty"`
-	DefaultEnumValueValue          *string                                             `json:"defaultEnumValueValue,omitempty"`
-	DefaultTextValue               *string                                             `json:"defaultTextValue,omitempty"`
-	Description                    *string                                             `json:"description,omitempty"`
-	DisplayColumns                 *[]DisplayColumnResult                              `json:"displayColumns,omitempty"`
-	DomainEnumId                   *int64                                              `json:"domainEnumId,omitempty"`
-	DomainEnumName                 *string                                             `json:"domainEnumName,omitempty"`
-	Editable                       *bool                                               `json:"editable,omitempty"`
-	Formula                        *string                                             `json:"formula,omitempty"`
-	Hidden                         *bool                                               `json:"hidden,omitempty"`
-	HiddenByPageTypeName           *string                                             `json:"hiddenByPageTypeName,omitempty"`
-	Id                             *int64                                              `json:"id,omitempty"`
-	IncomingSourceDescriptorId     *int64                                              `json:"incomingSourceDescriptorId,omitempty"`
-	IncomingSourceDescriptorName   *string                                             `json:"incomingSourceDescriptorName,omitempty"`
-	IncomingSourcePageTypeId       *int64                                              `json:"incomingSourcePageTypeId,omitempty"`
-	IncomingSourcePageTypeName     *string                                             `json:"incomingSourcePageTypeName,omitempty"`
-	MaxValue                       *float32                                            `json:"maxValue,omitempty"`
-	MinValue                       *float32                                            `json:"minValue,omitempty"`
-	Name                           *string                                             `json:"name,omitempty"`
-	NameColumnWidthPercentage      *int32                                              `json:"nameColumnWidthPercentage,omitempty"`
-	NumberFormat                   *PropertyDescriptorResultNumberFormat               `json:"numberFormat,omitempty"`
-	PageReferenceLimit             *int32                                              `json:"pageReferenceLimit,omitempty"`
-	PageReferenceSortDirection     *PropertyDescriptorResultPageReferenceSortDirection `json:"pageReferenceSortDirection,omitempty"`
-	SortOrder                      *int32                                              `json:"sortOrder,omitempty"`
-	SourceWorkItemTypeId           *int64                                              `json:"sourceWorkItemTypeId,omitempty"`
-	SourceWorkItemTypeName         *string                                             `json:"sourceWorkItemTypeName,omitempty"`
-	Triggers                       *[]ConditionalEnumTriggerResult                     `json:"triggers,omitempty"`
-	TypeSourceDescriptorId         *int64                                              `json:"typeSourceDescriptorId,omitempty"`
-	TypeSourceDescriptorName       *string                                             `json:"typeSourceDescriptorName,omitempty"`
+	AllowedPageTypeId              *int64                                `json:"allowedPageTypeId"`
+	AllowedPageTypeName            *string                               `json:"allowedPageTypeName"`
+	Category                       PropertyDescriptorResultCategory      `json:"category"`
+	ChainLinks                     []ChainLinkResult                     `json:"chainLinks"`
+	Chainable                      bool                                  `json:"chainable"`
+	ColorBands                     *[]ColorBandResult                    `json:"colorBands"`
+	ContainsThisPageDescriptorId   *int64                                `json:"containsThisPageDescriptorId"`
+	ContainsThisPageDescriptorName *string                               `json:"containsThisPageDescriptorName"`
+	CreatePagesAllowed             bool                                  `json:"createPagesAllowed"`
+	DataType                       PropertyDescriptorResultDataType      `json:"dataType"`
+	Decimals                       *int32                                `json:"decimals"`
+	DeclaredOnPageTypeId           int64                                 `json:"declaredOnPageTypeId"`
+	DeclaredOnPageTypeName         string                                `json:"declaredOnPageTypeName"`
+	DefaultEnumValueId             *int64                                `json:"defaultEnumValueId"`
+	DefaultEnumValueValue          *string                               `json:"defaultEnumValueValue"`
+	DefaultTextValue               *string                               `json:"defaultTextValue"`
+	Description                    *string                               `json:"description"`
+	DisplayColumns                 []DisplayColumnResult                 `json:"displayColumns"`
+	DomainEnumId                   *int64                                `json:"domainEnumId"`
+	DomainEnumName                 *string                               `json:"domainEnumName"`
+	Editable                       bool                                  `json:"editable"`
+	Formula                        *string                               `json:"formula"`
+	Hidden                         bool                                  `json:"hidden"`
+	HiddenByPageTypeName           *string                               `json:"hiddenByPageTypeName"`
+	Id                             int64                                 `json:"id"`
+	IncomingSourceDescriptorId     *int64                                `json:"incomingSourceDescriptorId"`
+	IncomingSourceDescriptorName   *string                               `json:"incomingSourceDescriptorName"`
+	IncomingSourcePageTypeId       *int64                                `json:"incomingSourcePageTypeId"`
+	IncomingSourcePageTypeName     *string                               `json:"incomingSourcePageTypeName"`
+	MaxValue                       *float32                              `json:"maxValue"`
+	MinValue                       *float32                              `json:"minValue"`
+	Name                           string                                `json:"name"`
+	NameColumnWidthPercentage      *int32                                `json:"nameColumnWidthPercentage"`
+	NumberFormat                   *PropertyDescriptorResultNumberFormat `json:"numberFormat"`
+
+	// PageReferenceLimit Maximum number of referenced pages shown in tables. PAGE_OUTGOING values are not cut by this limit; for PAGE_INCOMING, PAGE_SELECTOR and PROPERTY_CHAIN the value holds the first N.
+	PageReferenceLimit         *int32                                              `json:"pageReferenceLimit"`
+	PageReferenceSortDirection *PropertyDescriptorResultPageReferenceSortDirection `json:"pageReferenceSortDirection"`
+	SortOrder                  int32                                               `json:"sortOrder"`
+	SourceWorkItemTypeId       *int64                                              `json:"sourceWorkItemTypeId"`
+	SourceWorkItemTypeName     *string                                             `json:"sourceWorkItemTypeName"`
+	Triggers                   []ConditionalEnumTriggerResult                      `json:"triggers"`
+	TypeSourceDescriptorId     *int64                                              `json:"typeSourceDescriptorId"`
+	TypeSourceDescriptorName   *string                                             `json:"typeSourceDescriptorName"`
 }
 
 // PropertyDescriptorResultCategory defines model for PropertyDescriptorResult.Category.
@@ -3707,14 +3935,14 @@ type PropertyDescriptorVisibilityForm struct {
 
 // PropertyDescriptorVisibilityOverrideResult defines model for PropertyDescriptorVisibilityOverrideResult.
 type PropertyDescriptorVisibilityOverrideResult struct {
-	Hidden     *bool `json:"hidden,omitempty"`
-	Overridden *bool `json:"overridden,omitempty"`
+	Hidden     *bool `json:"hidden"`
+	Overridden bool  `json:"overridden"`
 }
 
 // PropertyTypeDefaultResult defines model for PropertyTypeDefaultResult.
 type PropertyTypeDefaultResult struct {
-	Payload *DefaultValuePayload            `json:"payload,omitempty"`
-	State   *PropertyTypeDefaultResultState `json:"state,omitempty"`
+	Payload DefaultValuePayload            `json:"payload"`
+	State   PropertyTypeDefaultResultState `json:"state"`
 }
 
 // PropertyTypeDefaultResultState defines model for PropertyTypeDefaultResult.State.
@@ -3755,29 +3983,29 @@ type PropertyValueForm struct {
 
 // PropertyValueResult defines model for PropertyValueResult.
 type PropertyValueResult struct {
-	CalcStatus                *PropertyValueResultCalcStatus   `json:"calcStatus,omitempty"`
-	ColorBands                *[]ColorBandResult               `json:"colorBands,omitempty"`
-	DataType                  *PropertyValueResultDataType     `json:"dataType,omitempty"`
-	DateTimeValue             *string                          `json:"dateTimeValue,omitempty"`
-	DateValue                 *openapi_types.Date              `json:"dateValue,omitempty"`
-	Decimals                  *int32                           `json:"decimals,omitempty"`
-	DisplayColumns            *[]DisplayColumnResult           `json:"displayColumns,omitempty"`
-	EnumValueColor            *string                          `json:"enumValueColor,omitempty"`
-	EnumValueDisplay          *string                          `json:"enumValueDisplay,omitempty"`
-	EnumValueId               *int64                           `json:"enumValueId,omitempty"`
-	Id                        *int64                           `json:"id,omitempty"`
-	MacroData                 *MacroData                       `json:"macroData,omitempty"`
-	NameColumnWidthPercentage *int32                           `json:"nameColumnWidthPercentage,omitempty"`
-	NumberFormat              *PropertyValueResultNumberFormat `json:"numberFormat,omitempty"`
-	NumericValue              *float32                         `json:"numericValue,omitempty"`
-	PageReferences            *[]PageReferenceResult           `json:"pageReferences,omitempty"`
-	PropertyDescriptorId      *int64                           `json:"propertyDescriptorId,omitempty"`
-	PropertyDescriptorName    *string                          `json:"propertyDescriptorName,omitempty"`
-	SelectedPageTypeId        *int64                           `json:"selectedPageTypeId,omitempty"`
-	SelectedPageTypeName      *string                          `json:"selectedPageTypeName,omitempty"`
-	TextValue                 *string                          `json:"textValue,omitempty"`
-	UserLinks                 *[]UserLinkResult                `json:"userLinks,omitempty"`
-	Version                   *int64                           `json:"version,omitempty"`
+	CalcStatus                *PropertyValueResultCalcStatus   `json:"calcStatus"`
+	ColorBands                *[]ColorBandResult               `json:"colorBands"`
+	DataType                  PropertyValueResultDataType      `json:"dataType"`
+	DateTimeValue             *string                          `json:"dateTimeValue"`
+	DateValue                 *openapi_types.Date              `json:"dateValue"`
+	Decimals                  *int32                           `json:"decimals"`
+	DisplayColumns            []DisplayColumnResult            `json:"displayColumns"`
+	EnumValueColor            *string                          `json:"enumValueColor"`
+	EnumValueDisplay          *string                          `json:"enumValueDisplay"`
+	EnumValueId               *int64                           `json:"enumValueId"`
+	Id                        *int64                           `json:"id"`
+	MacroData                 MacroData                        `json:"macroData"`
+	NameColumnWidthPercentage *int32                           `json:"nameColumnWidthPercentage"`
+	NumberFormat              *PropertyValueResultNumberFormat `json:"numberFormat"`
+	NumericValue              *float32                         `json:"numericValue"`
+	PageReferences            []PageReferenceResult            `json:"pageReferences"`
+	PropertyDescriptorId      int64                            `json:"propertyDescriptorId"`
+	PropertyDescriptorName    string                           `json:"propertyDescriptorName"`
+	SelectedPageTypeId        *int64                           `json:"selectedPageTypeId"`
+	SelectedPageTypeName      *string                          `json:"selectedPageTypeName"`
+	TextValue                 *string                          `json:"textValue"`
+	UserLinks                 []UserLinkResult                 `json:"userLinks"`
+	Version                   *int64                           `json:"version"`
 }
 
 // PropertyValueResultCalcStatus defines model for PropertyValueResult.CalcStatus.
@@ -3791,40 +4019,40 @@ type PropertyValueResultNumberFormat string
 
 // PublicActivationEmailSentResult defines model for PublicActivationEmailSentResult.
 type PublicActivationEmailSentResult struct {
-	ExpiresAt   *time.Time `json:"expiresAt,omitempty"`
-	RequestedAt *time.Time `json:"requestedAt,omitempty"`
+	ExpiresAt   time.Time `json:"expiresAt"`
+	RequestedAt time.Time `json:"requestedAt"`
 }
 
 // PublicAuditLogResult defines model for PublicAuditLogResult.
 type PublicAuditLogResult struct {
-	ActionType    *string                 `json:"actionType,omitempty"`
-	ActorId       *int64                  `json:"actorId,omitempty"`
-	ActorUsername *string                 `json:"actorUsername,omitempty"`
-	ApiKeyId      *int64                  `json:"apiKeyId,omitempty"`
+	ActionType    string                  `json:"actionType"`
+	ActorId       *int64                  `json:"actorId"`
+	ActorUsername string                  `json:"actorUsername"`
+	ApiKeyId      *int64                  `json:"apiKeyId"`
 	Changes       *map[string]interface{} `json:"changes,omitempty"`
-	EntityId      *int64                  `json:"entityId,omitempty"`
-	EntityType    *string                 `json:"entityType,omitempty"`
-	Id            *int64                  `json:"id,omitempty"`
-	PerformedAt   *time.Time              `json:"performedAt,omitempty"`
+	EntityId      int64                   `json:"entityId"`
+	EntityType    string                  `json:"entityType"`
+	Id            int64                   `json:"id"`
+	PerformedAt   time.Time               `json:"performedAt"`
 	Raw           *map[string]interface{} `json:"raw,omitempty"`
-	Summary       *string                 `json:"summary,omitempty"`
+	Summary       string                  `json:"summary"`
 }
 
 // PublicContentMacroDocsResult defines model for PublicContentMacroDocsResult.
 type PublicContentMacroDocsResult struct {
-	FilterSyntax *string           `json:"filterSyntax,omitempty"`
-	Macros       *[]MacroDocResult `json:"macros,omitempty"`
-	Preamble     *string           `json:"preamble,omitempty"`
+	FilterSyntax string           `json:"filterSyntax"`
+	Macros       []MacroDocResult `json:"macros"`
+	Preamble     string           `json:"preamble"`
 }
 
 // PublicContentMacroResult defines model for PublicContentMacroResult.
 type PublicContentMacroResult struct {
-	AllowedAttributes *[]MacroAttributeSchema `json:"allowedAttributes,omitempty"`
-	AllowedContexts   *[]string               `json:"allowedContexts,omitempty"`
-	DirectiveName     *string                 `json:"directiveName,omitempty"`
-	Form              *string                 `json:"form,omitempty"`
-	Module            *string                 `json:"module,omitempty"`
-	Selectable        *bool                   `json:"selectable,omitempty"`
+	AllowedAttributes []MacroAttributeSchema `json:"allowedAttributes"`
+	AllowedContexts   []string               `json:"allowedContexts"`
+	DirectiveName     string                 `json:"directiveName"`
+	Form              string                 `json:"form"`
+	Module            string                 `json:"module"`
+	Selectable        bool                   `json:"selectable"`
 }
 
 // PublicContentValidationForm defines model for PublicContentValidationForm.
@@ -3840,16 +4068,16 @@ type PublicContentValidationForm struct {
 // PublicInternalUserCreatedResult defines model for PublicInternalUserCreatedResult.
 type PublicInternalUserCreatedResult struct {
 	// ActivationEmailExpiresAt Expiry of the activation token that was issued with the activation email. Null when no activation email was sent (creationMode other than SEND_ACTIVATION_EMAIL).
-	ActivationEmailExpiresAt *time.Time                                            `json:"activationEmailExpiresAt,omitempty"`
-	Authenticated            *bool                                                 `json:"authenticated,omitempty"`
-	DisplayName              *string                                               `json:"displayName,omitempty"`
-	EffectiveRole            *PublicInternalUserCreatedResultEffectiveRole         `json:"effectiveRole,omitempty"`
-	EffectiveWorkflowRole    *PublicInternalUserCreatedResultEffectiveWorkflowRole `json:"effectiveWorkflowRole,omitempty"`
-	Email                    *string                                               `json:"email,omitempty"`
-	Id                       *int64                                                `json:"id,omitempty"`
-	Role                     *PublicInternalUserCreatedResultRole                  `json:"role,omitempty"`
-	Status                   *PublicInternalUserCreatedResultStatus                `json:"status,omitempty"`
-	WorkflowRole             *PublicInternalUserCreatedResultWorkflowRole          `json:"workflowRole,omitempty"`
+	ActivationEmailExpiresAt *time.Time                                            `json:"activationEmailExpiresAt"`
+	Authenticated            bool                                                  `json:"authenticated"`
+	DisplayName              string                                                `json:"displayName"`
+	EffectiveRole            *PublicInternalUserCreatedResultEffectiveRole         `json:"effectiveRole"`
+	EffectiveWorkflowRole    *PublicInternalUserCreatedResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
+	Email                    string                                                `json:"email"`
+	Id                       int64                                                 `json:"id"`
+	Role                     PublicInternalUserCreatedResultRole                   `json:"role"`
+	Status                   PublicInternalUserCreatedResultStatus                 `json:"status"`
+	WorkflowRole             *PublicInternalUserCreatedResultWorkflowRole          `json:"workflowRole"`
 }
 
 // PublicInternalUserCreatedResultEffectiveRole defines model for PublicInternalUserCreatedResult.EffectiveRole.
@@ -3869,58 +4097,64 @@ type PublicInternalUserCreatedResultWorkflowRole string
 
 // PublicPageCompositeResult defines model for PublicPageCompositeResult.
 type PublicPageCompositeResult struct {
-	UnderscoreErrors                     *map[string]ExpandError      `json:"_errors,omitempty"`
-	Attachments                          *[]FileAttachmentResult      `json:"attachments,omitempty"`
-	AvailablePropertyDescriptors         *[]PropertyDescriptorResult  `json:"availablePropertyDescriptors,omitempty"`
-	Breadcrumbs                          *[]BreadcrumbItemResult      `json:"breadcrumbs,omitempty"`
-	CanDelete                            *bool                        `json:"canDelete,omitempty"`
-	Content                              *string                      `json:"content,omitempty"`
-	CurrentUserAccessLevel               *string                      `json:"currentUserAccessLevel,omitempty"`
-	Diagnostics                          *[]ContentDiagnostic         `json:"diagnostics,omitempty"`
-	EffectiveChildType                   *AllowedChildTypeResult      `json:"effectiveChildType,omitempty"`
-	HasChildren                          *bool                        `json:"hasChildren,omitempty"`
-	HasOwnRestriction                    *bool                        `json:"hasOwnRestriction,omitempty"`
-	HasRestriction                       *bool                        `json:"hasRestriction,omitempty"`
-	Id                                   *int64                       `json:"id,omitempty"`
-	Images                               *[]ImageResult               `json:"images,omitempty"`
-	InTrash                              *bool                        `json:"inTrash,omitempty"`
-	JiraMacros                           *JiraMacroDataResult         `json:"jiraMacros,omitempty"`
-	LatestVersionAuthorDisplayNames      *[]string                    `json:"latestVersionAuthorDisplayNames,omitempty"`
-	LatestVersionCreatedAt               *string                      `json:"latestVersionCreatedAt,omitempty"`
-	LatestVersionLastEditedAt            *string                      `json:"latestVersionLastEditedAt,omitempty"`
-	LatestVersionLastEditorDisplayName   *string                      `json:"latestVersionLastEditorDisplayName,omitempty"`
-	LatestVersionNumber                  *int64                       `json:"latestVersionNumber,omitempty"`
-	MacroData                            *MacroData                   `json:"macroData,omitempty"`
-	Name                                 *string                      `json:"name,omitempty"`
-	PageType                             *PageTypeResult              `json:"pageType,omitempty"`
-	ParentId                             *int64                       `json:"parentId,omitempty"`
-	ParentName                           *string                      `json:"parentName,omitempty"`
-	PropertyValues                       *[]PropertyValueResult       `json:"propertyValues,omitempty"`
-	PublishedRevision                    *PageRevisionResult          `json:"publishedRevision,omitempty"`
-	PublishingWorkflowEnabled            *bool                        `json:"publishingWorkflowEnabled,omitempty"`
-	RequiresDiscardConfirmation          *bool                        `json:"requiresDiscardConfirmation,omitempty"`
-	ResolvedAllowedChildTypes            *[]AllowedChildTypeResult    `json:"resolvedAllowedChildTypes,omitempty"`
-	RestrictedByPageId                   *int64                       `json:"restrictedByPageId,omitempty"`
+	UnderscoreErrors                   *map[string]ExpandError                          `json:"_errors,omitempty"`
+	Attachments                        *[]FileAttachmentResult                          `json:"attachments,omitempty"`
+	AvailablePropertyDescriptors       []PropertyDescriptorResult                       `json:"availablePropertyDescriptors"`
+	Breadcrumbs                        []BreadcrumbItemResult                           `json:"breadcrumbs"`
+	CanDelete                          bool                                             `json:"canDelete"`
+	Content                            *string                                          `json:"content"`
+	CurrentUserAccessLevel             *PublicPageCompositeResultCurrentUserAccessLevel `json:"currentUserAccessLevel"`
+	Diagnostics                        *[]ContentDiagnostic                             `json:"diagnostics"`
+	EffectiveChildType                 AllowedChildTypeResult                           `json:"effectiveChildType"`
+	HasChildren                        bool                                             `json:"hasChildren"`
+	HasOwnRestriction                  bool                                             `json:"hasOwnRestriction"`
+	HasRestriction                     bool                                             `json:"hasRestriction"`
+	Id                                 int64                                            `json:"id"`
+	Images                             *[]ImageResult                                   `json:"images,omitempty"`
+	InTrash                            bool                                             `json:"inTrash"`
+	JiraMacros                         *JiraMacroDataResult                             `json:"jiraMacros,omitempty"`
+	LatestVersionAuthorDisplayNames    *[]string                                        `json:"latestVersionAuthorDisplayNames"`
+	LatestVersionCreatedAt             *string                                          `json:"latestVersionCreatedAt"`
+	LatestVersionLastEditedAt          *string                                          `json:"latestVersionLastEditedAt"`
+	LatestVersionLastEditorDisplayName *string                                          `json:"latestVersionLastEditorDisplayName"`
+	LatestVersionNumber                *int64                                           `json:"latestVersionNumber"`
+
+	// LockVersion Opaque optimistic-lock token for updating this page. Send it unchanged as version in PUT/PATCH. It changes on every save and on every workflow transition (submit, return, approve, publish, start, discard, restore), so a token read before such a change is stale. Null when the current user has no editable target (no editable working revision, or no write access).
+	LockVersion                          *int64                       `json:"lockVersion"`
+	MacroData                            MacroData                    `json:"macroData"`
+	Name                                 string                       `json:"name"`
+	PageType                             PageTypeResult               `json:"pageType"`
+	ParentId                             *int64                       `json:"parentId"`
+	ParentName                           *string                      `json:"parentName"`
+	PropertyValues                       []PropertyValueResult        `json:"propertyValues"`
+	PublishedRevision                    PageRevisionResult           `json:"publishedRevision"`
+	PublishingWorkflowEnabled            bool                         `json:"publishingWorkflowEnabled"`
+	RequiresDiscardConfirmation          bool                         `json:"requiresDiscardConfirmation"`
+	ResolvedAllowedChildTypes            []AllowedChildTypeResult     `json:"resolvedAllowedChildTypes"`
+	RestrictedByPageId                   *int64                       `json:"restrictedByPageId"`
 	Restriction                          *PageRestrictionDetailResult `json:"restriction,omitempty"`
-	Version                              *int64                       `json:"version,omitempty"`
+	Version                              int64                        `json:"version"`
 	WorkItems                            *[]PageWorkItemResult        `json:"workItems,omitempty"`
 	Workflow                             *[]AllowedPageActionResult   `json:"workflow,omitempty"`
-	WorkflowEnabled                      *bool                        `json:"workflowEnabled,omitempty"`
-	WorkingRevision                      *PageRevisionResult          `json:"workingRevision,omitempty"`
-	WorkingRevisionAuthors               *[]string                    `json:"workingRevisionAuthors,omitempty"`
-	WorkingRevisionLastEditedAt          *string                      `json:"workingRevisionLastEditedAt,omitempty"`
-	WorkingRevisionLastEditorDisplayName *string                      `json:"workingRevisionLastEditorDisplayName,omitempty"`
+	WorkflowEnabled                      bool                         `json:"workflowEnabled"`
+	WorkingRevision                      PageRevisionResult           `json:"workingRevision"`
+	WorkingRevisionAuthors               *[]string                    `json:"workingRevisionAuthors"`
+	WorkingRevisionLastEditedAt          *string                      `json:"workingRevisionLastEditedAt"`
+	WorkingRevisionLastEditorDisplayName *string                      `json:"workingRevisionLastEditorDisplayName"`
 }
+
+// PublicPageCompositeResultCurrentUserAccessLevel defines model for PublicPageCompositeResult.CurrentUserAccessLevel.
+type PublicPageCompositeResultCurrentUserAccessLevel string
 
 // PublicPagePropertyValuesResult defines model for PublicPagePropertyValuesResult.
 type PublicPagePropertyValuesResult struct {
-	PageId         *int64                                        `json:"pageId,omitempty"`
-	PageName       *string                                       `json:"pageName,omitempty"`
-	PageTypeId     *int64                                        `json:"pageTypeId,omitempty"`
-	PageTypeName   *string                                       `json:"pageTypeName,omitempty"`
-	PropertyValues *[]PropertyValueResult                        `json:"propertyValues,omitempty"`
-	RevisionNumber *int32                                        `json:"revisionNumber,omitempty"`
-	RevisionStatus *PublicPagePropertyValuesResultRevisionStatus `json:"revisionStatus,omitempty"`
+	PageId         int64                                         `json:"pageId"`
+	PageName       string                                        `json:"pageName"`
+	PageTypeId     int64                                         `json:"pageTypeId"`
+	PageTypeName   string                                        `json:"pageTypeName"`
+	PropertyValues []PropertyValueResult                         `json:"propertyValues"`
+	RevisionNumber *int32                                        `json:"revisionNumber"`
+	RevisionStatus *PublicPagePropertyValuesResultRevisionStatus `json:"revisionStatus"`
 }
 
 // PublicPagePropertyValuesResultRevisionStatus defines model for PublicPagePropertyValuesResult.RevisionStatus.
@@ -3929,34 +4163,34 @@ type PublicPagePropertyValuesResultRevisionStatus string
 // PublicPageRevisionCompositeResult defines model for PublicPageRevisionCompositeResult.
 type PublicPageRevisionCompositeResult struct {
 	UnderscoreErrors *map[string]ExpandError  `json:"_errors,omitempty"`
-	Id               *int64                   `json:"id,omitempty"`
+	Id               int64                    `json:"id"`
 	Left             *PageVersionDetailResult `json:"left,omitempty"`
-	Name             *string                  `json:"name,omitempty"`
+	Name             string                   `json:"name"`
 	Right            *PageVersionDetailResult `json:"right,omitempty"`
-	Versions         *[]PageVersionListResult `json:"versions,omitempty"`
+	Versions         []PageVersionListResult  `json:"versions"`
 }
 
 // PublicPageTypeCompositeResult defines model for PublicPageTypeCompositeResult.
 type PublicPageTypeCompositeResult struct {
-	UnderscoreErrors                *map[string]ExpandError                     `json:"_errors,omitempty"`
-	AbstractType                    *bool                                       `json:"abstractType,omitempty"`
-	AllowedChildTypes               *[]AllowedChildTypeResult                   `json:"allowedChildTypes,omitempty"`
-	Breadcrumbs                     *[]BreadcrumbItemResult                     `json:"breadcrumbs,omitempty"`
-	ChildTypeMode                   *PublicPageTypeCompositeResultChildTypeMode `json:"childTypeMode,omitempty"`
-	ChildTypePropertyDescriptorId   *int64                                      `json:"childTypePropertyDescriptorId,omitempty"`
-	ChildTypePropertyDescriptorName *string                                     `json:"childTypePropertyDescriptorName,omitempty"`
-	Diagnostics                     *[]ContentDiagnostic                        `json:"diagnostics,omitempty"`
-	Id                              *int64                                      `json:"id,omitempty"`
-	Name                            *string                                     `json:"name,omitempty"`
-	ParentId                        *int64                                      `json:"parentId,omitempty"`
-	ParentName                      *string                                     `json:"parentName,omitempty"`
-	PropertyDescriptors             *[]PropertyDescriptorResult                 `json:"propertyDescriptors,omitempty"`
-	PublishingWorkflowEnabled       *bool                                       `json:"publishingWorkflowEnabled,omitempty"`
-	PublishingWorkflowInherited     *bool                                       `json:"publishingWorkflowInherited,omitempty"`
-	SortableChildPages              *bool                                       `json:"sortableChildPages,omitempty"`
-	TemplateContent                 *string                                     `json:"templateContent,omitempty"`
-	TitleTemplate                   *string                                     `json:"titleTemplate,omitempty"`
-	Usage                           *PageTypeUsageResult                        `json:"usage,omitempty"`
+	UnderscoreErrors                *map[string]ExpandError                    `json:"_errors,omitempty"`
+	AbstractType                    bool                                       `json:"abstractType"`
+	AllowedChildTypes               []AllowedChildTypeResult                   `json:"allowedChildTypes"`
+	Breadcrumbs                     []BreadcrumbItemResult                     `json:"breadcrumbs"`
+	ChildTypeMode                   PublicPageTypeCompositeResultChildTypeMode `json:"childTypeMode"`
+	ChildTypePropertyDescriptorId   *int64                                     `json:"childTypePropertyDescriptorId"`
+	ChildTypePropertyDescriptorName *string                                    `json:"childTypePropertyDescriptorName"`
+	Diagnostics                     *[]ContentDiagnostic                       `json:"diagnostics"`
+	Id                              int64                                      `json:"id"`
+	Name                            string                                     `json:"name"`
+	ParentId                        *int64                                     `json:"parentId"`
+	ParentName                      *string                                    `json:"parentName"`
+	PropertyDescriptors             []PropertyDescriptorResult                 `json:"propertyDescriptors"`
+	PublishingWorkflowEnabled       bool                                       `json:"publishingWorkflowEnabled"`
+	PublishingWorkflowInherited     bool                                       `json:"publishingWorkflowInherited"`
+	SortableChildPages              bool                                       `json:"sortableChildPages"`
+	TemplateContent                 *string                                    `json:"templateContent"`
+	TitleTemplate                   *string                                    `json:"titleTemplate"`
+	Usage                           *PageTypeUsageResult                       `json:"usage,omitempty"`
 }
 
 // PublicPageTypeCompositeResultChildTypeMode defines model for PublicPageTypeCompositeResult.ChildTypeMode.
@@ -3965,40 +4199,40 @@ type PublicPageTypeCompositeResultChildTypeMode string
 // PublicPermanentDeleteReplacementsResult defines model for PublicPermanentDeleteReplacementsResult.
 type PublicPermanentDeleteReplacementsResult struct {
 	// Candidates Eligible replacement-owner candidates, sorted by displayName. Empty when replacementRequired is false, or when replacements are required but no user qualifies for all owned restrictions simultaneously.
-	Candidates *[]UserResult `json:"candidates,omitempty"`
+	Candidates []UserResult `json:"candidates"`
 
 	// ReplacementRequired True when the user owns page restrictions and a replacement owner must be supplied in the POST /public/v1/users/{id}/permanent-delete request body. False when no replacement is needed (candidates will be empty).
-	ReplacementRequired *bool `json:"replacementRequired,omitempty"`
+	ReplacementRequired bool `json:"replacementRequired"`
 }
 
 // PublicRevisionSnapshotResult defines model for PublicRevisionSnapshotResult.
 type PublicRevisionSnapshotResult struct {
-	AuthorDisplayNames         *[]string  `json:"authorDisplayNames,omitempty"`
-	Content                    *string    `json:"content,omitempty"`
-	CreatedAt                  *time.Time `json:"createdAt,omitempty"`
-	Name                       *string    `json:"name,omitempty"`
-	PageId                     *int64     `json:"pageId,omitempty"`
-	PageName                   *string    `json:"pageName,omitempty"`
-	PageTypeName               *string    `json:"pageTypeName,omitempty"`
-	ParentId                   *int64     `json:"parentId,omitempty"`
-	PropertyValuesSnapshot     *string    `json:"propertyValuesSnapshot,omitempty"`
-	RestoredFromRevisionNumber *int32     `json:"restoredFromRevisionNumber,omitempty"`
-	VersionNumber              *int64     `json:"versionNumber,omitempty"`
+	AuthorDisplayNames         []string  `json:"authorDisplayNames"`
+	Content                    *string   `json:"content"`
+	CreatedAt                  time.Time `json:"createdAt"`
+	Name                       string    `json:"name"`
+	PageId                     int64     `json:"pageId"`
+	PageName                   string    `json:"pageName"`
+	PageTypeName               *string   `json:"pageTypeName"`
+	ParentId                   *int64    `json:"parentId"`
+	PropertyValuesSnapshot     string    `json:"propertyValuesSnapshot"`
+	RestoredFromRevisionNumber *int32    `json:"restoredFromRevisionNumber"`
+	VersionNumber              int64     `json:"versionNumber"`
 }
 
 // PublicUserCompositeResult defines model for PublicUserCompositeResult.
 type PublicUserCompositeResult struct {
 	UnderscoreErrors      *map[string]ExpandError                         `json:"_errors,omitempty"`
-	Authenticated         *bool                                           `json:"authenticated,omitempty"`
-	DisplayName           *string                                         `json:"displayName,omitempty"`
-	EffectiveRole         *PublicUserCompositeResultEffectiveRole         `json:"effectiveRole,omitempty"`
-	EffectiveWorkflowRole *PublicUserCompositeResultEffectiveWorkflowRole `json:"effectiveWorkflowRole,omitempty"`
-	Email                 *string                                         `json:"email,omitempty"`
+	Authenticated         bool                                            `json:"authenticated"`
+	DisplayName           string                                          `json:"displayName"`
+	EffectiveRole         *PublicUserCompositeResultEffectiveRole         `json:"effectiveRole"`
+	EffectiveWorkflowRole *PublicUserCompositeResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
+	Email                 string                                          `json:"email"`
 	Groups                *[]UserGroupResult                              `json:"groups,omitempty"`
-	Id                    *int64                                          `json:"id,omitempty"`
-	Role                  *PublicUserCompositeResultRole                  `json:"role,omitempty"`
-	Status                *PublicUserCompositeResultStatus                `json:"status,omitempty"`
-	WorkflowRole          *PublicUserCompositeResultWorkflowRole          `json:"workflowRole,omitempty"`
+	Id                    int64                                           `json:"id"`
+	Role                  PublicUserCompositeResultRole                   `json:"role"`
+	Status                PublicUserCompositeResultStatus                 `json:"status"`
+	WorkflowRole          *PublicUserCompositeResultWorkflowRole          `json:"workflowRole"`
 }
 
 // PublicUserCompositeResultEffectiveRole defines model for PublicUserCompositeResult.EffectiveRole.
@@ -4018,16 +4252,16 @@ type PublicUserCompositeResultWorkflowRole string
 
 // PublicUserMeResult defines model for PublicUserMeResult.
 type PublicUserMeResult struct {
-	ApiKey                *ApiKeyMeta                              `json:"apiKey,omitempty"`
-	Authenticated         *bool                                    `json:"authenticated,omitempty"`
-	DisplayName           *string                                  `json:"displayName,omitempty"`
-	EffectiveRole         *PublicUserMeResultEffectiveRole         `json:"effectiveRole,omitempty"`
-	EffectiveWorkflowRole *PublicUserMeResultEffectiveWorkflowRole `json:"effectiveWorkflowRole,omitempty"`
-	Email                 *string                                  `json:"email,omitempty"`
-	Id                    *int64                                   `json:"id,omitempty"`
-	Role                  *PublicUserMeResultRole                  `json:"role,omitempty"`
-	Status                *PublicUserMeResultStatus                `json:"status,omitempty"`
-	WorkflowRole          *PublicUserMeResultWorkflowRole          `json:"workflowRole,omitempty"`
+	ApiKey                ApiKeyMeta                               `json:"apiKey"`
+	Authenticated         bool                                     `json:"authenticated"`
+	DisplayName           string                                   `json:"displayName"`
+	EffectiveRole         *PublicUserMeResultEffectiveRole         `json:"effectiveRole"`
+	EffectiveWorkflowRole *PublicUserMeResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
+	Email                 string                                   `json:"email"`
+	Id                    int64                                    `json:"id"`
+	Role                  PublicUserMeResultRole                   `json:"role"`
+	Status                PublicUserMeResultStatus                 `json:"status"`
+	WorkflowRole          *PublicUserMeResultWorkflowRole          `json:"workflowRole"`
 }
 
 // PublicUserMeResultEffectiveRole defines model for PublicUserMeResult.EffectiveRole.
@@ -4056,8 +4290,8 @@ type PublicWorkflowRoleCompositeResult struct {
 
 // RedirectTarget defines model for RedirectTarget.
 type RedirectTarget struct {
-	Kind   *RedirectTargetKind `json:"kind,omitempty"`
-	PageId *int64              `json:"pageId,omitempty"`
+	Kind   RedirectTargetKind `json:"kind"`
+	PageId *int64             `json:"pageId,omitempty"`
 }
 
 // RedirectTargetKind defines model for RedirectTarget.Kind.
@@ -4065,22 +4299,22 @@ type RedirectTargetKind string
 
 // ReferencedAsset defines model for ReferencedAsset.
 type ReferencedAsset struct {
-	Id        *int64  `json:"id,omitempty"`
-	Label     *string `json:"label,omitempty"`
-	ObjectKey *string `json:"objectKey,omitempty"`
+	Id        int64  `json:"id"`
+	Label     string `json:"label"`
+	ObjectKey string `json:"objectKey"`
 }
 
 // ReleaseNoteResult defines model for ReleaseNoteResult.
 type ReleaseNoteResult struct {
-	Body    *string             `json:"body,omitempty"`
-	Date    *openapi_types.Date `json:"date,omitempty"`
-	Version *string             `json:"version,omitempty"`
+	Body    string             `json:"body"`
+	Date    openapi_types.Date `json:"date"`
+	Version string             `json:"version"`
 }
 
 // ReleaseNoteSummaryResult defines model for ReleaseNoteSummaryResult.
 type ReleaseNoteSummaryResult struct {
-	Date    *openapi_types.Date `json:"date,omitempty"`
-	Version *string             `json:"version,omitempty"`
+	Date    openapi_types.Date `json:"date"`
+	Version string             `json:"version"`
 }
 
 // RestorePageForm defines model for RestorePageForm.
@@ -4090,16 +4324,16 @@ type RestorePageForm struct {
 
 // RestoreResult defines model for RestoreResult.
 type RestoreResult struct {
-	Success  *bool     `json:"success,omitempty"`
-	Warnings *[]string `json:"warnings,omitempty"`
+	Success  bool     `json:"success"`
+	Warnings []string `json:"warnings"`
 }
 
 // RestrictionHierarchyEntry defines model for RestrictionHierarchyEntry.
 type RestrictionHierarchyEntry struct {
-	HasRestriction *bool                  `json:"hasRestriction,omitempty"`
-	PageId         *int64                 `json:"pageId,omitempty"`
-	PageName       *string                `json:"pageName,omitempty"`
-	Restriction    *PageRestrictionResult `json:"restriction,omitempty"`
+	HasRestriction bool                  `json:"hasRestriction"`
+	PageId         int64                 `json:"pageId"`
+	PageName       string                `json:"pageName"`
+	Restriction    PageRestrictionResult `json:"restriction"`
 }
 
 // SortChildrenForm defines model for SortChildrenForm.
@@ -4109,9 +4343,9 @@ type SortChildrenForm struct {
 
 // SortObject defines model for SortObject.
 type SortObject struct {
-	Empty    *bool `json:"empty,omitempty"`
-	Sorted   *bool `json:"sorted,omitempty"`
-	Unsorted *bool `json:"unsorted,omitempty"`
+	Empty    bool `json:"empty"`
+	Sorted   bool `json:"sorted"`
+	Unsorted bool `json:"unsorted"`
 }
 
 // TransferVerificationForm defines model for TransferVerificationForm.
@@ -4131,21 +4365,21 @@ type TransitionFormTargetStatus string
 
 // TrashWithBreadcrumbResult defines model for TrashWithBreadcrumbResult.
 type TrashWithBreadcrumbResult struct {
-	Breadcrumbs  *[]BreadcrumbEntry `json:"breadcrumbs,omitempty"`
-	DeletedAt    *string            `json:"deletedAt,omitempty"`
-	Id           *int64             `json:"id,omitempty"`
-	Name         *string            `json:"name,omitempty"`
-	PageTypeName *string            `json:"pageTypeName,omitempty"`
+	Breadcrumbs  []BreadcrumbEntry `json:"breadcrumbs"`
+	DeletedAt    string            `json:"deletedAt"`
+	Id           int64             `json:"id"`
+	Name         string            `json:"name"`
+	PageTypeName *string           `json:"pageTypeName"`
 }
 
 // TrashedPageViewResult defines model for TrashedPageViewResult.
 type TrashedPageViewResult struct {
-	CanDeletePermanently *bool                               `json:"canDeletePermanently,omitempty"`
-	CanRestore           *bool                               `json:"canRestore,omitempty"`
-	DeletedAt            *time.Time                          `json:"deletedAt,omitempty"`
-	Page                 *PageResult                         `json:"page,omitempty"`
-	ParentId             *int64                              `json:"parentId,omitempty"`
-	RestoreTarget        *TrashedPageViewResultRestoreTarget `json:"restoreTarget,omitempty"`
+	CanDeletePermanently bool                                `json:"canDeletePermanently"`
+	CanRestore           bool                                `json:"canRestore"`
+	DeletedAt            time.Time                           `json:"deletedAt"`
+	Page                 PageResult                          `json:"page"`
+	ParentId             *int64                              `json:"parentId"`
+	RestoreTarget        *TrashedPageViewResultRestoreTarget `json:"restoreTarget"`
 	TrashedBy            *AuditActorResult                   `json:"trashedBy,omitempty"`
 }
 
@@ -4154,9 +4388,9 @@ type TrashedPageViewResultRestoreTarget string
 
 // UnchangedDescriptorResult defines model for UnchangedDescriptorResult.
 type UnchangedDescriptorResult struct {
-	Name   *string `json:"name,omitempty"`
-	Source *string `json:"source,omitempty"`
-	Type   *string `json:"type,omitempty"`
+	Name   string `json:"name"`
+	Source string `json:"source"`
+	Type   string `json:"type"`
 }
 
 // UserForm defines model for UserForm.
@@ -4194,14 +4428,14 @@ type UserGroupFormWorkflowRole string
 
 // UserGroupResult defines model for UserGroupResult.
 type UserGroupResult struct {
-	Description  *string                      `json:"description,omitempty"`
-	Id           *int64                       `json:"id,omitempty"`
-	MemberCount  *int32                       `json:"memberCount,omitempty"`
-	Members      *[]UserResult                `json:"members,omitempty"`
-	Name         *string                      `json:"name,omitempty"`
-	Role         *UserGroupResultRole         `json:"role,omitempty"`
-	Status       *UserGroupResultStatus       `json:"status,omitempty"`
-	WorkflowRole *UserGroupResultWorkflowRole `json:"workflowRole,omitempty"`
+	Description  *string                      `json:"description"`
+	Id           int64                        `json:"id"`
+	MemberCount  int32                        `json:"memberCount"`
+	Members      *[]UserResult                `json:"members"`
+	Name         string                       `json:"name"`
+	Role         *UserGroupResultRole         `json:"role"`
+	Status       UserGroupResultStatus        `json:"status"`
+	WorkflowRole *UserGroupResultWorkflowRole `json:"workflowRole"`
 }
 
 // UserGroupResultRole defines model for UserGroupResult.Role.
@@ -4221,23 +4455,26 @@ type UserLinkForm struct {
 
 // UserLinkResult defines model for UserLinkResult.
 type UserLinkResult struct {
-	DisplayName *string `json:"displayName,omitempty"`
-	Id          *int64  `json:"id,omitempty"`
-	Status      *string `json:"status,omitempty"`
-	UserId      *int64  `json:"userId,omitempty"`
+	DisplayName string               `json:"displayName"`
+	Id          int64                `json:"id"`
+	Status      UserLinkResultStatus `json:"status"`
+	UserId      *int64               `json:"userId"`
 }
+
+// UserLinkResultStatus defines model for UserLinkResult.Status.
+type UserLinkResultStatus string
 
 // UserResult defines model for UserResult.
 type UserResult struct {
-	Authenticated         *bool                            `json:"authenticated,omitempty"`
-	DisplayName           *string                          `json:"displayName,omitempty"`
-	EffectiveRole         *UserResultEffectiveRole         `json:"effectiveRole,omitempty"`
-	EffectiveWorkflowRole *UserResultEffectiveWorkflowRole `json:"effectiveWorkflowRole,omitempty"`
-	Email                 *string                          `json:"email,omitempty"`
-	Id                    *int64                           `json:"id,omitempty"`
-	Role                  *UserResultRole                  `json:"role,omitempty"`
-	Status                *UserResultStatus                `json:"status,omitempty"`
-	WorkflowRole          *UserResultWorkflowRole          `json:"workflowRole,omitempty"`
+	Authenticated         bool                             `json:"authenticated"`
+	DisplayName           string                           `json:"displayName"`
+	EffectiveRole         *UserResultEffectiveRole         `json:"effectiveRole"`
+	EffectiveWorkflowRole *UserResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
+	Email                 string                           `json:"email"`
+	Id                    int64                            `json:"id"`
+	Role                  UserResultRole                   `json:"role"`
+	Status                UserResultStatus                 `json:"status"`
+	WorkflowRole          *UserResultWorkflowRole          `json:"workflowRole"`
 }
 
 // UserResultEffectiveRole defines model for UserResult.EffectiveRole.
@@ -4263,11 +4500,11 @@ type WorkItemAssigneeForm struct {
 
 // WorkItemAvailableTransitionResult defines model for WorkItemAvailableTransitionResult.
 type WorkItemAvailableTransitionResult struct {
-	SortOrder       *int32  `json:"sortOrder,omitempty"`
-	ToColor         *string `json:"toColor,omitempty"`
-	ToLabel         *string `json:"toLabel,omitempty"`
-	ToValueId       *int64  `json:"toValueId,omitempty"`
-	TransitionLabel *string `json:"transitionLabel,omitempty"`
+	SortOrder       int32   `json:"sortOrder"`
+	ToColor         *string `json:"toColor"`
+	ToLabel         string  `json:"toLabel"`
+	ToValueId       int64   `json:"toValueId"`
+	TransitionLabel string  `json:"transitionLabel"`
 }
 
 // WorkItemCommentForm defines model for WorkItemCommentForm.
@@ -4280,23 +4517,32 @@ type WorkItemCreateForm struct {
 	Assignees   *[]WorkItemAssigneeForm `json:"assignees,omitempty"`
 	Description *string                 `json:"description,omitempty"`
 	DueDate     *openapi_types.Date     `json:"dueDate,omitempty"`
+	Identifier  *string                 `json:"identifier,omitempty"`
 	TypeSlug    string                  `json:"typeSlug"`
 }
 
 // WorkItemEditForm defines model for WorkItemEditForm.
 type WorkItemEditForm struct {
-	Assignees   *[]WorkItemAssigneeForm `json:"assignees,omitempty"`
-	Description *string                 `json:"description,omitempty"`
-	DueDate     *openapi_types.Date     `json:"dueDate,omitempty"`
+	// Assignees Omit or null to keep the current assignees; an empty list removes them.
+	Assignees *[]WorkItemAssigneeForm `json:"assignees,omitempty"`
+
+	// Description Omit to keep the current description.
+	Description *string `json:"description,omitempty"`
+
+	// DueDate Omit to keep the current due date; null removes it.
+	DueDate *openapi_types.Date `json:"dueDate,omitempty"`
+
+	// Identifier Omit or null to keep the current ID; an empty string removes it.
+	Identifier *string `json:"identifier,omitempty"`
 }
 
 // WorkItemLogEntry defines model for WorkItemLogEntry.
 type WorkItemLogEntry struct {
-	CreatedAt            *time.Time               `json:"createdAt,omitempty"`
-	CreatedByDisplayName *string                  `json:"createdByDisplayName,omitempty"`
-	Id                   *int64                   `json:"id,omitempty"`
-	LogType              *WorkItemLogEntryLogType `json:"logType,omitempty"`
-	Text                 *string                  `json:"text,omitempty"`
+	CreatedAt            time.Time               `json:"createdAt"`
+	CreatedByDisplayName *string                 `json:"createdByDisplayName"`
+	Id                   int64                   `json:"id"`
+	LogType              WorkItemLogEntryLogType `json:"logType"`
+	Text                 string                  `json:"text"`
 }
 
 // WorkItemLogEntryLogType defines model for WorkItemLogEntry.LogType.
@@ -4318,13 +4564,13 @@ type WorkItemTransitionForm struct {
 
 // WorkItemTransitionResult defines model for WorkItemTransitionResult.
 type WorkItemTransitionResult struct {
-	FromValueId    *int64  `json:"fromValueId,omitempty"`
-	FromValueLabel *string `json:"fromValueLabel,omitempty"`
-	Id             *int64  `json:"id,omitempty"`
-	Label          *string `json:"label,omitempty"`
-	SortOrder      *int32  `json:"sortOrder,omitempty"`
-	ToValueId      *int64  `json:"toValueId,omitempty"`
-	ToValueLabel   *string `json:"toValueLabel,omitempty"`
+	FromValueId    int64  `json:"fromValueId"`
+	FromValueLabel string `json:"fromValueLabel"`
+	Id             int64  `json:"id"`
+	Label          string `json:"label"`
+	SortOrder      int32  `json:"sortOrder"`
+	ToValueId      int64  `json:"toValueId"`
+	ToValueLabel   string `json:"toValueLabel"`
 }
 
 // WorkItemTransitionUpdateForm defines model for WorkItemTransitionUpdateForm.
@@ -4343,22 +4589,22 @@ type WorkItemTypeCreateForm struct {
 
 // WorkItemTypeEntry defines model for WorkItemTypeEntry.
 type WorkItemTypeEntry struct {
-	Id   *int64  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Slug *string `json:"slug,omitempty"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
+	Slug string `json:"slug"`
 }
 
 // WorkItemTypeResult defines model for WorkItemTypeResult.
 type WorkItemTypeResult struct {
-	DefaultStatusValueId *int64                      `json:"defaultStatusValueId,omitempty"`
-	DomainEnumId         *int64                      `json:"domainEnumId,omitempty"`
-	DomainEnumName       *string                     `json:"domainEnumName,omitempty"`
-	DomainEnumValues     *[]DomainEnumValueResult    `json:"domainEnumValues,omitempty"`
-	Id                   *int64                      `json:"id,omitempty"`
-	Name                 *string                     `json:"name,omitempty"`
-	Slug                 *string                     `json:"slug,omitempty"`
-	Transitions          *[]WorkItemTransitionResult `json:"transitions,omitempty"`
-	UsedInPageCount      *int64                      `json:"usedInPageCount,omitempty"`
+	DefaultStatusValueId *int64                     `json:"defaultStatusValueId"`
+	DomainEnumId         *int64                     `json:"domainEnumId"`
+	DomainEnumName       *string                    `json:"domainEnumName"`
+	DomainEnumValues     []DomainEnumValueResult    `json:"domainEnumValues"`
+	Id                   int64                      `json:"id"`
+	Name                 string                     `json:"name"`
+	Slug                 string                     `json:"slug"`
+	Transitions          []WorkItemTransitionResult `json:"transitions"`
+	UsedInPageCount      int64                      `json:"usedInPageCount"`
 }
 
 // WorkItemTypeUpdateForm defines model for WorkItemTypeUpdateForm.
@@ -4371,11 +4617,11 @@ type WorkItemTypeUpdateForm struct {
 
 // WorkflowItemResult defines model for WorkflowItemResult.
 type WorkflowItemResult struct {
-	AuthorDisplayNames *[]string `json:"authorDisplayNames,omitempty"`
-	LastTransitionDate *string   `json:"lastTransitionDate,omitempty"`
-	PageId             *int64    `json:"pageId,omitempty"`
-	PageName           *string   `json:"pageName,omitempty"`
-	RevisionId         *int64    `json:"revisionId,omitempty"`
+	AuthorDisplayNames []string `json:"authorDisplayNames"`
+	LastTransitionDate string   `json:"lastTransitionDate"`
+	PageId             int64    `json:"pageId"`
+	PageName           string   `json:"pageName"`
+	RevisionId         int64    `json:"revisionId"`
 }
 
 // WorkflowRoleForm defines model for WorkflowRoleForm.
@@ -4388,9 +4634,9 @@ type WorkflowRoleFormWorkflowRole string
 
 // WorkflowRoleGroupResult defines model for WorkflowRoleGroupResult.
 type WorkflowRoleGroupResult struct {
-	Id           *int64                               `json:"id,omitempty"`
-	Name         *string                              `json:"name,omitempty"`
-	WorkflowRole *WorkflowRoleGroupResultWorkflowRole `json:"workflowRole,omitempty"`
+	Id           int64                                `json:"id"`
+	Name         string                               `json:"name"`
+	WorkflowRole *WorkflowRoleGroupResultWorkflowRole `json:"workflowRole"`
 }
 
 // WorkflowRoleGroupResultWorkflowRole defines model for WorkflowRoleGroupResult.WorkflowRole.
@@ -4398,10 +4644,10 @@ type WorkflowRoleGroupResultWorkflowRole string
 
 // WorkflowRoleResult defines model for WorkflowRoleResult.
 type WorkflowRoleResult struct {
-	DisplayName  *string                         `json:"displayName,omitempty"`
-	Email        *string                         `json:"email,omitempty"`
-	Id           *int64                          `json:"id,omitempty"`
-	WorkflowRole *WorkflowRoleResultWorkflowRole `json:"workflowRole,omitempty"`
+	DisplayName  string                          `json:"displayName"`
+	Email        string                          `json:"email"`
+	Id           int64                           `json:"id"`
+	WorkflowRole *WorkflowRoleResultWorkflowRole `json:"workflowRole"`
 }
 
 // WorkflowRoleResultWorkflowRole defines model for WorkflowRoleResult.WorkflowRole.
@@ -18016,6 +18262,8 @@ type PatchPageResponse struct {
 	ApplicationproblemJSON401 *ProblemDetail
 	ApplicationproblemJSON403 *ProblemDetail
 	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON409 *ProblemDetail
+	ApplicationproblemJSON428 *ProblemDetail
 	ApplicationproblemJSON429 *ProblemDetail
 }
 
@@ -18050,6 +18298,8 @@ type UpdatePageResponse struct {
 	ApplicationproblemJSON401 *ProblemDetail
 	ApplicationproblemJSON403 *ProblemDetail
 	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON409 *ProblemDetail
+	ApplicationproblemJSON428 *ProblemDetail
 	ApplicationproblemJSON429 *ProblemDetail
 }
 
@@ -25717,6 +25967,20 @@ func ParsePatchPageResponse(rsp *http.Response) (*PatchPageResponse, error) {
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 428:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON428 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest ProblemDetail
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -25770,6 +26034,20 @@ func ParseUpdatePageResponse(rsp *http.Response) (*UpdatePageResponse, error) {
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 428:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON428 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest ProblemDetail

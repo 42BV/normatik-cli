@@ -84,7 +84,7 @@ func ExitClasses() []ExitClass {
 	return []ExitClass{
 		{0, "success"},
 		{2, "usage error (wrong flags/args)"},
-		{3, "validation/input (INVALID_SORT, CONTENT_VALIDATION_FAILED, 400/422)"},
+		{3, "validation/input (INVALID_SORT, CONTENT_VALIDATION_FAILED, UPDATE_PRECONDITION_REQUIRED, 400/422/428)"},
 		{4, "authentication (API_KEY_INVALID/EXPIRED, 401)"},
 		{5, "forbidden/role (API_KEY_READ_ONLY, INSUFFICIENT_WORKFLOW_ROLE, 403)"},
 		{6, "not found (404)"},
@@ -128,7 +128,9 @@ func ExitFor(code string, status int) int {
 		}
 	}
 	switch status {
-	case 400, 422:
+	case 400, 422, 428:
+		// 428 UPDATE_PRECONDITION_REQUIRED: the caller omitted the lock token — an
+		// input/precondition error of the invocation, not a server-side conflict (7).
 		return 3
 	case 401:
 		return 4

@@ -98,13 +98,13 @@ func newPageTypesFindCmd() *cobra.Command {
 
 			rows := make([]pageTypePropertyMatch, 0)
 			for _, pt := range pageTypes {
-				id := deref64(pt.Id)
+				id := pt.Id
 				descriptors, dErr := fetchDescriptors(cmd.Context(), d.Client, id)
 				if dErr != nil {
 					return command.RenderError(d.Printer, dErr, "normatik page-types find")
 				}
 				for _, desc := range descriptors {
-					dt := derefDataType(desc.DataType)
+					dt := desc.DataType
 					if dataTypeSet && dt != wanted {
 						continue
 					}
@@ -112,9 +112,9 @@ func newPageTypesFindCmd() *cobra.Command {
 						continue
 					}
 					rows = append(rows, pageTypePropertyMatch{
-						PageType:   derefStr(pt.Name),
+						PageType:   pt.Name,
 						PageTypeId: id,
-						Property:   derefStr(desc.Name),
+						Property:   desc.Name,
 						DataType:   string(dt),
 						Writable:   writableDataType(dt),
 					})

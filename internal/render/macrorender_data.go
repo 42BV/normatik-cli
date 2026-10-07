@@ -95,6 +95,7 @@ func breakdownLines(items []any) string {
 // pageTaskFieldLabels mirrors PageTasksRenderer.tsx SUPPORTED_FIELDS +
 // FIELD_LABELS; unknown fields-entries are dropped, like the web.
 var pageTaskFieldLabels = map[string]string{
+	"id":          "ID",
 	"status":      "Status",
 	"description": "Description",
 	"assignees":   "Assignees",
@@ -171,6 +172,11 @@ func renderPageTasks(n *dnode, idx *macroIndex, width int) string {
 // displayName list, dueDate as the raw ISO date.
 func pageTaskCell(field string, im map[string]any, idx *macroIndex) string {
 	switch field {
+	case "id":
+		if id := gstr(im, "identifier"); id != "" {
+			return id
+		}
+		return "—"
 	case "description":
 		return renderInline(gstr(im, "description"), idx)
 	case "status":

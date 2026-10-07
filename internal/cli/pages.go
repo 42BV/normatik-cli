@@ -64,7 +64,10 @@ func newPagesTreeCmd() *cobra.Command {
 				d.Printer.Message("304 Not Modified — the tree has not changed.")
 				return nil
 			}
-			d.Printer.List(body) // tree-node velden afgeleid; volledige boom via --output json
+			// Top-level nodes as rows; lockVersion is the token a caller passes back as
+			// --version on `pages update` (— when the page is not editable for this user).
+			// Full tree (children) via --output json.
+			d.Printer.List(body, "id", "name", "lockVersion", "workflowEnabled", "workingRevisionStatus", "hasRestriction")
 			return nil
 		},
 	}
@@ -448,10 +451,7 @@ func fetchDescriptors(ctx context.Context, c *client.Client, pageTypeID int64) (
 	if err := json.Unmarshal(body, &pt); err != nil {
 		return nil, &client.APIError{Status: 0, Body: body, Malformed: true}
 	}
-	if pt.PropertyDescriptors == nil {
-		return nil, nil
-	}
-	return *pt.PropertyDescriptors, nil
+	return pt.PropertyDescriptors, nil
 }
 
 // newPagesDescribePropertiesCmd discovers the settable properties of a page type
@@ -481,7 +481,7 @@ func newPagesDescribePropertiesCmd() *cobra.Command {
 				if apiErr != nil {
 					return command.RenderError(d.Printer, apiErr, "normatik pages describe-properties")
 				}
-				descriptors = derefDescriptors(page.AvailablePropertyDescriptors)
+				descriptors = page.AvailablePropertyDescriptors
 			} else {
 				fetched, apiErr := fetchDescriptors(cmd.Context(), d.Client, pageTypeID)
 				if apiErr != nil {
@@ -545,13 +545,13 @@ type describePropertyRow struct {
 func describePropertyRows(ctx context.Context, descriptors []api.PropertyDescriptorResult, lookup propertyLookup) ([]describePropertyRow, error) {
 	rows := make([]describePropertyRow, 0, len(descriptors))
 	for _, desc := range descriptors {
-		dt := derefDataType(desc.DataType)
+		dt := desc.DataType
 		enumValues, err := describeEnumValues(ctx, lookup, desc)
 		if err != nil {
 			return nil, err
 		}
 		row := describePropertyRow{
-			Name:       derefStr(desc.Name),
+			Name:       desc.Name,
 			DataType:   string(dt),
 			Writable:   writableDataType(dt),
 			LookupHint: describeHint(desc, enumValues),
@@ -702,9 +702,7 @@ func pageListIDs(list *api.PagePageListResult) []int64 {
 	}
 	out := make([]int64, 0, len(*list.Content))
 	for _, it := range *list.Content {
-		if it.Id != nil {
-			out = append(out, *it.Id)
-		}
+		out = append(out, it.Id)
 	}
 	return out
 }

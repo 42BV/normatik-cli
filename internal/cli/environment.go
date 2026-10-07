@@ -372,7 +372,7 @@ func newEnvironmentSeedCompleteCmd() *cobra.Command {
 		Short: "Complete the environment seed and remove the logged-in bootstrap account (irreversible)",
 		Long: "Recognizes the logged-in account via GET /users/me, then calls POST /environment-seed/complete: " +
 			"the server verifies the caller is the bootstrap account, the transfer is TRANSFER_VERIFIED and at " +
-			"least one other ACTIVE user has a local password and effective ADMIN + PUBLISHER roles, before " +
+			"least one other ACTIVE user has a local password and an effective ADMIN role, before " +
 			"completing the seed and permanently removing the calling account and all its API keys in one " +
 			"transaction. Only after the server confirms success does the CLI remove the local profile (the " +
 			"config.toml entry and the OS-keychain key) -- a rejected or failed call leaves the profile intact.",

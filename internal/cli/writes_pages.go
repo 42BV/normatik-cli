@@ -59,8 +59,12 @@ func addPagesWrites(parent *cobra.Command) {
 			if cmd.Flags().Changed("content") {
 				f.Content = strPtr(content)
 			}
+			// The optimistic-lock token is mandatory for a real write (backend: 428
+			// UPDATE_PRECONDITION_REQUIRED). Presence is tracked explicitly: version 0
+			// is a legitimate token, so the decoded int64 cannot tell "absent" apart.
+			hasVersion := cmd.Flags().Changed("version") || (file != "" && formHasKey(file, "version"))
 			if cmd.Flags().Changed("version") {
-				f.Version = i64Ptr(version)
+				f.Version = version
 			}
 			hasProps := len(props) > 0 || len(unsets) > 0
 			hasFormProps := len(derefEditValues(f.PropertyValues)) > 0
@@ -81,14 +85,14 @@ func addPagesWrites(parent *cobra.Command) {
 				}
 				if hasProps {
 					// Property flags route via PATCH — preview the resolved PagePatchForm.
-					return previewPageProperties(cmd, d, id, f, props, unsets, timezone)
+					return previewPageProperties(cmd, d, id, f, hasVersion, props, unsets, timezone)
 				}
 				if hasFormProps {
 					// A -f form (no flags) routes via PUT merge: preview the PageEditForm
-					// itself. Omitted fields are kept by the backend. The optimistic-lock
-					// version is auto-filled from the page at send when absent, so it may
-					// not appear in this preview.
-					d.Printer.DryRun(f)
+					// itself. Omitted fields are kept by the backend. A dry run needs no
+					// version; when none was given the preview omits it rather than
+					// showing a misleading 0.
+					d.Printer.DryRun(previewPayload(f, hasVersion))
 				}
 				return nil
 			}
@@ -101,23 +105,33 @@ func addPagesWrites(parent *cobra.Command) {
 				d.Printer.Message("Error [USAGE]: nothing to update — pass --name/--content, --property/--unset-property, or -f <form>")
 				return command.Handled(2)
 			}
-			// Route selection (both paths auto-fill the optimistic-lock version):
-			// a -f form without property flags is a PUT with merge semantics
-			// (omitted/null name, content and propertyValues are kept). Everything
-			// else — property flags OR a plain --name/--content change — routes via
-			// PATCH. PATCH remains the only path that can unset properties. An
-			// explicit --version (or -f version) always wins; otherwise patchVersion
-			// fills Page.version for non-workflow/unknown and leaves version null on
-			// a confirmed workflow page.
+			// Fail closed BEFORE any write: the token must come from an earlier read
+			// (tree or page get) — the CLI never fetches or fills it in (CR verplichte
+			// lockversie: no force path, no fallback to a freshly fetched token).
+			if !hasVersion {
+				d.Printer.LocalError("VERSION_REQUIRED",
+					"a real update requires the optimistic-lock token: pass --version (or \"version\" in the -f form)",
+					fmt.Sprintf("read lockVersion from `normatik pages tree` or `normatik pages get %d` and pass it unchanged as --version; --dry-run needs no version", id),
+					2)
+				return command.Handled(2)
+			}
+			// Route selection: a -f form without property flags is a PUT with merge
+			// semantics (omitted/null name, content and propertyValues are kept).
+			// Property flags route via PATCH and fetch page metadata only to resolve
+			// descriptor names — never to replace the caller's version. A plain
+			// --name/--content change is a PATCH without any page GET.
 			if file != "" && !hasProps {
 				return updatePagePut(cmd, d, id, f)
 			}
-			return updatePageProperties(cmd, d, id, f, props, unsets, timezone)
+			if hasProps {
+				return updatePageProperties(cmd, d, id, f, props, unsets, timezone)
+			}
+			return updatePageSimplePatch(cmd, d, id, f)
 		},
 	}
 	update.Flags().StringVar(&name, "name", "", "new name")
 	update.Flags().StringVar(&content, "content", "", "new markdown content")
-	update.Flags().Int64Var(&version, "version", 0, "expected version (optimistic locking)")
+	update.Flags().Int64Var(&version, "version", 0, "required for a real update: the lockVersion read from `pages tree` or `pages get` (optimistic locking; missing → 428, stale → 409)")
 	update.Flags().StringVarP(&file, "file", "f", "", "JSON file with PageEditForm (incl. propertyValues); PUT merge — omitted/null fields are kept, empty string is an explicit write. Use --property/--unset-property for PATCH (unset removes a property)")
 	update.Flags().StringArrayVar(&props, "property", nil, "set a property: \"name=value\" (repeatable; routes via PATCH; see `pages describe-properties`)")
 	update.Flags().StringArrayVar(&unsets, "unset-property", nil, "clear a property by name (repeatable; routes via PATCH)")
@@ -290,7 +304,7 @@ func buildPropertyPatch(cmd *cobra.Command, d *command.Deps, id int64, f api.Pag
 	pd := propertyDispatcher{lookup: newCachingLookup(newClientLookup(d.Client)), timezone: tz}
 	values, unsetIDs, pferr := applyPropertyFlagsPatch(
 		cmd.Context(), derefEditValues(f.PropertyValues), props, unsets,
-		derefDescriptors(page.AvailablePropertyDescriptors), pd)
+		page.AvailablePropertyDescriptors, pd)
 	if pferr != nil {
 		return api.PagePatchForm{}, nil, renderPropError(d, pferr, updateInvocation(id))
 	}
@@ -302,25 +316,17 @@ func buildPropertyPatch(cmd *cobra.Command, d *command.Deps, id int64, f api.Pag
 	if len(unsetIDs) > 0 {
 		patch.UnsetPropertyDescriptorIds = &unsetIDs
 	}
-	patch.Version = patchVersion(f.Version, page)
+	// The metadata GET above may report a newer page version; it never replaces
+	// the caller's token — a stale token must surface as a 409, not be papered over.
+	patch.Version = f.Version
 	return patch, page, nil
 }
 
-// updatePagePut performs a -f form page update via PUT. Plain --name/--content
-// flag updates route via PATCH. When the caller passed no --version it auto-fills
-// the optimistic-lock version the same way the PATCH path does (patchVersion):
-// Page.version for non-workflow/unknown, null for a confirmed workflow page. An
-// explicit --version (or -f version) always wins and skips the extra GET. PUT
-// merges omitted/null name, content and propertyValues; an empty string is an
-// explicit write. Removing a property is PATCH --unset-property only.
+// updatePagePut performs a -f form page update via PUT with the caller's version.
+// Plain --name/--content flag updates route via PATCH. PUT merges omitted/null
+// name, content and propertyValues; an empty string is an explicit write.
+// Removing a property is PATCH --unset-property only.
 func updatePagePut(cmd *cobra.Command, d *command.Deps, id int64, f api.PageEditForm) error {
-	if f.Version == nil {
-		page, apiErr := fetchPage(cmd.Context(), d.Client, id)
-		if apiErr != nil {
-			return command.RenderError(d.Printer, apiErr, updateInvocation(id))
-		}
-		f.Version = patchVersion(f.Version, page)
-	}
 	body, apiErr := d.Client.UpdatePage(cmd.Context(), id, f)
 	if apiErr != nil {
 		return command.RenderError(d.Printer, apiErr, updateInvocation(id))
@@ -342,10 +348,23 @@ func updateInvocation(id int64) string {
 // updatePageProperties performs a property-aware page update via PATCH, using the
 // shared resolver.
 func updatePageProperties(cmd *cobra.Command, d *command.Deps, id int64, f api.PageEditForm, props, unsets []string, timezone string) error {
-	patch, page, err := buildPropertyPatch(cmd, d, id, f, props, unsets, timezone)
+	patch, _, err := buildPropertyPatch(cmd, d, id, f, props, unsets, timezone)
 	if err != nil {
 		return err
 	}
+	return sendPagePatch(cmd, d, id, patch)
+}
+
+// updatePageSimplePatch performs a plain --name/--content update via PATCH with
+// the caller's version and WITHOUT any page GET: there are no property names to
+// resolve, and the token comes from the caller's earlier read (tree or page get).
+func updatePageSimplePatch(cmd *cobra.Command, d *command.Deps, id int64, f api.PageEditForm) error {
+	patch := api.PagePatchForm{Name: f.Name, Content: f.Content, Version: f.Version}
+	return sendPagePatch(cmd, d, id, patch)
+}
+
+// sendPagePatch sends the PATCH and renders the result plus the read-back hint.
+func sendPagePatch(cmd *cobra.Command, d *command.Deps, id int64, patch api.PagePatchForm) error {
 	body, apiErr := d.Client.PatchPage(cmd.Context(), id, patch)
 	if apiErr != nil {
 		return command.RenderError(d.Printer, apiErr, updateInvocation(id))
@@ -357,8 +376,9 @@ func updatePageProperties(cmd *cobra.Command, d *command.Deps, id int64, f api.P
 	// On a workflow page the PATCH lands on the working revision, so the default
 	// (published) `pages get` read-back does NOT show it yet — point the caller at
 	// the working-revision view. A non-workflow page shows the value immediately,
-	// so we confirm symmetrically that the change is already live.
-	if page != nil && page.WorkflowEnabled != nil && *page.WorkflowEnabled {
+	// so we confirm symmetrically that the change is already live. The flag is read
+	// from the PATCH response itself, so no extra GET is needed.
+	if workflowEnabledFromBody(body) {
 		d.Printer.Message("Saved to the working revision (not yet published). View: normatik pages get %d --working", id)
 	} else {
 		d.Printer.Message("Saved. The change is live (this page type has no publishing workflow). View: normatik pages get %d", id)
@@ -366,11 +386,41 @@ func updatePageProperties(cmd *cobra.Command, d *command.Deps, id int64, f api.P
 	return nil
 }
 
+// workflowEnabledFromBody reads workflowEnabled from a PageResult response body.
+func workflowEnabledFromBody(body []byte) bool {
+	var res struct {
+		WorkflowEnabled *bool `json:"workflowEnabled"`
+	}
+	if json.Unmarshal(body, &res) != nil || res.WorkflowEnabled == nil {
+		return false
+	}
+	return *res.WorkflowEnabled
+}
+
+// previewPayload returns the payload as printed by --dry-run: the form itself
+// when the caller supplied a version, otherwise a copy without the required
+// version field (its int64 zero value would read as a real token).
+func previewPayload(v any, hasVersion bool) any {
+	if hasVersion {
+		return v
+	}
+	raw, err := json.Marshal(v)
+	if err != nil {
+		return v
+	}
+	var m map[string]any
+	if json.Unmarshal(raw, &m) != nil {
+		return v
+	}
+	delete(m, "version")
+	return m
+}
+
 // previewPageProperties resolves the same PATCH as updatePageProperties but prints
 // it instead of sending it (--dry-run). No write ever happens. In table mode it
 // prefixes a human-readable "name: old -> new" diff; JSON mode stays byte-identical
 // (only the DryRun payload on stdout, no diff), so `--dry-run -o json | jq` is clean.
-func previewPageProperties(cmd *cobra.Command, d *command.Deps, id int64, f api.PageEditForm, props, unsets []string, timezone string) error {
+func previewPageProperties(cmd *cobra.Command, d *command.Deps, id int64, f api.PageEditForm, hasVersion bool, props, unsets []string, timezone string) error {
 	patch, page, err := buildPropertyPatch(cmd, d, id, f, props, unsets, timezone)
 	if err != nil {
 		return err
@@ -378,7 +428,7 @@ func previewPageProperties(cmd *cobra.Command, d *command.Deps, id int64, f api.
 	if d.Printer.Mode != render.JSON {
 		printDryRunDiff(d, page, props, unsets)
 	}
-	d.Printer.DryRun(patch)
+	d.Printer.DryRun(previewPayload(patch, hasVersion))
 	return nil
 }
 
@@ -409,23 +459,19 @@ func dryRunPropertySource(page *api.PublicPageCompositeResult) []api.PropertyVal
 	// property list is empty (e.g. after unsetting everything): falling back to the
 	// published values there would show a stale "old" the PATCH does not touch. Only
 	// an ABSENT working revision falls back to the published values.
-	if wr := page.WorkingRevision; wr != nil {
-		if wr.PropertyValues != nil {
-			return *wr.PropertyValues
-		}
-		return nil
+	// Id is required on a present revision. oapi-codegen renders a required
+	// nullable $ref as a value, so a JSON null arrives as the zero revision.
+	if wr := page.WorkingRevision; wr.Id != 0 {
+		return wr.PropertyValues
 	}
-	if page.PropertyValues != nil {
-		return *page.PropertyValues
-	}
-	return nil
+	return page.PropertyValues
 }
 
 // currentPropertyDisplayByName finds the property value with the given name
 // (case-insensitive) in source and renders its current display, or "-" when absent.
 func currentPropertyDisplayByName(source []api.PropertyValueResult, name string) string {
 	for _, pv := range source {
-		if strings.EqualFold(derefStr(pv.PropertyDescriptorName), name) {
+		if strings.EqualFold(pv.PropertyDescriptorName, name) {
 			return currentPropertyDisplay(pv)
 		}
 	}
@@ -457,40 +503,17 @@ func currentPropertyDisplay(pv api.PropertyValueResult) string {
 // (whichever is populated) for the --dry-run diff.
 func linkedRefNames(pv api.PropertyValueResult) []string {
 	var names []string
-	if pv.PageReferences != nil {
-		for _, ref := range *pv.PageReferences {
-			if n := derefStr(ref.Name); n != "" {
-				names = append(names, n)
-			}
+	for _, ref := range pv.PageReferences {
+		if ref.Name != "" {
+			names = append(names, ref.Name)
 		}
 	}
-	if pv.UserLinks != nil {
-		for _, ul := range *pv.UserLinks {
-			if n := derefStr(ul.DisplayName); n != "" {
-				names = append(names, n)
-			}
+	for _, ul := range pv.UserLinks {
+		if ul.DisplayName != "" {
+			names = append(names, ul.DisplayName)
 		}
 	}
 	return names
-}
-
-// patchVersion picks the optimistic-locking version for a PATCH. An explicit
-// version (from --version or -f) always wins. Otherwise we auto-send Page.version
-// for a NON-workflow page (PATCH checks Page.version) and ONLY suppress it for a
-// confirmed workflow page: workflow PATCH (editWorkingRevision) validates against
-// PageRevision.version, not Page.version, so auto-sending Page.version there would
-// cause spurious 409 CONCURRENT_UPDATE errors (the user can still pass --version
-// with a known revision version). An unknown/absent workflowEnabled falls back to
-// sending the version — a visible 409 is safer than silently dropping optimistic
-// locking on a concurrent edit.
-func patchVersion(explicit *int64, page *api.PublicPageCompositeResult) *int64 {
-	if explicit != nil {
-		return explicit
-	}
-	if page.WorkflowEnabled != nil && *page.WorkflowEnabled {
-		return nil
-	}
-	return page.Version
 }
 
 // addRevisionsWrites extends the pages revisions subtree with workflow writes.

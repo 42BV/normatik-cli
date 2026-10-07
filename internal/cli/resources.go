@@ -318,6 +318,10 @@ func newWorkItemTypesCmd() *cobra.Command {
 
 // ---- work-items (scoped under --page) ----
 
+// workItemFields are the readable columns of work-items list/get; identifier
+// is explicit so the derived-column cap can never drop it.
+var workItemFields = []string{"id", "identifier", "typeSlug", "currentStatusLabel", "dueDate", "description"}
+
 func newWorkItemsCmd() *cobra.Command {
 	c := parent("work-items", "Work items of a page (list, get, transitions, create, edit, delete, comment, transition)")
 	var pageID int64
@@ -329,7 +333,7 @@ func newWorkItemsCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runListURL(cmd, "normatik work-items list", weburl.Page(pageID), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.ListWorkItems(cmd.Context(), pageID, typ)
-			})
+			}, workItemFields...)
 		},
 	}
 	list.Flags().StringVar(&typ, "type", "", "filter by work-item-type slug")
@@ -343,7 +347,7 @@ func newWorkItemsCmd() *cobra.Command {
 			}
 			return runObjectURL(cmd, "normatik work-items get", weburl.Page(pageID), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.GetWorkItem(cmd.Context(), pageID, wid)
-			})
+			}, workItemFields...)
 		},
 	}
 	command.URLFlag(get)

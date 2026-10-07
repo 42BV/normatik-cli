@@ -70,6 +70,23 @@ func loadForm[T any](path string) (T, error) {
 	return v, err
 }
 
+// formHasKey reports whether the JSON object in a -f form file carries the given
+// top-level key. Needed for required scalar fields (e.g. version int64) whose Go
+// zero value is a legitimate wire value, so presence cannot be derived from the
+// decoded struct.
+func formHasKey(path, key string) bool {
+	data, err := localfile.ReadBounded(path, maxFormFileBytes)
+	if err != nil {
+		return false
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) != nil {
+		return false
+	}
+	_, ok := raw[key]
+	return ok
+}
+
 // runWrite builds deps, calls a write fn and renders the result; an empty 2xx
 // body (204) prints the success message instead of a blank object.
 func runWrite(cmd *cobra.Command, invocation, successMsg string, fn func(*command.Deps) ([]byte, *client.APIError), fields ...string) error {

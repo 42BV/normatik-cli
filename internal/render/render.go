@@ -79,8 +79,12 @@ func (p *Printer) PageList(list *api.PagePageListResult) {
 	}
 	if list.Content != nil {
 		for _, it := range *list.Content {
+			children := "—"
+			if it.HasChildren {
+				children = "yes"
+			}
 			fmt.Fprintf(tw, "%d\t%s\t%s\t%s\n",
-				i64(it.Id), s(it.Name), s(it.PageTypeName), yesno(it.HasChildren))
+				it.Id, terminalLine(it.Name), terminalLine(it.PageTypeName), children)
 		}
 	}
 	_ = tw.Flush()
@@ -177,6 +181,25 @@ func (p *Printer) Malformed(status int, body []byte) {
 	}
 	fmt.Fprintf(p.Err, "Error: HTTP %d without ProblemDetail (no errorCode).\n", status)
 	fmt.Fprintf(p.Err, "  Body: %s\n", terminalLine(truncate(body, 200)))
+}
+
+// LocalError renders a client-side precondition failure (no request was sent).
+// JSON mode emits one machine-readable envelope on stderr — same outer shape as
+// Problem ({"error":{...}}) so agents branch on one contract; table mode prints the
+// usual "Error [CODE]: detail" plus a hint line. Stdout stays untouched.
+func (p *Printer) LocalError(code, detail, hint string, exitCode int) {
+	if p.Mode == JSON {
+		env := map[string]any{"code": code, "detail": detail, "exitCode": exitCode}
+		if hint != "" {
+			env["hint"] = hint
+		}
+		p.json(p.Err, map[string]any{"error": env})
+		return
+	}
+	fmt.Fprintf(p.Err, "Error [%s]: %s\n", terminalLine(code), terminalLine(detail))
+	if hint != "" {
+		fmt.Fprintf(p.Err, "  Hint: %s\n", terminalLine(hint))
+	}
 }
 
 func (p *Printer) Message(format string, a ...any) {
@@ -541,12 +564,6 @@ func i64(p *int64) int64 {
 		return 0
 	}
 	return *p
-}
-func yesno(p *bool) string {
-	if p != nil && *p {
-		return "yes"
-	}
-	return "—"
 }
 func truncate(b []byte, n int) string {
 	if len(b) <= n {

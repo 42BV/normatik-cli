@@ -249,24 +249,26 @@ var synth = map[string]synthFunc{
 		}
 		return ""
 	},
-	// After a stale/concurrent write the safe next step is to re-read the current
-	// state, review the other change, then retry — a blind retry would clobber it.
-	// A `pages update <id>` invocation carries the id (updateInvocation), so emit a
-	// runnable `pages get <id>` and surface the fresh version for the retry. Other
-	// entities fall back to the generic advisory.
+	// After a stale/concurrent write the safe next step is reload → review the
+	// conflicting change → re-apply your own change on the fresh content → write
+	// again with the token from that reload. currentVersion is information for that
+	// rebase, never permission to retry blindly: a `--version <current>` retry would
+	// clobber the other change. A `pages update <id>` invocation carries the id
+	// (updateInvocation), so emit a runnable `pages get <id>`; other entities fall
+	// back to the generic advisory.
 	"CONCURRENT_UPDATE": func(p *Problem, base string) string {
 		if strings.HasPrefix(base, "normatik pages update ") {
 			if id := argAfter(base, "update"); id != "" {
 				if p.CurrentVersion != "" {
-					return fmt.Sprintf("normatik pages get %s   # changed concurrently to version %s; review, then re-run your update with --version %s", id, p.CurrentVersion, p.CurrentVersion)
+					return fmt.Sprintf("normatik pages get %s   # changed concurrently (now version %s): reload, review the conflicting change, re-apply your change on the fresh content, then update again with the lockVersion from that reload — do not retry blindly", id, p.CurrentVersion)
 				}
-				return fmt.Sprintf("normatik pages get %s   # changed concurrently; review, then re-run your update", id)
+				return fmt.Sprintf("normatik pages get %s   # changed concurrently: reload, review the conflicting change, re-apply your change on the fresh content, then update again with the lockVersion from that reload", id)
 			}
 		}
 		if p.CurrentVersion != "" {
-			return fmt.Sprintf("re-GET the resource (current version %s) and try again", p.CurrentVersion)
+			return fmt.Sprintf("re-GET the resource (current version %s), review the conflicting change and re-apply yours before writing again — do not retry blindly", p.CurrentVersion)
 		}
-		return "re-GET the resource, take the fresh version and try again"
+		return "re-GET the resource, review the conflicting change and re-apply yours before writing again"
 	},
 	"RATE_LIMIT_EXCEEDED": func(p *Problem, _ string) string {
 		if p.RetryAfterSeconds != nil {

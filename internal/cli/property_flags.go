@@ -202,11 +202,9 @@ func (l *clientLookup) EnumValues(ctx context.Context, domainEnumID int64) ([]en
 	if err := json.Unmarshal(body, &de); err != nil {
 		return nil, err
 	}
-	var out []enumValue
-	if de.Values != nil {
-		for _, v := range *de.Values {
-			out = append(out, enumValue{id: deref64(v.Id), value: derefStr(v.Value)})
-		}
+	out := make([]enumValue, 0, len(de.Values))
+	for _, v := range de.Values {
+		out = append(out, enumValue{id: v.Id, value: v.Value})
 	}
 	return out, nil
 }
@@ -225,7 +223,7 @@ func (l *clientLookup) PagesByName(ctx context.Context, name string, allowedPage
 	var out []namedRef
 	if res.Content != nil {
 		for _, p := range *res.Content {
-			out = append(out, namedRef{id: deref64(p.Id), name: derefStr(p.Name), note: derefStr(p.PageTypeName)})
+			out = append(out, namedRef{id: p.Id, name: p.Name, note: derefStr(p.PageTypeName)})
 		}
 	}
 	return out, nil
@@ -245,7 +243,7 @@ func (l *clientLookup) PageTypesByName(ctx context.Context, _ string) ([]namedRe
 	}
 	out := make([]namedRef, 0, len(pts))
 	for _, p := range pts {
-		out = append(out, namedRef{id: deref64(p.Id), name: derefStr(p.Name)})
+		out = append(out, namedRef{id: p.Id, name: p.Name})
 	}
 	l.ptCache, l.ptLoaded = out, true
 	return out, nil
@@ -262,7 +260,7 @@ func (l *clientLookup) UsersByEmail(ctx context.Context, email string) ([]namedR
 	}
 	var out []namedRef
 	for _, u := range users {
-		out = append(out, namedRef{id: deref64(u.Id), name: derefStr(u.Email)})
+		out = append(out, namedRef{id: u.Id, name: u.Email})
 	}
 	return out, nil
 }
@@ -313,7 +311,7 @@ func writableDataType(dt api.PropertyDescriptorResultDataType) bool {
 // lookupHint describes how a writable property's value is interpreted, for the
 // `describe-properties` discovery output.
 func lookupHint(desc api.PropertyDescriptorResult) string {
-	dt := derefDataType(desc.DataType)
+	dt := desc.DataType
 	switch dt {
 	case api.PropertyDescriptorResultDataTypeTEXT:
 		return "free text"
@@ -384,7 +382,7 @@ func decimalsSuffix(desc api.PropertyDescriptorResult) string {
 // with a permission/transport error — the caller still shows the enum name from
 // the hint. A decoded 429 is returned so describe-properties cannot swallow it.
 func describeEnumValues(ctx context.Context, lookup propertyLookup, desc api.PropertyDescriptorResult) ([]string, error) {
-	if derefDataType(desc.DataType) != api.PropertyDescriptorResultDataTypeENUM || desc.DomainEnumId == nil {
+	if desc.DataType != api.PropertyDescriptorResultDataTypeENUM || desc.DomainEnumId == nil {
 		return nil, nil
 	}
 	values, err := lookup.EnumValues(ctx, *desc.DomainEnumId)
@@ -406,7 +404,7 @@ func describeEnumValues(ctx context.Context, lookup propertyLookup, desc api.Pro
 // table cells, so the values must live in the hint string).
 func describeHint(desc api.PropertyDescriptorResult, enumValues []string) string {
 	hint := lookupHint(desc)
-	if len(enumValues) > 0 && derefDataType(desc.DataType) == api.PropertyDescriptorResultDataTypeENUM {
+	if len(enumValues) > 0 && desc.DataType == api.PropertyDescriptorResultDataTypeENUM {
 		hint += "; values: " + strings.Join(enumValues, ", ")
 	}
 	return hint
@@ -416,8 +414,8 @@ func describeHint(desc api.PropertyDescriptorResult, enumValues []string) string
 // writable descriptor so an agent can construct a call without a second command.
 // Read-only descriptors return "" (no example).
 func describeExample(desc api.PropertyDescriptorResult, enumValues []string) string {
-	name := derefStr(desc.Name)
-	switch derefDataType(desc.DataType) {
+	name := desc.Name
+	switch desc.DataType {
 	case api.PropertyDescriptorResultDataTypeTEXT:
 		return name + "=some text"
 	case api.PropertyDescriptorResultDataTypeMARKDOWN:
@@ -473,11 +471,11 @@ type propertyDispatcher struct {
 }
 
 func (pd propertyDispatcher) build(ctx context.Context, desc api.PropertyDescriptorResult, name, rawValue string) (api.PropertyValueForm, *propFlagError) {
-	form := api.PropertyValueForm{PropertyDescriptorId: deref64(desc.Id)}
-	if desc.DataType == nil {
+	form := api.PropertyValueForm{PropertyDescriptorId: desc.Id}
+	if desc.DataType == "" {
 		return form, invalidRequest(fmt.Sprintf("property '%s' has no dataType in the metadata", name))
 	}
-	dt := *desc.DataType
+	dt := desc.DataType
 	switch dt {
 	case api.PropertyDescriptorResultDataTypeTEXT, api.PropertyDescriptorResultDataTypeMARKDOWN:
 		v := rawValue
@@ -815,7 +813,7 @@ func resolveUnsetIDs(unsets []string, descriptors []api.PropertyDescriptorResult
 		if !ok {
 			return nil, unknownProperty(nm, descriptors)
 		}
-		id := deref64(desc.Id)
+		id := desc.Id
 		if !seen[id] {
 			seen[id] = true
 			ids = append(ids, id)
@@ -937,7 +935,7 @@ func toEditForm(pv api.PropertyValueForm) api.PropertyValueEditForm {
 // findDescriptor matches a descriptor by name, case-insensitively.
 func findDescriptor(descriptors []api.PropertyDescriptorResult, name string) (*api.PropertyDescriptorResult, bool) {
 	for i := range descriptors {
-		if descriptors[i].Name != nil && strings.EqualFold(*descriptors[i].Name, name) {
+		if strings.EqualFold(descriptors[i].Name, name) {
 			return &descriptors[i], true
 		}
 	}
@@ -949,8 +947,8 @@ func findDescriptor(descriptors []api.PropertyDescriptorResult, name string) (*a
 func unknownProperty(name string, descriptors []api.PropertyDescriptorResult) *propFlagError {
 	var writable []string
 	for _, d := range descriptors {
-		if d.Name != nil && writableDataType(derefDataType(d.DataType)) {
-			writable = append(writable, *d.Name)
+		if writableDataType(d.DataType) {
+			writable = append(writable, d.Name)
 		}
 	}
 	extra := []string{fmt.Sprintf("valid values for 'property': %s", strings.Join(writable, ", "))}
@@ -1147,13 +1145,6 @@ func dashEmpty(s string) string {
 	return s
 }
 
-func deref64(p *int64) int64 {
-	if p == nil {
-		return 0
-	}
-	return *p
-}
-
 func derefStr(p *string) string {
 	if p == nil {
 		return ""
@@ -1169,20 +1160,6 @@ func f32ToF64Ptr(p *float32) *float64 {
 	}
 	v := float64(*p)
 	return &v
-}
-
-func derefDataType(p *api.PropertyDescriptorResultDataType) api.PropertyDescriptorResultDataType {
-	if p == nil {
-		return ""
-	}
-	return *p
-}
-
-func derefDescriptors(p *[]api.PropertyDescriptorResult) []api.PropertyDescriptorResult {
-	if p == nil {
-		return nil
-	}
-	return *p
 }
 
 func derefEditValues(p *[]api.PropertyValueEditForm) []api.PropertyValueEditForm {

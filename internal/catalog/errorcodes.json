@@ -282,7 +282,7 @@
     "name": "ENVIRONMENT_SEED_NO_ELIGIBLE_ADMIN",
     "status": 409,
     "title": "No eligible replacement admin",
-    "userMessage": "The environment seed cannot be completed because no other active user has a local password and effective ADMIN and PUBLISHER roles.",
+    "userMessage": "The environment seed cannot be completed because no other active user has a local password and an effective ADMIN role.",
     "hintKind": "NO_HINT",
     "exitCode": 7
   },
@@ -970,6 +970,14 @@
     "exitCode": 3
   },
   {
+    "name": "PROPERTY_CREATE_PLAN_NOT_FEASIBLE",
+    "status": 409,
+    "title": "Page could not be created",
+    "userMessage": "This page can no longer be created from this property. Close the dialog and try again.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
     "name": "PROPERTY_DESCRIPTOR_CONTAINS_THIS_PAGE_IN_USE",
     "status": 409,
     "title": "Property descriptor referenced as contains-this-page constraint",
@@ -1214,6 +1222,15 @@
     "staticHint": "Sorting is not enabled for this page type. Use GET /public/v1/page-types/{id} to check if sortableChildPages is enabled on the parent page type."
   },
   {
+    "name": "UPDATE_PRECONDITION_REQUIRED",
+    "status": 428,
+    "title": "Update precondition required",
+    "userMessage": "This update requires the current lock version. Read the page or the page tree first and send its lockVersion as version.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "Page updates require the version field. Read lockVersion from GET /public/v1/pages/tree or GET /public/v1/pages/{id} and send it unchanged as version in the PUT or PATCH body."
+  },
+  {
     "name": "USER_GROUP_NOT_FOUND",
     "status": 404,
     "title": "User group not found",
@@ -1238,6 +1255,38 @@
     "hintKind": "STATIC",
     "exitCode": 6,
     "staticHint": "Use GET /public/v1/users to list all users and verify the user ID."
+  },
+  {
+    "name": "WORK_ITEM_IDENTIFIER_ARCHIVED",
+    "status": 409,
+    "title": "Task ID used in archive",
+    "userMessage": "This ID is used by a task on an archived page.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "WORK_ITEM_IDENTIFIER_EXISTS",
+    "status": 409,
+    "title": "Task ID already in use",
+    "userMessage": "This ID is already used by another task.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "WORK_ITEM_IDENTIFIER_IN_TRASH",
+    "status": 409,
+    "title": "Task ID used in trash",
+    "userMessage": "This ID is used by a task on a page in the trash.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "WORK_ITEM_IDENTIFIER_TOO_LONG",
+    "status": 400,
+    "title": "Task ID too long",
+    "userMessage": "ID can be at most 40 characters.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
   },
   {
     "name": "WORK_ITEM_NOT_FOUND",
