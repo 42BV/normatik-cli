@@ -1222,6 +1222,54 @@
     "staticHint": "Sorting is not enabled for this page type. Use GET /public/v1/page-types/{id} to check if sortableChildPages is enabled on the parent page type."
   },
   {
+    "name": "TWO_FACTOR_CHALLENGE_EXPIRED",
+    "status": 401,
+    "title": "Two-factor challenge expired",
+    "userMessage": "Your two-factor session has expired. Please sign in again.",
+    "hintKind": "NO_HINT",
+    "exitCode": 4
+  },
+  {
+    "name": "TWO_FACTOR_INVALID_CODE",
+    "status": 401,
+    "title": "Invalid verification code",
+    "userMessage": "The verification code is incorrect.",
+    "hintKind": "NO_HINT",
+    "exitCode": 4
+  },
+  {
+    "name": "TWO_FACTOR_INVALID_REQUEST",
+    "status": 400,
+    "title": "Invalid two-factor request",
+    "userMessage": "The verification code must be exactly six digits.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "TWO_FACTOR_POLICY_CONFLICT",
+    "status": 409,
+    "title": "Two-factor policy conflict",
+    "userMessage": "The individual two-factor requirement cannot be changed while the global policy requires two-factor for all users.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "TWO_FACTOR_RATE_LIMITED",
+    "status": 429,
+    "title": "Too many verification attempts",
+    "userMessage": "Too many failed verification attempts. Please wait before trying again.",
+    "hintKind": "NO_HINT",
+    "exitCode": 75
+  },
+  {
+    "name": "TWO_FACTOR_STATE_CONFLICT",
+    "status": 409,
+    "title": "Two-factor state conflict",
+    "userMessage": "This action does not match the current step of your two-factor sign-in.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
     "name": "UPDATE_PRECONDITION_REQUIRED",
     "status": 428,
     "title": "Update precondition required",
