@@ -165,6 +165,13 @@ func (p *Printer) Problem(pr *problem.Problem, suggestion string) {
 			fmt.Fprintf(p.Err, "  %s: %s\n", terminalLine(x.Key), terminalLine(txt))
 		}
 	}
+	// A refused move to another space lists its blockers (NORM-vnvimssy); other arrays stay JSON-only.
+	if pr.ErrorCode == "PAGE_MOVE_TO_SPACE_BLOCKED" {
+		var blockers []any
+		if raw, ok := pr.Raw["blockers"]; ok && json.Unmarshal(raw, &blockers) == nil && len(blockers) > 0 {
+			writeMoveToSpaceBlockers(p.Err, "  ", blockers)
+		}
+	}
 	if suggestion != "" {
 		fmt.Fprintf(p.Err, "  Try:  %s\n", terminalLine(suggestion))
 	}

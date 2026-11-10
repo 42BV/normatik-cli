@@ -47,7 +47,7 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 			}
 			return runWriteURL(cmd, "normatik property-descriptors create", "Property descriptor created.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.CreatePropertyDescriptor(cmd.Context(), pageTypeID, form)
-			}, func([]byte) string { return weburl.PageType(pageTypeID) }, "id", "name", "dataType")
+			}, func([]byte) string { return lookupPageTypeURL(cmd, d, pageTypeID) }, "id", "name", "dataType")
 		},
 	}
 	create.Flags().Int64Var(&pageTypeID, "page-type-id", 0, "page type id (required)")
@@ -115,9 +115,9 @@ func addPropertyDescriptorWrites(c *cobra.Command) {
 			if !ok {
 				return command.Handled(2)
 			}
-			return runWriteURL(cmd, "normatik property-descriptors sort", "Descriptors sorted.", func(d *command.Deps) ([]byte, *client.APIError) {
+			return runWriteURLFor(cmd, "normatik property-descriptors sort", "Descriptors sorted.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.SortPropertyDescriptors(cmd.Context(), sortPageTypeID, ids)
-			}, func([]byte) string { return weburl.PageType(sortPageTypeID) })
+			}, func(d *command.Deps, _ []byte) string { return lookupPageTypeURL(cmd, d, sortPageTypeID) })
 		},
 	}
 	sort.Flags().Int64Var(&sortPageTypeID, "page-type-id", 0, "page type id (required)")
@@ -392,10 +392,10 @@ func addWorkItemsWrites(c *cobra.Command) {
 // ---- work-item-types writes (slug-keyed) ----
 
 func addWorkItemTypesWrites(c *cobra.Command) {
-	var name, slug string
+	var name, slug, createSpace string
 	var domainEnumID, defaultStatusID int64
 	create := &cobra.Command{
-		Use: "create", Short: "Create a work item type (--name, --slug)",
+		Use: "create", Short: "Create a work item type (--name, --slug; --space for one local to a space)",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			f := api.WorkItemTypeCreateForm{}
 			if cmd.Flags().Changed("name") {
@@ -411,22 +411,34 @@ func addWorkItemTypesWrites(c *cobra.Command) {
 				f.DefaultStatusValueId = i64Ptr(defaultStatusID)
 			}
 			return runWriteURL(cmd, "normatik work-item-types create", "Work item type created.", func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.CreateWorkItemType(cmd.Context(), f)
-			}, func(body []byte) string { return weburl.AdminWorkItemType(responseSlug(body)) }, "slug", "name")
+				if createSpace == "" {
+					return d.Client.CreateWorkItemType(cmd.Context(), f)
+				}
+				sp, apiErr := spaceByKey(cmd.Context(), d, createSpace)
+				if apiErr != nil {
+					return nil, apiErr
+				}
+				return d.Client.CreateSpaceWorkItemType(cmd.Context(), sp.Id, f)
+			}, func(body []byte) string { return workItemTypeURL(responseSlug(body), body) }, "slug", "name")
 		},
 	}
 	create.Flags().StringVar(&name, "name", "", "name")
 	create.Flags().StringVar(&slug, "slug", "", "slug")
 	create.Flags().Int64Var(&domainEnumID, "domain-enum-id", 0, "linked domain enum id")
 	create.Flags().Int64Var(&defaultStatusID, "default-status-value-id", 0, "default status value id")
+	create.Flags().StringVar(&createSpace, "space", "", "create the definition local to this space (key): the space is its origin and the only space that may use it; without --space it is global")
 	command.URLFlag(create)
 
 	update := &cobra.Command{
-		Use: "update <slug> -f form.json", Short: "Update a work item type (-f form.json)", Args: cobra.ExactArgs(1),
+		Use: "update <slug> --space <key> -f form.json", Short: "Update a work item type (-f form.json)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			d, err := command.Build(cmd)
 			if err != nil {
 				return err
+			}
+			space, serr := requireDefinitionSpace(cmd, d)
+			if serr != nil {
+				return serr
 			}
 			file, _ := cmd.Flags().GetString("file")
 			f, lerr := loadForm[api.WorkItemTypeUpdateForm](file)
@@ -435,27 +447,32 @@ func addWorkItemTypesWrites(c *cobra.Command) {
 				return command.Handled(2)
 			}
 			return runWriteURL(cmd, "normatik work-item-types update", "Work item type updated.", func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.UpdateWorkItemType(cmd.Context(), args[0], f)
-			}, func([]byte) string { return weburl.AdminWorkItemType(args[0]) })
+				return d.Client.UpdateWorkItemType(cmd.Context(), args[0], space, f)
+			}, func(body []byte) string { return workItemTypeURL(args[0], body) })
 		},
 	}
 	update.Flags().StringP("file", "f", "", "JSON file with the form (required)")
 	_ = update.MarkFlagRequired("file")
+	addDefinitionSpaceFlag(update)
 	command.URLFlag(update)
 
 	// Delete points at the bare list route (mapping table): the detail page
 	// is gone after the delete.
 	del := &cobra.Command{
-		Use: "delete <slug>", Short: "Delete a work item type", Args: cobra.ExactArgs(1),
+		Use: "delete <slug> --space <key>", Short: "Delete a work item type", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			d, err := command.Build(cmd)
 			if err != nil {
 				return err
 			}
+			space, serr := requireDefinitionSpace(cmd, d)
+			if serr != nil {
+				return serr
+			}
 			if e := confirmHard(cmd, d, args[0]); e != nil {
 				return e
 			}
-			body, apiErr := d.Client.DeleteWorkItemType(cmd.Context(), args[0])
+			body, apiErr := d.Client.DeleteWorkItemType(cmd.Context(), args[0], space)
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik work-item-types delete")
 			}
@@ -467,15 +484,20 @@ func addWorkItemTypesWrites(c *cobra.Command) {
 		},
 	}
 	addHardConfirm(del)
+	addDefinitionSpaceFlag(del)
 	command.URLFlag(del)
 
 	transitions := &cobra.Command{Use: "transitions", Short: "Transitions of a work item type (add, update, remove)", RunE: command.UnknownSub}
 	addT := &cobra.Command{
-		Use: "add <typeSlug> -f form.json", Short: "Add a transition (-f form.json)", Args: cobra.ExactArgs(1),
+		Use: "add <typeSlug> --space <key> -f form.json", Short: "Add a transition (-f form.json)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			d, err := command.Build(cmd)
 			if err != nil {
 				return err
+			}
+			space, serr := requireDefinitionSpace(cmd, d)
+			if serr != nil {
+				return serr
 			}
 			file, _ := cmd.Flags().GetString("file")
 			f, lerr := loadForm[api.WorkItemTransitionCreateForm](file)
@@ -484,15 +506,16 @@ func addWorkItemTypesWrites(c *cobra.Command) {
 				return command.Handled(2)
 			}
 			return runWriteURL(cmd, "normatik work-item-types transitions add", "Transition added.", func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.AddWorkItemTransition(cmd.Context(), args[0], f)
-			}, func([]byte) string { return weburl.AdminWorkItemType(args[0]) })
+				return d.Client.AddWorkItemTransition(cmd.Context(), args[0], space, f)
+			}, func([]byte) string { return lookupWorkItemTypeURL(cmd, d, args[0], space) })
 		},
 	}
 	addT.Flags().StringP("file", "f", "", "JSON file with the form (required)")
 	_ = addT.MarkFlagRequired("file")
+	addDefinitionSpaceFlag(addT)
 	command.URLFlag(addT)
 	updT := &cobra.Command{
-		Use: "update <typeSlug> <transitionId> -f form.json", Short: "Update a transition (-f form.json)", Args: cobra.ExactArgs(2),
+		Use: "update <typeSlug> <transitionId> --space <key> -f form.json", Short: "Update a transition (-f form.json)", Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			tid, perr := command.ParseID(args[1])
 			if perr != nil {
@@ -501,6 +524,10 @@ func addWorkItemTypesWrites(c *cobra.Command) {
 			d, err := command.Build(cmd)
 			if err != nil {
 				return err
+			}
+			space, serr := requireDefinitionSpace(cmd, d)
+			if serr != nil {
+				return serr
 			}
 			file, _ := cmd.Flags().GetString("file")
 			f, lerr := loadForm[api.WorkItemTransitionUpdateForm](file)
@@ -509,15 +536,16 @@ func addWorkItemTypesWrites(c *cobra.Command) {
 				return command.Handled(2)
 			}
 			return runWriteURL(cmd, "normatik work-item-types transitions update", "Transition updated.", func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.UpdateWorkItemTransition(cmd.Context(), args[0], tid, f)
-			}, func([]byte) string { return weburl.AdminWorkItemType(args[0]) })
+				return d.Client.UpdateWorkItemTransition(cmd.Context(), args[0], space, tid, f)
+			}, func([]byte) string { return lookupWorkItemTypeURL(cmd, d, args[0], space) })
 		},
 	}
 	updT.Flags().StringP("file", "f", "", "JSON file with the form (required)")
 	_ = updT.MarkFlagRequired("file")
+	addDefinitionSpaceFlag(updT)
 	command.URLFlag(updT)
 	remT := &cobra.Command{
-		Use: "remove <typeSlug> <transitionId>", Short: "Remove a transition", Args: cobra.ExactArgs(2),
+		Use: "remove <typeSlug> <transitionId> --space <key>", Short: "Remove a transition", Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			tid, perr := command.ParseID(args[1])
 			if perr != nil {
@@ -527,20 +555,25 @@ func addWorkItemTypesWrites(c *cobra.Command) {
 			if err != nil {
 				return err
 			}
+			space, serr := requireDefinitionSpace(cmd, d)
+			if serr != nil {
+				return serr
+			}
 			if e := confirmSoft(cmd, d); e != nil {
 				return e
 			}
-			body, apiErr := d.Client.RemoveWorkItemTransition(cmd.Context(), args[0], tid)
+			body, apiErr := d.Client.RemoveWorkItemTransition(cmd.Context(), args[0], space, tid)
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik work-item-types transitions remove")
 			}
-			if command.PrintURL(d, cmd, weburl.AdminWorkItemType(args[0])) {
+			if command.PrintURL(d, cmd, lookupWorkItemTypeURL(cmd, d, args[0], space)) {
 				return nil
 			}
 			writeResult(d, body, "Transition removed.")
 			return nil
 		},
 	}
+	addDefinitionSpaceFlag(remT)
 	command.URLFlag(remT)
 	addSoftConfirm(remT)
 	transitions.AddCommand(addT, updT, remT)

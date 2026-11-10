@@ -147,22 +147,33 @@ func (c *Client) TransitionWorkItem(ctx context.Context, pageID, workItemID int6
 func (c *Client) CreateWorkItemType(ctx context.Context, f api.WorkItemTypeCreateForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.CreateWorkItemType(ctx, f) })
 }
-func (c *Client) UpdateWorkItemType(ctx context.Context, slug string, f api.WorkItemTypeUpdateForm) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.UpdateWorkItemType(ctx, slug, f) })
-}
-func (c *Client) DeleteWorkItemType(ctx context.Context, slug string) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.DeleteWorkItemType(ctx, slug) })
-}
-func (c *Client) AddWorkItemTransition(ctx context.Context, typeSlug string, f api.WorkItemTransitionCreateForm) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.CreateWorkItemTypeTransition(ctx, typeSlug, f) })
-}
-func (c *Client) UpdateWorkItemTransition(ctx context.Context, typeSlug string, transitionID int64, f api.WorkItemTransitionUpdateForm) ([]byte, *APIError) {
+
+// The slug actions below name the space (key) of the work item type: a slug is only unique within the global
+// types plus the local types of one space.
+func (c *Client) UpdateWorkItemType(ctx context.Context, slug, space string, f api.WorkItemTypeUpdateForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) {
-		return c.api.UpdateWorkItemTypeTransition(ctx, typeSlug, transitionID, f)
+		return c.api.UpdateWorkItemType(ctx, slug, &api.UpdateWorkItemTypeParams{Space: space}, f)
 	})
 }
-func (c *Client) RemoveWorkItemTransition(ctx context.Context, typeSlug string, transitionID int64) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.DeleteWorkItemTypeTransition(ctx, typeSlug, transitionID) })
+func (c *Client) DeleteWorkItemType(ctx context.Context, slug, space string) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.DeleteWorkItemType(ctx, slug, &api.DeleteWorkItemTypeParams{Space: space})
+	})
+}
+func (c *Client) AddWorkItemTransition(ctx context.Context, typeSlug, space string, f api.WorkItemTransitionCreateForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.CreateWorkItemTypeTransition(ctx, typeSlug, &api.CreateWorkItemTypeTransitionParams{Space: space}, f)
+	})
+}
+func (c *Client) UpdateWorkItemTransition(ctx context.Context, typeSlug, space string, transitionID int64, f api.WorkItemTransitionUpdateForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.UpdateWorkItemTypeTransition(ctx, typeSlug, transitionID, &api.UpdateWorkItemTypeTransitionParams{Space: space}, f)
+	})
+}
+func (c *Client) RemoveWorkItemTransition(ctx context.Context, typeSlug, space string, transitionID int64) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.DeleteWorkItemTypeTransition(ctx, typeSlug, transitionID, &api.DeleteWorkItemTypeTransitionParams{Space: space})
+	})
 }
 
 // ---- Page restrictions ----
@@ -196,14 +207,20 @@ func (c *Client) RemoveGroupAccess(ctx context.Context, pageID, accessID int64) 
 
 // ---- Workflow roles / landing settings ----
 
-func (c *Client) SetUserWorkflowRole(ctx context.Context, userID int64, f api.WorkflowRoleForm) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.UpdateUserWorkflowRole(ctx, userID, f) })
+func (c *Client) SetUserWorkflowRole(ctx context.Context, userID int64, space string, f api.WorkflowRoleForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.UpdateUserWorkflowRole(ctx, userID, &api.UpdateUserWorkflowRoleParams{Space: &space}, f)
+	})
 }
-func (c *Client) SetGroupWorkflowRole(ctx context.Context, groupID int64, f api.WorkflowRoleForm) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.UpdateGroupWorkflowRole(ctx, groupID, f) })
+func (c *Client) SetGroupWorkflowRole(ctx context.Context, groupID int64, space string, f api.WorkflowRoleForm) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.UpdateGroupWorkflowRole(ctx, groupID, &api.UpdateGroupWorkflowRoleParams{Space: &space}, f)
+	})
 }
-func (c *Client) UpdateLandingSettings(ctx context.Context, f api.LandingSettingsForm) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.UpdateLandingSettings(ctx, f) })
+func (c *Client) UpdateLandingSettings(ctx context.Context, f api.LandingSettingsForm, space string, token ...string) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.UpdateLandingSettings(ctx, &api.UpdateLandingSettingsParams{Space: spaceParam(space)}, f, withSettingsToken(token))
+	})
 }
 
 // ---- Environment (name/banner, Google login — admin only) ----
@@ -263,8 +280,8 @@ func (c *Client) PerformTransition(ctx context.Context, id int64, f api.Transiti
 func (c *Client) RestoreVersion(ctx context.Context, id int64, revisionNumber int32) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.RestorePageVersion(ctx, id, revisionNumber) })
 }
-func (c *Client) RestoreFromTrash(ctx context.Context, pageID int64, reason string) ([]byte, *APIError) {
-	f := api.RestorePageForm{}
+func (c *Client) RestoreFromTrash(ctx context.Context, pageID int64, reason string, target RestoreTarget) ([]byte, *APIError) {
+	f := api.RestorePageToSpaceForm{TargetSpaceId: target.SpaceID, TargetParentId: target.ParentID, TargetRoot: target.Root}
 	if strings.TrimSpace(reason) != "" {
 		r := reason
 		f.Reason = &r
@@ -277,8 +294,18 @@ func (c *Client) PurgeFromTrash(ctx context.Context, pageID int64) ([]byte, *API
 
 // UnarchivePage — POST /public/v1/pages/admin/archive/{pageId}/unarchive: the
 // server-side name of what the CLI exposes as `archive restore`.
-func (c *Client) UnarchivePage(ctx context.Context, pageID int64) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.UnarchivePage(ctx, pageID) })
+func (c *Client) UnarchivePage(ctx context.Context, pageID int64, target RestoreTarget) ([]byte, *APIError) {
+	f := api.UnarchivePageJSONRequestBody{TargetSpaceId: target.SpaceID, TargetParentId: target.ParentID, TargetRoot: target.Root}
+	return c.DoRaw(func() (*http.Response, error) { return c.api.UnarchivePage(ctx, pageID, f) })
+}
+
+// RestoreTarget is the optional explicit restore destination of the admin
+// restore routes. All fields nil is the plain restore; the server refuses any
+// field while the original space still exists (RESTORE_TARGET_SPACE_NOT_ALLOWED).
+type RestoreTarget struct {
+	SpaceID  *int64
+	ParentID *int64
+	Root     *bool
 }
 
 // DeleteArchivedPage — DELETE /public/v1/pages/admin/archive/{pageId}: moves an
@@ -295,10 +322,10 @@ func (c *Client) CascadeArchivePage(ctx context.Context, id int64, f api.Cascade
 func (c *Client) CascadeTrashPage(ctx context.Context, id int64, f api.CascadeTrashForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadeTrashPage(ctx, id, f) })
 }
-func (c *Client) CascadeUnarchivePage(ctx context.Context, pageID int64, f api.CascadeSubtreeForm) ([]byte, *APIError) {
+func (c *Client) CascadeUnarchivePage(ctx context.Context, pageID int64, f api.CascadeUnarchiveToSpaceForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadeUnarchivePage(ctx, pageID, f) })
 }
-func (c *Client) CascadeRestoreFromTrash(ctx context.Context, pageID int64, f api.CascadeRestoreForm) ([]byte, *APIError) {
+func (c *Client) CascadeRestoreFromTrash(ctx context.Context, pageID int64, f api.CascadeRestoreToSpaceForm) ([]byte, *APIError) {
 	return c.DoRaw(func() (*http.Response, error) { return c.api.CascadeRestorePageFromTrash(ctx, pageID, f) })
 }
 func (c *Client) CascadePermanentDeleteFromTrash(ctx context.Context, pageID int64) ([]byte, *APIError) {

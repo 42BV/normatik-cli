@@ -131,8 +131,11 @@ func (c *Client) ListWorkItemTypes(ctx context.Context, page, size int, sort []s
 	})
 }
 
-func (c *Client) GetWorkItemType(ctx context.Context, slug string) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.GetWorkItemType(ctx, slug) })
+// GetWorkItemType reads a work item type by slug in the given space (key): the global type or the one local to it.
+func (c *Client) GetWorkItemType(ctx context.Context, slug, space string) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.GetWorkItemType(ctx, slug, &api.GetWorkItemTypeParams{Space: space})
+	})
 }
 
 // ---- Work items (scoped under a page) ----
@@ -171,8 +174,8 @@ func (c *Client) GetDomainEnumUsages(ctx context.Context, id int64) ([]byte, *AP
 
 // ---- Workflow roles (bounded picker) ----
 
-func (c *Client) GetWorkflowRoles(ctx context.Context, include string) ([]byte, *APIError) {
-	params := &api.GetWorkflowRolesParams{}
+func (c *Client) GetWorkflowRoles(ctx context.Context, space, include string) ([]byte, *APIError) {
+	params := &api.GetWorkflowRolesParams{Space: &space}
 	if include != "" {
 		inc := api.GetWorkflowRolesParamsInclude(include)
 		params.Include = &inc
@@ -202,8 +205,10 @@ func (c *Client) ListDraftsQueue(ctx context.Context, page, size int, sort []str
 
 // ---- Landing settings / trash / archive / content macros ----
 
-func (c *Client) GetLandingSettings(ctx context.Context) ([]byte, *APIError) {
-	return c.DoRaw(func() (*http.Response, error) { return c.api.GetLandingSettings(ctx) })
+func (c *Client) GetLandingSettings(ctx context.Context, space string) ([]byte, *APIError) {
+	return c.DoRaw(func() (*http.Response, error) {
+		return c.api.GetLandingSettings(ctx, &api.GetLandingSettingsParams{Space: spaceParam(space)})
+	})
 }
 
 // ---- Environment (name/banner, Google login, preparation readiness — admin only) ----
@@ -384,8 +389,8 @@ func (c *Client) SearchAuditLog(ctx context.Context, f AuditFilters, page, size 
 
 // ---- Pages: tree + revisions ----
 
-func (c *Client) GetPagesTree(ctx context.Context, ifNoneMatch string) (body []byte, notModified bool, err *APIError) {
-	params := &api.GetPageTreeParams{}
+func (c *Client) GetPagesTree(ctx context.Context, ifNoneMatch, space string) (body []byte, notModified bool, err *APIError) {
+	params := &api.GetPageTreeParams{Space: spaceParam(space)}
 	if ifNoneMatch != "" {
 		params.IfNoneMatch = &ifNoneMatch
 	}

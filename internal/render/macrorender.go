@@ -194,16 +194,22 @@ func renderNodes(nodes []*dnode, idx *macroIndex, width int) string {
 	var out []string
 	for _, n := range nodes {
 		if n.name == "#text" {
-			out = append(out, renderTextBlock(strings.Join(n.lines, "\n"), idx))
+			out = append(out, renderTextBlock(strings.Join(n.lines, "\n"), idx, width))
 			continue
 		}
-		renderer, ok := macroRenderers[n.name]
-		if !ok {
-			renderer = renderUnknownMacro
-		}
-		out = append(out, renderer(n, idx, width))
+		out = append(out, renderDirective(n, idx, width))
 	}
 	return strings.Join(out, "\n")
+}
+
+// renderDirective renders one directive node via the registry; names without
+// an entry fall back to renderUnknownMacro.
+func renderDirective(n *dnode, idx *macroIndex, width int) string {
+	renderer, ok := macroRenderers[n.name]
+	if !ok {
+		renderer = renderUnknownMacro
+	}
+	return renderer(n, idx, width)
 }
 
 // renderUnknownMacro is the generic fallback for directives without a
@@ -219,8 +225,10 @@ func renderUnknownMacro(n *dnode, idx *macroIndex, width int) string {
 
 // renderTextBlock renders plain markdown (headings, lists, paragraphs) with
 // inline macros resolved. ```-fenced code is emitted verbatim (indented, like
-// markdownToASCII and renderCode) — no inline resolution inside a fence.
-func renderTextBlock(s string, idx *macroIndex) string {
+// markdownToASCII and renderCode) — no inline resolution inside a fence. A line
+// that is only a leaf directive ("::name{attrs}", also behind a list or quote
+// marker) renders through the macro registry and keeps its marker.
+func renderTextBlock(s string, idx *macroIndex, width int) string {
 	if strings.TrimSpace(s) == "" {
 		return ""
 	}
@@ -235,6 +243,10 @@ func renderTextBlock(s string, idx *macroIndex) string {
 		}
 		if inFence {
 			out = append(out, "    "+line)
+			continue
+		}
+		if prefix, name, attrs, ok := leafLine(line); ok {
+			out = append(out, renderLeafLine(prefix, &dnode{name: name, attrs: attrs}, idx, width))
 			continue
 		}
 		if m := headingRe.FindStringSubmatch(trimmed); m != nil {
@@ -258,10 +270,36 @@ func renderTextBlock(s string, idx *macroIndex) string {
 	return strings.TrimRight(strings.Join(out, "\n"), "\n")
 }
 
+// renderLeafLine renders a leaf directive found in a text line. Plain
+// indentation is dropped; a list or quote marker stays in front of the first
+// output line and later lines are aligned under it (quote markers repeat).
+func renderLeafLine(prefix string, n *dnode, idx *macroIndex, width int) string {
+	rendered := renderDirective(n, idx, width)
+	if strings.TrimSpace(prefix) == "" {
+		return rendered
+	}
+	continuation := strings.Map(func(r rune) rune {
+		if r == '>' {
+			return r
+		}
+		return ' '
+	}, prefix)
+	lines := strings.Split(rendered, "\n")
+	for i, l := range lines {
+		if i == 0 {
+			lines[i] = prefix + l
+		} else {
+			lines[i] = continuation + l
+		}
+	}
+	return strings.Join(lines, "\n")
+}
+
 // renderCode renders :::code{lang title lineNumbers}: an optional header rule
 // with "lang · title" above the verbatim body (attrs per CodeMacroDataResolver
-// @MacroDoc: lang, title, lineNumbers + legacy showLineNumbers — bare flags
-// parse to "true"). The body stays verbatim; lineNumbers adds a gutter.
+// @MacroDoc: lang, title, lineNumbers — bare flags parse to "true"). The body
+// stays verbatim after decoding one column-zero tilde escape; lineNumbers adds
+// a gutter.
 func renderCode(n *dnode) string {
 	var lines []string
 	for _, k := range n.kids {
@@ -269,13 +307,21 @@ func renderCode(n *dnode) string {
 			lines = append(lines, k.lines...)
 		}
 	}
-	numbered := n.attrs["lineNumbers"] == "true" || n.attrs["showLineNumbers"] == "true"
+	numbered := n.attrs["lineNumbers"] == "true"
 	var b strings.Builder
+	// NORM-321 L1: showLineNumbers is no longer a code attribute; report it like
+	// the content validation does, in the same wording.
+	if _, legacy := n.attrs["showLineNumbers"]; legacy {
+		b.WriteString(errorLine("Unknown attribute 'showLineNumbers' on 'code'. Valid attributes: lang, lineNumbers, title") + "\n")
+	}
 	if head := joinNonEmpty(" · ", n.attrs["lang"], n.attrs["title"]); head != "" {
 		b.WriteString(ruleHeader(head) + "\n")
 	}
 	b.WriteString("    ----\n")
 	for i, l := range lines {
+		if strings.HasPrefix(l, "~") && strings.HasPrefix(strings.TrimLeft(l, "~"), ":::") {
+			l = l[1:]
+		}
 		if numbered {
 			fmt.Fprintf(&b, "    %3d │ %s\n", i+1, l)
 		} else {

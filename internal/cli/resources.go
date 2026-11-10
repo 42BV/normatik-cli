@@ -56,6 +56,12 @@ func idArg(cmd *cobra.Command, arg string) (int64, error) {
 // when --url is set the resolved urlPath replaces the normal list render
 // (CR-besluit 1). Callers register the flag themselves via command.URLFlag.
 func runListURL(cmd *cobra.Command, invocation, urlPath string, fn func(*command.Deps) ([]byte, *client.APIError), fields ...string) error {
+	return runListURLFor(cmd, invocation, func(*command.Deps, []byte) string { return urlPath }, fn, fields...)
+}
+
+// runListURLFor is runListURL with a URL that depends on the response or on
+// a further read (definitionurl.go), resolved only after fn succeeded.
+func runListURLFor(cmd *cobra.Command, invocation string, urlPath func(*command.Deps, []byte) string, fn func(*command.Deps) ([]byte, *client.APIError), fields ...string) error {
 	d, err := command.Build(cmd)
 	if err != nil {
 		return err
@@ -64,7 +70,7 @@ func runListURL(cmd *cobra.Command, invocation, urlPath string, fn func(*command
 	if apiErr != nil {
 		return command.RenderError(d.Printer, apiErr, invocation)
 	}
-	if command.PrintURL(d, cmd, urlPath) {
+	if command.PrintURL(d, cmd, urlPath(d, body)) {
 		return nil
 	}
 	d.Printer.List(body, fields...)
@@ -73,6 +79,12 @@ func runListURL(cmd *cobra.Command, invocation, urlPath string, fn func(*command
 
 // runObjectURL is runObject (readhelpers.go) with --url support; see runListURL.
 func runObjectURL(cmd *cobra.Command, invocation, urlPath string, fn func(*command.Deps) ([]byte, *client.APIError), fields ...string) error {
+	return runObjectURLFor(cmd, invocation, func(*command.Deps, []byte) string { return urlPath }, fn, fields...)
+}
+
+// runObjectURLFor is runObjectURL with a URL that depends on the response or
+// on a further read; see runListURLFor.
+func runObjectURLFor(cmd *cobra.Command, invocation string, urlPath func(*command.Deps, []byte) string, fn func(*command.Deps) ([]byte, *client.APIError), fields ...string) error {
 	d, err := command.Build(cmd)
 	if err != nil {
 		return err
@@ -81,7 +93,7 @@ func runObjectURL(cmd *cobra.Command, invocation, urlPath string, fn func(*comma
 	if apiErr != nil {
 		return command.RenderError(d.Printer, apiErr, invocation)
 	}
-	if command.PrintURL(d, cmd, urlPath) {
+	if command.PrintURL(d, cmd, urlPath(d, body)) {
 		return nil
 	}
 	d.Printer.Raw(body, fields...)
@@ -129,7 +141,7 @@ func newUsersCmd() *cobra.Command {
 			}
 			return runObjectURL(cmd, "normatik users get", weburl.AdminUser(id), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.GetUser(cmd.Context(), id, expand)
-			}, "id", "displayName", "email", "role", "workflowRole")
+			}, "id", "displayName", "email", "role")
 		},
 	}
 	get.Flags().StringSliceVar(&expand, "expand", nil, "sections: groups")
@@ -177,7 +189,7 @@ func newGroupsCmd() *cobra.Command {
 			}
 			return runObjectURL(cmd, "normatik groups get", weburl.AdminGroup(id), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.GetGroup(cmd.Context(), id)
-			}, "id", "name", "status", "role", "workflowRole")
+			}, "id", "name", "status", "role")
 		},
 	}
 	command.URLFlag(get)
@@ -194,7 +206,7 @@ func newPageTypesCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runListURL(cmd, "normatik page-types list", weburl.PageTypes(), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.ListPageTypes(cmd.Context())
-			})
+			}, "id", "name", "parentId", "abstractType", "originSpaceKey")
 		},
 	}
 	command.URLFlag(list)
@@ -206,7 +218,7 @@ func newPageTypesCmd() *cobra.Command {
 			if err != nil {
 				return command.Handled(2)
 			}
-			return runObjectURL(cmd, "normatik page-types get", weburl.PageType(id), func(d *command.Deps) ([]byte, *client.APIError) {
+			return runObjectURLFor(cmd, "normatik page-types get", func(_ *command.Deps, body []byte) string { return pageTypeURL(id, body) }, func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.GetPageType(cmd.Context(), id, expand)
 			}, "id", "name", "abstractType")
 		},
@@ -220,7 +232,7 @@ func newPageTypesCmd() *cobra.Command {
 			if err != nil {
 				return command.Handled(2)
 			}
-			return runListURL(cmd, "normatik page-types available-descriptors", weburl.PageType(id), func(d *command.Deps) ([]byte, *client.APIError) {
+			return runListURLFor(cmd, "normatik page-types available-descriptors", func(d *command.Deps, _ []byte) string { return lookupPageTypeURL(cmd, d, id) }, func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.GetAvailablePropertyDescriptors(cmd.Context(), id)
 			})
 		},
@@ -234,7 +246,7 @@ func newPageTypesCmd() *cobra.Command {
 			if err != nil {
 				return command.Handled(2)
 			}
-			return runListURL(cmd, "normatik page-types chain-link-options", weburl.PageType(id), func(d *command.Deps) ([]byte, *client.APIError) {
+			return runListURLFor(cmd, "normatik page-types chain-link-options", func(d *command.Deps, _ []byte) string { return lookupPageTypeURL(cmd, d, id) }, func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.GetChainLinkOptions(cmd.Context(), id, clpPageID)
 			})
 		},
@@ -298,19 +310,28 @@ func newWorkItemTypesCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runListURL(cmd, "normatik work-item-types list", weburl.AdminWorkItemTypes(), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.ListWorkItemTypes(cmd.Context(), pg.page, pg.size, pg.sort)
-			})
+			}, "id", "slug", "name", "domainEnumName", "originSpaceKey")
 		},
 	}
 	addPaging(list, &pg)
 	command.URLFlag(list)
 	get := &cobra.Command{
-		Use: "get <slug>", Short: "Get a work item type (by slug)", Args: cobra.ExactArgs(1),
+		Use: "get <slug> --space <key>", Short: "Get a work item type (by slug, in the global types plus those of --space)", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return runObjectURL(cmd, "normatik work-item-types get", weburl.AdminWorkItemType(args[0]), func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.GetWorkItemType(cmd.Context(), args[0])
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			space, err := requireDefinitionSpace(cmd, d)
+			if err != nil {
+				return err
+			}
+			return runObjectURLFor(cmd, "normatik work-item-types get", func(_ *command.Deps, body []byte) string { return workItemTypeURL(args[0], body) }, func(d *command.Deps) ([]byte, *client.APIError) {
+				return d.Client.GetWorkItemType(cmd.Context(), args[0], space)
 			}, "slug", "name")
 		},
 	}
+	addDefinitionSpaceFlag(get)
 	command.URLFlag(get)
 	c.AddCommand(list, get)
 	return c
@@ -380,7 +401,7 @@ func newDomainEnumsCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runListURL(cmd, "normatik domain-enums list", weburl.AdminDomainEnums(), func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.ListDomainEnums(cmd.Context(), expand)
-			})
+			}, "id", "name", "valueCount", "originSpaceKey")
 		},
 	}
 	list.Flags().StringSliceVar(&expand, "expand", nil, "sections: values")
@@ -402,7 +423,7 @@ func newDomainEnumsCmd() *cobra.Command {
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik domain-enums get")
 			}
-			if command.PrintURL(d, cmd, weburl.AdminDomainEnum(id)) {
+			if command.PrintURL(d, cmd, domainEnumURL(id, body)) {
 				return nil
 			}
 			d.Printer.DomainEnum(body)
@@ -417,7 +438,7 @@ func newDomainEnumsCmd() *cobra.Command {
 			if err != nil {
 				return command.Handled(2)
 			}
-			return runObjectURL(cmd, "normatik domain-enums usages", weburl.AdminDomainEnum(id), func(d *command.Deps) ([]byte, *client.APIError) {
+			return runObjectURLFor(cmd, "normatik domain-enums usages", func(d *command.Deps, _ []byte) string { return lookupDomainEnumURL(cmd, d, id) }, func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.GetDomainEnumUsages(cmd.Context(), id)
 			})
 		},
@@ -431,16 +452,17 @@ func newDomainEnumsCmd() *cobra.Command {
 
 func newWorkflowRolesCmd() *cobra.Command {
 	c := parent("workflow-roles", "Workflow roles composite (get, set-user, set-group)")
-	var include string
+	var include, space string
 	get := &cobra.Command{
-		Use: "get", Short: "Get workflow roles (--include available|groups|users)",
+		Use: "get", Short: "Get the workflow roles of a space (--space, --include available|groups|users)",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runObjectURL(cmd, "normatik workflow-roles get", weburl.AdminWorkflowRoles(), func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.GetWorkflowRoles(cmd.Context(), include)
+				return d.Client.GetWorkflowRoles(cmd.Context(), space, include)
 			})
 		},
 	}
 	get.Flags().StringVar(&include, "include", "", "extra sections: available|groups|users")
+	get.Flags().StringVar(&space, "space", "", "space key whose roles are listed (required while Spaces is enabled; otherwise the default space)")
 	command.URLFlag(get)
 	c.AddCommand(get)
 	return c
@@ -495,7 +517,7 @@ func newLandingSettingsCmd() *cobra.Command {
 		Use: "get", Short: "Current landing settings",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runObjectURL(cmd, "normatik landing-settings get", weburl.AdminLanding(), func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.GetLandingSettings(cmd.Context())
+				return d.Client.GetLandingSettings(cmd.Context(), spaceOf(cmd))
 			})
 		},
 	}

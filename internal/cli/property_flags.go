@@ -121,12 +121,16 @@ type propertyLookup interface {
 
 // clientLookup is the production propertyLookup backed by the API client.
 type clientLookup struct {
-	c        *client.Client
+	c *client.Client
+	// space scopes page-name resolution: names are unique per space, not globally.
+	space    string
 	ptCache  []namedRef
 	ptLoaded bool
 }
 
-func newClientLookup(c *client.Client) *clientLookup { return &clientLookup{c: c} }
+func newClientLookup(c *client.Client, space string) *clientLookup {
+	return &clientLookup{c: c, space: space}
+}
 
 // cachingLookup memoizes name->id resolutions for the lifetime of a single
 // command so that two properties needing the same enum / page-search / user-search
@@ -212,7 +216,7 @@ func (l *clientLookup) EnumValues(ctx context.Context, domainEnumID int64) ([]en
 func (l *clientLookup) PagesByName(ctx context.Context, name string, allowedPageTypeID *int64) ([]namedRef, error) {
 	// size 200 == backend maxPageSize: fetch the candidate set in one call so an exact
 	// name match is never silently dropped beyond a small first page.
-	body, apiErr := l.c.SearchPages(ctx, name, 1, 200, allowedPageTypeID)
+	body, apiErr := l.c.SearchPages(ctx, name, 1, 200, allowedPageTypeID, l.space)
 	if apiErr != nil {
 		return nil, apiErr
 	}

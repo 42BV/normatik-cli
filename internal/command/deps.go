@@ -104,7 +104,7 @@ func Build(cmd *cobra.Command) (*Deps, error) {
 	}
 	c.OnRetry = func(wait time.Duration, attempt int) {
 		if !p.Quiet {
-			p.Message("Rate limited; retrying in %ds (attempt %d/3)", int(wait/time.Second), attempt)
+			p.Message("Rate limited; retrying in %ds (attempt %d/4)", int(wait/time.Second), attempt)
 		}
 	}
 	return &Deps{Client: c, Printer: p, BaseURL: res.BaseURL}, nil

@@ -151,6 +151,12 @@ func responseSlug(body []byte) string {
 // resource is already known from args (e.g. update); create commands read the
 // new resource's id/slug from the response via responseID/responseSlug.
 func runWriteURL(cmd *cobra.Command, invocation, successMsg string, fn func(*command.Deps) ([]byte, *client.APIError), urlPath func(body []byte) string, fields ...string) error {
+	return runWriteURLFor(cmd, invocation, successMsg, fn, func(_ *command.Deps, body []byte) string { return urlPath(body) }, fields...)
+}
+
+// runWriteURLFor is runWriteURL with a URL that may need a further read
+// after the write (definitionurl.go).
+func runWriteURLFor(cmd *cobra.Command, invocation, successMsg string, fn func(*command.Deps) ([]byte, *client.APIError), urlPath func(d *command.Deps, body []byte) string, fields ...string) error {
 	d, err := command.Build(cmd)
 	if err != nil {
 		return err
@@ -159,7 +165,7 @@ func runWriteURL(cmd *cobra.Command, invocation, successMsg string, fn func(*com
 	if apiErr != nil {
 		return command.RenderError(d.Printer, apiErr, invocation)
 	}
-	if command.PrintURL(d, cmd, urlPath(body)) {
+	if command.PrintURL(d, cmd, urlPath(d, body)) {
 		return nil
 	}
 	writeResult(d, body, successMsg, fields...)
@@ -287,12 +293,12 @@ func idFormFileWriteURL[T any](use, short, invocation, success string, fn func(*
 func addUsersWrites(c *cobra.Command) {
 	var dn, email string
 	var internal, external bool
-	var role, workflowRole string
+	var role string
 	create := &cobra.Command{
 		Use:   "create",
 		Short: "Create a user (external by default, or --internal with a role)",
 		Example: "  normatik users create --display-name \"Jan\" --email jan@x.nl\n" +
-			"  normatik users create --internal --display-name \"Jan\" --email jan@x.nl --role USER --workflow-role CONTRIBUTOR",
+			"  normatik users create --internal --display-name \"Jan\" --email jan@x.nl --role USER",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			if internal {
 				if email == "" || role == "" {
@@ -305,13 +311,9 @@ func addUsersWrites(c *cobra.Command) {
 					Role:         api.InternalUserFormRole(role),
 					CreationMode: api.InternalUserFormCreationModeSENDACTIVATIONEMAIL,
 				}
-				if cmd.Flags().Changed("workflow-role") {
-					wr := api.InternalUserFormWorkflowRole(workflowRole)
-					f.WorkflowRole = &wr
-				}
 				return runWriteURL(cmd, "normatik users create", "User created.", func(d *command.Deps) ([]byte, *client.APIError) {
 					return d.Client.CreateInternalUser(cmd.Context(), f)
-				}, func(body []byte) string { return weburl.AdminUser(responseID(body)) }, "id", "displayName", "email", "role", "workflowRole", "status", "activationEmailExpiresAt")
+				}, func(body []byte) string { return weburl.AdminUser(responseID(body)) }, "id", "displayName", "email", "role", "status", "activationEmailExpiresAt")
 			}
 			f := api.ExternalUserForm{DisplayName: dn}
 			if email != "" {
@@ -328,12 +330,11 @@ func addUsersWrites(c *cobra.Command) {
 	create.Flags().BoolVar(&internal, "internal", false, "create an internal user with a role (PENDING; requests the activation email)")
 	create.Flags().BoolVar(&external, "external", false, "create an external user (default)")
 	create.Flags().StringVar(&role, "role", "", "role for --internal: USER|ADMIN (required with --internal)")
-	create.Flags().StringVar(&workflowRole, "workflow-role", "", "workflow role for --internal (optional): READER|CONTRIBUTOR|REVIEWER|PUBLISHER")
 	_ = create.MarkFlagRequired("display-name")
 	create.MarkFlagsMutuallyExclusive("internal", "external")
 	command.URLFlag(create)
 
-	var udn, uemail, urole, uwf string
+	var udn, uemail, urole string
 	var setPassword bool
 	update := &cobra.Command{
 		Use: "update <id>", Short: "Update a user (admin)", Args: cobra.ExactArgs(1),
@@ -353,10 +354,6 @@ func addUsersWrites(c *cobra.Command) {
 				}
 				f.Password = strPtr(pw)
 			}
-			if cmd.Flags().Changed("workflow-role") {
-				wr := api.UserFormWorkflowRole(uwf)
-				f.WorkflowRole = &wr
-			}
 			return runWriteURL(cmd, "normatik users update", "User updated.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.UpdateUser(cmd.Context(), id, f)
 			}, func([]byte) string { return weburl.AdminUser(id) }, "id", "displayName", "email", "role")
@@ -366,7 +363,6 @@ func addUsersWrites(c *cobra.Command) {
 	update.Flags().StringVar(&uemail, "email", "", "email address (required)")
 	update.Flags().StringVar(&urole, "role", "", "role (required): USER|ADMIN")
 	update.Flags().BoolVar(&setPassword, "set-password", false, "set a new password; read from a hidden prompt or piped stdin, never from argv")
-	update.Flags().StringVar(&uwf, "workflow-role", "", "workflow role (optional)")
 	_ = update.MarkFlagRequired("display-name")
 	_ = update.MarkFlagRequired("email")
 	_ = update.MarkFlagRequired("role")
@@ -448,7 +444,7 @@ func addUsersWrites(c *cobra.Command) {
 // ---- groups ----
 
 func addGroupsWrites(c *cobra.Command) {
-	bindGroup := func(cmd *cobra.Command, name, desc, role, wf string) api.UserGroupForm {
+	bindGroup := func(cmd *cobra.Command, name, desc, role string) api.UserGroupForm {
 		f := api.UserGroupForm{Name: name}
 		if cmd.Flags().Changed("description") {
 			f.Description = strPtr(desc)
@@ -457,17 +453,13 @@ func addGroupsWrites(c *cobra.Command) {
 			r := api.UserGroupFormRole(role)
 			f.Role = &r
 		}
-		if cmd.Flags().Changed("workflow-role") {
-			wr := api.UserGroupFormWorkflowRole(wf)
-			f.WorkflowRole = &wr
-		}
 		return f
 	}
-	var cn, cdesc, crole, cwf string
+	var cn, cdesc, crole string
 	create := &cobra.Command{
 		Use: "create", Short: "Create a group",
 		RunE: func(cmd *cobra.Command, _ []string) error {
-			f := bindGroup(cmd, cn, cdesc, crole, cwf)
+			f := bindGroup(cmd, cn, cdesc, crole)
 			return runWriteURL(cmd, "normatik groups create", "Group created.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.CreateGroup(cmd.Context(), f)
 			}, func(body []byte) string { return weburl.AdminGroup(responseID(body)) }, "id", "name")
@@ -476,11 +468,10 @@ func addGroupsWrites(c *cobra.Command) {
 	create.Flags().StringVar(&cn, "name", "", "group name (required)")
 	create.Flags().StringVar(&cdesc, "description", "", "description")
 	create.Flags().StringVar(&crole, "role", "", "user role assignment")
-	create.Flags().StringVar(&cwf, "workflow-role", "", "workflow role assignment")
 	_ = create.MarkFlagRequired("name")
 	command.URLFlag(create)
 
-	var un, udesc, urole, uwf string
+	var un, udesc, urole string
 	update := &cobra.Command{
 		Use: "update <id>", Short: "Update a group", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -488,7 +479,7 @@ func addGroupsWrites(c *cobra.Command) {
 			if perr != nil {
 				return command.Handled(2)
 			}
-			f := bindGroup(cmd, un, udesc, urole, uwf)
+			f := bindGroup(cmd, un, udesc, urole)
 			return runWriteURL(cmd, "normatik groups update", "Group updated.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.UpdateGroup(cmd.Context(), id, f)
 			}, func([]byte) string { return weburl.AdminGroup(id) }, "id", "name")
@@ -497,7 +488,6 @@ func addGroupsWrites(c *cobra.Command) {
 	update.Flags().StringVar(&un, "name", "", "group name (required)")
 	update.Flags().StringVar(&udesc, "description", "", "description")
 	update.Flags().StringVar(&urole, "role", "", "user role assignment")
-	update.Flags().StringVar(&uwf, "workflow-role", "", "workflow role assignment")
 	_ = update.MarkFlagRequired("name")
 	command.URLFlag(update)
 
@@ -566,14 +556,23 @@ func addGroupsWrites(c *cobra.Command) {
 const pageTypesUpdateFileHelp = "JSON file with PageTypeForm; full replace via PUT — omitted templateContent, titleTemplate, allowedChildTypeIds and abstractType are cleared; omitted publishingWorkflowEnabled is unchanged (keeps the existing own opt-in; exception to omit=clear); parentId must be the current parent — change via page-types move. Templates do not inherit (set them on each concrete type). allowedChildTypes order is not a contract. titleTemplate supports only {{currentday}}"
 
 func addPageTypesWrites(c *cobra.Command) {
-	create := formFileWriteURL[api.PageTypeForm]("create", "Create a page type (-f form.json)", "normatik page-types create", "Page type created.",
+	var createSpace string
+	create := formFileWriteURL[api.PageTypeForm]("create", "Create a page type (-f form.json; --space for one local to a space)", "normatik page-types create", "Page type created.",
 		func(d *command.Deps, ctx context.Context, f api.PageTypeForm) ([]byte, *client.APIError) {
-			return d.Client.CreatePageType(ctx, f)
-		}, func(body []byte) string { return weburl.PageType(responseID(body)) })
+			if createSpace == "" {
+				return d.Client.CreatePageType(ctx, f)
+			}
+			sp, apiErr := spaceByKey(ctx, d, createSpace)
+			if apiErr != nil {
+				return nil, apiErr
+			}
+			return d.Client.CreateSpacePageType(ctx, sp.Id, f)
+		}, func(body []byte) string { return pageTypeURL(responseID(body), body) })
+	create.Flags().StringVar(&createSpace, "space", "", "create the definition local to this space (key): the space is its origin and the only space that may use it; without --space it is global")
 	update := idFormFileWriteURL[api.PageTypeForm]("update <id>", "Update a page type (-f form.json)", "normatik page-types update", "Page type updated.",
 		func(d *command.Deps, ctx context.Context, id int64, f api.PageTypeForm) ([]byte, *client.APIError) {
 			return d.Client.UpdatePageType(ctx, id, f)
-		}, func(id int64, _ []byte) string { return weburl.PageType(id) })
+		}, func(id int64, body []byte) string { return pageTypeURL(id, body) })
 	// Per-command override: do not rewrite the shared idFormFileWriteURL
 	// string (domain-enums update keeps the generic form-file help).
 	if f := update.Flags().Lookup("file"); f != nil {
@@ -608,7 +607,7 @@ func addPageTypesWrites(c *cobra.Command) {
 			}
 			return runWriteURL(cmd, "normatik page-types move", "Page type moved.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.MovePageType(cmd.Context(), id, f)
-			}, func([]byte) string { return weburl.PageType(id) })
+			}, func(body []byte) string { return pageTypeURL(id, body) })
 		},
 	}
 	move.Flags().Int64Var(&newParent, "new-parent-id", 0, "new parent page type id (omit = root)")
@@ -646,18 +645,26 @@ func runPageTypeMovePreview(cmd *cobra.Command, id, newParent int64) error {
 // ---- domain-enums ----
 
 func addDomainEnumsWrites(c *cobra.Command) {
-	var createFile string
+	var createFile, createSpace string
 	var autoSort bool
 	create := &cobra.Command{
 		Use:   "create",
-		Short: "Create a domain enum (-f form.json with values[]; --auto-sort-order)",
+		Short: "Create a domain enum (-f form.json with values[]; --auto-sort-order; --space for one local to a space)",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return runDomainEnumFormWrite(cmd, createFile, autoSort, "normatik domain-enums create", "Domain enum created.",
 				func(d *command.Deps, f api.DomainEnumForm) ([]byte, *client.APIError) {
-					return d.Client.CreateDomainEnum(cmd.Context(), f)
-				}, func(body []byte) string { return weburl.AdminDomainEnum(responseID(body)) })
+					if createSpace == "" {
+						return d.Client.CreateDomainEnum(cmd.Context(), f)
+					}
+					sp, apiErr := spaceByKey(cmd.Context(), d, createSpace)
+					if apiErr != nil {
+						return nil, apiErr
+					}
+					return d.Client.CreateSpaceEnum(cmd.Context(), sp.Id, f)
+				}, func(body []byte) string { return domainEnumURL(responseID(body), body) })
 		},
 	}
+	create.Flags().StringVar(&createSpace, "space", "", "create the definition local to this space (key): the space is its origin and the only space that may use it; without --space it is global")
 	create.Flags().StringVarP(&createFile, "file", "f", "", "JSON file containing the form (required)")
 	_ = create.MarkFlagRequired("file")
 	create.Flags().BoolVar(&autoSort, "auto-sort-order", false, "assign values[].sortOrder 0..n-1 in file order")
@@ -676,7 +683,7 @@ func addDomainEnumsWrites(c *cobra.Command) {
 			return runDomainEnumFormWrite(cmd, updateFile, false, "normatik domain-enums update", "Domain enum updated.",
 				func(d *command.Deps, f api.DomainEnumForm) ([]byte, *client.APIError) {
 					return d.Client.UpdateDomainEnum(cmd.Context(), id, f)
-				}, func([]byte) string { return weburl.AdminDomainEnum(id) })
+				}, func(body []byte) string { return domainEnumURL(id, body) })
 		},
 	}
 	// P12: keep the generic -f usage; do not copy page-types full-replace help.
@@ -695,8 +702,8 @@ func addDomainEnumsWrites(c *cobra.Command) {
 // ---- workflow-roles ----
 
 func addWorkflowRolesWrites(c *cobra.Command) {
-	var role string
-	mk := func(use, short, invocation, success string, fn func(*command.Deps, context.Context, int64, api.WorkflowRoleForm) ([]byte, *client.APIError)) *cobra.Command {
+	var role, space string
+	mk := func(use, short, invocation, success string, fn func(*command.Deps, context.Context, int64, string, api.WorkflowRoleForm) ([]byte, *client.APIError)) *cobra.Command {
 		cmd := &cobra.Command{Use: use, Short: short, Args: cobra.ExactArgs(1), RunE: func(cmd *cobra.Command, args []string) error {
 			id, perr := command.ParseID(args[0])
 			if perr != nil {
@@ -711,20 +718,21 @@ func addWorkflowRolesWrites(c *cobra.Command) {
 				wr := api.WorkflowRoleFormWorkflowRole(role)
 				f.WorkflowRole = &wr
 			}
-			return runWriteURL(cmd, invocation, success, func(d *command.Deps) ([]byte, *client.APIError) { return fn(d, cmd.Context(), id, f) },
+			return runWriteURL(cmd, invocation, success, func(d *command.Deps) ([]byte, *client.APIError) { return fn(d, cmd.Context(), id, space, f) },
 				func([]byte) string { return weburl.AdminWorkflowRoles() })
 		}}
 		cmd.Flags().StringVar(&role, "workflow-role", "", "workflow role (empty = unassign)")
+		cmd.Flags().StringVar(&space, "space", "", "space key the role applies to (required while Spaces is enabled; otherwise the default space)")
 		command.URLFlag(cmd)
 		return cmd
 	}
 	setUser := mk("set-user <userId>", "Set the workflow role of a user", "normatik workflow-roles set-user", "Workflow role set.",
-		func(d *command.Deps, ctx context.Context, id int64, f api.WorkflowRoleForm) ([]byte, *client.APIError) {
-			return d.Client.SetUserWorkflowRole(ctx, id, f)
+		func(d *command.Deps, ctx context.Context, id int64, space string, f api.WorkflowRoleForm) ([]byte, *client.APIError) {
+			return d.Client.SetUserWorkflowRole(ctx, id, space, f)
 		})
 	setGroup := mk("set-group <groupId>", "Set the workflow role of a group", "normatik workflow-roles set-group", "Workflow role set.",
-		func(d *command.Deps, ctx context.Context, id int64, f api.WorkflowRoleForm) ([]byte, *client.APIError) {
-			return d.Client.SetGroupWorkflowRole(ctx, id, f)
+		func(d *command.Deps, ctx context.Context, id int64, space string, f api.WorkflowRoleForm) ([]byte, *client.APIError) {
+			return d.Client.SetGroupWorkflowRole(ctx, id, space, f)
 		})
 	addWriteCommands(c, setUser, setGroup)
 }
@@ -735,22 +743,24 @@ func addLandingSettingsWrites(c *cobra.Command) {
 	var active bool
 	var content string
 	update := &cobra.Command{
-		Use: "update", Short: "Update the landing settings (--active, --content)",
+		Use: "update", Short: "Update the landing settings (--active, --content; an omitted flag keeps its current value)",
 		RunE: func(cmd *cobra.Command, _ []string) error {
-			f := api.LandingSettingsForm{}
-			if cmd.Flags().Changed("active") {
-				f.Active = boolPtr(active)
-			}
-			if cmd.Flags().Changed("content") {
-				f.Content = strPtr(content)
+			if !cmd.Flags().Changed("active") && !cmd.Flags().Changed("content") {
+				return cmdUsageError(cmd, "nothing to update: pass --active and/or --content")
 			}
 			return runWriteURL(cmd, "normatik landing-settings update", "Landing settings updated.", func(d *command.Deps) ([]byte, *client.APIError) {
-				return d.Client.UpdateLandingSettings(cmd.Context(), f)
+				return updateLandingSettings(cmd, active, content,
+					func() (client.SettingsSnapshot, *client.APIError) {
+						return d.Client.GetLandingSettingsSnapshot(cmd.Context(), spaceOf(cmd))
+					},
+					func(form api.LandingSettingsForm, token string) ([]byte, *client.APIError) {
+						return d.Client.UpdateLandingSettings(cmd.Context(), form, spaceOf(cmd), token)
+					})
 			}, func([]byte) string { return weburl.AdminLanding() })
 		},
 	}
-	update.Flags().BoolVar(&active, "active", false, "landing page active")
-	update.Flags().StringVar(&content, "content", "", "markdown content of the landing page")
+	update.Flags().BoolVar(&active, "active", false, "landing page active (omitted: keep the current value)")
+	update.Flags().StringVar(&content, "content", "", "markdown content of the landing page (omitted: keep the current content; '' clears it)")
 	command.URLFlag(update)
 	addWriteCommands(c, update)
 }

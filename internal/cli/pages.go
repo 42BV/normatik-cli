@@ -53,7 +53,7 @@ func newPagesTreeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			body, notModified, apiErr := d.Client.GetPagesTree(cmd.Context(), inm)
+			body, notModified, apiErr := d.Client.GetPagesTree(cmd.Context(), inm, spaceOf(cmd))
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik pages tree")
 			}
@@ -260,7 +260,7 @@ func newPagesCreateCmd() *cobra.Command {
 		Use:   "create",
 		Short: "Create a new page (flags, --property, or -f form.json with propertyValues[])",
 		Long: "Create a new page (flags, --property, or -f form.json with propertyValues[]).\n" +
-			"Page names are globally unique and case-sensitive. Names in trash and archive count.\n" +
+			"Page names are unique within a space and case-sensitive. Names in trash and archive count.\n" +
 			"A duplicate is rejected (PAGE_NAME_EXISTS); the same rule also applies on publish and restore.\n" +
 			"--url performs the write first, then prints only the new page's frontend URL (built\n" +
 			"from the response id) instead of the normal output — not to be confused with\n" +
@@ -308,6 +308,10 @@ func newPagesCreateCmd() *cobra.Command {
 				d.Printer.Message("Error [USAGE]: name and page-type-id are required (via flags or -f form.json)")
 				return command.Handled(2)
 			}
+			// The effective parent (form + flags) must live in --space, also for a dry-run.
+			if err := verifyEffectiveCreateParent(cmd, d, form); err != nil {
+				return err
+			}
 			hasProps := len(props) > 0 || len(unsets) > 0
 			hasFormProps := len(derefPropertyValues(form.PropertyValues)) > 0
 			if dr, _ := cmd.Flags().GetBool("dry-run"); dr {
@@ -320,7 +324,7 @@ func newPagesCreateCmd() *cobra.Command {
 					return command.Handled(2)
 				}
 				if form.Content != nil {
-					if err := validateContent(cmd, d, *form.Content, nil, i64Ptr(form.PageTypeId), false); err != nil {
+					if err := validateContent(cmd, d, *form.Content, nil, i64Ptr(form.PageTypeId), "", false); err != nil {
 						return err
 					}
 				}
@@ -348,7 +352,7 @@ func newPagesCreateCmd() *cobra.Command {
 				}
 				form = resolved
 			}
-			res, apiErr := d.Client.CreatePageForm(cmd.Context(), form)
+			res, apiErr := d.Client.CreatePageForm(cmd.Context(), form, createSpace(cmd, form))
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik pages create")
 			}
@@ -401,7 +405,7 @@ func resolveCreateProperties(cmd *cobra.Command, d *command.Deps, form api.PageC
 	if tz == "" {
 		tz = localZoneName()
 	}
-	pd := propertyDispatcher{lookup: newCachingLookup(newClientLookup(d.Client)), timezone: tz}
+	pd := propertyDispatcher{lookup: newCachingLookup(newClientLookup(d.Client, spaceOf(cmd))), timezone: tz}
 	merged, perr := applyPropertyFlags(cmd.Context(), derefPropertyValues(form.PropertyValues), props, unsets, descriptors, pd)
 	if perr != nil {
 		return form, renderPropError(d, perr, "normatik pages create")
@@ -493,12 +497,12 @@ func newPagesDescribePropertiesCmd() *cobra.Command {
 				if command.PrintURL(d, cmd, weburl.Page(pageID)) {
 					return nil
 				}
-			} else if command.PrintURL(d, cmd, weburl.PageType(pageTypeID)) {
+			} else if command.PrintURL(d, cmd, lookupPageTypeURL(cmd, d, pageTypeID)) {
 				return nil
 			}
 			// Resolve enum values inline (cached: two props sharing a domain enum
 			// trigger one lookup) so the discovery output is self-contained.
-			lookup := newCachingLookup(newClientLookup(d.Client))
+			lookup := newCachingLookup(newClientLookup(d.Client, spaceOf(cmd)))
 			rows, rowsErr := describePropertyRows(cmd.Context(), descriptors, lookup)
 			if rowsErr != nil {
 				var apiErr *client.APIError
@@ -599,7 +603,7 @@ func newPagesListCmd() *cobra.Command {
 			if cmd.Flags().Changed("page-type-id") {
 				ptID = &pageTypeID
 			}
-			list, apiErr := d.Client.ListPages(cmd.Context(), page, size, sort, ptID)
+			list, apiErr := d.Client.ListPages(cmd.Context(), page, size, sort, ptID, spaceOf(cmd))
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik pages list")
 			}
@@ -642,7 +646,7 @@ func newPagesPropertyValuesCmd() *cobra.Command {
 			if cmd.Flags().Changed("ids") {
 				requested = dedupeIDs(ids)
 			} else {
-				list, apiErr := d.Client.ListPages(cmd.Context(), page, size, nil, &pageTypeID)
+				list, apiErr := d.Client.ListPages(cmd.Context(), page, size, nil, &pageTypeID, spaceOf(cmd))
 				if apiErr != nil {
 					return command.RenderError(d.Printer, apiErr, "normatik pages property-values")
 				}
@@ -965,7 +969,7 @@ func newPagesSearchCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			body, apiErr := d.Client.SearchPages(cmd.Context(), args[0], page, size, nil)
+			body, apiErr := d.Client.SearchPages(cmd.Context(), args[0], page, size, nil, spaceOf(cmd))
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik pages search")
 			}

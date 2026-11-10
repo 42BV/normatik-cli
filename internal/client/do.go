@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 	"io"
+	"math/rand/v2"
 	"net/http"
 	"strconv"
 	"strings"
@@ -13,9 +14,10 @@ const (
 	jsonResponseLimit    int64 = 32 << 20
 	errorResponseLimit   int64 = 1 << 20
 	downloadLimit        int64 = 64 << 20
-	maxRateLimitAttempts       = 4
-	maxRateLimitRetries        = 3
+	maxRateLimitAttempts       = 5
 )
+
+var randFloat64 = rand.Float64
 
 // LowLevel is a thunk that performs exactly one generated low-level oapi call.
 // The wrapper method closes over ctx, path params, body and request-editors, so
@@ -129,10 +131,16 @@ func (c *Client) withRateLimitRetry(call LowLevel) (*http.Response, error) {
 		if err != nil {
 			return nil, err
 		}
-		if resp.StatusCode != http.StatusTooManyRequests || attempt == maxRateLimitAttempts {
+		retry429 := resp.StatusCode == http.StatusTooManyRequests
+		retry503 := resp.StatusCode == http.StatusServiceUnavailable &&
+			resp.Request != nil &&
+			(resp.Request.Method == http.MethodGet || resp.Request.Method == http.MethodHead)
+		if (!retry429 && !retry503) || attempt == maxRateLimitAttempts {
 			return resp, nil
 		}
-		wait := parseRetryAfter(resp.Header.Get("Retry-After"))
+		base := time.Second << (attempt - 1)
+		backoff := base + time.Duration(randFloat64()*float64(base/2))
+		wait := max(parseRetryAfter(resp.Header.Get("Retry-After")), backoff)
 		drainAndClose(resp.Body)
 		if c.OnRetry != nil {
 			c.OnRetry(wait, attempt)

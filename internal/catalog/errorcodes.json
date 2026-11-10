@@ -189,6 +189,23 @@
     "exitCode": 3
   },
   {
+    "name": "DEFINITION_OUT_OF_SCOPE",
+    "status": 409,
+    "title": "Definition not available here",
+    "userMessage": "A shared definition can only use shared definitions. A definition of a space can use shared definitions and those of its own space.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "DEFINITION_SPACE_REQUIRED",
+    "status": 400,
+    "title": "Space required",
+    "userMessage": "A space is required for this lookup: a work item type slug is only unique within the global types plus the local types of one space. Specify the space, also for a global type.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "Add the space query parameter (the space key, e.g. space=home), also for a global work item type."
+  },
+  {
     "name": "DESCRIPTOR_IN_USE",
     "status": 409,
     "title": "Descriptor referenced in formula",
@@ -633,6 +650,14 @@
     "exitCode": 1
   },
   {
+    "name": "LANDING_PREVIEW_NOT_FOUND",
+    "status": 404,
+    "title": "Preview not found",
+    "userMessage": "This preview has expired. Return to the editor and click Preview again.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
     "name": "METHOD_NOT_ALLOWED",
     "status": 405,
     "title": "Method not allowed",
@@ -654,6 +679,22 @@
     "status": 409,
     "title": "No stored revision",
     "userMessage": "Cannot migrate-publish: no STORED revision exists. The migrate-publish endpoint is intended for content migration only and operates outside the regular publishing workflow.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "MODULE_NOT_FOUND",
+    "status": 404,
+    "title": "Module not found",
+    "userMessage": "The requested module does not exist.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "MOVE_CROSS_SPACE",
+    "status": 409,
+    "title": "Page cannot move to another space here",
+    "userMessage": "Use Move to space to move this page to another space.",
     "hintKind": "NO_HINT",
     "exitCode": 7
   },
@@ -751,6 +792,14 @@
     "userMessage": "PAGE_INCOMING properties are read-only and must be managed from the linked outgoing property.",
     "hintKind": "NO_HINT",
     "exitCode": 3
+  },
+  {
+    "name": "PAGE_MOVE_TO_SPACE_BLOCKED",
+    "status": 409,
+    "title": "Move to space blocked",
+    "userMessage": "This page and its child pages cannot move to the target space. Nothing was moved; the reasons are listed.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
   },
   {
     "name": "PAGE_NAME_EXISTS",
@@ -899,6 +948,14 @@
     "userMessage": "A page type with this name already exists. Please choose a different name.",
     "hintKind": "NO_HINT",
     "exitCode": 3
+  },
+  {
+    "name": "PAGE_TYPE_NOT_AVAILABLE_IN_SPACE",
+    "status": 409,
+    "title": "Page type not available in this space",
+    "userMessage": "Not available in this space.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
   },
   {
     "name": "PAGE_TYPE_NOT_FOUND",
@@ -1196,6 +1253,22 @@
     "staticHint": "This user owns page restrictions and requires a replacement owner. Fetch eligible candidates via GET /public/v1/users/{id}/permanent-delete-replacements."
   },
   {
+    "name": "RESTORE_TARGET_REQUIRED",
+    "status": 400,
+    "title": "Restore target required",
+    "userMessage": "The space of this page was deleted. Choose a target space and either a parent page or the root of that space.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "RESTORE_TARGET_SPACE_NOT_ALLOWED",
+    "status": 409,
+    "title": "Restore target not allowed",
+    "userMessage": "The space of this page still exists, so the page is restored there. Remove the target space, parent and root choice from the request.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
     "name": "REVISION_NOT_EDITABLE",
     "status": 400,
     "title": "Revision not editable",
@@ -1213,6 +1286,14 @@
     "exitCode": 6
   },
   {
+    "name": "SERVICE_BUSY",
+    "status": 503,
+    "title": "Service busy",
+    "userMessage": "The service is temporarily busy. Please try again shortly.",
+    "hintKind": "NO_HINT",
+    "exitCode": 1
+  },
+  {
     "name": "SORT_NOT_ALLOWED",
     "status": 400,
     "title": "Sort not allowed",
@@ -1220,6 +1301,111 @@
     "hintKind": "STATIC",
     "exitCode": 3,
     "staticHint": "Sorting is not enabled for this page type. Use GET /public/v1/page-types/{id} to check if sortableChildPages is enabled on the parent page type."
+  },
+  {
+    "name": "SPACE_ACCESS_CONFIRMATION_REQUIRED",
+    "status": 409,
+    "title": "Confirmation required",
+    "userMessage": "This change removes your own administration or access of this space. Confirm to continue.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SPACE_ADMIN_REQUIRED",
+    "status": 403,
+    "title": "Space administrator required",
+    "userMessage": "You must be an administrator of this space to change it.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
+  },
+  {
+    "name": "SPACE_DEFAULT_PROTECTED",
+    "status": 409,
+    "title": "Default space is protected",
+    "userMessage": "The default space cannot be hidden or deleted. Choose another default space first.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SPACE_HAS_ACTIVE_PAGES",
+    "status": 409,
+    "title": "Space still has pages",
+    "userMessage": "A space with active pages cannot be deleted. Move or delete its pages first.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SPACE_HAS_PAGES",
+    "status": 409,
+    "title": "Space still holds pages",
+    "userMessage": "A space that still holds pages, including archived or trashed pages, cannot be removed permanently.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SPACE_KEY_INVALID",
+    "status": 400,
+    "title": "Invalid space key",
+    "userMessage": "A space key has 2 to 20 characters: letters and digits only.",
+    "hintKind": "NO_HINT",
+    "exitCode": 3
+  },
+  {
+    "name": "SPACE_KEY_TAKEN",
+    "status": 409,
+    "title": "Space key already in use",
+    "userMessage": "This space key is already in use, also by a hidden or deleted space.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SPACE_MODULE_DISABLED",
+    "status": 409,
+    "title": "Spaces is disabled",
+    "userMessage": "Enable Spaces before creating more spaces. Only the first space can be created while Spaces is disabled.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SPACE_NOT_FOUND",
+    "status": 404,
+    "title": "Space not found",
+    "userMessage": "The requested space does not exist.",
+    "hintKind": "NO_HINT",
+    "exitCode": 6
+  },
+  {
+    "name": "SPACE_NOT_INITIALIZED",
+    "status": 409,
+    "title": "No space yet",
+    "userMessage": "No space exists yet, so there is no default space to create a page in. Create the first space first.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SPACE_REQUIRED",
+    "status": 400,
+    "title": "Space required",
+    "userMessage": "A space is required. Workflow roles are managed per space: name the space in the request.",
+    "hintKind": "STATIC",
+    "exitCode": 3,
+    "staticHint": "Workflow roles are per space. Add the space key as query parameter, for example PUT /public/v1/workflow-roles/{userId}?space=home."
+  },
+  {
+    "name": "SPACES_DEFAULT_REQUIRED",
+    "status": 409,
+    "title": "Spaces needs a default space",
+    "userMessage": "Create your first space before enabling Spaces.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
+    "name": "SYS_ADMIN_REQUIRED",
+    "status": 403,
+    "title": "System administrator required",
+    "userMessage": "Only a system administrator can grant the system administrator role or change a system administrator.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
   },
   {
     "name": "TWO_FACTOR_CHALLENGE_EXPIRED",
@@ -1393,13 +1579,21 @@
     "exitCode": 7
   },
   {
+    "name": "WORK_ITEM_TYPE_NOT_AVAILABLE_IN_SPACE",
+    "status": 409,
+    "title": "Work item type not available in this space",
+    "userMessage": "Not available in this space.",
+    "hintKind": "NO_HINT",
+    "exitCode": 7
+  },
+  {
     "name": "WORK_ITEM_TYPE_NOT_FOUND",
     "status": 404,
     "title": "Work item type not found",
     "userMessage": "The work item type you're looking for doesn't exist.",
     "hintKind": "STATIC",
     "exitCode": 6,
-    "staticHint": "Work item type not found. Use GET /public/v1/work-item-types to list all available work item types."
+    "staticHint": "Work item type not found. Use GET /public/v1/work-item-types to list all available work item types. The space query parameter selects the space: the global types plus the types local to that space."
   },
   {
     "name": "WORK_ITEM_TYPE_SLUG_EXISTS",
@@ -1441,6 +1635,14 @@
     "userMessage": "Publishing workflow is not enabled for this page type.",
     "hintKind": "NO_HINT",
     "exitCode": 3
+  },
+  {
+    "name": "WORKFLOW_ROLE_ABOVE_OWN_ROLE",
+    "status": 403,
+    "title": "Publishing role above your own role",
+    "userMessage": "You cannot grant a publishing role above your own role in this space.",
+    "hintKind": "NO_HINT",
+    "exitCode": 5
   },
   {
     "name": "WORKING_REVISION_EXISTS",

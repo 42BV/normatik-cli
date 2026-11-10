@@ -20,7 +20,7 @@ func newWhoamiCmd() *cobra.Command {
 			if apiErr != nil {
 				return command.RenderError(d.Printer, apiErr, "normatik whoami")
 			}
-			d.Printer.Raw(body, "id", "displayName", "email", "role", "workflowRole", "accessMode")
+			d.Printer.Raw(body, "id", "displayName", "email", "role", "accessMode")
 			return nil
 		},
 	}

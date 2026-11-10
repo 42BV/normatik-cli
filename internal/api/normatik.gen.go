@@ -24,19 +24,19 @@ const (
 
 // Defines values for AllowedPageActionResultReason.
 const (
-	INSUFFICIENTROLE AllowedPageActionResultReason = "INSUFFICIENT_ROLE"
-	NOWRITEACCESS    AllowedPageActionResultReason = "NO_WRITE_ACCESS"
-	PAGEHASCHILDREN  AllowedPageActionResultReason = "PAGE_HAS_CHILDREN"
+	AllowedPageActionResultReasonINSUFFICIENTROLE AllowedPageActionResultReason = "INSUFFICIENT_ROLE"
+	AllowedPageActionResultReasonNOWRITEACCESS    AllowedPageActionResultReason = "NO_WRITE_ACCESS"
+	AllowedPageActionResultReasonPAGEHASCHILDREN  AllowedPageActionResultReason = "PAGE_HAS_CHILDREN"
 )
 
 // Valid indicates whether the value is a known member of the AllowedPageActionResultReason enum.
 func (e AllowedPageActionResultReason) Valid() bool {
 	switch e {
-	case INSUFFICIENTROLE:
+	case AllowedPageActionResultReasonINSUFFICIENTROLE:
 		return true
-	case NOWRITEACCESS:
+	case AllowedPageActionResultReasonNOWRITEACCESS:
 		return true
-	case PAGEHASCHILDREN:
+	case AllowedPageActionResultReasonPAGEHASCHILDREN:
 		return true
 	default:
 		return false
@@ -417,6 +417,7 @@ func (e DisplayColumnResultDataType) Valid() bool {
 
 // Defines values for EligibleUserResultMaxAccessLevel.
 const (
+	EligibleUserResultMaxAccessLevelADMIN     EligibleUserResultMaxAccessLevel = "ADMIN"
 	EligibleUserResultMaxAccessLevelREAD      EligibleUserResultMaxAccessLevel = "READ"
 	EligibleUserResultMaxAccessLevelREADWRITE EligibleUserResultMaxAccessLevel = "READ_WRITE"
 )
@@ -424,6 +425,8 @@ const (
 // Valid indicates whether the value is a known member of the EligibleUserResultMaxAccessLevel enum.
 func (e EligibleUserResultMaxAccessLevel) Valid() bool {
 	switch e {
+	case EligibleUserResultMaxAccessLevelADMIN:
+		return true
 	case EligibleUserResultMaxAccessLevelREAD:
 		return true
 	case EligibleUserResultMaxAccessLevelREADWRITE:
@@ -475,6 +478,30 @@ func (e EnvironmentSeedStateResultStatus) Valid() bool {
 	}
 }
 
+// Defines values for GroupRoleSourceWorkflowRole.
+const (
+	GroupRoleSourceWorkflowRoleCONTRIBUTOR GroupRoleSourceWorkflowRole = "CONTRIBUTOR"
+	GroupRoleSourceWorkflowRolePUBLISHER   GroupRoleSourceWorkflowRole = "PUBLISHER"
+	GroupRoleSourceWorkflowRoleREADER      GroupRoleSourceWorkflowRole = "READER"
+	GroupRoleSourceWorkflowRoleREVIEWER    GroupRoleSourceWorkflowRole = "REVIEWER"
+)
+
+// Valid indicates whether the value is a known member of the GroupRoleSourceWorkflowRole enum.
+func (e GroupRoleSourceWorkflowRole) Valid() bool {
+	switch e {
+	case GroupRoleSourceWorkflowRoleCONTRIBUTOR:
+		return true
+	case GroupRoleSourceWorkflowRolePUBLISHER:
+		return true
+	case GroupRoleSourceWorkflowRoleREADER:
+		return true
+	case GroupRoleSourceWorkflowRoleREVIEWER:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for InternalUserFormCreationMode.
 const (
 	InternalUserFormCreationModeNOPASSWORD          InternalUserFormCreationMode = "NO_PASSWORD"
@@ -498,8 +525,9 @@ func (e InternalUserFormCreationMode) Valid() bool {
 
 // Defines values for InternalUserFormRole.
 const (
-	InternalUserFormRoleADMIN InternalUserFormRole = "ADMIN"
-	InternalUserFormRoleUSER  InternalUserFormRole = "USER"
+	InternalUserFormRoleADMIN    InternalUserFormRole = "ADMIN"
+	InternalUserFormRoleSYSADMIN InternalUserFormRole = "SYS_ADMIN"
+	InternalUserFormRoleUSER     InternalUserFormRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the InternalUserFormRole enum.
@@ -507,31 +535,9 @@ func (e InternalUserFormRole) Valid() bool {
 	switch e {
 	case InternalUserFormRoleADMIN:
 		return true
+	case InternalUserFormRoleSYSADMIN:
+		return true
 	case InternalUserFormRoleUSER:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for InternalUserFormWorkflowRole.
-const (
-	InternalUserFormWorkflowRoleCONTRIBUTOR InternalUserFormWorkflowRole = "CONTRIBUTOR"
-	InternalUserFormWorkflowRolePUBLISHER   InternalUserFormWorkflowRole = "PUBLISHER"
-	InternalUserFormWorkflowRoleREADER      InternalUserFormWorkflowRole = "READER"
-	InternalUserFormWorkflowRoleREVIEWER    InternalUserFormWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the InternalUserFormWorkflowRole enum.
-func (e InternalUserFormWorkflowRole) Valid() bool {
-	switch e {
-	case InternalUserFormWorkflowRoleCONTRIBUTOR:
-		return true
-	case InternalUserFormWorkflowRolePUBLISHER:
-		return true
-	case InternalUserFormWorkflowRoleREADER:
-		return true
-	case InternalUserFormWorkflowRoleREVIEWER:
 		return true
 	default:
 		return false
@@ -565,6 +571,72 @@ func (e MacroAttributeSchemaType) Valid() bool {
 	}
 }
 
+// Defines values for ModuleResultName.
+const (
+	SPACES ModuleResultName = "SPACES"
+)
+
+// Valid indicates whether the value is a known member of the ModuleResultName enum.
+func (e ModuleResultName) Valid() bool {
+	switch e {
+	case SPACES:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MoveToSpaceBlockerReason.
+const (
+	MoveToSpaceBlockerReasonNAMECONFLICT              MoveToSpaceBlockerReason = "NAME_CONFLICT"
+	MoveToSpaceBlockerReasonNOWRITEACCESS             MoveToSpaceBlockerReason = "NO_WRITE_ACCESS"
+	MoveToSpaceBlockerReasonPAGETASKSTYPENOTAVAILABLE MoveToSpaceBlockerReason = "PAGE_TASKS_TYPE_NOT_AVAILABLE"
+	MoveToSpaceBlockerReasonPAGETYPENOTAVAILABLE      MoveToSpaceBlockerReason = "PAGE_TYPE_NOT_AVAILABLE"
+	MoveToSpaceBlockerReasonTARGETPARENTNOTWRITABLE   MoveToSpaceBlockerReason = "TARGET_PARENT_NOT_WRITABLE"
+	MoveToSpaceBlockerReasonTARGETSPACENOTWRITABLE    MoveToSpaceBlockerReason = "TARGET_SPACE_NOT_WRITABLE"
+	MoveToSpaceBlockerReasonWORKITEMTYPENOTAVAILABLE  MoveToSpaceBlockerReason = "WORK_ITEM_TYPE_NOT_AVAILABLE"
+)
+
+// Valid indicates whether the value is a known member of the MoveToSpaceBlockerReason enum.
+func (e MoveToSpaceBlockerReason) Valid() bool {
+	switch e {
+	case MoveToSpaceBlockerReasonNAMECONFLICT:
+		return true
+	case MoveToSpaceBlockerReasonNOWRITEACCESS:
+		return true
+	case MoveToSpaceBlockerReasonPAGETASKSTYPENOTAVAILABLE:
+		return true
+	case MoveToSpaceBlockerReasonPAGETYPENOTAVAILABLE:
+		return true
+	case MoveToSpaceBlockerReasonTARGETPARENTNOTWRITABLE:
+		return true
+	case MoveToSpaceBlockerReasonTARGETSPACENOTWRITABLE:
+		return true
+	case MoveToSpaceBlockerReasonWORKITEMTYPENOTAVAILABLE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MoveToSpaceImpactResultWarnings.
+const (
+	INHERITSTARGETRESTRICTION MoveToSpaceImpactResultWarnings = "INHERITS_TARGET_RESTRICTION"
+	LOSESINHERITEDRESTRICTION MoveToSpaceImpactResultWarnings = "LOSES_INHERITED_RESTRICTION"
+)
+
+// Valid indicates whether the value is a known member of the MoveToSpaceImpactResultWarnings enum.
+func (e MoveToSpaceImpactResultWarnings) Valid() bool {
+	switch e {
+	case INHERITSTARGETRESTRICTION:
+		return true
+	case LOSESINHERITEDRESTRICTION:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PageLinkDataState.
 const (
 	PageLinkDataStateActive   PageLinkDataState = "active"
@@ -588,6 +660,7 @@ func (e PageLinkDataState) Valid() bool {
 
 // Defines values for PageRestrictionAccessFormAccessLevel.
 const (
+	PageRestrictionAccessFormAccessLevelADMIN     PageRestrictionAccessFormAccessLevel = "ADMIN"
 	PageRestrictionAccessFormAccessLevelREAD      PageRestrictionAccessFormAccessLevel = "READ"
 	PageRestrictionAccessFormAccessLevelREADWRITE PageRestrictionAccessFormAccessLevel = "READ_WRITE"
 )
@@ -595,6 +668,8 @@ const (
 // Valid indicates whether the value is a known member of the PageRestrictionAccessFormAccessLevel enum.
 func (e PageRestrictionAccessFormAccessLevel) Valid() bool {
 	switch e {
+	case PageRestrictionAccessFormAccessLevelADMIN:
+		return true
 	case PageRestrictionAccessFormAccessLevelREAD:
 		return true
 	case PageRestrictionAccessFormAccessLevelREADWRITE:
@@ -606,6 +681,7 @@ func (e PageRestrictionAccessFormAccessLevel) Valid() bool {
 
 // Defines values for PageRestrictionAccessResultAccessLevel.
 const (
+	PageRestrictionAccessResultAccessLevelADMIN     PageRestrictionAccessResultAccessLevel = "ADMIN"
 	PageRestrictionAccessResultAccessLevelREAD      PageRestrictionAccessResultAccessLevel = "READ"
 	PageRestrictionAccessResultAccessLevelREADWRITE PageRestrictionAccessResultAccessLevel = "READ_WRITE"
 )
@@ -613,6 +689,8 @@ const (
 // Valid indicates whether the value is a known member of the PageRestrictionAccessResultAccessLevel enum.
 func (e PageRestrictionAccessResultAccessLevel) Valid() bool {
 	switch e {
+	case PageRestrictionAccessResultAccessLevelADMIN:
+		return true
 	case PageRestrictionAccessResultAccessLevelREAD:
 		return true
 	case PageRestrictionAccessResultAccessLevelREADWRITE:
@@ -624,6 +702,7 @@ func (e PageRestrictionAccessResultAccessLevel) Valid() bool {
 
 // Defines values for PageRestrictionGroupAccessFormAccessLevel.
 const (
+	PageRestrictionGroupAccessFormAccessLevelADMIN     PageRestrictionGroupAccessFormAccessLevel = "ADMIN"
 	PageRestrictionGroupAccessFormAccessLevelREAD      PageRestrictionGroupAccessFormAccessLevel = "READ"
 	PageRestrictionGroupAccessFormAccessLevelREADWRITE PageRestrictionGroupAccessFormAccessLevel = "READ_WRITE"
 )
@@ -631,6 +710,8 @@ const (
 // Valid indicates whether the value is a known member of the PageRestrictionGroupAccessFormAccessLevel enum.
 func (e PageRestrictionGroupAccessFormAccessLevel) Valid() bool {
 	switch e {
+	case PageRestrictionGroupAccessFormAccessLevelADMIN:
+		return true
 	case PageRestrictionGroupAccessFormAccessLevelREAD:
 		return true
 	case PageRestrictionGroupAccessFormAccessLevelREADWRITE:
@@ -642,6 +723,7 @@ func (e PageRestrictionGroupAccessFormAccessLevel) Valid() bool {
 
 // Defines values for PageRestrictionGroupAccessResultAccessLevel.
 const (
+	PageRestrictionGroupAccessResultAccessLevelADMIN     PageRestrictionGroupAccessResultAccessLevel = "ADMIN"
 	PageRestrictionGroupAccessResultAccessLevelREAD      PageRestrictionGroupAccessResultAccessLevel = "READ"
 	PageRestrictionGroupAccessResultAccessLevelREADWRITE PageRestrictionGroupAccessResultAccessLevel = "READ_WRITE"
 )
@@ -649,6 +731,8 @@ const (
 // Valid indicates whether the value is a known member of the PageRestrictionGroupAccessResultAccessLevel enum.
 func (e PageRestrictionGroupAccessResultAccessLevel) Valid() bool {
 	switch e {
+	case PageRestrictionGroupAccessResultAccessLevelADMIN:
+		return true
 	case PageRestrictionGroupAccessResultAccessLevelREAD:
 		return true
 	case PageRestrictionGroupAccessResultAccessLevelREADWRITE:
@@ -1206,14 +1290,17 @@ func (e PropertyValueResultNumberFormat) Valid() bool {
 
 // Defines values for PublicInternalUserCreatedResultEffectiveRole.
 const (
-	PublicInternalUserCreatedResultEffectiveRoleADMIN PublicInternalUserCreatedResultEffectiveRole = "ADMIN"
-	PublicInternalUserCreatedResultEffectiveRoleUSER  PublicInternalUserCreatedResultEffectiveRole = "USER"
+	PublicInternalUserCreatedResultEffectiveRoleADMIN    PublicInternalUserCreatedResultEffectiveRole = "ADMIN"
+	PublicInternalUserCreatedResultEffectiveRoleSYSADMIN PublicInternalUserCreatedResultEffectiveRole = "SYS_ADMIN"
+	PublicInternalUserCreatedResultEffectiveRoleUSER     PublicInternalUserCreatedResultEffectiveRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultEffectiveRole enum.
 func (e PublicInternalUserCreatedResultEffectiveRole) Valid() bool {
 	switch e {
 	case PublicInternalUserCreatedResultEffectiveRoleADMIN:
+		return true
+	case PublicInternalUserCreatedResultEffectiveRoleSYSADMIN:
 		return true
 	case PublicInternalUserCreatedResultEffectiveRoleUSER:
 		return true
@@ -1222,40 +1309,19 @@ func (e PublicInternalUserCreatedResultEffectiveRole) Valid() bool {
 	}
 }
 
-// Defines values for PublicInternalUserCreatedResultEffectiveWorkflowRole.
-const (
-	PublicInternalUserCreatedResultEffectiveWorkflowRoleCONTRIBUTOR PublicInternalUserCreatedResultEffectiveWorkflowRole = "CONTRIBUTOR"
-	PublicInternalUserCreatedResultEffectiveWorkflowRolePUBLISHER   PublicInternalUserCreatedResultEffectiveWorkflowRole = "PUBLISHER"
-	PublicInternalUserCreatedResultEffectiveWorkflowRoleREADER      PublicInternalUserCreatedResultEffectiveWorkflowRole = "READER"
-	PublicInternalUserCreatedResultEffectiveWorkflowRoleREVIEWER    PublicInternalUserCreatedResultEffectiveWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultEffectiveWorkflowRole enum.
-func (e PublicInternalUserCreatedResultEffectiveWorkflowRole) Valid() bool {
-	switch e {
-	case PublicInternalUserCreatedResultEffectiveWorkflowRoleCONTRIBUTOR:
-		return true
-	case PublicInternalUserCreatedResultEffectiveWorkflowRolePUBLISHER:
-		return true
-	case PublicInternalUserCreatedResultEffectiveWorkflowRoleREADER:
-		return true
-	case PublicInternalUserCreatedResultEffectiveWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for PublicInternalUserCreatedResultRole.
 const (
-	PublicInternalUserCreatedResultRoleADMIN PublicInternalUserCreatedResultRole = "ADMIN"
-	PublicInternalUserCreatedResultRoleUSER  PublicInternalUserCreatedResultRole = "USER"
+	PublicInternalUserCreatedResultRoleADMIN    PublicInternalUserCreatedResultRole = "ADMIN"
+	PublicInternalUserCreatedResultRoleSYSADMIN PublicInternalUserCreatedResultRole = "SYS_ADMIN"
+	PublicInternalUserCreatedResultRoleUSER     PublicInternalUserCreatedResultRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultRole enum.
 func (e PublicInternalUserCreatedResultRole) Valid() bool {
 	switch e {
 	case PublicInternalUserCreatedResultRoleADMIN:
+		return true
+	case PublicInternalUserCreatedResultRoleSYSADMIN:
 		return true
 	case PublicInternalUserCreatedResultRoleUSER:
 		return true
@@ -1285,45 +1351,21 @@ func (e PublicInternalUserCreatedResultStatus) Valid() bool {
 	}
 }
 
-// Defines values for PublicInternalUserCreatedResultWorkflowRole.
-const (
-	PublicInternalUserCreatedResultWorkflowRoleCONTRIBUTOR PublicInternalUserCreatedResultWorkflowRole = "CONTRIBUTOR"
-	PublicInternalUserCreatedResultWorkflowRolePUBLISHER   PublicInternalUserCreatedResultWorkflowRole = "PUBLISHER"
-	PublicInternalUserCreatedResultWorkflowRoleREADER      PublicInternalUserCreatedResultWorkflowRole = "READER"
-	PublicInternalUserCreatedResultWorkflowRoleREVIEWER    PublicInternalUserCreatedResultWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the PublicInternalUserCreatedResultWorkflowRole enum.
-func (e PublicInternalUserCreatedResultWorkflowRole) Valid() bool {
-	switch e {
-	case PublicInternalUserCreatedResultWorkflowRoleCONTRIBUTOR:
-		return true
-	case PublicInternalUserCreatedResultWorkflowRolePUBLISHER:
-		return true
-	case PublicInternalUserCreatedResultWorkflowRoleREADER:
-		return true
-	case PublicInternalUserCreatedResultWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for PublicPageCompositeResultCurrentUserAccessLevel.
 const (
-	OWNER     PublicPageCompositeResultCurrentUserAccessLevel = "OWNER"
-	READ      PublicPageCompositeResultCurrentUserAccessLevel = "READ"
-	READWRITE PublicPageCompositeResultCurrentUserAccessLevel = "READ_WRITE"
+	PublicPageCompositeResultCurrentUserAccessLevelOWNER     PublicPageCompositeResultCurrentUserAccessLevel = "OWNER"
+	PublicPageCompositeResultCurrentUserAccessLevelREAD      PublicPageCompositeResultCurrentUserAccessLevel = "READ"
+	PublicPageCompositeResultCurrentUserAccessLevelREADWRITE PublicPageCompositeResultCurrentUserAccessLevel = "READ_WRITE"
 )
 
 // Valid indicates whether the value is a known member of the PublicPageCompositeResultCurrentUserAccessLevel enum.
 func (e PublicPageCompositeResultCurrentUserAccessLevel) Valid() bool {
 	switch e {
-	case OWNER:
+	case PublicPageCompositeResultCurrentUserAccessLevelOWNER:
 		return true
-	case READ:
+	case PublicPageCompositeResultCurrentUserAccessLevelREAD:
 		return true
-	case READWRITE:
+	case PublicPageCompositeResultCurrentUserAccessLevelREADWRITE:
 		return true
 	default:
 		return false
@@ -1374,14 +1416,17 @@ func (e PublicPageTypeCompositeResultChildTypeMode) Valid() bool {
 
 // Defines values for PublicUserCompositeResultEffectiveRole.
 const (
-	PublicUserCompositeResultEffectiveRoleADMIN PublicUserCompositeResultEffectiveRole = "ADMIN"
-	PublicUserCompositeResultEffectiveRoleUSER  PublicUserCompositeResultEffectiveRole = "USER"
+	PublicUserCompositeResultEffectiveRoleADMIN    PublicUserCompositeResultEffectiveRole = "ADMIN"
+	PublicUserCompositeResultEffectiveRoleSYSADMIN PublicUserCompositeResultEffectiveRole = "SYS_ADMIN"
+	PublicUserCompositeResultEffectiveRoleUSER     PublicUserCompositeResultEffectiveRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the PublicUserCompositeResultEffectiveRole enum.
 func (e PublicUserCompositeResultEffectiveRole) Valid() bool {
 	switch e {
 	case PublicUserCompositeResultEffectiveRoleADMIN:
+		return true
+	case PublicUserCompositeResultEffectiveRoleSYSADMIN:
 		return true
 	case PublicUserCompositeResultEffectiveRoleUSER:
 		return true
@@ -1390,40 +1435,19 @@ func (e PublicUserCompositeResultEffectiveRole) Valid() bool {
 	}
 }
 
-// Defines values for PublicUserCompositeResultEffectiveWorkflowRole.
-const (
-	PublicUserCompositeResultEffectiveWorkflowRoleCONTRIBUTOR PublicUserCompositeResultEffectiveWorkflowRole = "CONTRIBUTOR"
-	PublicUserCompositeResultEffectiveWorkflowRolePUBLISHER   PublicUserCompositeResultEffectiveWorkflowRole = "PUBLISHER"
-	PublicUserCompositeResultEffectiveWorkflowRoleREADER      PublicUserCompositeResultEffectiveWorkflowRole = "READER"
-	PublicUserCompositeResultEffectiveWorkflowRoleREVIEWER    PublicUserCompositeResultEffectiveWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the PublicUserCompositeResultEffectiveWorkflowRole enum.
-func (e PublicUserCompositeResultEffectiveWorkflowRole) Valid() bool {
-	switch e {
-	case PublicUserCompositeResultEffectiveWorkflowRoleCONTRIBUTOR:
-		return true
-	case PublicUserCompositeResultEffectiveWorkflowRolePUBLISHER:
-		return true
-	case PublicUserCompositeResultEffectiveWorkflowRoleREADER:
-		return true
-	case PublicUserCompositeResultEffectiveWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for PublicUserCompositeResultRole.
 const (
-	PublicUserCompositeResultRoleADMIN PublicUserCompositeResultRole = "ADMIN"
-	PublicUserCompositeResultRoleUSER  PublicUserCompositeResultRole = "USER"
+	PublicUserCompositeResultRoleADMIN    PublicUserCompositeResultRole = "ADMIN"
+	PublicUserCompositeResultRoleSYSADMIN PublicUserCompositeResultRole = "SYS_ADMIN"
+	PublicUserCompositeResultRoleUSER     PublicUserCompositeResultRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the PublicUserCompositeResultRole enum.
 func (e PublicUserCompositeResultRole) Valid() bool {
 	switch e {
 	case PublicUserCompositeResultRoleADMIN:
+		return true
+	case PublicUserCompositeResultRoleSYSADMIN:
 		return true
 	case PublicUserCompositeResultRoleUSER:
 		return true
@@ -1453,40 +1477,19 @@ func (e PublicUserCompositeResultStatus) Valid() bool {
 	}
 }
 
-// Defines values for PublicUserCompositeResultWorkflowRole.
-const (
-	PublicUserCompositeResultWorkflowRoleCONTRIBUTOR PublicUserCompositeResultWorkflowRole = "CONTRIBUTOR"
-	PublicUserCompositeResultWorkflowRolePUBLISHER   PublicUserCompositeResultWorkflowRole = "PUBLISHER"
-	PublicUserCompositeResultWorkflowRoleREADER      PublicUserCompositeResultWorkflowRole = "READER"
-	PublicUserCompositeResultWorkflowRoleREVIEWER    PublicUserCompositeResultWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the PublicUserCompositeResultWorkflowRole enum.
-func (e PublicUserCompositeResultWorkflowRole) Valid() bool {
-	switch e {
-	case PublicUserCompositeResultWorkflowRoleCONTRIBUTOR:
-		return true
-	case PublicUserCompositeResultWorkflowRolePUBLISHER:
-		return true
-	case PublicUserCompositeResultWorkflowRoleREADER:
-		return true
-	case PublicUserCompositeResultWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for PublicUserMeResultEffectiveRole.
 const (
-	PublicUserMeResultEffectiveRoleADMIN PublicUserMeResultEffectiveRole = "ADMIN"
-	PublicUserMeResultEffectiveRoleUSER  PublicUserMeResultEffectiveRole = "USER"
+	PublicUserMeResultEffectiveRoleADMIN    PublicUserMeResultEffectiveRole = "ADMIN"
+	PublicUserMeResultEffectiveRoleSYSADMIN PublicUserMeResultEffectiveRole = "SYS_ADMIN"
+	PublicUserMeResultEffectiveRoleUSER     PublicUserMeResultEffectiveRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the PublicUserMeResultEffectiveRole enum.
 func (e PublicUserMeResultEffectiveRole) Valid() bool {
 	switch e {
 	case PublicUserMeResultEffectiveRoleADMIN:
+		return true
+	case PublicUserMeResultEffectiveRoleSYSADMIN:
 		return true
 	case PublicUserMeResultEffectiveRoleUSER:
 		return true
@@ -1495,40 +1498,19 @@ func (e PublicUserMeResultEffectiveRole) Valid() bool {
 	}
 }
 
-// Defines values for PublicUserMeResultEffectiveWorkflowRole.
-const (
-	PublicUserMeResultEffectiveWorkflowRoleCONTRIBUTOR PublicUserMeResultEffectiveWorkflowRole = "CONTRIBUTOR"
-	PublicUserMeResultEffectiveWorkflowRolePUBLISHER   PublicUserMeResultEffectiveWorkflowRole = "PUBLISHER"
-	PublicUserMeResultEffectiveWorkflowRoleREADER      PublicUserMeResultEffectiveWorkflowRole = "READER"
-	PublicUserMeResultEffectiveWorkflowRoleREVIEWER    PublicUserMeResultEffectiveWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the PublicUserMeResultEffectiveWorkflowRole enum.
-func (e PublicUserMeResultEffectiveWorkflowRole) Valid() bool {
-	switch e {
-	case PublicUserMeResultEffectiveWorkflowRoleCONTRIBUTOR:
-		return true
-	case PublicUserMeResultEffectiveWorkflowRolePUBLISHER:
-		return true
-	case PublicUserMeResultEffectiveWorkflowRoleREADER:
-		return true
-	case PublicUserMeResultEffectiveWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for PublicUserMeResultRole.
 const (
-	PublicUserMeResultRoleADMIN PublicUserMeResultRole = "ADMIN"
-	PublicUserMeResultRoleUSER  PublicUserMeResultRole = "USER"
+	PublicUserMeResultRoleADMIN    PublicUserMeResultRole = "ADMIN"
+	PublicUserMeResultRoleSYSADMIN PublicUserMeResultRole = "SYS_ADMIN"
+	PublicUserMeResultRoleUSER     PublicUserMeResultRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the PublicUserMeResultRole enum.
 func (e PublicUserMeResultRole) Valid() bool {
 	switch e {
 	case PublicUserMeResultRoleADMIN:
+		return true
+	case PublicUserMeResultRoleSYSADMIN:
 		return true
 	case PublicUserMeResultRoleUSER:
 		return true
@@ -1558,30 +1540,6 @@ func (e PublicUserMeResultStatus) Valid() bool {
 	}
 }
 
-// Defines values for PublicUserMeResultWorkflowRole.
-const (
-	PublicUserMeResultWorkflowRoleCONTRIBUTOR PublicUserMeResultWorkflowRole = "CONTRIBUTOR"
-	PublicUserMeResultWorkflowRolePUBLISHER   PublicUserMeResultWorkflowRole = "PUBLISHER"
-	PublicUserMeResultWorkflowRoleREADER      PublicUserMeResultWorkflowRole = "READER"
-	PublicUserMeResultWorkflowRoleREVIEWER    PublicUserMeResultWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the PublicUserMeResultWorkflowRole enum.
-func (e PublicUserMeResultWorkflowRole) Valid() bool {
-	switch e {
-	case PublicUserMeResultWorkflowRoleCONTRIBUTOR:
-		return true
-	case PublicUserMeResultWorkflowRolePUBLISHER:
-		return true
-	case PublicUserMeResultWorkflowRoleREADER:
-		return true
-	case PublicUserMeResultWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for RedirectTargetKind.
 const (
 	PAGE      RedirectTargetKind = "PAGE"
@@ -1594,6 +1552,210 @@ func (e RedirectTargetKind) Valid() bool {
 	case PAGE:
 		return true
 	case PAGESROOT:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceAccessFormAccessMode.
+const (
+	SpaceAccessFormAccessModeALLUSERS SpaceAccessFormAccessMode = "ALL_USERS"
+	SpaceAccessFormAccessModeSELECTED SpaceAccessFormAccessMode = "SELECTED"
+)
+
+// Valid indicates whether the value is a known member of the SpaceAccessFormAccessMode enum.
+func (e SpaceAccessFormAccessMode) Valid() bool {
+	switch e {
+	case SpaceAccessFormAccessModeALLUSERS:
+		return true
+	case SpaceAccessFormAccessModeSELECTED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceAccessResultAccessMode.
+const (
+	SpaceAccessResultAccessModeALLUSERS SpaceAccessResultAccessMode = "ALL_USERS"
+	SpaceAccessResultAccessModeSELECTED SpaceAccessResultAccessMode = "SELECTED"
+)
+
+// Valid indicates whether the value is a known member of the SpaceAccessResultAccessMode enum.
+func (e SpaceAccessResultAccessMode) Valid() bool {
+	switch e {
+	case SpaceAccessResultAccessModeALLUSERS:
+		return true
+	case SpaceAccessResultAccessModeSELECTED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceFormAccessMode.
+const (
+	SpaceFormAccessModeALLUSERS SpaceFormAccessMode = "ALL_USERS"
+	SpaceFormAccessModeSELECTED SpaceFormAccessMode = "SELECTED"
+)
+
+// Valid indicates whether the value is a known member of the SpaceFormAccessMode enum.
+func (e SpaceFormAccessMode) Valid() bool {
+	switch e {
+	case SpaceFormAccessModeALLUSERS:
+		return true
+	case SpaceFormAccessModeSELECTED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceGroupGrantFormAccessLevel.
+const (
+	SpaceGroupGrantFormAccessLevelADMIN     SpaceGroupGrantFormAccessLevel = "ADMIN"
+	SpaceGroupGrantFormAccessLevelREAD      SpaceGroupGrantFormAccessLevel = "READ"
+	SpaceGroupGrantFormAccessLevelREADWRITE SpaceGroupGrantFormAccessLevel = "READ_WRITE"
+)
+
+// Valid indicates whether the value is a known member of the SpaceGroupGrantFormAccessLevel enum.
+func (e SpaceGroupGrantFormAccessLevel) Valid() bool {
+	switch e {
+	case SpaceGroupGrantFormAccessLevelADMIN:
+		return true
+	case SpaceGroupGrantFormAccessLevelREAD:
+		return true
+	case SpaceGroupGrantFormAccessLevelREADWRITE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceGroupGrantResultAccessLevel.
+const (
+	SpaceGroupGrantResultAccessLevelADMIN     SpaceGroupGrantResultAccessLevel = "ADMIN"
+	SpaceGroupGrantResultAccessLevelREAD      SpaceGroupGrantResultAccessLevel = "READ"
+	SpaceGroupGrantResultAccessLevelREADWRITE SpaceGroupGrantResultAccessLevel = "READ_WRITE"
+)
+
+// Valid indicates whether the value is a known member of the SpaceGroupGrantResultAccessLevel enum.
+func (e SpaceGroupGrantResultAccessLevel) Valid() bool {
+	switch e {
+	case SpaceGroupGrantResultAccessLevelADMIN:
+		return true
+	case SpaceGroupGrantResultAccessLevelREAD:
+		return true
+	case SpaceGroupGrantResultAccessLevelREADWRITE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceResultAccessMode.
+const (
+	SpaceResultAccessModeALLUSERS SpaceResultAccessMode = "ALL_USERS"
+	SpaceResultAccessModeSELECTED SpaceResultAccessMode = "SELECTED"
+)
+
+// Valid indicates whether the value is a known member of the SpaceResultAccessMode enum.
+func (e SpaceResultAccessMode) Valid() bool {
+	switch e {
+	case SpaceResultAccessModeALLUSERS:
+		return true
+	case SpaceResultAccessModeSELECTED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceRoleResultDirectRole.
+const (
+	SpaceRoleResultDirectRoleCONTRIBUTOR SpaceRoleResultDirectRole = "CONTRIBUTOR"
+	SpaceRoleResultDirectRolePUBLISHER   SpaceRoleResultDirectRole = "PUBLISHER"
+	SpaceRoleResultDirectRoleREADER      SpaceRoleResultDirectRole = "READER"
+	SpaceRoleResultDirectRoleREVIEWER    SpaceRoleResultDirectRole = "REVIEWER"
+)
+
+// Valid indicates whether the value is a known member of the SpaceRoleResultDirectRole enum.
+func (e SpaceRoleResultDirectRole) Valid() bool {
+	switch e {
+	case SpaceRoleResultDirectRoleCONTRIBUTOR:
+		return true
+	case SpaceRoleResultDirectRolePUBLISHER:
+		return true
+	case SpaceRoleResultDirectRoleREADER:
+		return true
+	case SpaceRoleResultDirectRoleREVIEWER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceRoleResultEffectiveRole.
+const (
+	SpaceRoleResultEffectiveRoleCONTRIBUTOR SpaceRoleResultEffectiveRole = "CONTRIBUTOR"
+	SpaceRoleResultEffectiveRolePUBLISHER   SpaceRoleResultEffectiveRole = "PUBLISHER"
+	SpaceRoleResultEffectiveRoleREADER      SpaceRoleResultEffectiveRole = "READER"
+	SpaceRoleResultEffectiveRoleREVIEWER    SpaceRoleResultEffectiveRole = "REVIEWER"
+)
+
+// Valid indicates whether the value is a known member of the SpaceRoleResultEffectiveRole enum.
+func (e SpaceRoleResultEffectiveRole) Valid() bool {
+	switch e {
+	case SpaceRoleResultEffectiveRoleCONTRIBUTOR:
+		return true
+	case SpaceRoleResultEffectiveRolePUBLISHER:
+		return true
+	case SpaceRoleResultEffectiveRoleREADER:
+		return true
+	case SpaceRoleResultEffectiveRoleREVIEWER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceUserGrantFormAccessLevel.
+const (
+	SpaceUserGrantFormAccessLevelADMIN     SpaceUserGrantFormAccessLevel = "ADMIN"
+	SpaceUserGrantFormAccessLevelREAD      SpaceUserGrantFormAccessLevel = "READ"
+	SpaceUserGrantFormAccessLevelREADWRITE SpaceUserGrantFormAccessLevel = "READ_WRITE"
+)
+
+// Valid indicates whether the value is a known member of the SpaceUserGrantFormAccessLevel enum.
+func (e SpaceUserGrantFormAccessLevel) Valid() bool {
+	switch e {
+	case SpaceUserGrantFormAccessLevelADMIN:
+		return true
+	case SpaceUserGrantFormAccessLevelREAD:
+		return true
+	case SpaceUserGrantFormAccessLevelREADWRITE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SpaceUserGrantResultAccessLevel.
+const (
+	SpaceUserGrantResultAccessLevelADMIN     SpaceUserGrantResultAccessLevel = "ADMIN"
+	SpaceUserGrantResultAccessLevelREAD      SpaceUserGrantResultAccessLevel = "READ"
+	SpaceUserGrantResultAccessLevelREADWRITE SpaceUserGrantResultAccessLevel = "READ_WRITE"
+)
+
+// Valid indicates whether the value is a known member of the SpaceUserGrantResultAccessLevel enum.
+func (e SpaceUserGrantResultAccessLevel) Valid() bool {
+	switch e {
+	case SpaceUserGrantResultAccessLevelADMIN:
+		return true
+	case SpaceUserGrantResultAccessLevelREAD:
+		return true
+	case SpaceUserGrantResultAccessLevelREADWRITE:
 		return true
 	default:
 		return false
@@ -1665,14 +1827,17 @@ func (e UserFormCreationMode) Valid() bool {
 
 // Defines values for UserFormRole.
 const (
-	UserFormRoleADMIN UserFormRole = "ADMIN"
-	UserFormRoleUSER  UserFormRole = "USER"
+	UserFormRoleADMIN    UserFormRole = "ADMIN"
+	UserFormRoleSYSADMIN UserFormRole = "SYS_ADMIN"
+	UserFormRoleUSER     UserFormRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the UserFormRole enum.
 func (e UserFormRole) Valid() bool {
 	switch e {
 	case UserFormRoleADMIN:
+		return true
+	case UserFormRoleSYSADMIN:
 		return true
 	case UserFormRoleUSER:
 		return true
@@ -1681,40 +1846,19 @@ func (e UserFormRole) Valid() bool {
 	}
 }
 
-// Defines values for UserFormWorkflowRole.
-const (
-	UserFormWorkflowRoleCONTRIBUTOR UserFormWorkflowRole = "CONTRIBUTOR"
-	UserFormWorkflowRolePUBLISHER   UserFormWorkflowRole = "PUBLISHER"
-	UserFormWorkflowRoleREADER      UserFormWorkflowRole = "READER"
-	UserFormWorkflowRoleREVIEWER    UserFormWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the UserFormWorkflowRole enum.
-func (e UserFormWorkflowRole) Valid() bool {
-	switch e {
-	case UserFormWorkflowRoleCONTRIBUTOR:
-		return true
-	case UserFormWorkflowRolePUBLISHER:
-		return true
-	case UserFormWorkflowRoleREADER:
-		return true
-	case UserFormWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for UserGroupFormRole.
 const (
-	UserGroupFormRoleADMIN UserGroupFormRole = "ADMIN"
-	UserGroupFormRoleUSER  UserGroupFormRole = "USER"
+	UserGroupFormRoleADMIN    UserGroupFormRole = "ADMIN"
+	UserGroupFormRoleSYSADMIN UserGroupFormRole = "SYS_ADMIN"
+	UserGroupFormRoleUSER     UserGroupFormRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the UserGroupFormRole enum.
 func (e UserGroupFormRole) Valid() bool {
 	switch e {
 	case UserGroupFormRoleADMIN:
+		return true
+	case UserGroupFormRoleSYSADMIN:
 		return true
 	case UserGroupFormRoleUSER:
 		return true
@@ -1723,40 +1867,19 @@ func (e UserGroupFormRole) Valid() bool {
 	}
 }
 
-// Defines values for UserGroupFormWorkflowRole.
-const (
-	UserGroupFormWorkflowRoleCONTRIBUTOR UserGroupFormWorkflowRole = "CONTRIBUTOR"
-	UserGroupFormWorkflowRolePUBLISHER   UserGroupFormWorkflowRole = "PUBLISHER"
-	UserGroupFormWorkflowRoleREADER      UserGroupFormWorkflowRole = "READER"
-	UserGroupFormWorkflowRoleREVIEWER    UserGroupFormWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the UserGroupFormWorkflowRole enum.
-func (e UserGroupFormWorkflowRole) Valid() bool {
-	switch e {
-	case UserGroupFormWorkflowRoleCONTRIBUTOR:
-		return true
-	case UserGroupFormWorkflowRolePUBLISHER:
-		return true
-	case UserGroupFormWorkflowRoleREADER:
-		return true
-	case UserGroupFormWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for UserGroupResultRole.
 const (
-	UserGroupResultRoleADMIN UserGroupResultRole = "ADMIN"
-	UserGroupResultRoleUSER  UserGroupResultRole = "USER"
+	UserGroupResultRoleADMIN    UserGroupResultRole = "ADMIN"
+	UserGroupResultRoleSYSADMIN UserGroupResultRole = "SYS_ADMIN"
+	UserGroupResultRoleUSER     UserGroupResultRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the UserGroupResultRole enum.
 func (e UserGroupResultRole) Valid() bool {
 	switch e {
 	case UserGroupResultRoleADMIN:
+		return true
+	case UserGroupResultRoleSYSADMIN:
 		return true
 	case UserGroupResultRoleUSER:
 		return true
@@ -1777,30 +1900,6 @@ func (e UserGroupResultStatus) Valid() bool {
 	case UserGroupResultStatusACTIVE:
 		return true
 	case UserGroupResultStatusINACTIVE:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for UserGroupResultWorkflowRole.
-const (
-	UserGroupResultWorkflowRoleCONTRIBUTOR UserGroupResultWorkflowRole = "CONTRIBUTOR"
-	UserGroupResultWorkflowRolePUBLISHER   UserGroupResultWorkflowRole = "PUBLISHER"
-	UserGroupResultWorkflowRoleREADER      UserGroupResultWorkflowRole = "READER"
-	UserGroupResultWorkflowRoleREVIEWER    UserGroupResultWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the UserGroupResultWorkflowRole enum.
-func (e UserGroupResultWorkflowRole) Valid() bool {
-	switch e {
-	case UserGroupResultWorkflowRoleCONTRIBUTOR:
-		return true
-	case UserGroupResultWorkflowRolePUBLISHER:
-		return true
-	case UserGroupResultWorkflowRoleREADER:
-		return true
-	case UserGroupResultWorkflowRoleREVIEWER:
 		return true
 	default:
 		return false
@@ -1833,14 +1932,17 @@ func (e UserLinkResultStatus) Valid() bool {
 
 // Defines values for UserResultEffectiveRole.
 const (
-	UserResultEffectiveRoleADMIN UserResultEffectiveRole = "ADMIN"
-	UserResultEffectiveRoleUSER  UserResultEffectiveRole = "USER"
+	UserResultEffectiveRoleADMIN    UserResultEffectiveRole = "ADMIN"
+	UserResultEffectiveRoleSYSADMIN UserResultEffectiveRole = "SYS_ADMIN"
+	UserResultEffectiveRoleUSER     UserResultEffectiveRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the UserResultEffectiveRole enum.
 func (e UserResultEffectiveRole) Valid() bool {
 	switch e {
 	case UserResultEffectiveRoleADMIN:
+		return true
+	case UserResultEffectiveRoleSYSADMIN:
 		return true
 	case UserResultEffectiveRoleUSER:
 		return true
@@ -1849,42 +1951,21 @@ func (e UserResultEffectiveRole) Valid() bool {
 	}
 }
 
-// Defines values for UserResultEffectiveWorkflowRole.
-const (
-	UserResultEffectiveWorkflowRoleCONTRIBUTOR UserResultEffectiveWorkflowRole = "CONTRIBUTOR"
-	UserResultEffectiveWorkflowRolePUBLISHER   UserResultEffectiveWorkflowRole = "PUBLISHER"
-	UserResultEffectiveWorkflowRoleREADER      UserResultEffectiveWorkflowRole = "READER"
-	UserResultEffectiveWorkflowRoleREVIEWER    UserResultEffectiveWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the UserResultEffectiveWorkflowRole enum.
-func (e UserResultEffectiveWorkflowRole) Valid() bool {
-	switch e {
-	case UserResultEffectiveWorkflowRoleCONTRIBUTOR:
-		return true
-	case UserResultEffectiveWorkflowRolePUBLISHER:
-		return true
-	case UserResultEffectiveWorkflowRoleREADER:
-		return true
-	case UserResultEffectiveWorkflowRoleREVIEWER:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for UserResultRole.
 const (
-	UserResultRoleADMIN UserResultRole = "ADMIN"
-	UserResultRoleUSER  UserResultRole = "USER"
+	ADMIN    UserResultRole = "ADMIN"
+	SYSADMIN UserResultRole = "SYS_ADMIN"
+	USER     UserResultRole = "USER"
 )
 
 // Valid indicates whether the value is a known member of the UserResultRole enum.
 func (e UserResultRole) Valid() bool {
 	switch e {
-	case UserResultRoleADMIN:
+	case ADMIN:
 		return true
-	case UserResultRoleUSER:
+	case SYSADMIN:
+		return true
+	case USER:
 		return true
 	default:
 		return false
@@ -1906,30 +1987,6 @@ func (e UserResultStatus) Valid() bool {
 	case UserResultStatusDELETED:
 		return true
 	case UserResultStatusPENDING:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for UserResultWorkflowRole.
-const (
-	UserResultWorkflowRoleCONTRIBUTOR UserResultWorkflowRole = "CONTRIBUTOR"
-	UserResultWorkflowRolePUBLISHER   UserResultWorkflowRole = "PUBLISHER"
-	UserResultWorkflowRoleREADER      UserResultWorkflowRole = "READER"
-	UserResultWorkflowRoleREVIEWER    UserResultWorkflowRole = "REVIEWER"
-)
-
-// Valid indicates whether the value is a known member of the UserResultWorkflowRole enum.
-func (e UserResultWorkflowRole) Valid() bool {
-	switch e {
-	case UserResultWorkflowRoleCONTRIBUTOR:
-		return true
-	case UserResultWorkflowRolePUBLISHER:
-		return true
-	case UserResultWorkflowRoleREADER:
-		return true
-	case UserResultWorkflowRoleREVIEWER:
 		return true
 	default:
 		return false
@@ -2007,22 +2064,22 @@ func (e WorkflowRoleGroupResultWorkflowRole) Valid() bool {
 
 // Defines values for WorkflowRoleResultWorkflowRole.
 const (
-	WorkflowRoleResultWorkflowRoleCONTRIBUTOR WorkflowRoleResultWorkflowRole = "CONTRIBUTOR"
-	WorkflowRoleResultWorkflowRolePUBLISHER   WorkflowRoleResultWorkflowRole = "PUBLISHER"
-	WorkflowRoleResultWorkflowRoleREADER      WorkflowRoleResultWorkflowRole = "READER"
-	WorkflowRoleResultWorkflowRoleREVIEWER    WorkflowRoleResultWorkflowRole = "REVIEWER"
+	CONTRIBUTOR WorkflowRoleResultWorkflowRole = "CONTRIBUTOR"
+	PUBLISHER   WorkflowRoleResultWorkflowRole = "PUBLISHER"
+	READER      WorkflowRoleResultWorkflowRole = "READER"
+	REVIEWER    WorkflowRoleResultWorkflowRole = "REVIEWER"
 )
 
 // Valid indicates whether the value is a known member of the WorkflowRoleResultWorkflowRole enum.
 func (e WorkflowRoleResultWorkflowRole) Valid() bool {
 	switch e {
-	case WorkflowRoleResultWorkflowRoleCONTRIBUTOR:
+	case CONTRIBUTOR:
 		return true
-	case WorkflowRoleResultWorkflowRolePUBLISHER:
+	case PUBLISHER:
 		return true
-	case WorkflowRoleResultWorkflowRoleREADER:
+	case READER:
 		return true
-	case WorkflowRoleResultWorkflowRoleREVIEWER:
+	case REVIEWER:
 		return true
 	default:
 		return false
@@ -2206,6 +2263,24 @@ func (e PreviewPageCascadeImpactParamsOperation) Valid() bool {
 	case TRASH:
 		return true
 	case UNARCHIVE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PreviewSpaceAccessImpactParamsAccessMode.
+const (
+	ALLUSERS PreviewSpaceAccessImpactParamsAccessMode = "ALL_USERS"
+	SELECTED PreviewSpaceAccessImpactParamsAccessMode = "SELECTED"
+)
+
+// Valid indicates whether the value is a known member of the PreviewSpaceAccessImpactParamsAccessMode enum.
+func (e PreviewSpaceAccessImpactParamsAccessMode) Valid() bool {
+	switch e {
+	case ALLUSERS:
+		return true
+	case SELECTED:
 		return true
 	default:
 		return false
@@ -2398,9 +2473,15 @@ type BreadcrumbEntry struct {
 
 // BreadcrumbItemResult defines model for BreadcrumbItemResult.
 type BreadcrumbItemResult struct {
-	Id     *int64                      `json:"id,omitempty"`
-	Name   string                      `json:"name"`
-	Status *BreadcrumbItemResultStatus `json:"status,omitempty"`
+	Id   *int64 `json:"id,omitempty"`
+	Name string `json:"name"`
+
+	// Space Lowercase key of the space.
+	Space *string `json:"space,omitempty"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId *int64                      `json:"spaceId,omitempty"`
+	Status  *BreadcrumbItemResultStatus `json:"status,omitempty"`
 }
 
 // BreadcrumbItemResultStatus defines model for BreadcrumbItemResult.Status.
@@ -2422,10 +2503,13 @@ type CascadeImpactPreviewResult struct {
 	TrashedCount            int64 `json:"trashedCount"`
 }
 
-// CascadeRestoreForm defines model for CascadeRestoreForm.
-type CascadeRestoreForm struct {
+// CascadeRestoreToSpaceForm defines model for CascadeRestoreToSpaceForm.
+type CascadeRestoreToSpaceForm struct {
 	IncludeSubtree *bool   `json:"includeSubtree,omitempty"`
 	Reason         *string `json:"reason,omitempty"`
+	TargetParentId *int64  `json:"targetParentId,omitempty"`
+	TargetRoot     *bool   `json:"targetRoot,omitempty"`
+	TargetSpaceId  *int64  `json:"targetSpaceId,omitempty"`
 }
 
 // CascadeResult defines model for CascadeResult.
@@ -2434,14 +2518,17 @@ type CascadeResult struct {
 	CorrelationId   string  `json:"correlationId"`
 }
 
-// CascadeSubtreeForm defines model for CascadeSubtreeForm.
-type CascadeSubtreeForm struct {
-	IncludeSubtree *bool `json:"includeSubtree,omitempty"`
-}
-
 // CascadeTrashForm defines model for CascadeTrashForm.
 type CascadeTrashForm struct {
 	AcknowledgePublished *bool `json:"acknowledgePublished,omitempty"`
+}
+
+// CascadeUnarchiveToSpaceForm defines model for CascadeUnarchiveToSpaceForm.
+type CascadeUnarchiveToSpaceForm struct {
+	IncludeSubtree *bool  `json:"includeSubtree,omitempty"`
+	TargetParentId *int64 `json:"targetParentId,omitempty"`
+	TargetRoot     *bool  `json:"targetRoot,omitempty"`
+	TargetSpaceId  *int64 `json:"targetSpaceId,omitempty"`
 }
 
 // ChainBreakResult defines model for ChainBreakResult.
@@ -2496,8 +2583,14 @@ type ChildPageData struct {
 	Id        int64     `json:"id"`
 	MacroData MacroData `json:"macroData"`
 	Slug      string    `json:"slug"`
-	Summary   *string   `json:"summary"`
-	Title     string    `json:"title"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64   `json:"spaceId"`
+	Summary *string `json:"summary"`
+	Title   string  `json:"title"`
 }
 
 // ChildrenInstanceData defines model for ChildrenInstanceData.
@@ -2644,9 +2737,11 @@ type DomainEnumForm struct {
 
 // DomainEnumResult defines model for DomainEnumResult.
 type DomainEnumResult struct {
-	Id     int64                   `json:"id"`
-	Name   string                  `json:"name"`
-	Values []DomainEnumValueResult `json:"values"`
+	Id             int64                   `json:"id"`
+	Name           string                  `json:"name"`
+	OriginSpaceId  *int64                  `json:"originSpaceId,omitempty"`
+	OriginSpaceKey *string                 `json:"originSpaceKey,omitempty"`
+	Values         []DomainEnumValueResult `json:"values"`
 }
 
 // DomainEnumUsagesResult defines model for DomainEnumUsagesResult.
@@ -2675,10 +2770,12 @@ type DomainEnumValueResult struct {
 
 // DomainEnumWithValuesListResult defines model for DomainEnumWithValuesListResult.
 type DomainEnumWithValuesListResult struct {
-	Id         int64                    `json:"id"`
-	Name       string                   `json:"name"`
-	ValueCount int32                    `json:"valueCount"`
-	Values     *[]DomainEnumValueResult `json:"values,omitempty"`
+	Id             int64                    `json:"id"`
+	Name           string                   `json:"name"`
+	OriginSpaceId  *int64                   `json:"originSpaceId,omitempty"`
+	OriginSpaceKey *string                  `json:"originSpaceKey,omitempty"`
+	ValueCount     int32                    `json:"valueCount"`
+	Values         *[]DomainEnumValueResult `json:"values,omitempty"`
 }
 
 // DraftPageResult defines model for DraftPageResult.
@@ -2687,6 +2784,12 @@ type DraftPageResult struct {
 	LastEdit string  `json:"lastEdit"`
 	PageId   int64   `json:"pageId"`
 	PageName string  `json:"pageName"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // EligibleUserResult defines model for EligibleUserResult.
@@ -2756,6 +2859,12 @@ type ExcerptIncludeData struct {
 	Id        int64     `json:"id"`
 	MacroData MacroData `json:"macroData"`
 	Name      string    `json:"name"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // ExpandError defines model for ExpandError.
@@ -2804,6 +2913,16 @@ type GoogleLoginStatusResult struct {
 	Enabled               bool `json:"enabled"`
 }
 
+// GroupRoleSource defines model for GroupRoleSource.
+type GroupRoleSource struct {
+	Id           int64                       `json:"id"`
+	Name         string                      `json:"name"`
+	WorkflowRole GroupRoleSourceWorkflowRole `json:"workflowRole"`
+}
+
+// GroupRoleSourceWorkflowRole defines model for GroupRoleSource.WorkflowRole.
+type GroupRoleSourceWorkflowRole string
+
 // ImageData defines model for ImageData.
 type ImageData struct {
 	Filename string `json:"filename"`
@@ -2833,15 +2952,20 @@ type IncludePageData struct {
 	Id        int64     `json:"id"`
 	MacroData MacroData `json:"macroData"`
 	Name      *string   `json:"name"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // InternalUserForm defines model for InternalUserForm.
 type InternalUserForm struct {
-	CreationMode InternalUserFormCreationMode  `json:"creationMode"`
-	DisplayName  string                        `json:"displayName"`
-	Email        openapi_types.Email           `json:"email"`
-	Role         InternalUserFormRole          `json:"role"`
-	WorkflowRole *InternalUserFormWorkflowRole `json:"workflowRole,omitempty"`
+	CreationMode InternalUserFormCreationMode `json:"creationMode"`
+	DisplayName  string                       `json:"displayName"`
+	Email        openapi_types.Email          `json:"email"`
+	Role         InternalUserFormRole         `json:"role"`
 }
 
 // InternalUserFormCreationMode defines model for InternalUserForm.CreationMode.
@@ -2849,9 +2973,6 @@ type InternalUserFormCreationMode string
 
 // InternalUserFormRole defines model for InternalUserForm.Role.
 type InternalUserFormRole string
-
-// InternalUserFormWorkflowRole defines model for InternalUserForm.WorkflowRole.
-type InternalUserFormWorkflowRole string
 
 // JiraAsset defines model for JiraAsset.
 type JiraAsset struct {
@@ -2992,6 +3113,12 @@ type MacroScanPageResult struct {
 	Count  int32  `json:"count"`
 	Name   string `json:"name"`
 	PageId int64  `json:"pageId"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // MacroScanRestrictedSummary defines model for MacroScanRestrictedSummary.
@@ -3016,10 +3143,50 @@ type MandatoryMergeResult struct {
 	ValuesAffected         int32  `json:"valuesAffected"`
 }
 
+// ModuleForm defines model for ModuleForm.
+type ModuleForm struct {
+	Enabled bool `json:"enabled"`
+}
+
+// ModuleResult defines model for ModuleResult.
+type ModuleResult struct {
+	Enabled bool             `json:"enabled"`
+	Name    ModuleResultName `json:"name"`
+}
+
+// ModuleResultName defines model for ModuleResult.Name.
+type ModuleResultName string
+
 // MoveImpactSnapshotForm defines model for MoveImpactSnapshotForm.
 type MoveImpactSnapshotForm struct {
 	SnapshotKey string `json:"snapshotKey"`
 }
+
+// MoveToSpaceBlocker defines model for MoveToSpaceBlocker.
+type MoveToSpaceBlocker struct {
+	ConflictingPageId *int64                   `json:"conflictingPageId"`
+	Count             int64                    `json:"count"`
+	PageId            *int64                   `json:"pageId"`
+	PageName          *string                  `json:"pageName"`
+	Reason            MoveToSpaceBlockerReason `json:"reason"`
+	TypeId            *int64                   `json:"typeId"`
+	TypeName          *string                  `json:"typeName"`
+	TypeSpaceName     *string                  `json:"typeSpaceName"`
+}
+
+// MoveToSpaceBlockerReason defines model for MoveToSpaceBlocker.Reason.
+type MoveToSpaceBlockerReason string
+
+// MoveToSpaceImpactResult defines model for MoveToSpaceImpactResult.
+type MoveToSpaceImpactResult struct {
+	Allowed   bool                              `json:"allowed"`
+	Blockers  []MoveToSpaceBlocker              `json:"blockers"`
+	PageCount int64                             `json:"pageCount"`
+	Warnings  []MoveToSpaceImpactResultWarnings `json:"warnings"`
+}
+
+// MoveToSpaceImpactResultWarnings defines model for MoveToSpaceImpactResult.Warnings.
+type MoveToSpaceImpactResultWarnings string
 
 // NewDescriptorResult defines model for NewDescriptorResult.
 type NewDescriptorResult struct {
@@ -3102,10 +3269,16 @@ type PageFileAttachmentResult struct {
 
 // PageLinkData defines model for PageLinkData.
 type PageLinkData struct {
-	Id    int64             `json:"id"`
-	Slug  string            `json:"slug"`
-	State PageLinkDataState `json:"state"`
-	Title string            `json:"title"`
+	Id   int64  `json:"id"`
+	Slug string `json:"slug"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64             `json:"spaceId"`
+	State   PageLinkDataState `json:"state"`
+	Title   string            `json:"title"`
 }
 
 // PageLinkDataState defines model for PageLinkData.State.
@@ -3120,11 +3293,23 @@ type PageListResult struct {
 	PageTypeName               string `json:"pageTypeName"`
 	PageTypeSortableChildPages bool   `json:"pageTypeSortableChildPages"`
 	ParentId                   *int64 `json:"parentId"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // PageMoveForm defines model for PageMoveForm.
 type PageMoveForm struct {
 	ParentId *int64 `json:"parentId,omitempty"`
+}
+
+// PageMoveToSpaceForm defines model for PageMoveToSpaceForm.
+type PageMoveToSpaceForm struct {
+	TargetParentId *int64 `json:"targetParentId,omitempty"`
+	TargetSpaceId  int64  `json:"targetSpaceId"`
 }
 
 // PagePageListResult defines model for PagePageListResult.
@@ -3188,12 +3373,24 @@ type PagePublicAuditLogResult struct {
 type PageReference struct {
 	Id   int64  `json:"id"`
 	Name string `json:"name"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // PageReferenceResult defines model for PageReferenceResult.
 type PageReferenceResult struct {
 	Id   int64  `json:"id"`
 	Name string `json:"name"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // PageReleaseNoteSummaryResult defines model for PageReleaseNoteSummaryResult.
@@ -3268,6 +3465,12 @@ type PageRestrictionResult struct {
 	LockedByUser        UserResult                         `json:"lockedByUser"`
 	PageId              int64                              `json:"pageId"`
 	PageName            string                             `json:"pageName"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // PageResult defines model for PageResult.
@@ -3291,24 +3494,30 @@ type PageResult struct {
 	LatestVersionNumber                *int64                            `json:"latestVersionNumber"`
 
 	// LockVersion Opaque optimistic-lock token for updating this page. Send it unchanged as version in PUT/PATCH. It changes on every save and on every workflow transition (submit, return, approve, publish, start, discard, restore), so a token read before such a change is stale. Null when the current user has no editable target (no editable working revision, or no write access).
-	LockVersion                          *int64                   `json:"lockVersion"`
-	MacroData                            MacroData                `json:"macroData"`
-	Name                                 string                   `json:"name"`
-	PageType                             PageTypeResult           `json:"pageType"`
-	ParentId                             *int64                   `json:"parentId"`
-	ParentName                           *string                  `json:"parentName"`
-	PropertyValues                       []PropertyValueResult    `json:"propertyValues"`
-	PublishedRevision                    PageRevisionResult       `json:"publishedRevision"`
-	PublishingWorkflowEnabled            bool                     `json:"publishingWorkflowEnabled"`
-	RequiresDiscardConfirmation          bool                     `json:"requiresDiscardConfirmation"`
-	ResolvedAllowedChildTypes            []AllowedChildTypeResult `json:"resolvedAllowedChildTypes"`
-	RestrictedByPageId                   *int64                   `json:"restrictedByPageId"`
-	Version                              int64                    `json:"version"`
-	WorkflowEnabled                      bool                     `json:"workflowEnabled"`
-	WorkingRevision                      PageRevisionResult       `json:"workingRevision"`
-	WorkingRevisionAuthors               *[]string                `json:"workingRevisionAuthors"`
-	WorkingRevisionLastEditedAt          *string                  `json:"workingRevisionLastEditedAt"`
-	WorkingRevisionLastEditorDisplayName *string                  `json:"workingRevisionLastEditorDisplayName"`
+	LockVersion                 *int64                   `json:"lockVersion"`
+	MacroData                   MacroData                `json:"macroData"`
+	Name                        string                   `json:"name"`
+	PageType                    PageTypeResult           `json:"pageType"`
+	ParentId                    *int64                   `json:"parentId"`
+	ParentName                  *string                  `json:"parentName"`
+	PropertyValues              []PropertyValueResult    `json:"propertyValues"`
+	PublishedRevision           PageRevisionResult       `json:"publishedRevision"`
+	PublishingWorkflowEnabled   bool                     `json:"publishingWorkflowEnabled"`
+	RequiresDiscardConfirmation bool                     `json:"requiresDiscardConfirmation"`
+	ResolvedAllowedChildTypes   []AllowedChildTypeResult `json:"resolvedAllowedChildTypes"`
+	RestrictedByPageId          *int64                   `json:"restrictedByPageId"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId                              int64              `json:"spaceId"`
+	Version                              int64              `json:"version"`
+	WorkflowEnabled                      bool               `json:"workflowEnabled"`
+	WorkingRevision                      PageRevisionResult `json:"workingRevision"`
+	WorkingRevisionAuthors               *[]string          `json:"workingRevisionAuthors"`
+	WorkingRevisionLastEditedAt          *string            `json:"workingRevisionLastEditedAt"`
+	WorkingRevisionLastEditorDisplayName *string            `json:"workingRevisionLastEditorDisplayName"`
 }
 
 // PageResultCurrentUserAccessLevel defines model for PageResult.CurrentUserAccessLevel.
@@ -3337,6 +3546,12 @@ type PageSearchResult struct {
 	Id           int64   `json:"id"`
 	Name         string  `json:"name"`
 	PageTypeName *string `json:"pageTypeName"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // PageSelectorMacroData defines model for PageSelectorMacroData.
@@ -3378,9 +3593,15 @@ type PageTreeNodeResult struct {
 	InTrash             bool                 `json:"inTrash"`
 
 	// LockVersion Opaque optimistic-lock token for updating this page. Send it unchanged as version in PUT/PATCH. It changes on every save and on every workflow transition (submit, return, approve, publish, start, discard, restore), so a token read before such a change is stale. Null when the current user has no editable target (no editable working revision, or no write access).
-	LockVersion           *int64                                   `json:"lockVersion"`
-	Name                  string                                   `json:"name"`
-	SortableChildPages    bool                                     `json:"sortableChildPages"`
+	LockVersion        *int64 `json:"lockVersion"`
+	Name               string `json:"name"`
+	SortableChildPages bool   `json:"sortableChildPages"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId               int64                                    `json:"spaceId"`
 	WorkflowEnabled       bool                                     `json:"workflowEnabled"`
 	WorkingRevisionStatus *PageTreeNodeResultWorkingRevisionStatus `json:"workingRevisionStatus"`
 }
@@ -3412,6 +3633,8 @@ type PageTypeListResult struct {
 	AbstractType              bool    `json:"abstractType"`
 	Id                        int64   `json:"id"`
 	Name                      string  `json:"name"`
+	OriginSpaceId             *int64  `json:"originSpaceId,omitempty"`
+	OriginSpaceKey            *string `json:"originSpaceKey,omitempty"`
 	ParentId                  *int64  `json:"parentId"`
 	ParentName                *string `json:"parentName"`
 	PublishingWorkflowEnabled bool    `json:"publishingWorkflowEnabled"`
@@ -3468,6 +3691,8 @@ type PageTypeResult struct {
 	Diagnostics                     *[]ContentDiagnostic        `json:"diagnostics"`
 	Id                              int64                       `json:"id"`
 	Name                            string                      `json:"name"`
+	OriginSpaceId                   *int64                      `json:"originSpaceId,omitempty"`
+	OriginSpaceKey                  *string                     `json:"originSpaceKey,omitempty"`
 	ParentId                        *int64                      `json:"parentId"`
 	ParentName                      *string                     `json:"parentName"`
 	PropertyDescriptors             []PropertyDescriptorResult  `json:"propertyDescriptors"`
@@ -3524,7 +3749,7 @@ type PageUserResult struct {
 // PageVersionDetailResult defines model for PageVersionDetailResult.
 type PageVersionDetailResult struct {
 	AuthorDisplayNames         []string  `json:"authorDisplayNames"`
-	Content                    string    `json:"content"`
+	Content                    *string   `json:"content"`
 	CreatedAt                  time.Time `json:"createdAt"`
 	Name                       string    `json:"name"`
 	PropertyValuesSnapshot     string    `json:"propertyValuesSnapshot"`
@@ -4060,40 +4285,34 @@ type PublicContentValidationForm struct {
 	BothTargetsSupplied *bool `json:"bothTargetsSupplied,omitempty"`
 
 	// Content Normatik markdown: CommonMark, GFM strikethrough and autolink literals, and Normatik directives. GFM pipe tables, footnotes and task lists are rejected (UNSUPPORTED_MARKDOWN_TABLE, UNSUPPORTED_MARKDOWN_FOOTNOTE, UNSUPPORTED_MARKDOWN_TASK_LIST); use the :::table macro for tables. See GET /public/v1/content-macros/docs.
-	Content          string `json:"content"`
-	TargetPageId     *int64 `json:"targetPageId,omitempty"`
-	TargetPageTypeId *int64 `json:"targetPageTypeId,omitempty"`
+	Content          string  `json:"content"`
+	TargetPageId     *int64  `json:"targetPageId,omitempty"`
+	TargetPageTypeId *int64  `json:"targetPageTypeId,omitempty"`
+	TargetSpace      *string `json:"targetSpace,omitempty"`
 }
 
 // PublicInternalUserCreatedResult defines model for PublicInternalUserCreatedResult.
 type PublicInternalUserCreatedResult struct {
 	// ActivationEmailExpiresAt Expiry of the activation token that was issued with the activation email. Null when no activation email was sent (creationMode other than SEND_ACTIVATION_EMAIL).
-	ActivationEmailExpiresAt *time.Time                                            `json:"activationEmailExpiresAt"`
-	Authenticated            bool                                                  `json:"authenticated"`
-	DisplayName              string                                                `json:"displayName"`
-	EffectiveRole            *PublicInternalUserCreatedResultEffectiveRole         `json:"effectiveRole"`
-	EffectiveWorkflowRole    *PublicInternalUserCreatedResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
-	Email                    string                                                `json:"email"`
-	Id                       int64                                                 `json:"id"`
-	Role                     PublicInternalUserCreatedResultRole                   `json:"role"`
-	Status                   PublicInternalUserCreatedResultStatus                 `json:"status"`
-	WorkflowRole             *PublicInternalUserCreatedResultWorkflowRole          `json:"workflowRole"`
+	ActivationEmailExpiresAt *time.Time                                    `json:"activationEmailExpiresAt"`
+	Authenticated            bool                                          `json:"authenticated"`
+	DisplayName              string                                        `json:"displayName"`
+	EffectiveRole            *PublicInternalUserCreatedResultEffectiveRole `json:"effectiveRole"`
+	Email                    string                                        `json:"email"`
+	Id                       int64                                         `json:"id"`
+	Role                     PublicInternalUserCreatedResultRole           `json:"role"`
+	SpaceRoles               *[]SpaceRoleResult                            `json:"spaceRoles,omitempty"`
+	Status                   PublicInternalUserCreatedResultStatus         `json:"status"`
 }
 
 // PublicInternalUserCreatedResultEffectiveRole defines model for PublicInternalUserCreatedResult.EffectiveRole.
 type PublicInternalUserCreatedResultEffectiveRole string
-
-// PublicInternalUserCreatedResultEffectiveWorkflowRole defines model for PublicInternalUserCreatedResult.EffectiveWorkflowRole.
-type PublicInternalUserCreatedResultEffectiveWorkflowRole string
 
 // PublicInternalUserCreatedResultRole defines model for PublicInternalUserCreatedResult.Role.
 type PublicInternalUserCreatedResultRole string
 
 // PublicInternalUserCreatedResultStatus defines model for PublicInternalUserCreatedResult.Status.
 type PublicInternalUserCreatedResultStatus string
-
-// PublicInternalUserCreatedResultWorkflowRole defines model for PublicInternalUserCreatedResult.WorkflowRole.
-type PublicInternalUserCreatedResultWorkflowRole string
 
 // PublicPageCompositeResult defines model for PublicPageCompositeResult.
 type PublicPageCompositeResult struct {
@@ -4120,27 +4339,33 @@ type PublicPageCompositeResult struct {
 	LatestVersionNumber                *int64                                           `json:"latestVersionNumber"`
 
 	// LockVersion Opaque optimistic-lock token for updating this page. Send it unchanged as version in PUT/PATCH. It changes on every save and on every workflow transition (submit, return, approve, publish, start, discard, restore), so a token read before such a change is stale. Null when the current user has no editable target (no editable working revision, or no write access).
-	LockVersion                          *int64                       `json:"lockVersion"`
-	MacroData                            MacroData                    `json:"macroData"`
-	Name                                 string                       `json:"name"`
-	PageType                             PageTypeResult               `json:"pageType"`
-	ParentId                             *int64                       `json:"parentId"`
-	ParentName                           *string                      `json:"parentName"`
-	PropertyValues                       []PropertyValueResult        `json:"propertyValues"`
-	PublishedRevision                    PageRevisionResult           `json:"publishedRevision"`
-	PublishingWorkflowEnabled            bool                         `json:"publishingWorkflowEnabled"`
-	RequiresDiscardConfirmation          bool                         `json:"requiresDiscardConfirmation"`
-	ResolvedAllowedChildTypes            []AllowedChildTypeResult     `json:"resolvedAllowedChildTypes"`
-	RestrictedByPageId                   *int64                       `json:"restrictedByPageId"`
-	Restriction                          *PageRestrictionDetailResult `json:"restriction,omitempty"`
-	Version                              int64                        `json:"version"`
-	WorkItems                            *[]PageWorkItemResult        `json:"workItems,omitempty"`
-	Workflow                             *[]AllowedPageActionResult   `json:"workflow,omitempty"`
-	WorkflowEnabled                      bool                         `json:"workflowEnabled"`
-	WorkingRevision                      PageRevisionResult           `json:"workingRevision"`
-	WorkingRevisionAuthors               *[]string                    `json:"workingRevisionAuthors"`
-	WorkingRevisionLastEditedAt          *string                      `json:"workingRevisionLastEditedAt"`
-	WorkingRevisionLastEditorDisplayName *string                      `json:"workingRevisionLastEditorDisplayName"`
+	LockVersion                 *int64                       `json:"lockVersion"`
+	MacroData                   MacroData                    `json:"macroData"`
+	Name                        string                       `json:"name"`
+	PageType                    PageTypeResult               `json:"pageType"`
+	ParentId                    *int64                       `json:"parentId"`
+	ParentName                  *string                      `json:"parentName"`
+	PropertyValues              []PropertyValueResult        `json:"propertyValues"`
+	PublishedRevision           PageRevisionResult           `json:"publishedRevision"`
+	PublishingWorkflowEnabled   bool                         `json:"publishingWorkflowEnabled"`
+	RequiresDiscardConfirmation bool                         `json:"requiresDiscardConfirmation"`
+	ResolvedAllowedChildTypes   []AllowedChildTypeResult     `json:"resolvedAllowedChildTypes"`
+	RestrictedByPageId          *int64                       `json:"restrictedByPageId"`
+	Restriction                 *PageRestrictionDetailResult `json:"restriction,omitempty"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId                              int64                      `json:"spaceId"`
+	Version                              int64                      `json:"version"`
+	WorkItems                            *[]PageWorkItemResult      `json:"workItems,omitempty"`
+	Workflow                             *[]AllowedPageActionResult `json:"workflow,omitempty"`
+	WorkflowEnabled                      bool                       `json:"workflowEnabled"`
+	WorkingRevision                      PageRevisionResult         `json:"workingRevision"`
+	WorkingRevisionAuthors               *[]string                  `json:"workingRevisionAuthors"`
+	WorkingRevisionLastEditedAt          *string                    `json:"workingRevisionLastEditedAt"`
+	WorkingRevisionLastEditorDisplayName *string                    `json:"workingRevisionLastEditorDisplayName"`
 }
 
 // PublicPageCompositeResultCurrentUserAccessLevel defines model for PublicPageCompositeResult.CurrentUserAccessLevel.
@@ -4182,6 +4407,8 @@ type PublicPageTypeCompositeResult struct {
 	Diagnostics                     *[]ContentDiagnostic                       `json:"diagnostics"`
 	Id                              int64                                      `json:"id"`
 	Name                            string                                     `json:"name"`
+	OriginSpaceId                   *int64                                     `json:"originSpaceId,omitempty"`
+	OriginSpaceKey                  *string                                    `json:"originSpaceKey,omitempty"`
 	ParentId                        *int64                                     `json:"parentId"`
 	ParentName                      *string                                    `json:"parentName"`
 	PropertyDescriptors             []PropertyDescriptorResult                 `json:"propertyDescriptors"`
@@ -4222,24 +4449,20 @@ type PublicRevisionSnapshotResult struct {
 
 // PublicUserCompositeResult defines model for PublicUserCompositeResult.
 type PublicUserCompositeResult struct {
-	UnderscoreErrors      *map[string]ExpandError                         `json:"_errors,omitempty"`
-	Authenticated         bool                                            `json:"authenticated"`
-	DisplayName           string                                          `json:"displayName"`
-	EffectiveRole         *PublicUserCompositeResultEffectiveRole         `json:"effectiveRole"`
-	EffectiveWorkflowRole *PublicUserCompositeResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
-	Email                 string                                          `json:"email"`
-	Groups                *[]UserGroupResult                              `json:"groups,omitempty"`
-	Id                    int64                                           `json:"id"`
-	Role                  PublicUserCompositeResultRole                   `json:"role"`
-	Status                PublicUserCompositeResultStatus                 `json:"status"`
-	WorkflowRole          *PublicUserCompositeResultWorkflowRole          `json:"workflowRole"`
+	UnderscoreErrors *map[string]ExpandError                 `json:"_errors,omitempty"`
+	Authenticated    bool                                    `json:"authenticated"`
+	DisplayName      string                                  `json:"displayName"`
+	EffectiveRole    *PublicUserCompositeResultEffectiveRole `json:"effectiveRole"`
+	Email            string                                  `json:"email"`
+	Groups           *[]UserGroupResult                      `json:"groups,omitempty"`
+	Id               int64                                   `json:"id"`
+	Role             PublicUserCompositeResultRole           `json:"role"`
+	SpaceRoles       *[]SpaceRoleResult                      `json:"spaceRoles,omitempty"`
+	Status           PublicUserCompositeResultStatus         `json:"status"`
 }
 
 // PublicUserCompositeResultEffectiveRole defines model for PublicUserCompositeResult.EffectiveRole.
 type PublicUserCompositeResultEffectiveRole string
-
-// PublicUserCompositeResultEffectiveWorkflowRole defines model for PublicUserCompositeResult.EffectiveWorkflowRole.
-type PublicUserCompositeResultEffectiveWorkflowRole string
 
 // PublicUserCompositeResultRole defines model for PublicUserCompositeResult.Role.
 type PublicUserCompositeResultRole string
@@ -4247,37 +4470,27 @@ type PublicUserCompositeResultRole string
 // PublicUserCompositeResultStatus defines model for PublicUserCompositeResult.Status.
 type PublicUserCompositeResultStatus string
 
-// PublicUserCompositeResultWorkflowRole defines model for PublicUserCompositeResult.WorkflowRole.
-type PublicUserCompositeResultWorkflowRole string
-
 // PublicUserMeResult defines model for PublicUserMeResult.
 type PublicUserMeResult struct {
-	ApiKey                ApiKeyMeta                               `json:"apiKey"`
-	Authenticated         bool                                     `json:"authenticated"`
-	DisplayName           string                                   `json:"displayName"`
-	EffectiveRole         *PublicUserMeResultEffectiveRole         `json:"effectiveRole"`
-	EffectiveWorkflowRole *PublicUserMeResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
-	Email                 string                                   `json:"email"`
-	Id                    int64                                    `json:"id"`
-	Role                  PublicUserMeResultRole                   `json:"role"`
-	Status                PublicUserMeResultStatus                 `json:"status"`
-	WorkflowRole          *PublicUserMeResultWorkflowRole          `json:"workflowRole"`
+	ApiKey        ApiKeyMeta                       `json:"apiKey"`
+	Authenticated bool                             `json:"authenticated"`
+	DisplayName   string                           `json:"displayName"`
+	EffectiveRole *PublicUserMeResultEffectiveRole `json:"effectiveRole"`
+	Email         string                           `json:"email"`
+	Id            int64                            `json:"id"`
+	Role          PublicUserMeResultRole           `json:"role"`
+	SpaceRoles    *[]SpaceRoleResult               `json:"spaceRoles,omitempty"`
+	Status        PublicUserMeResultStatus         `json:"status"`
 }
 
 // PublicUserMeResultEffectiveRole defines model for PublicUserMeResult.EffectiveRole.
 type PublicUserMeResultEffectiveRole string
-
-// PublicUserMeResultEffectiveWorkflowRole defines model for PublicUserMeResult.EffectiveWorkflowRole.
-type PublicUserMeResultEffectiveWorkflowRole string
 
 // PublicUserMeResultRole defines model for PublicUserMeResult.Role.
 type PublicUserMeResultRole string
 
 // PublicUserMeResultStatus defines model for PublicUserMeResult.Status.
 type PublicUserMeResultStatus string
-
-// PublicUserMeResultWorkflowRole defines model for PublicUserMeResult.WorkflowRole.
-type PublicUserMeResultWorkflowRole string
 
 // PublicWorkflowRoleCompositeResult defines model for PublicWorkflowRoleCompositeResult.
 type PublicWorkflowRoleCompositeResult struct {
@@ -4317,9 +4530,12 @@ type ReleaseNoteSummaryResult struct {
 	Version string             `json:"version"`
 }
 
-// RestorePageForm defines model for RestorePageForm.
-type RestorePageForm struct {
-	Reason *string `json:"reason,omitempty"`
+// RestorePageToSpaceForm defines model for RestorePageToSpaceForm.
+type RestorePageToSpaceForm struct {
+	Reason         *string `json:"reason,omitempty"`
+	TargetParentId *int64  `json:"targetParentId,omitempty"`
+	TargetRoot     *bool   `json:"targetRoot,omitempty"`
+	TargetSpaceId  *int64  `json:"targetSpaceId,omitempty"`
 }
 
 // RestoreResult defines model for RestoreResult.
@@ -4334,6 +4550,12 @@ type RestrictionHierarchyEntry struct {
 	PageId         int64                 `json:"pageId"`
 	PageName       string                `json:"pageName"`
 	Restriction    PageRestrictionResult `json:"restriction"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // SortChildrenForm defines model for SortChildrenForm.
@@ -4346,6 +4568,187 @@ type SortObject struct {
 	Empty    bool `json:"empty"`
 	Sorted   bool `json:"sorted"`
 	Unsorted bool `json:"unsorted"`
+}
+
+// SpaceAccessForm defines model for SpaceAccessForm.
+type SpaceAccessForm struct {
+	AccessMode            SpaceAccessFormAccessMode `json:"accessMode"`
+	AdministratorGroupIds []int64                   `json:"administratorGroupIds"`
+	AdministratorUserIds  []int64                   `json:"administratorUserIds"`
+	ConfirmOwnLoss        *bool                     `json:"confirmOwnLoss,omitempty"`
+	Groups                []SpaceGroupGrantForm     `json:"groups"`
+	Users                 []SpaceUserGrantForm      `json:"users"`
+}
+
+// SpaceAccessFormAccessMode defines model for SpaceAccessForm.AccessMode.
+type SpaceAccessFormAccessMode string
+
+// SpaceAccessImpactResult defines model for SpaceAccessImpactResult.
+type SpaceAccessImpactResult struct {
+	UsersGainingAccess int64 `json:"usersGainingAccess"`
+	UsersLosingAccess  int64 `json:"usersLosingAccess"`
+}
+
+// SpaceAccessResult defines model for SpaceAccessResult.
+type SpaceAccessResult struct {
+	AccessMode          SpaceAccessResultAccessMode `json:"accessMode"`
+	AdministratorGroups []SpaceGroupGrantResult     `json:"administratorGroups"`
+	AdministratorUsers  []SpaceUserGrantResult      `json:"administratorUsers"`
+	Groups              []SpaceGroupGrantResult     `json:"groups"`
+	Users               []SpaceUserGrantResult      `json:"users"`
+}
+
+// SpaceAccessResultAccessMode defines model for SpaceAccessResult.AccessMode.
+type SpaceAccessResultAccessMode string
+
+// SpaceAppearanceForm defines model for SpaceAppearanceForm.
+type SpaceAppearanceForm struct {
+	Color            *string `json:"color,omitempty"`
+	InitialsOverride *string `json:"initialsOverride,omitempty"`
+	Name             string  `json:"name"`
+}
+
+// SpaceDomainEnumResult defines model for SpaceDomainEnumResult.
+type SpaceDomainEnumResult struct {
+	Id    int64  `json:"id"`
+	Local bool   `json:"local"`
+	Name  string `json:"name"`
+
+	// OriginSpace Lowercase key of the space.
+	OriginSpace *string `json:"originSpace"`
+
+	// OriginSpaceId Permanent id of the space.
+	OriginSpaceId *int64 `json:"originSpaceId"`
+}
+
+// SpaceForm defines model for SpaceForm.
+type SpaceForm struct {
+	AccessMode       SpaceFormAccessMode `json:"accessMode"`
+	Color            *string             `json:"color,omitempty"`
+	InitialsOverride *string             `json:"initialsOverride,omitempty"`
+	Key              string              `json:"key"`
+	Name             string              `json:"name"`
+}
+
+// SpaceFormAccessMode defines model for SpaceForm.AccessMode.
+type SpaceFormAccessMode string
+
+// SpaceGroupGrantForm defines model for SpaceGroupGrantForm.
+type SpaceGroupGrantForm struct {
+	AccessLevel SpaceGroupGrantFormAccessLevel `json:"accessLevel"`
+	GroupId     int64                          `json:"groupId"`
+}
+
+// SpaceGroupGrantFormAccessLevel defines model for SpaceGroupGrantForm.AccessLevel.
+type SpaceGroupGrantFormAccessLevel string
+
+// SpaceGroupGrantResult defines model for SpaceGroupGrantResult.
+type SpaceGroupGrantResult struct {
+	AccessLevel SpaceGroupGrantResultAccessLevel `json:"accessLevel"`
+	GroupId     int64                            `json:"groupId"`
+	GroupName   string                           `json:"groupName"`
+}
+
+// SpaceGroupGrantResultAccessLevel defines model for SpaceGroupGrantResult.AccessLevel.
+type SpaceGroupGrantResultAccessLevel string
+
+// SpaceHiddenForm defines model for SpaceHiddenForm.
+type SpaceHiddenForm struct {
+	Hidden *bool `json:"hidden,omitempty"`
+}
+
+// SpacePageTypeResult defines model for SpacePageTypeResult.
+type SpacePageTypeResult struct {
+	AbstractType bool   `json:"abstractType"`
+	Id           int64  `json:"id"`
+	Local        bool   `json:"local"`
+	Name         string `json:"name"`
+
+	// OriginSpace Lowercase key of the space.
+	OriginSpace *string `json:"originSpace"`
+
+	// OriginSpaceId Permanent id of the space.
+	OriginSpaceId *int64 `json:"originSpaceId"`
+	ParentId      *int64 `json:"parentId"`
+	UsedInSpace   int64  `json:"usedInSpace"`
+}
+
+// SpaceRef defines model for SpaceRef.
+type SpaceRef struct {
+	Color    string `json:"color"`
+	Id       int64  `json:"id"`
+	Initials string `json:"initials"`
+	Key      string `json:"key"`
+	Name     string `json:"name"`
+}
+
+// SpaceResult defines model for SpaceResult.
+type SpaceResult struct {
+	AccessMode       SpaceResultAccessMode `json:"accessMode"`
+	ActivePageCount  *int64                `json:"activePageCount,omitempty"`
+	ArchivedCount    *int64                `json:"archivedCount,omitempty"`
+	Color            string                `json:"color"`
+	DeletedAt        *time.Time            `json:"deletedAt,omitempty"`
+	Hidden           bool                  `json:"hidden"`
+	Id               int64                 `json:"id"`
+	Initials         string                `json:"initials"`
+	InitialsOverride *string               `json:"initialsOverride"`
+	IsDefault        bool                  `json:"isDefault"`
+	Key              string                `json:"key"`
+	Name             string                `json:"name"`
+	TrashCount       *int64                `json:"trashCount,omitempty"`
+}
+
+// SpaceResultAccessMode defines model for SpaceResult.AccessMode.
+type SpaceResultAccessMode string
+
+// SpaceRoleResult defines model for SpaceRoleResult.
+type SpaceRoleResult struct {
+	DirectRole    *SpaceRoleResultDirectRole   `json:"directRole,omitempty"`
+	EffectiveRole SpaceRoleResultEffectiveRole `json:"effectiveRole"`
+	Space         SpaceRef                     `json:"space"`
+	ViaGroups     []GroupRoleSource            `json:"viaGroups"`
+}
+
+// SpaceRoleResultDirectRole defines model for SpaceRoleResult.DirectRole.
+type SpaceRoleResultDirectRole string
+
+// SpaceRoleResultEffectiveRole defines model for SpaceRoleResult.EffectiveRole.
+type SpaceRoleResultEffectiveRole string
+
+// SpaceUserGrantForm defines model for SpaceUserGrantForm.
+type SpaceUserGrantForm struct {
+	AccessLevel SpaceUserGrantFormAccessLevel `json:"accessLevel"`
+	UserId      int64                         `json:"userId"`
+}
+
+// SpaceUserGrantFormAccessLevel defines model for SpaceUserGrantForm.AccessLevel.
+type SpaceUserGrantFormAccessLevel string
+
+// SpaceUserGrantResult defines model for SpaceUserGrantResult.
+type SpaceUserGrantResult struct {
+	AccessLevel SpaceUserGrantResultAccessLevel `json:"accessLevel"`
+	DisplayName string                          `json:"displayName"`
+	UserId      int64                           `json:"userId"`
+}
+
+// SpaceUserGrantResultAccessLevel defines model for SpaceUserGrantResult.AccessLevel.
+type SpaceUserGrantResultAccessLevel string
+
+// SpaceWorkItemTypeResult defines model for SpaceWorkItemTypeResult.
+type SpaceWorkItemTypeResult struct {
+	DomainEnumName *string `json:"domainEnumName"`
+	Id             int64   `json:"id"`
+	Local          bool    `json:"local"`
+	Name           string  `json:"name"`
+
+	// OriginSpace Lowercase key of the space.
+	OriginSpace *string `json:"originSpace"`
+
+	// OriginSpaceId Permanent id of the space.
+	OriginSpaceId *int64 `json:"originSpaceId"`
+	Slug          string `json:"slug"`
+	UsedInSpace   int64  `json:"usedInSpace"`
 }
 
 // TransferVerificationForm defines model for TransferVerificationForm.
@@ -4400,7 +4803,6 @@ type UserForm struct {
 	Email        openapi_types.Email   `json:"email"`
 	Password     *string               `json:"password,omitempty"`
 	Role         UserFormRole          `json:"role"`
-	WorkflowRole *UserFormWorkflowRole `json:"workflowRole,omitempty"`
 }
 
 // UserFormCreationMode defines model for UserForm.CreationMode.
@@ -4409,33 +4811,26 @@ type UserFormCreationMode string
 // UserFormRole defines model for UserForm.Role.
 type UserFormRole string
 
-// UserFormWorkflowRole defines model for UserForm.WorkflowRole.
-type UserFormWorkflowRole string
-
 // UserGroupForm defines model for UserGroupForm.
 type UserGroupForm struct {
-	Description  *string                    `json:"description,omitempty"`
-	Name         string                     `json:"name"`
-	Role         *UserGroupFormRole         `json:"role,omitempty"`
-	WorkflowRole *UserGroupFormWorkflowRole `json:"workflowRole,omitempty"`
+	Description *string            `json:"description,omitempty"`
+	Name        string             `json:"name"`
+	Role        *UserGroupFormRole `json:"role,omitempty"`
 }
 
 // UserGroupFormRole defines model for UserGroupForm.Role.
 type UserGroupFormRole string
 
-// UserGroupFormWorkflowRole defines model for UserGroupForm.WorkflowRole.
-type UserGroupFormWorkflowRole string
-
 // UserGroupResult defines model for UserGroupResult.
 type UserGroupResult struct {
-	Description  *string                      `json:"description"`
-	Id           int64                        `json:"id"`
-	MemberCount  int32                        `json:"memberCount"`
-	Members      *[]UserResult                `json:"members"`
-	Name         string                       `json:"name"`
-	Role         *UserGroupResultRole         `json:"role"`
-	Status       UserGroupResultStatus        `json:"status"`
-	WorkflowRole *UserGroupResultWorkflowRole `json:"workflowRole"`
+	Description *string               `json:"description"`
+	Id          int64                 `json:"id"`
+	MemberCount int32                 `json:"memberCount"`
+	Members     *[]UserResult         `json:"members"`
+	Name        string                `json:"name"`
+	Role        *UserGroupResultRole  `json:"role"`
+	SpaceRoles  *[]SpaceRoleResult    `json:"spaceRoles,omitempty"`
+	Status      UserGroupResultStatus `json:"status"`
 }
 
 // UserGroupResultRole defines model for UserGroupResult.Role.
@@ -4443,9 +4838,6 @@ type UserGroupResultRole string
 
 // UserGroupResultStatus defines model for UserGroupResult.Status.
 type UserGroupResultStatus string
-
-// UserGroupResultWorkflowRole defines model for UserGroupResult.WorkflowRole.
-type UserGroupResultWorkflowRole string
 
 // UserLinkForm defines model for UserLinkForm.
 type UserLinkForm struct {
@@ -4466,31 +4858,24 @@ type UserLinkResultStatus string
 
 // UserResult defines model for UserResult.
 type UserResult struct {
-	Authenticated         bool                             `json:"authenticated"`
-	DisplayName           string                           `json:"displayName"`
-	EffectiveRole         *UserResultEffectiveRole         `json:"effectiveRole"`
-	EffectiveWorkflowRole *UserResultEffectiveWorkflowRole `json:"effectiveWorkflowRole"`
-	Email                 string                           `json:"email"`
-	Id                    int64                            `json:"id"`
-	Role                  UserResultRole                   `json:"role"`
-	Status                UserResultStatus                 `json:"status"`
-	WorkflowRole          *UserResultWorkflowRole          `json:"workflowRole"`
+	Authenticated bool                     `json:"authenticated"`
+	DisplayName   string                   `json:"displayName"`
+	EffectiveRole *UserResultEffectiveRole `json:"effectiveRole"`
+	Email         string                   `json:"email"`
+	Id            int64                    `json:"id"`
+	Role          UserResultRole           `json:"role"`
+	SpaceRoles    *[]SpaceRoleResult       `json:"spaceRoles,omitempty"`
+	Status        UserResultStatus         `json:"status"`
 }
 
 // UserResultEffectiveRole defines model for UserResult.EffectiveRole.
 type UserResultEffectiveRole string
-
-// UserResultEffectiveWorkflowRole defines model for UserResult.EffectiveWorkflowRole.
-type UserResultEffectiveWorkflowRole string
 
 // UserResultRole defines model for UserResult.Role.
 type UserResultRole string
 
 // UserResultStatus defines model for UserResult.Status.
 type UserResultStatus string
-
-// UserResultWorkflowRole defines model for UserResult.WorkflowRole.
-type UserResultWorkflowRole string
 
 // WorkItemAssigneeForm defines model for WorkItemAssigneeForm.
 type WorkItemAssigneeForm struct {
@@ -4602,6 +4987,8 @@ type WorkItemTypeResult struct {
 	DomainEnumValues     []DomainEnumValueResult    `json:"domainEnumValues"`
 	Id                   int64                      `json:"id"`
 	Name                 string                     `json:"name"`
+	OriginSpaceId        *int64                     `json:"originSpaceId,omitempty"`
+	OriginSpaceKey       *string                    `json:"originSpaceKey,omitempty"`
 	Slug                 string                     `json:"slug"`
 	Transitions          []WorkItemTransitionResult `json:"transitions"`
 	UsedInPageCount      int64                      `json:"usedInPageCount"`
@@ -4622,6 +5009,12 @@ type WorkflowItemResult struct {
 	PageId             int64    `json:"pageId"`
 	PageName           string   `json:"pageName"`
 	RevisionId         int64    `json:"revisionId"`
+
+	// Space Lowercase key of the space.
+	Space string `json:"space"`
+
+	// SpaceId Permanent id of the space.
+	SpaceId int64 `json:"spaceId"`
 }
 
 // WorkflowRoleForm defines model for WorkflowRoleForm.
@@ -4764,6 +5157,17 @@ type DownloadImageParams struct {
 	IfNoneMatch *string `json:"If-None-Match,omitempty"`
 }
 
+// GetLandingSettingsParams defines parameters for GetLandingSettings.
+type GetLandingSettingsParams struct {
+	Space *string `form:"space,omitempty" json:"space,omitempty"`
+}
+
+// UpdateLandingSettingsParams defines parameters for UpdateLandingSettings.
+type UpdateLandingSettingsParams struct {
+	Space                  *string `form:"space,omitempty" json:"space,omitempty"`
+	XNormatikSettingsToken *string `json:"X-Normatik-Settings-Token,omitempty"`
+}
+
 // GetPageTypeParams defines parameters for GetPageType.
 type GetPageTypeParams struct {
 	// Expand Comma-separated list of sections to expand: usage
@@ -4783,7 +5187,8 @@ type SortPageTypePropertyDescriptorsJSONBody = []int64
 
 // ListPagesParams defines parameters for ListPages.
 type ListPagesParams struct {
-	PageTypeId *int64 `form:"pageTypeId,omitempty" json:"pageTypeId,omitempty"`
+	PageTypeId *int64  `form:"pageTypeId,omitempty" json:"pageTypeId,omitempty"`
+	Space      *string `form:"space,omitempty" json:"space,omitempty"`
 
 	// Page Zero-based page index (0..N)
 	Page *int `form:"page,omitempty" json:"page,omitempty"`
@@ -4793,6 +5198,11 @@ type ListPagesParams struct {
 
 	// Sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
 	Sort *[]string `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// CreatePageParams defines parameters for CreatePage.
+type CreatePageParams struct {
+	Space *string `form:"space,omitempty" json:"space,omitempty"`
 }
 
 // PreviewAdminArchiveCascadeImpactParams defines parameters for PreviewAdminArchiveCascadeImpact.
@@ -4820,8 +5230,9 @@ type ListPagePropertyValuesParams struct {
 
 // SearchPagesParams defines parameters for SearchPages.
 type SearchPagesParams struct {
-	Query             string `form:"query" json:"query"`
-	AllowedPageTypeId *int64 `form:"allowedPageTypeId,omitempty" json:"allowedPageTypeId,omitempty"`
+	Query             string  `form:"query" json:"query"`
+	AllowedPageTypeId *int64  `form:"allowedPageTypeId,omitempty" json:"allowedPageTypeId,omitempty"`
+	Space             *string `form:"space,omitempty" json:"space,omitempty"`
 
 	// Page Zero-based page index (0..N)
 	Page *int `form:"page,omitempty" json:"page,omitempty"`
@@ -4835,6 +5246,7 @@ type SearchPagesParams struct {
 
 // GetPageTreeParams defines parameters for GetPageTree.
 type GetPageTreeParams struct {
+	Space       *string `form:"space,omitempty" json:"space,omitempty"`
 	IfNoneMatch *string `json:"If-None-Match,omitempty"`
 }
 
@@ -4904,6 +5316,31 @@ type ListReleaseNotesParams struct {
 	Sort *[]string `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
+// ListSpacesParams defines parameters for ListSpaces.
+type ListSpacesParams struct {
+	All *bool `form:"all,omitempty" json:"all,omitempty"`
+}
+
+// UpdateSpaceParams defines parameters for UpdateSpace.
+type UpdateSpaceParams struct {
+	XNormatikSettingsToken *string `json:"X-Normatik-Settings-Token,omitempty"`
+}
+
+// PreviewSpaceAccessImpactParams defines parameters for PreviewSpaceAccessImpact.
+type PreviewSpaceAccessImpactParams struct {
+	AccessMode PreviewSpaceAccessImpactParamsAccessMode `form:"accessMode" json:"accessMode"`
+	UserIds    *[]int64                                 `form:"userIds,omitempty" json:"userIds,omitempty"`
+	GroupIds   *[]int64                                 `form:"groupIds,omitempty" json:"groupIds,omitempty"`
+}
+
+// PreviewSpaceAccessImpactParamsAccessMode defines parameters for PreviewSpaceAccessImpact.
+type PreviewSpaceAccessImpactParamsAccessMode string
+
+// UpdateSpaceLandingParams defines parameters for UpdateSpaceLanding.
+type UpdateSpaceLandingParams struct {
+	XNormatikSettingsToken *string `json:"X-Normatik-Settings-Token,omitempty"`
+}
+
 // ListUsersParams defines parameters for ListUsers.
 type ListUsersParams struct {
 	Status *ListUsersParamsStatus `form:"status,omitempty" json:"status,omitempty"`
@@ -4961,8 +5398,45 @@ type ListWorkItemTypesParams struct {
 	Sort *[]string `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
+// DeleteWorkItemTypeParams defines parameters for DeleteWorkItemType.
+type DeleteWorkItemTypeParams struct {
+	// Space Key of the space the slug is looked up in: the global work item type or the one local to this space. Required, also for a global type: a slug is only unique within the global types plus the local types of one space.
+	Space string `form:"space" json:"space"`
+}
+
+// GetWorkItemTypeParams defines parameters for GetWorkItemType.
+type GetWorkItemTypeParams struct {
+	// Space Key of the space the slug is looked up in: the global work item type or the one local to this space. Required, also for a global type: a slug is only unique within the global types plus the local types of one space.
+	Space string `form:"space" json:"space"`
+}
+
+// UpdateWorkItemTypeParams defines parameters for UpdateWorkItemType.
+type UpdateWorkItemTypeParams struct {
+	// Space Key of the space the slug is looked up in: the global work item type or the one local to this space. Required, also for a global type: a slug is only unique within the global types plus the local types of one space.
+	Space string `form:"space" json:"space"`
+}
+
+// CreateWorkItemTypeTransitionParams defines parameters for CreateWorkItemTypeTransition.
+type CreateWorkItemTypeTransitionParams struct {
+	// Space Key of the space the slug is looked up in: the global work item type or the one local to this space. Required, also for a global type: a slug is only unique within the global types plus the local types of one space.
+	Space string `form:"space" json:"space"`
+}
+
+// DeleteWorkItemTypeTransitionParams defines parameters for DeleteWorkItemTypeTransition.
+type DeleteWorkItemTypeTransitionParams struct {
+	// Space Key of the space the slug is looked up in: the global work item type or the one local to this space. Required, also for a global type: a slug is only unique within the global types plus the local types of one space.
+	Space string `form:"space" json:"space"`
+}
+
+// UpdateWorkItemTypeTransitionParams defines parameters for UpdateWorkItemTypeTransition.
+type UpdateWorkItemTypeTransitionParams struct {
+	// Space Key of the space the slug is looked up in: the global work item type or the one local to this space. Required, also for a global type: a slug is only unique within the global types plus the local types of one space.
+	Space string `form:"space" json:"space"`
+}
+
 // GetWorkflowRolesParams defines parameters for GetWorkflowRoles.
 type GetWorkflowRolesParams struct {
+	Space               *string                        `form:"space,omitempty" json:"space,omitempty"`
 	Include             *GetWorkflowRolesParamsInclude `form:"include,omitempty" json:"include,omitempty"`
 	UsersPage           *int                           `form:"users.page,omitempty" json:"users.page,omitempty"`
 	UsersSize           *int                           `form:"users.size,omitempty" json:"users.size,omitempty"`
@@ -4980,6 +5454,16 @@ type GetWorkflowRolesParams struct {
 
 // GetWorkflowRolesParamsInclude defines parameters for GetWorkflowRoles.
 type GetWorkflowRolesParamsInclude string
+
+// UpdateGroupWorkflowRoleParams defines parameters for UpdateGroupWorkflowRole.
+type UpdateGroupWorkflowRoleParams struct {
+	Space *string `form:"space,omitempty" json:"space,omitempty"`
+}
+
+// UpdateUserWorkflowRoleParams defines parameters for UpdateUserWorkflowRole.
+type UpdateUserWorkflowRoleParams struct {
+	Space *string `form:"space,omitempty" json:"space,omitempty"`
+}
 
 // GetWorkflowDraftItemsParams defines parameters for GetWorkflowDraftItems.
 type GetWorkflowDraftItemsParams struct {
@@ -5047,6 +5531,9 @@ type SearchJSONRequestBody = AssetSearchRequest
 // UpdateLandingSettingsJSONRequestBody defines body for UpdateLandingSettings for application/json ContentType.
 type UpdateLandingSettingsJSONRequestBody = LandingSettingsForm
 
+// UpdateModuleJSONRequestBody defines body for UpdateModule for application/json ContentType.
+type UpdateModuleJSONRequestBody = ModuleForm
+
 // CreatePageTypeJSONRequestBody defines body for CreatePageType for application/json ContentType.
 type CreatePageTypeJSONRequestBody = PageTypeForm
 
@@ -5075,13 +5562,16 @@ type SetPropertyDescriptorVisibilityOverrideJSONRequestBody = PropertyDescriptor
 type CreatePageJSONRequestBody = PageCreateForm
 
 // CascadeUnarchivePageJSONRequestBody defines body for CascadeUnarchivePage for application/json ContentType.
-type CascadeUnarchivePageJSONRequestBody = CascadeSubtreeForm
+type CascadeUnarchivePageJSONRequestBody = CascadeUnarchiveToSpaceForm
+
+// UnarchivePageJSONRequestBody defines body for UnarchivePage for application/json ContentType.
+type UnarchivePageJSONRequestBody = RestorePageToSpaceForm
 
 // CascadeRestorePageFromTrashJSONRequestBody defines body for CascadeRestorePageFromTrash for application/json ContentType.
-type CascadeRestorePageFromTrashJSONRequestBody = CascadeRestoreForm
+type CascadeRestorePageFromTrashJSONRequestBody = CascadeRestoreToSpaceForm
 
 // RestorePageFromTrashJSONRequestBody defines body for RestorePageFromTrash for application/json ContentType.
-type RestorePageFromTrashJSONRequestBody = RestorePageForm
+type RestorePageFromTrashJSONRequestBody = RestorePageToSpaceForm
 
 // MigrateSortRootPagesJSONRequestBody defines body for MigrateSortRootPages for application/json ContentType.
 type MigrateSortRootPagesJSONRequestBody = SortChildrenForm
@@ -5106,6 +5596,12 @@ type MigrateMovePageJSONRequestBody = PageMoveForm
 
 // MovePageJSONRequestBody defines body for MovePage for application/json ContentType.
 type MovePageJSONRequestBody = PageMoveForm
+
+// MoveToSpaceJSONRequestBody defines body for MoveToSpace for application/json ContentType.
+type MoveToSpaceJSONRequestBody = PageMoveToSpaceForm
+
+// PreviewMoveToSpaceJSONRequestBody defines body for PreviewMoveToSpace for application/json ContentType.
+type PreviewMoveToSpaceJSONRequestBody = PageMoveToSpaceForm
 
 // TransitionPageRevisionJSONRequestBody defines body for TransitionPageRevision for application/json ContentType.
 type TransitionPageRevisionJSONRequestBody = TransitionForm
@@ -5151,6 +5647,30 @@ type UpdatePropertyDescriptorJSONRequestBody = PropertyDescriptorForm
 
 // SortPropertyDescriptorDisplayColumnsJSONRequestBody defines body for SortPropertyDescriptorDisplayColumns for application/json ContentType.
 type SortPropertyDescriptorDisplayColumnsJSONRequestBody = SortPropertyDescriptorDisplayColumnsJSONBody
+
+// CreateSpaceJSONRequestBody defines body for CreateSpace for application/json ContentType.
+type CreateSpaceJSONRequestBody = SpaceForm
+
+// UpdateSpaceJSONRequestBody defines body for UpdateSpace for application/json ContentType.
+type UpdateSpaceJSONRequestBody = SpaceAppearanceForm
+
+// UpdateSpaceAccessJSONRequestBody defines body for UpdateSpaceAccess for application/json ContentType.
+type UpdateSpaceAccessJSONRequestBody = SpaceAccessForm
+
+// CreateSpaceEnumJSONRequestBody defines body for CreateSpaceEnum for application/json ContentType.
+type CreateSpaceEnumJSONRequestBody = DomainEnumForm
+
+// SetSpaceHiddenJSONRequestBody defines body for SetSpaceHidden for application/json ContentType.
+type SetSpaceHiddenJSONRequestBody = SpaceHiddenForm
+
+// UpdateSpaceLandingJSONRequestBody defines body for UpdateSpaceLanding for application/json ContentType.
+type UpdateSpaceLandingJSONRequestBody = LandingSettingsForm
+
+// CreateSpacePageTypeJSONRequestBody defines body for CreateSpacePageType for application/json ContentType.
+type CreateSpacePageTypeJSONRequestBody = PageTypeForm
+
+// CreateSpaceWorkItemTypeJSONRequestBody defines body for CreateSpaceWorkItemType for application/json ContentType.
+type CreateSpaceWorkItemTypeJSONRequestBody = WorkItemTypeCreateForm
 
 // CreateUserJSONRequestBody defines body for CreateUser for application/json ContentType.
 type CreateUserJSONRequestBody = ExternalUserForm
@@ -5385,12 +5905,20 @@ type ClientInterface interface {
 	GetAttributes(ctx context.Context, objectType string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetLandingSettings request
-	GetLandingSettings(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetLandingSettings(ctx context.Context, params *GetLandingSettingsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateLandingSettingsWithBody request with any body
-	UpdateLandingSettingsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateLandingSettingsWithBody(ctx context.Context, params *UpdateLandingSettingsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateLandingSettings(ctx context.Context, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateLandingSettings(ctx context.Context, params *UpdateLandingSettingsParams, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListModules request
+	ListModules(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateModuleWithBody request with any body
+	UpdateModuleWithBody(ctx context.Context, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateModule(ctx context.Context, name string, body UpdateModuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPageTypes request
 	ListPageTypes(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5460,9 +5988,9 @@ type ClientInterface interface {
 	ListPages(ctx context.Context, params *ListPagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreatePageWithBody request with any body
-	CreatePageWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreatePageWithBody(ctx context.Context, params *CreatePageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreatePage(ctx context.Context, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreatePage(ctx context.Context, params *CreatePageParams, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteArchivedPage request
 	DeleteArchivedPage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5478,8 +6006,10 @@ type ClientInterface interface {
 
 	CascadeUnarchivePage(ctx context.Context, pageId int64, body CascadeUnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UnarchivePage request
-	UnarchivePage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// UnarchivePageWithBody request with any body
+	UnarchivePageWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UnarchivePage(ctx context.Context, pageId int64, body UnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PermanentlyDeletePageFromTrash request
 	PermanentlyDeletePageFromTrash(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5563,6 +6093,16 @@ type ClientInterface interface {
 	MovePageWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	MovePage(ctx context.Context, id int64, body MovePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MoveToSpaceWithBody request with any body
+	MoveToSpaceWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	MoveToSpace(ctx context.Context, id int64, body MoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewMoveToSpaceWithBody request with any body
+	PreviewMoveToSpaceWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	PreviewMoveToSpace(ctx context.Context, id int64, body PreviewMoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetPageRevisions request
 	GetPageRevisions(ctx context.Context, id int64, params *GetPageRevisionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5701,6 +6241,79 @@ type ClientInterface interface {
 	// GetReleaseNoteByVersion request
 	GetReleaseNoteByVersion(ctx context.Context, version string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListSpaces request
+	ListSpaces(ctx context.Context, params *ListSpacesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSpaceWithBody request with any body
+	CreateSpaceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateSpace(ctx context.Context, body CreateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteSpace request
+	DeleteSpace(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetSpace request
+	GetSpace(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSpaceWithBody request with any body
+	UpdateSpaceWithBody(ctx context.Context, id int64, params *UpdateSpaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateSpace(ctx context.Context, id int64, params *UpdateSpaceParams, body UpdateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetSpaceAccess request
+	GetSpaceAccess(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSpaceAccessWithBody request with any body
+	UpdateSpaceAccessWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateSpaceAccess(ctx context.Context, id int64, body UpdateSpaceAccessJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewSpaceAccessImpact request
+	PreviewSpaceAccessImpact(ctx context.Context, id int64, params *PreviewSpaceAccessImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MakeSpaceDefault request
+	MakeSpaceDefault(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListSpaceEnums request
+	ListSpaceEnums(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSpaceEnumWithBody request with any body
+	CreateSpaceEnumWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateSpaceEnum(ctx context.Context, id int64, body CreateSpaceEnumJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SetSpaceHiddenWithBody request with any body
+	SetSpaceHiddenWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	SetSpaceHidden(ctx context.Context, id int64, body SetSpaceHiddenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetSpaceLanding request
+	GetSpaceLanding(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSpaceLandingWithBody request with any body
+	UpdateSpaceLandingWithBody(ctx context.Context, id int64, params *UpdateSpaceLandingParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateSpaceLanding(ctx context.Context, id int64, params *UpdateSpaceLandingParams, body UpdateSpaceLandingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListSpacePageTypes request
+	ListSpacePageTypes(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSpacePageTypeWithBody request with any body
+	CreateSpacePageTypeWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateSpacePageType(ctx context.Context, id int64, body CreateSpacePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PurgeSpace request
+	PurgeSpace(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListSpaceWorkItemTypes request
+	ListSpaceWorkItemTypes(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSpaceWorkItemTypeWithBody request with any body
+	CreateSpaceWorkItemTypeWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateSpaceWorkItemType(ctx context.Context, id int64, body CreateSpaceWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListUsers request
 	ListUsers(ctx context.Context, params *ListUsersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -5748,6 +6361,9 @@ type ClientInterface interface {
 	// SendUserActivationEmail request
 	SendUserActivationEmail(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GrantUserSysAdmin request
+	GrantUserSysAdmin(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListWorkItemTypes request
 	ListWorkItemTypes(ctx context.Context, params *ListWorkItemTypesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -5757,41 +6373,41 @@ type ClientInterface interface {
 	CreateWorkItemType(ctx context.Context, body CreateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteWorkItemType request
-	DeleteWorkItemType(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteWorkItemType(ctx context.Context, slug string, params *DeleteWorkItemTypeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetWorkItemType request
-	GetWorkItemType(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetWorkItemType(ctx context.Context, slug string, params *GetWorkItemTypeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateWorkItemTypeWithBody request with any body
-	UpdateWorkItemTypeWithBody(ctx context.Context, slug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateWorkItemTypeWithBody(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateWorkItemType(ctx context.Context, slug string, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateWorkItemType(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkItemTypeTransitionWithBody request with any body
-	CreateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateWorkItemTypeTransition(ctx context.Context, typeSlug string, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateWorkItemTypeTransition(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteWorkItemTypeTransition request
-	DeleteWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, params *DeleteWorkItemTypeTransitionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateWorkItemTypeTransitionWithBody request with any body
-	UpdateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, transitionId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetWorkflowRoles request
 	GetWorkflowRoles(ctx context.Context, params *GetWorkflowRolesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateGroupWorkflowRoleWithBody request with any body
-	UpdateGroupWorkflowRoleWithBody(ctx context.Context, groupId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateGroupWorkflowRoleWithBody(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateGroupWorkflowRole(ctx context.Context, groupId int64, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateGroupWorkflowRole(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateUserWorkflowRoleWithBody request with any body
-	UpdateUserWorkflowRoleWithBody(ctx context.Context, userId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateUserWorkflowRoleWithBody(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateUserWorkflowRole(ctx context.Context, userId int64, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateUserWorkflowRole(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetWorkflowDraftItems request
 	GetWorkflowDraftItems(ctx context.Context, params *GetWorkflowDraftItemsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -6355,8 +6971,8 @@ func (c *Client) GetAttributes(ctx context.Context, objectType string, reqEditor
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetLandingSettings(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetLandingSettingsRequest(c.Server)
+func (c *Client) GetLandingSettings(ctx context.Context, params *GetLandingSettingsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetLandingSettingsRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -6367,8 +6983,8 @@ func (c *Client) GetLandingSettings(ctx context.Context, reqEditors ...RequestEd
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateLandingSettingsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLandingSettingsRequestWithBody(c.Server, contentType, body)
+func (c *Client) UpdateLandingSettingsWithBody(ctx context.Context, params *UpdateLandingSettingsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLandingSettingsRequestWithBody(c.Server, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6379,8 +6995,44 @@ func (c *Client) UpdateLandingSettingsWithBody(ctx context.Context, contentType 
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateLandingSettings(ctx context.Context, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLandingSettingsRequest(c.Server, body)
+func (c *Client) UpdateLandingSettings(ctx context.Context, params *UpdateLandingSettingsParams, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLandingSettingsRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListModules(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListModulesRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateModuleWithBody(ctx context.Context, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateModuleRequestWithBody(c.Server, name, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateModule(ctx context.Context, name string, body UpdateModuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateModuleRequest(c.Server, name, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6691,8 +7343,8 @@ func (c *Client) ListPages(ctx context.Context, params *ListPagesParams, reqEdit
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreatePageWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePageRequestWithBody(c.Server, contentType, body)
+func (c *Client) CreatePageWithBody(ctx context.Context, params *CreatePageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePageRequestWithBody(c.Server, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6703,8 +7355,8 @@ func (c *Client) CreatePageWithBody(ctx context.Context, contentType string, bod
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreatePage(ctx context.Context, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePageRequest(c.Server, body)
+func (c *Client) CreatePage(ctx context.Context, params *CreatePageParams, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePageRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6775,8 +7427,20 @@ func (c *Client) CascadeUnarchivePage(ctx context.Context, pageId int64, body Ca
 	return c.Client.Do(req)
 }
 
-func (c *Client) UnarchivePage(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUnarchivePageRequest(c.Server, pageId)
+func (c *Client) UnarchivePageWithBody(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnarchivePageRequestWithBody(c.Server, pageId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UnarchivePage(ctx context.Context, pageId int64, body UnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnarchivePageRequest(c.Server, pageId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7149,6 +7813,54 @@ func (c *Client) MovePageWithBody(ctx context.Context, id int64, contentType str
 
 func (c *Client) MovePage(ctx context.Context, id int64, body MovePageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewMovePageRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) MoveToSpaceWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMoveToSpaceRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) MoveToSpace(ctx context.Context, id int64, body MoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMoveToSpaceRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PreviewMoveToSpaceWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewMoveToSpaceRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PreviewMoveToSpace(ctx context.Context, id int64, body PreviewMoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewMoveToSpaceRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7759,6 +8471,330 @@ func (c *Client) GetReleaseNoteByVersion(ctx context.Context, version string, re
 	return c.Client.Do(req)
 }
 
+func (c *Client) ListSpaces(ctx context.Context, params *ListSpacesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListSpacesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpaceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpaceRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpace(ctx context.Context, body CreateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpaceRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteSpace(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteSpaceRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetSpace(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSpaceRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateSpaceWithBody(ctx context.Context, id int64, params *UpdateSpaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSpaceRequestWithBody(c.Server, id, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateSpace(ctx context.Context, id int64, params *UpdateSpaceParams, body UpdateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSpaceRequest(c.Server, id, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetSpaceAccess(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSpaceAccessRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateSpaceAccessWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSpaceAccessRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateSpaceAccess(ctx context.Context, id int64, body UpdateSpaceAccessJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSpaceAccessRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PreviewSpaceAccessImpact(ctx context.Context, id int64, params *PreviewSpaceAccessImpactParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewSpaceAccessImpactRequest(c.Server, id, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) MakeSpaceDefault(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMakeSpaceDefaultRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListSpaceEnums(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListSpaceEnumsRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpaceEnumWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpaceEnumRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpaceEnum(ctx context.Context, id int64, body CreateSpaceEnumJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpaceEnumRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SetSpaceHiddenWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetSpaceHiddenRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SetSpaceHidden(ctx context.Context, id int64, body SetSpaceHiddenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetSpaceHiddenRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetSpaceLanding(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSpaceLandingRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateSpaceLandingWithBody(ctx context.Context, id int64, params *UpdateSpaceLandingParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSpaceLandingRequestWithBody(c.Server, id, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateSpaceLanding(ctx context.Context, id int64, params *UpdateSpaceLandingParams, body UpdateSpaceLandingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSpaceLandingRequest(c.Server, id, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListSpacePageTypes(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListSpacePageTypesRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpacePageTypeWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpacePageTypeRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpacePageType(ctx context.Context, id int64, body CreateSpacePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpacePageTypeRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PurgeSpace(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPurgeSpaceRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListSpaceWorkItemTypes(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListSpaceWorkItemTypesRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpaceWorkItemTypeWithBody(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpaceWorkItemTypeRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateSpaceWorkItemType(ctx context.Context, id int64, body CreateSpaceWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSpaceWorkItemTypeRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListUsersRequest(c.Server, params)
 	if err != nil {
@@ -7963,6 +8999,18 @@ func (c *Client) SendUserActivationEmail(ctx context.Context, id int64, reqEdito
 	return c.Client.Do(req)
 }
 
+func (c *Client) GrantUserSysAdmin(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGrantUserSysAdminRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) ListWorkItemTypes(ctx context.Context, params *ListWorkItemTypesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListWorkItemTypesRequest(c.Server, params)
 	if err != nil {
@@ -7999,8 +9047,8 @@ func (c *Client) CreateWorkItemType(ctx context.Context, body CreateWorkItemType
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteWorkItemType(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteWorkItemTypeRequest(c.Server, slug)
+func (c *Client) DeleteWorkItemType(ctx context.Context, slug string, params *DeleteWorkItemTypeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteWorkItemTypeRequest(c.Server, slug, params)
 	if err != nil {
 		return nil, err
 	}
@@ -8011,8 +9059,8 @@ func (c *Client) DeleteWorkItemType(ctx context.Context, slug string, reqEditors
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetWorkItemType(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetWorkItemTypeRequest(c.Server, slug)
+func (c *Client) GetWorkItemType(ctx context.Context, slug string, params *GetWorkItemTypeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetWorkItemTypeRequest(c.Server, slug, params)
 	if err != nil {
 		return nil, err
 	}
@@ -8023,8 +9071,8 @@ func (c *Client) GetWorkItemType(ctx context.Context, slug string, reqEditors ..
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateWorkItemTypeWithBody(ctx context.Context, slug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateWorkItemTypeRequestWithBody(c.Server, slug, contentType, body)
+func (c *Client) UpdateWorkItemTypeWithBody(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkItemTypeRequestWithBody(c.Server, slug, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8035,8 +9083,8 @@ func (c *Client) UpdateWorkItemTypeWithBody(ctx context.Context, slug string, co
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateWorkItemType(ctx context.Context, slug string, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateWorkItemTypeRequest(c.Server, slug, body)
+func (c *Client) UpdateWorkItemType(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkItemTypeRequest(c.Server, slug, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8047,8 +9095,8 @@ func (c *Client) UpdateWorkItemType(ctx context.Context, slug string, body Updat
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkItemTypeTransitionRequestWithBody(c.Server, typeSlug, contentType, body)
+func (c *Client) CreateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkItemTypeTransitionRequestWithBody(c.Server, typeSlug, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8059,8 +9107,8 @@ func (c *Client) CreateWorkItemTypeTransitionWithBody(ctx context.Context, typeS
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateWorkItemTypeTransition(ctx context.Context, typeSlug string, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkItemTypeTransitionRequest(c.Server, typeSlug, body)
+func (c *Client) CreateWorkItemTypeTransition(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkItemTypeTransitionRequest(c.Server, typeSlug, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8071,8 +9119,8 @@ func (c *Client) CreateWorkItemTypeTransition(ctx context.Context, typeSlug stri
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteWorkItemTypeTransitionRequest(c.Server, typeSlug, transitionId)
+func (c *Client) DeleteWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, params *DeleteWorkItemTypeTransitionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteWorkItemTypeTransitionRequest(c.Server, typeSlug, transitionId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -8083,8 +9131,8 @@ func (c *Client) DeleteWorkItemTypeTransition(ctx context.Context, typeSlug stri
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, transitionId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateWorkItemTypeTransitionRequestWithBody(c.Server, typeSlug, transitionId, contentType, body)
+func (c *Client) UpdateWorkItemTypeTransitionWithBody(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkItemTypeTransitionRequestWithBody(c.Server, typeSlug, transitionId, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8095,8 +9143,8 @@ func (c *Client) UpdateWorkItemTypeTransitionWithBody(ctx context.Context, typeS
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateWorkItemTypeTransitionRequest(c.Server, typeSlug, transitionId, body)
+func (c *Client) UpdateWorkItemTypeTransition(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkItemTypeTransitionRequest(c.Server, typeSlug, transitionId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8119,8 +9167,8 @@ func (c *Client) GetWorkflowRoles(ctx context.Context, params *GetWorkflowRolesP
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateGroupWorkflowRoleWithBody(ctx context.Context, groupId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateGroupWorkflowRoleRequestWithBody(c.Server, groupId, contentType, body)
+func (c *Client) UpdateGroupWorkflowRoleWithBody(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateGroupWorkflowRoleRequestWithBody(c.Server, groupId, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8131,8 +9179,8 @@ func (c *Client) UpdateGroupWorkflowRoleWithBody(ctx context.Context, groupId in
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateGroupWorkflowRole(ctx context.Context, groupId int64, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateGroupWorkflowRoleRequest(c.Server, groupId, body)
+func (c *Client) UpdateGroupWorkflowRole(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateGroupWorkflowRoleRequest(c.Server, groupId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8143,8 +9191,8 @@ func (c *Client) UpdateGroupWorkflowRole(ctx context.Context, groupId int64, bod
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateUserWorkflowRoleWithBody(ctx context.Context, userId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateUserWorkflowRoleRequestWithBody(c.Server, userId, contentType, body)
+func (c *Client) UpdateUserWorkflowRoleWithBody(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateUserWorkflowRoleRequestWithBody(c.Server, userId, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8155,8 +9203,8 @@ func (c *Client) UpdateUserWorkflowRoleWithBody(ctx context.Context, userId int6
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateUserWorkflowRole(ctx context.Context, userId int64, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateUserWorkflowRoleRequest(c.Server, userId, body)
+func (c *Client) UpdateUserWorkflowRole(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateUserWorkflowRoleRequest(c.Server, userId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9871,7 +10919,7 @@ func NewGetAttributesRequest(server string, objectType string) (*http.Request, e
 }
 
 // NewGetLandingSettingsRequest generates requests for GetLandingSettings
-func NewGetLandingSettingsRequest(server string) (*http.Request, error) {
+func NewGetLandingSettingsRequest(server string, params *GetLandingSettingsParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -9889,6 +10937,33 @@ func NewGetLandingSettingsRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
@@ -9898,18 +10973,18 @@ func NewGetLandingSettingsRequest(server string) (*http.Request, error) {
 }
 
 // NewUpdateLandingSettingsRequest calls the generic UpdateLandingSettings builder with application/json body
-func NewUpdateLandingSettingsRequest(server string, body UpdateLandingSettingsJSONRequestBody) (*http.Request, error) {
+func NewUpdateLandingSettingsRequest(server string, params *UpdateLandingSettingsParams, body UpdateLandingSettingsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateLandingSettingsRequestWithBody(server, "application/json", bodyReader)
+	return NewUpdateLandingSettingsRequestWithBody(server, params, "application/json", bodyReader)
 }
 
 // NewUpdateLandingSettingsRequestWithBody generates requests for UpdateLandingSettings with any type of body
-func NewUpdateLandingSettingsRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateLandingSettingsRequestWithBody(server string, params *UpdateLandingSettingsParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -9918,6 +10993,122 @@ func NewUpdateLandingSettingsRequestWithBody(server string, contentType string, 
 	}
 
 	operationPath := fmt.Sprintf("/public/v1/landing-settings")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.XNormatikSettingsToken != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "X-Normatik-Settings-Token", *params.XNormatikSettingsToken, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("X-Normatik-Settings-Token", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListModulesRequest generates requests for ListModules
+func NewListModulesRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/modules")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateModuleRequest calls the generic UpdateModule builder with application/json body
+func NewUpdateModuleRequest(server string, name string, body UpdateModuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateModuleRequestWithBody(server, name, "application/json", bodyReader)
+}
+
+// NewUpdateModuleRequestWithBody generates requests for UpdateModule with any type of body
+func NewUpdateModuleRequestWithBody(server string, name string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "name", name, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/modules/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -10700,6 +11891,18 @@ func NewListPagesRequest(server string, params *ListPagesParams) (*http.Request,
 
 		}
 
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.Page != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
@@ -10751,18 +11954,18 @@ func NewListPagesRequest(server string, params *ListPagesParams) (*http.Request,
 }
 
 // NewCreatePageRequest calls the generic CreatePage builder with application/json body
-func NewCreatePageRequest(server string, body CreatePageJSONRequestBody) (*http.Request, error) {
+func NewCreatePageRequest(server string, params *CreatePageParams, body CreatePageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreatePageRequestWithBody(server, "application/json", bodyReader)
+	return NewCreatePageRequestWithBody(server, params, "application/json", bodyReader)
 }
 
 // NewCreatePageRequestWithBody generates requests for CreatePage with any type of body
-func NewCreatePageRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreatePageRequestWithBody(server string, params *CreatePageParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -10778,6 +11981,33 @@ func NewCreatePageRequestWithBody(server string, contentType string, body io.Rea
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
@@ -10978,8 +12208,19 @@ func NewCascadeUnarchivePageRequestWithBody(server string, pageId int64, content
 	return req, nil
 }
 
-// NewUnarchivePageRequest generates requests for UnarchivePage
-func NewUnarchivePageRequest(server string, pageId int64) (*http.Request, error) {
+// NewUnarchivePageRequest calls the generic UnarchivePage builder with application/json body
+func NewUnarchivePageRequest(server string, pageId int64, body UnarchivePageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUnarchivePageRequestWithBody(server, pageId, "application/json", bodyReader)
+}
+
+// NewUnarchivePageRequestWithBody generates requests for UnarchivePage with any type of body
+func NewUnarchivePageRequestWithBody(server string, pageId int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11004,10 +12245,12 @@ func NewUnarchivePageRequest(server string, pageId int64) (*http.Request, error)
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -11419,6 +12662,18 @@ func NewSearchPagesRequest(server string, params *SearchPagesParams) (*http.Requ
 
 		}
 
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.Page != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
@@ -11486,6 +12741,33 @@ func NewGetPageTreeRequest(server string, params *GetPageTreeParams) (*http.Requ
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -12029,6 +13311,100 @@ func NewMovePageRequestWithBody(server string, id int64, contentType string, bod
 	}
 
 	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewMoveToSpaceRequest calls the generic MoveToSpace builder with application/json body
+func NewMoveToSpaceRequest(server string, id int64, body MoveToSpaceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewMoveToSpaceRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewMoveToSpaceRequestWithBody generates requests for MoveToSpace with any type of body
+func NewMoveToSpaceRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/%s/move-to-space", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewPreviewMoveToSpaceRequest calls the generic PreviewMoveToSpace builder with application/json body
+func NewPreviewMoveToSpaceRequest(server string, id int64, body PreviewMoveToSpaceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPreviewMoveToSpaceRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewPreviewMoveToSpaceRequestWithBody generates requests for PreviewMoveToSpace with any type of body
+func NewPreviewMoveToSpaceRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/pages/%s/move-to-space/preview", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -13695,6 +15071,846 @@ func NewGetReleaseNoteByVersionRequest(server string, version string) (*http.Req
 	return req, nil
 }
 
+// NewListSpacesRequest generates requests for ListSpaces
+func NewListSpacesRequest(server string, params *ListSpacesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.All != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "all", *params.All, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateSpaceRequest calls the generic CreateSpace builder with application/json body
+func NewCreateSpaceRequest(server string, body CreateSpaceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateSpaceRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateSpaceRequestWithBody generates requests for CreateSpace with any type of body
+func NewCreateSpaceRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteSpaceRequest generates requests for DeleteSpace
+func NewDeleteSpaceRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetSpaceRequest generates requests for GetSpace
+func NewGetSpaceRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateSpaceRequest calls the generic UpdateSpace builder with application/json body
+func NewUpdateSpaceRequest(server string, id int64, params *UpdateSpaceParams, body UpdateSpaceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateSpaceRequestWithBody(server, id, params, "application/json", bodyReader)
+}
+
+// NewUpdateSpaceRequestWithBody generates requests for UpdateSpace with any type of body
+func NewUpdateSpaceRequestWithBody(server string, id int64, params *UpdateSpaceParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.XNormatikSettingsToken != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "X-Normatik-Settings-Token", *params.XNormatikSettingsToken, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("X-Normatik-Settings-Token", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetSpaceAccessRequest generates requests for GetSpaceAccess
+func NewGetSpaceAccessRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/access", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateSpaceAccessRequest calls the generic UpdateSpaceAccess builder with application/json body
+func NewUpdateSpaceAccessRequest(server string, id int64, body UpdateSpaceAccessJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateSpaceAccessRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateSpaceAccessRequestWithBody generates requests for UpdateSpaceAccess with any type of body
+func NewUpdateSpaceAccessRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/access", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewPreviewSpaceAccessImpactRequest generates requests for PreviewSpaceAccessImpact
+func NewPreviewSpaceAccessImpactRequest(server string, id int64, params *PreviewSpaceAccessImpactParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/access-impact", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "accessMode", params.AccessMode, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if params.UserIds != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "userIds", *params.UserIds, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.GroupIds != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "groupIds", *params.GroupIds, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewMakeSpaceDefaultRequest generates requests for MakeSpaceDefault
+func NewMakeSpaceDefaultRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/default", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListSpaceEnumsRequest generates requests for ListSpaceEnums
+func NewListSpaceEnumsRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/enums", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateSpaceEnumRequest calls the generic CreateSpaceEnum builder with application/json body
+func NewCreateSpaceEnumRequest(server string, id int64, body CreateSpaceEnumJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateSpaceEnumRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateSpaceEnumRequestWithBody generates requests for CreateSpaceEnum with any type of body
+func NewCreateSpaceEnumRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/enums", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewSetSpaceHiddenRequest calls the generic SetSpaceHidden builder with application/json body
+func NewSetSpaceHiddenRequest(server string, id int64, body SetSpaceHiddenJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSetSpaceHiddenRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewSetSpaceHiddenRequestWithBody generates requests for SetSpaceHidden with any type of body
+func NewSetSpaceHiddenRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/hidden", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetSpaceLandingRequest generates requests for GetSpaceLanding
+func NewGetSpaceLandingRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/landing", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateSpaceLandingRequest calls the generic UpdateSpaceLanding builder with application/json body
+func NewUpdateSpaceLandingRequest(server string, id int64, params *UpdateSpaceLandingParams, body UpdateSpaceLandingJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateSpaceLandingRequestWithBody(server, id, params, "application/json", bodyReader)
+}
+
+// NewUpdateSpaceLandingRequestWithBody generates requests for UpdateSpaceLanding with any type of body
+func NewUpdateSpaceLandingRequestWithBody(server string, id int64, params *UpdateSpaceLandingParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/landing", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.XNormatikSettingsToken != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "X-Normatik-Settings-Token", *params.XNormatikSettingsToken, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("X-Normatik-Settings-Token", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListSpacePageTypesRequest generates requests for ListSpacePageTypes
+func NewListSpacePageTypesRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/page-types", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateSpacePageTypeRequest calls the generic CreateSpacePageType builder with application/json body
+func NewCreateSpacePageTypeRequest(server string, id int64, body CreateSpacePageTypeJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateSpacePageTypeRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateSpacePageTypeRequestWithBody generates requests for CreateSpacePageType with any type of body
+func NewCreateSpacePageTypeRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/page-types", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewPurgeSpaceRequest generates requests for PurgeSpace
+func NewPurgeSpaceRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/purge", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListSpaceWorkItemTypesRequest generates requests for ListSpaceWorkItemTypes
+func NewListSpaceWorkItemTypesRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/work-item-types", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateSpaceWorkItemTypeRequest calls the generic CreateSpaceWorkItemType builder with application/json body
+func NewCreateSpaceWorkItemTypeRequest(server string, id int64, body CreateSpaceWorkItemTypeJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateSpaceWorkItemTypeRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateSpaceWorkItemTypeRequestWithBody generates requests for CreateSpaceWorkItemType with any type of body
+func NewCreateSpaceWorkItemTypeRequestWithBody(server string, id int64, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/spaces/%s/work-item-types", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewListUsersRequest generates requests for ListUsers
 func NewListUsersRequest(server string, params *ListUsersParams) (*http.Request, error) {
 	var err error
@@ -14319,6 +16535,40 @@ func NewSendUserActivationEmailRequest(server string, id int64) (*http.Request, 
 	return req, nil
 }
 
+// NewGrantUserSysAdminRequest generates requests for GrantUserSysAdmin
+func NewGrantUserSysAdminRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/public/v1/users/%s/sys-admin", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListWorkItemTypesRequest generates requests for ListWorkItemTypes
 func NewListWorkItemTypesRequest(server string, params *ListWorkItemTypesParams) (*http.Request, error) {
 	var err error
@@ -14438,7 +16688,7 @@ func NewCreateWorkItemTypeRequestWithBody(server string, contentType string, bod
 }
 
 // NewDeleteWorkItemTypeRequest generates requests for DeleteWorkItemType
-func NewDeleteWorkItemTypeRequest(server string, slug string) (*http.Request, error) {
+func NewDeleteWorkItemTypeRequest(server string, slug string, params *DeleteWorkItemTypeParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14461,6 +16711,29 @@ func NewDeleteWorkItemTypeRequest(server string, slug string) (*http.Request, er
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
@@ -14472,7 +16745,7 @@ func NewDeleteWorkItemTypeRequest(server string, slug string) (*http.Request, er
 }
 
 // NewGetWorkItemTypeRequest generates requests for GetWorkItemType
-func NewGetWorkItemTypeRequest(server string, slug string) (*http.Request, error) {
+func NewGetWorkItemTypeRequest(server string, slug string, params *GetWorkItemTypeParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14495,6 +16768,29 @@ func NewGetWorkItemTypeRequest(server string, slug string) (*http.Request, error
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -14506,18 +16802,18 @@ func NewGetWorkItemTypeRequest(server string, slug string) (*http.Request, error
 }
 
 // NewUpdateWorkItemTypeRequest calls the generic UpdateWorkItemType builder with application/json body
-func NewUpdateWorkItemTypeRequest(server string, slug string, body UpdateWorkItemTypeJSONRequestBody) (*http.Request, error) {
+func NewUpdateWorkItemTypeRequest(server string, slug string, params *UpdateWorkItemTypeParams, body UpdateWorkItemTypeJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateWorkItemTypeRequestWithBody(server, slug, "application/json", bodyReader)
+	return NewUpdateWorkItemTypeRequestWithBody(server, slug, params, "application/json", bodyReader)
 }
 
 // NewUpdateWorkItemTypeRequestWithBody generates requests for UpdateWorkItemType with any type of body
-func NewUpdateWorkItemTypeRequestWithBody(server string, slug string, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateWorkItemTypeRequestWithBody(server string, slug string, params *UpdateWorkItemTypeParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14540,6 +16836,29 @@ func NewUpdateWorkItemTypeRequestWithBody(server string, slug string, contentTyp
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
@@ -14553,18 +16872,18 @@ func NewUpdateWorkItemTypeRequestWithBody(server string, slug string, contentTyp
 }
 
 // NewCreateWorkItemTypeTransitionRequest calls the generic CreateWorkItemTypeTransition builder with application/json body
-func NewCreateWorkItemTypeTransitionRequest(server string, typeSlug string, body CreateWorkItemTypeTransitionJSONRequestBody) (*http.Request, error) {
+func NewCreateWorkItemTypeTransitionRequest(server string, typeSlug string, params *CreateWorkItemTypeTransitionParams, body CreateWorkItemTypeTransitionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateWorkItemTypeTransitionRequestWithBody(server, typeSlug, "application/json", bodyReader)
+	return NewCreateWorkItemTypeTransitionRequestWithBody(server, typeSlug, params, "application/json", bodyReader)
 }
 
 // NewCreateWorkItemTypeTransitionRequestWithBody generates requests for CreateWorkItemTypeTransition with any type of body
-func NewCreateWorkItemTypeTransitionRequestWithBody(server string, typeSlug string, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateWorkItemTypeTransitionRequestWithBody(server string, typeSlug string, params *CreateWorkItemTypeTransitionParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14589,6 +16908,29 @@ func NewCreateWorkItemTypeTransitionRequestWithBody(server string, typeSlug stri
 		return nil, err
 	}
 
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
@@ -14600,7 +16942,7 @@ func NewCreateWorkItemTypeTransitionRequestWithBody(server string, typeSlug stri
 }
 
 // NewDeleteWorkItemTypeTransitionRequest generates requests for DeleteWorkItemTypeTransition
-func NewDeleteWorkItemTypeTransitionRequest(server string, typeSlug string, transitionId int64) (*http.Request, error) {
+func NewDeleteWorkItemTypeTransitionRequest(server string, typeSlug string, transitionId int64, params *DeleteWorkItemTypeTransitionParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14630,6 +16972,29 @@ func NewDeleteWorkItemTypeTransitionRequest(server string, typeSlug string, tran
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
@@ -14641,18 +17006,18 @@ func NewDeleteWorkItemTypeTransitionRequest(server string, typeSlug string, tran
 }
 
 // NewUpdateWorkItemTypeTransitionRequest calls the generic UpdateWorkItemTypeTransition builder with application/json body
-func NewUpdateWorkItemTypeTransitionRequest(server string, typeSlug string, transitionId int64, body UpdateWorkItemTypeTransitionJSONRequestBody) (*http.Request, error) {
+func NewUpdateWorkItemTypeTransitionRequest(server string, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, body UpdateWorkItemTypeTransitionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateWorkItemTypeTransitionRequestWithBody(server, typeSlug, transitionId, "application/json", bodyReader)
+	return NewUpdateWorkItemTypeTransitionRequestWithBody(server, typeSlug, transitionId, params, "application/json", bodyReader)
 }
 
 // NewUpdateWorkItemTypeTransitionRequestWithBody generates requests for UpdateWorkItemTypeTransition with any type of body
-func NewUpdateWorkItemTypeTransitionRequestWithBody(server string, typeSlug string, transitionId int64, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateWorkItemTypeTransitionRequestWithBody(server string, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14682,6 +17047,29 @@ func NewUpdateWorkItemTypeTransitionRequestWithBody(server string, typeSlug stri
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
@@ -14721,6 +17109,18 @@ func NewGetWorkflowRolesRequest(server string, params *GetWorkflowRolesParams) (
 		// styled parameters, preserving literal commas as delimiters
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
+
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
 
 		if params.Include != nil {
 
@@ -14893,18 +17293,18 @@ func NewGetWorkflowRolesRequest(server string, params *GetWorkflowRolesParams) (
 }
 
 // NewUpdateGroupWorkflowRoleRequest calls the generic UpdateGroupWorkflowRole builder with application/json body
-func NewUpdateGroupWorkflowRoleRequest(server string, groupId int64, body UpdateGroupWorkflowRoleJSONRequestBody) (*http.Request, error) {
+func NewUpdateGroupWorkflowRoleRequest(server string, groupId int64, params *UpdateGroupWorkflowRoleParams, body UpdateGroupWorkflowRoleJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateGroupWorkflowRoleRequestWithBody(server, groupId, "application/json", bodyReader)
+	return NewUpdateGroupWorkflowRoleRequestWithBody(server, groupId, params, "application/json", bodyReader)
 }
 
 // NewUpdateGroupWorkflowRoleRequestWithBody generates requests for UpdateGroupWorkflowRole with any type of body
-func NewUpdateGroupWorkflowRoleRequestWithBody(server string, groupId int64, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateGroupWorkflowRoleRequestWithBody(server string, groupId int64, params *UpdateGroupWorkflowRoleParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14929,6 +17329,33 @@ func NewUpdateGroupWorkflowRoleRequestWithBody(server string, groupId int64, con
 		return nil, err
 	}
 
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
 	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
 	if err != nil {
 		return nil, err
@@ -14940,18 +17367,18 @@ func NewUpdateGroupWorkflowRoleRequestWithBody(server string, groupId int64, con
 }
 
 // NewUpdateUserWorkflowRoleRequest calls the generic UpdateUserWorkflowRole builder with application/json body
-func NewUpdateUserWorkflowRoleRequest(server string, userId int64, body UpdateUserWorkflowRoleJSONRequestBody) (*http.Request, error) {
+func NewUpdateUserWorkflowRoleRequest(server string, userId int64, params *UpdateUserWorkflowRoleParams, body UpdateUserWorkflowRoleJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateUserWorkflowRoleRequestWithBody(server, userId, "application/json", bodyReader)
+	return NewUpdateUserWorkflowRoleRequestWithBody(server, userId, params, "application/json", bodyReader)
 }
 
 // NewUpdateUserWorkflowRoleRequestWithBody generates requests for UpdateUserWorkflowRole with any type of body
-func NewUpdateUserWorkflowRoleRequestWithBody(server string, userId int64, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateUserWorkflowRoleRequestWithBody(server string, userId int64, params *UpdateUserWorkflowRoleParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14974,6 +17401,33 @@ func NewUpdateUserWorkflowRoleRequestWithBody(server string, userId int64, conte
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Space != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "space", *params.Space, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
@@ -15393,12 +17847,20 @@ type ClientWithResponsesInterface interface {
 	GetAttributesWithResponse(ctx context.Context, objectType string, reqEditors ...RequestEditorFn) (*GetAttributesResponse, error)
 
 	// GetLandingSettingsWithResponse request
-	GetLandingSettingsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetLandingSettingsResponse, error)
+	GetLandingSettingsWithResponse(ctx context.Context, params *GetLandingSettingsParams, reqEditors ...RequestEditorFn) (*GetLandingSettingsResponse, error)
 
 	// UpdateLandingSettingsWithBodyWithResponse request with any body
-	UpdateLandingSettingsWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error)
+	UpdateLandingSettingsWithBodyWithResponse(ctx context.Context, params *UpdateLandingSettingsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error)
 
-	UpdateLandingSettingsWithResponse(ctx context.Context, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error)
+	UpdateLandingSettingsWithResponse(ctx context.Context, params *UpdateLandingSettingsParams, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error)
+
+	// ListModulesWithResponse request
+	ListModulesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListModulesResponse, error)
+
+	// UpdateModuleWithBodyWithResponse request with any body
+	UpdateModuleWithBodyWithResponse(ctx context.Context, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateModuleResponse, error)
+
+	UpdateModuleWithResponse(ctx context.Context, name string, body UpdateModuleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateModuleResponse, error)
 
 	// ListPageTypesWithResponse request
 	ListPageTypesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListPageTypesResponse, error)
@@ -15468,9 +17930,9 @@ type ClientWithResponsesInterface interface {
 	ListPagesWithResponse(ctx context.Context, params *ListPagesParams, reqEditors ...RequestEditorFn) (*ListPagesResponse, error)
 
 	// CreatePageWithBodyWithResponse request with any body
-	CreatePageWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePageResponse, error)
+	CreatePageWithBodyWithResponse(ctx context.Context, params *CreatePageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePageResponse, error)
 
-	CreatePageWithResponse(ctx context.Context, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePageResponse, error)
+	CreatePageWithResponse(ctx context.Context, params *CreatePageParams, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePageResponse, error)
 
 	// DeleteArchivedPageWithResponse request
 	DeleteArchivedPageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*DeleteArchivedPageResponse, error)
@@ -15486,8 +17948,10 @@ type ClientWithResponsesInterface interface {
 
 	CascadeUnarchivePageWithResponse(ctx context.Context, pageId int64, body CascadeUnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CascadeUnarchivePageResponse, error)
 
-	// UnarchivePageWithResponse request
-	UnarchivePageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error)
+	// UnarchivePageWithBodyWithResponse request with any body
+	UnarchivePageWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error)
+
+	UnarchivePageWithResponse(ctx context.Context, pageId int64, body UnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error)
 
 	// PermanentlyDeletePageFromTrashWithResponse request
 	PermanentlyDeletePageFromTrashWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*PermanentlyDeletePageFromTrashResponse, error)
@@ -15571,6 +18035,16 @@ type ClientWithResponsesInterface interface {
 	MovePageWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MovePageResponse, error)
 
 	MovePageWithResponse(ctx context.Context, id int64, body MovePageJSONRequestBody, reqEditors ...RequestEditorFn) (*MovePageResponse, error)
+
+	// MoveToSpaceWithBodyWithResponse request with any body
+	MoveToSpaceWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MoveToSpaceResponse, error)
+
+	MoveToSpaceWithResponse(ctx context.Context, id int64, body MoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*MoveToSpaceResponse, error)
+
+	// PreviewMoveToSpaceWithBodyWithResponse request with any body
+	PreviewMoveToSpaceWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PreviewMoveToSpaceResponse, error)
+
+	PreviewMoveToSpaceWithResponse(ctx context.Context, id int64, body PreviewMoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*PreviewMoveToSpaceResponse, error)
 
 	// GetPageRevisionsWithResponse request
 	GetPageRevisionsWithResponse(ctx context.Context, id int64, params *GetPageRevisionsParams, reqEditors ...RequestEditorFn) (*GetPageRevisionsResponse, error)
@@ -15709,6 +18183,79 @@ type ClientWithResponsesInterface interface {
 	// GetReleaseNoteByVersionWithResponse request
 	GetReleaseNoteByVersionWithResponse(ctx context.Context, version string, reqEditors ...RequestEditorFn) (*GetReleaseNoteByVersionResponse, error)
 
+	// ListSpacesWithResponse request
+	ListSpacesWithResponse(ctx context.Context, params *ListSpacesParams, reqEditors ...RequestEditorFn) (*ListSpacesResponse, error)
+
+	// CreateSpaceWithBodyWithResponse request with any body
+	CreateSpaceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpaceResponse, error)
+
+	CreateSpaceWithResponse(ctx context.Context, body CreateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpaceResponse, error)
+
+	// DeleteSpaceWithResponse request
+	DeleteSpaceWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*DeleteSpaceResponse, error)
+
+	// GetSpaceWithResponse request
+	GetSpaceWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GetSpaceResponse, error)
+
+	// UpdateSpaceWithBodyWithResponse request with any body
+	UpdateSpaceWithBodyWithResponse(ctx context.Context, id int64, params *UpdateSpaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSpaceResponse, error)
+
+	UpdateSpaceWithResponse(ctx context.Context, id int64, params *UpdateSpaceParams, body UpdateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSpaceResponse, error)
+
+	// GetSpaceAccessWithResponse request
+	GetSpaceAccessWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GetSpaceAccessResponse, error)
+
+	// UpdateSpaceAccessWithBodyWithResponse request with any body
+	UpdateSpaceAccessWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSpaceAccessResponse, error)
+
+	UpdateSpaceAccessWithResponse(ctx context.Context, id int64, body UpdateSpaceAccessJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSpaceAccessResponse, error)
+
+	// PreviewSpaceAccessImpactWithResponse request
+	PreviewSpaceAccessImpactWithResponse(ctx context.Context, id int64, params *PreviewSpaceAccessImpactParams, reqEditors ...RequestEditorFn) (*PreviewSpaceAccessImpactResponse, error)
+
+	// MakeSpaceDefaultWithResponse request
+	MakeSpaceDefaultWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*MakeSpaceDefaultResponse, error)
+
+	// ListSpaceEnumsWithResponse request
+	ListSpaceEnumsWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ListSpaceEnumsResponse, error)
+
+	// CreateSpaceEnumWithBodyWithResponse request with any body
+	CreateSpaceEnumWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpaceEnumResponse, error)
+
+	CreateSpaceEnumWithResponse(ctx context.Context, id int64, body CreateSpaceEnumJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpaceEnumResponse, error)
+
+	// SetSpaceHiddenWithBodyWithResponse request with any body
+	SetSpaceHiddenWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetSpaceHiddenResponse, error)
+
+	SetSpaceHiddenWithResponse(ctx context.Context, id int64, body SetSpaceHiddenJSONRequestBody, reqEditors ...RequestEditorFn) (*SetSpaceHiddenResponse, error)
+
+	// GetSpaceLandingWithResponse request
+	GetSpaceLandingWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GetSpaceLandingResponse, error)
+
+	// UpdateSpaceLandingWithBodyWithResponse request with any body
+	UpdateSpaceLandingWithBodyWithResponse(ctx context.Context, id int64, params *UpdateSpaceLandingParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSpaceLandingResponse, error)
+
+	UpdateSpaceLandingWithResponse(ctx context.Context, id int64, params *UpdateSpaceLandingParams, body UpdateSpaceLandingJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSpaceLandingResponse, error)
+
+	// ListSpacePageTypesWithResponse request
+	ListSpacePageTypesWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ListSpacePageTypesResponse, error)
+
+	// CreateSpacePageTypeWithBodyWithResponse request with any body
+	CreateSpacePageTypeWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpacePageTypeResponse, error)
+
+	CreateSpacePageTypeWithResponse(ctx context.Context, id int64, body CreateSpacePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpacePageTypeResponse, error)
+
+	// PurgeSpaceWithResponse request
+	PurgeSpaceWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*PurgeSpaceResponse, error)
+
+	// ListSpaceWorkItemTypesWithResponse request
+	ListSpaceWorkItemTypesWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ListSpaceWorkItemTypesResponse, error)
+
+	// CreateSpaceWorkItemTypeWithBodyWithResponse request with any body
+	CreateSpaceWorkItemTypeWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpaceWorkItemTypeResponse, error)
+
+	CreateSpaceWorkItemTypeWithResponse(ctx context.Context, id int64, body CreateSpaceWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpaceWorkItemTypeResponse, error)
+
 	// ListUsersWithResponse request
 	ListUsersWithResponse(ctx context.Context, params *ListUsersParams, reqEditors ...RequestEditorFn) (*ListUsersResponse, error)
 
@@ -15756,6 +18303,9 @@ type ClientWithResponsesInterface interface {
 	// SendUserActivationEmailWithResponse request
 	SendUserActivationEmailWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*SendUserActivationEmailResponse, error)
 
+	// GrantUserSysAdminWithResponse request
+	GrantUserSysAdminWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GrantUserSysAdminResponse, error)
+
 	// ListWorkItemTypesWithResponse request
 	ListWorkItemTypesWithResponse(ctx context.Context, params *ListWorkItemTypesParams, reqEditors ...RequestEditorFn) (*ListWorkItemTypesResponse, error)
 
@@ -15765,41 +18315,41 @@ type ClientWithResponsesInterface interface {
 	CreateWorkItemTypeWithResponse(ctx context.Context, body CreateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeResponse, error)
 
 	// DeleteWorkItemTypeWithResponse request
-	DeleteWorkItemTypeWithResponse(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeResponse, error)
+	DeleteWorkItemTypeWithResponse(ctx context.Context, slug string, params *DeleteWorkItemTypeParams, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeResponse, error)
 
 	// GetWorkItemTypeWithResponse request
-	GetWorkItemTypeWithResponse(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*GetWorkItemTypeResponse, error)
+	GetWorkItemTypeWithResponse(ctx context.Context, slug string, params *GetWorkItemTypeParams, reqEditors ...RequestEditorFn) (*GetWorkItemTypeResponse, error)
 
 	// UpdateWorkItemTypeWithBodyWithResponse request with any body
-	UpdateWorkItemTypeWithBodyWithResponse(ctx context.Context, slug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error)
+	UpdateWorkItemTypeWithBodyWithResponse(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error)
 
-	UpdateWorkItemTypeWithResponse(ctx context.Context, slug string, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error)
+	UpdateWorkItemTypeWithResponse(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error)
 
 	// CreateWorkItemTypeTransitionWithBodyWithResponse request with any body
-	CreateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error)
+	CreateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error)
 
-	CreateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error)
+	CreateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error)
 
 	// DeleteWorkItemTypeTransitionWithResponse request
-	DeleteWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeTransitionResponse, error)
+	DeleteWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, params *DeleteWorkItemTypeTransitionParams, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeTransitionResponse, error)
 
 	// UpdateWorkItemTypeTransitionWithBodyWithResponse request with any body
-	UpdateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, transitionId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error)
+	UpdateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error)
 
-	UpdateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error)
+	UpdateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error)
 
 	// GetWorkflowRolesWithResponse request
 	GetWorkflowRolesWithResponse(ctx context.Context, params *GetWorkflowRolesParams, reqEditors ...RequestEditorFn) (*GetWorkflowRolesResponse, error)
 
 	// UpdateGroupWorkflowRoleWithBodyWithResponse request with any body
-	UpdateGroupWorkflowRoleWithBodyWithResponse(ctx context.Context, groupId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error)
+	UpdateGroupWorkflowRoleWithBodyWithResponse(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error)
 
-	UpdateGroupWorkflowRoleWithResponse(ctx context.Context, groupId int64, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error)
+	UpdateGroupWorkflowRoleWithResponse(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error)
 
 	// UpdateUserWorkflowRoleWithBodyWithResponse request with any body
-	UpdateUserWorkflowRoleWithBodyWithResponse(ctx context.Context, userId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error)
+	UpdateUserWorkflowRoleWithBodyWithResponse(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error)
 
-	UpdateUserWorkflowRoleWithResponse(ctx context.Context, userId int64, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error)
+	UpdateUserWorkflowRoleWithResponse(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error)
 
 	// GetWorkflowDraftItemsWithResponse request
 	GetWorkflowDraftItemsWithResponse(ctx context.Context, params *GetWorkflowDraftItemsParams, reqEditors ...RequestEditorFn) (*GetWorkflowDraftItemsResponse, error)
@@ -17091,6 +19641,72 @@ func (r UpdateLandingSettingsResponse) ContentType() string {
 	return ""
 }
 
+type ListModulesResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ListModulesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListModulesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListModulesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateModuleResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateModuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateModuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateModuleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListPageTypesResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -17828,6 +20444,7 @@ func (r CascadeUnarchivePageResponse) ContentType() string {
 type UnarchivePageResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
 	ApplicationproblemJSON401 *ProblemDetail
 	ApplicationproblemJSON403 *ProblemDetail
 	ApplicationproblemJSON404 *ProblemDetail
@@ -18557,6 +21174,74 @@ func (r MovePageResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r MovePageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type MoveToSpaceResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r MoveToSpaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MoveToSpaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r MoveToSpaceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PreviewMoveToSpaceResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewMoveToSpaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewMoveToSpaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewMoveToSpaceResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -19795,6 +22480,639 @@ func (r GetReleaseNoteByVersionResponse) ContentType() string {
 	return ""
 }
 
+type ListSpacesResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ListSpacesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListSpacesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListSpacesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateSpaceResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateSpaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateSpaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateSpaceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteSpaceResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteSpaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteSpaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteSpaceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetSpaceResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetSpaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetSpaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetSpaceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateSpaceResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateSpaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateSpaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateSpaceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetSpaceAccessResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetSpaceAccessResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetSpaceAccessResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetSpaceAccessResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateSpaceAccessResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateSpaceAccessResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateSpaceAccessResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateSpaceAccessResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PreviewSpaceAccessImpactResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewSpaceAccessImpactResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewSpaceAccessImpactResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewSpaceAccessImpactResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type MakeSpaceDefaultResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r MakeSpaceDefaultResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MakeSpaceDefaultResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r MakeSpaceDefaultResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListSpaceEnumsResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ListSpaceEnumsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListSpaceEnumsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListSpaceEnumsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateSpaceEnumResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateSpaceEnumResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateSpaceEnumResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateSpaceEnumResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SetSpaceHiddenResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r SetSpaceHiddenResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SetSpaceHiddenResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SetSpaceHiddenResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetSpaceLandingResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GetSpaceLandingResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetSpaceLandingResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetSpaceLandingResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateSpaceLandingResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateSpaceLandingResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateSpaceLandingResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateSpaceLandingResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListSpacePageTypesResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ListSpacePageTypesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListSpacePageTypesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListSpacePageTypesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateSpacePageTypeResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateSpacePageTypeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateSpacePageTypeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateSpacePageTypeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PurgeSpaceResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r PurgeSpaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PurgeSpaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PurgeSpaceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListSpaceWorkItemTypesResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r ListSpaceWorkItemTypesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListSpaceWorkItemTypesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListSpaceWorkItemTypesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateSpaceWorkItemTypeResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON400 *ProblemDetail
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateSpaceWorkItemTypeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateSpaceWorkItemTypeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateSpaceWorkItemTypeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListUsersResponse struct {
 	Body                      []byte
 	HTTPResponse              *http.Response
@@ -20218,6 +23536,39 @@ func (r SendUserActivationEmailResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r SendUserActivationEmailResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GrantUserSysAdminResponse struct {
+	Body                      []byte
+	HTTPResponse              *http.Response
+	ApplicationproblemJSON401 *ProblemDetail
+	ApplicationproblemJSON403 *ProblemDetail
+	ApplicationproblemJSON404 *ProblemDetail
+	ApplicationproblemJSON429 *ProblemDetail
+}
+
+// Status returns HTTPResponse.Status
+func (r GrantUserSysAdminResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GrantUserSysAdminResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GrantUserSysAdminResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -21092,8 +24443,8 @@ func (c *ClientWithResponses) GetAttributesWithResponse(ctx context.Context, obj
 }
 
 // GetLandingSettingsWithResponse request returning *GetLandingSettingsResponse
-func (c *ClientWithResponses) GetLandingSettingsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetLandingSettingsResponse, error) {
-	rsp, err := c.GetLandingSettings(ctx, reqEditors...)
+func (c *ClientWithResponses) GetLandingSettingsWithResponse(ctx context.Context, params *GetLandingSettingsParams, reqEditors ...RequestEditorFn) (*GetLandingSettingsResponse, error) {
+	rsp, err := c.GetLandingSettings(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -21101,20 +24452,46 @@ func (c *ClientWithResponses) GetLandingSettingsWithResponse(ctx context.Context
 }
 
 // UpdateLandingSettingsWithBodyWithResponse request with arbitrary body returning *UpdateLandingSettingsResponse
-func (c *ClientWithResponses) UpdateLandingSettingsWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error) {
-	rsp, err := c.UpdateLandingSettingsWithBody(ctx, contentType, body, reqEditors...)
+func (c *ClientWithResponses) UpdateLandingSettingsWithBodyWithResponse(ctx context.Context, params *UpdateLandingSettingsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error) {
+	rsp, err := c.UpdateLandingSettingsWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateLandingSettingsResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateLandingSettingsWithResponse(ctx context.Context, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error) {
-	rsp, err := c.UpdateLandingSettings(ctx, body, reqEditors...)
+func (c *ClientWithResponses) UpdateLandingSettingsWithResponse(ctx context.Context, params *UpdateLandingSettingsParams, body UpdateLandingSettingsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLandingSettingsResponse, error) {
+	rsp, err := c.UpdateLandingSettings(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateLandingSettingsResponse(rsp)
+}
+
+// ListModulesWithResponse request returning *ListModulesResponse
+func (c *ClientWithResponses) ListModulesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListModulesResponse, error) {
+	rsp, err := c.ListModules(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListModulesResponse(rsp)
+}
+
+// UpdateModuleWithBodyWithResponse request with arbitrary body returning *UpdateModuleResponse
+func (c *ClientWithResponses) UpdateModuleWithBodyWithResponse(ctx context.Context, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateModuleResponse, error) {
+	rsp, err := c.UpdateModuleWithBody(ctx, name, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateModuleResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateModuleWithResponse(ctx context.Context, name string, body UpdateModuleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateModuleResponse, error) {
+	rsp, err := c.UpdateModule(ctx, name, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateModuleResponse(rsp)
 }
 
 // ListPageTypesWithResponse request returning *ListPageTypesResponse
@@ -21335,16 +24712,16 @@ func (c *ClientWithResponses) ListPagesWithResponse(ctx context.Context, params 
 }
 
 // CreatePageWithBodyWithResponse request with arbitrary body returning *CreatePageResponse
-func (c *ClientWithResponses) CreatePageWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePageResponse, error) {
-	rsp, err := c.CreatePageWithBody(ctx, contentType, body, reqEditors...)
+func (c *ClientWithResponses) CreatePageWithBodyWithResponse(ctx context.Context, params *CreatePageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePageResponse, error) {
+	rsp, err := c.CreatePageWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreatePageResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreatePageWithResponse(ctx context.Context, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePageResponse, error) {
-	rsp, err := c.CreatePage(ctx, body, reqEditors...)
+func (c *ClientWithResponses) CreatePageWithResponse(ctx context.Context, params *CreatePageParams, body CreatePageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePageResponse, error) {
+	rsp, err := c.CreatePage(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -21395,9 +24772,17 @@ func (c *ClientWithResponses) CascadeUnarchivePageWithResponse(ctx context.Conte
 	return ParseCascadeUnarchivePageResponse(rsp)
 }
 
-// UnarchivePageWithResponse request returning *UnarchivePageResponse
-func (c *ClientWithResponses) UnarchivePageWithResponse(ctx context.Context, pageId int64, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error) {
-	rsp, err := c.UnarchivePage(ctx, pageId, reqEditors...)
+// UnarchivePageWithBodyWithResponse request with arbitrary body returning *UnarchivePageResponse
+func (c *ClientWithResponses) UnarchivePageWithBodyWithResponse(ctx context.Context, pageId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error) {
+	rsp, err := c.UnarchivePageWithBody(ctx, pageId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnarchivePageResponse(rsp)
+}
+
+func (c *ClientWithResponses) UnarchivePageWithResponse(ctx context.Context, pageId int64, body UnarchivePageJSONRequestBody, reqEditors ...RequestEditorFn) (*UnarchivePageResponse, error) {
+	rsp, err := c.UnarchivePage(ctx, pageId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -21671,6 +25056,40 @@ func (c *ClientWithResponses) MovePageWithResponse(ctx context.Context, id int64
 		return nil, err
 	}
 	return ParseMovePageResponse(rsp)
+}
+
+// MoveToSpaceWithBodyWithResponse request with arbitrary body returning *MoveToSpaceResponse
+func (c *ClientWithResponses) MoveToSpaceWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MoveToSpaceResponse, error) {
+	rsp, err := c.MoveToSpaceWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMoveToSpaceResponse(rsp)
+}
+
+func (c *ClientWithResponses) MoveToSpaceWithResponse(ctx context.Context, id int64, body MoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*MoveToSpaceResponse, error) {
+	rsp, err := c.MoveToSpace(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMoveToSpaceResponse(rsp)
+}
+
+// PreviewMoveToSpaceWithBodyWithResponse request with arbitrary body returning *PreviewMoveToSpaceResponse
+func (c *ClientWithResponses) PreviewMoveToSpaceWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PreviewMoveToSpaceResponse, error) {
+	rsp, err := c.PreviewMoveToSpaceWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewMoveToSpaceResponse(rsp)
+}
+
+func (c *ClientWithResponses) PreviewMoveToSpaceWithResponse(ctx context.Context, id int64, body PreviewMoveToSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*PreviewMoveToSpaceResponse, error) {
+	rsp, err := c.PreviewMoveToSpace(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewMoveToSpaceResponse(rsp)
 }
 
 // GetPageRevisionsWithResponse request returning *GetPageRevisionsResponse
@@ -22110,6 +25529,241 @@ func (c *ClientWithResponses) GetReleaseNoteByVersionWithResponse(ctx context.Co
 	return ParseGetReleaseNoteByVersionResponse(rsp)
 }
 
+// ListSpacesWithResponse request returning *ListSpacesResponse
+func (c *ClientWithResponses) ListSpacesWithResponse(ctx context.Context, params *ListSpacesParams, reqEditors ...RequestEditorFn) (*ListSpacesResponse, error) {
+	rsp, err := c.ListSpaces(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListSpacesResponse(rsp)
+}
+
+// CreateSpaceWithBodyWithResponse request with arbitrary body returning *CreateSpaceResponse
+func (c *ClientWithResponses) CreateSpaceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpaceResponse, error) {
+	rsp, err := c.CreateSpaceWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpaceResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateSpaceWithResponse(ctx context.Context, body CreateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpaceResponse, error) {
+	rsp, err := c.CreateSpace(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpaceResponse(rsp)
+}
+
+// DeleteSpaceWithResponse request returning *DeleteSpaceResponse
+func (c *ClientWithResponses) DeleteSpaceWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*DeleteSpaceResponse, error) {
+	rsp, err := c.DeleteSpace(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteSpaceResponse(rsp)
+}
+
+// GetSpaceWithResponse request returning *GetSpaceResponse
+func (c *ClientWithResponses) GetSpaceWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GetSpaceResponse, error) {
+	rsp, err := c.GetSpace(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetSpaceResponse(rsp)
+}
+
+// UpdateSpaceWithBodyWithResponse request with arbitrary body returning *UpdateSpaceResponse
+func (c *ClientWithResponses) UpdateSpaceWithBodyWithResponse(ctx context.Context, id int64, params *UpdateSpaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSpaceResponse, error) {
+	rsp, err := c.UpdateSpaceWithBody(ctx, id, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSpaceResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateSpaceWithResponse(ctx context.Context, id int64, params *UpdateSpaceParams, body UpdateSpaceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSpaceResponse, error) {
+	rsp, err := c.UpdateSpace(ctx, id, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSpaceResponse(rsp)
+}
+
+// GetSpaceAccessWithResponse request returning *GetSpaceAccessResponse
+func (c *ClientWithResponses) GetSpaceAccessWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GetSpaceAccessResponse, error) {
+	rsp, err := c.GetSpaceAccess(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetSpaceAccessResponse(rsp)
+}
+
+// UpdateSpaceAccessWithBodyWithResponse request with arbitrary body returning *UpdateSpaceAccessResponse
+func (c *ClientWithResponses) UpdateSpaceAccessWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSpaceAccessResponse, error) {
+	rsp, err := c.UpdateSpaceAccessWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSpaceAccessResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateSpaceAccessWithResponse(ctx context.Context, id int64, body UpdateSpaceAccessJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSpaceAccessResponse, error) {
+	rsp, err := c.UpdateSpaceAccess(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSpaceAccessResponse(rsp)
+}
+
+// PreviewSpaceAccessImpactWithResponse request returning *PreviewSpaceAccessImpactResponse
+func (c *ClientWithResponses) PreviewSpaceAccessImpactWithResponse(ctx context.Context, id int64, params *PreviewSpaceAccessImpactParams, reqEditors ...RequestEditorFn) (*PreviewSpaceAccessImpactResponse, error) {
+	rsp, err := c.PreviewSpaceAccessImpact(ctx, id, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewSpaceAccessImpactResponse(rsp)
+}
+
+// MakeSpaceDefaultWithResponse request returning *MakeSpaceDefaultResponse
+func (c *ClientWithResponses) MakeSpaceDefaultWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*MakeSpaceDefaultResponse, error) {
+	rsp, err := c.MakeSpaceDefault(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMakeSpaceDefaultResponse(rsp)
+}
+
+// ListSpaceEnumsWithResponse request returning *ListSpaceEnumsResponse
+func (c *ClientWithResponses) ListSpaceEnumsWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ListSpaceEnumsResponse, error) {
+	rsp, err := c.ListSpaceEnums(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListSpaceEnumsResponse(rsp)
+}
+
+// CreateSpaceEnumWithBodyWithResponse request with arbitrary body returning *CreateSpaceEnumResponse
+func (c *ClientWithResponses) CreateSpaceEnumWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpaceEnumResponse, error) {
+	rsp, err := c.CreateSpaceEnumWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpaceEnumResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateSpaceEnumWithResponse(ctx context.Context, id int64, body CreateSpaceEnumJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpaceEnumResponse, error) {
+	rsp, err := c.CreateSpaceEnum(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpaceEnumResponse(rsp)
+}
+
+// SetSpaceHiddenWithBodyWithResponse request with arbitrary body returning *SetSpaceHiddenResponse
+func (c *ClientWithResponses) SetSpaceHiddenWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetSpaceHiddenResponse, error) {
+	rsp, err := c.SetSpaceHiddenWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetSpaceHiddenResponse(rsp)
+}
+
+func (c *ClientWithResponses) SetSpaceHiddenWithResponse(ctx context.Context, id int64, body SetSpaceHiddenJSONRequestBody, reqEditors ...RequestEditorFn) (*SetSpaceHiddenResponse, error) {
+	rsp, err := c.SetSpaceHidden(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetSpaceHiddenResponse(rsp)
+}
+
+// GetSpaceLandingWithResponse request returning *GetSpaceLandingResponse
+func (c *ClientWithResponses) GetSpaceLandingWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GetSpaceLandingResponse, error) {
+	rsp, err := c.GetSpaceLanding(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetSpaceLandingResponse(rsp)
+}
+
+// UpdateSpaceLandingWithBodyWithResponse request with arbitrary body returning *UpdateSpaceLandingResponse
+func (c *ClientWithResponses) UpdateSpaceLandingWithBodyWithResponse(ctx context.Context, id int64, params *UpdateSpaceLandingParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSpaceLandingResponse, error) {
+	rsp, err := c.UpdateSpaceLandingWithBody(ctx, id, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSpaceLandingResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateSpaceLandingWithResponse(ctx context.Context, id int64, params *UpdateSpaceLandingParams, body UpdateSpaceLandingJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSpaceLandingResponse, error) {
+	rsp, err := c.UpdateSpaceLanding(ctx, id, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSpaceLandingResponse(rsp)
+}
+
+// ListSpacePageTypesWithResponse request returning *ListSpacePageTypesResponse
+func (c *ClientWithResponses) ListSpacePageTypesWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ListSpacePageTypesResponse, error) {
+	rsp, err := c.ListSpacePageTypes(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListSpacePageTypesResponse(rsp)
+}
+
+// CreateSpacePageTypeWithBodyWithResponse request with arbitrary body returning *CreateSpacePageTypeResponse
+func (c *ClientWithResponses) CreateSpacePageTypeWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpacePageTypeResponse, error) {
+	rsp, err := c.CreateSpacePageTypeWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpacePageTypeResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateSpacePageTypeWithResponse(ctx context.Context, id int64, body CreateSpacePageTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpacePageTypeResponse, error) {
+	rsp, err := c.CreateSpacePageType(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpacePageTypeResponse(rsp)
+}
+
+// PurgeSpaceWithResponse request returning *PurgeSpaceResponse
+func (c *ClientWithResponses) PurgeSpaceWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*PurgeSpaceResponse, error) {
+	rsp, err := c.PurgeSpace(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePurgeSpaceResponse(rsp)
+}
+
+// ListSpaceWorkItemTypesWithResponse request returning *ListSpaceWorkItemTypesResponse
+func (c *ClientWithResponses) ListSpaceWorkItemTypesWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ListSpaceWorkItemTypesResponse, error) {
+	rsp, err := c.ListSpaceWorkItemTypes(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListSpaceWorkItemTypesResponse(rsp)
+}
+
+// CreateSpaceWorkItemTypeWithBodyWithResponse request with arbitrary body returning *CreateSpaceWorkItemTypeResponse
+func (c *ClientWithResponses) CreateSpaceWorkItemTypeWithBodyWithResponse(ctx context.Context, id int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSpaceWorkItemTypeResponse, error) {
+	rsp, err := c.CreateSpaceWorkItemTypeWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpaceWorkItemTypeResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateSpaceWorkItemTypeWithResponse(ctx context.Context, id int64, body CreateSpaceWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSpaceWorkItemTypeResponse, error) {
+	rsp, err := c.CreateSpaceWorkItemType(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSpaceWorkItemTypeResponse(rsp)
+}
+
 // ListUsersWithResponse request returning *ListUsersResponse
 func (c *ClientWithResponses) ListUsersWithResponse(ctx context.Context, params *ListUsersParams, reqEditors ...RequestEditorFn) (*ListUsersResponse, error) {
 	rsp, err := c.ListUsers(ctx, params, reqEditors...)
@@ -22259,6 +25913,15 @@ func (c *ClientWithResponses) SendUserActivationEmailWithResponse(ctx context.Co
 	return ParseSendUserActivationEmailResponse(rsp)
 }
 
+// GrantUserSysAdminWithResponse request returning *GrantUserSysAdminResponse
+func (c *ClientWithResponses) GrantUserSysAdminWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*GrantUserSysAdminResponse, error) {
+	rsp, err := c.GrantUserSysAdmin(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGrantUserSysAdminResponse(rsp)
+}
+
 // ListWorkItemTypesWithResponse request returning *ListWorkItemTypesResponse
 func (c *ClientWithResponses) ListWorkItemTypesWithResponse(ctx context.Context, params *ListWorkItemTypesParams, reqEditors ...RequestEditorFn) (*ListWorkItemTypesResponse, error) {
 	rsp, err := c.ListWorkItemTypes(ctx, params, reqEditors...)
@@ -22286,8 +25949,8 @@ func (c *ClientWithResponses) CreateWorkItemTypeWithResponse(ctx context.Context
 }
 
 // DeleteWorkItemTypeWithResponse request returning *DeleteWorkItemTypeResponse
-func (c *ClientWithResponses) DeleteWorkItemTypeWithResponse(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeResponse, error) {
-	rsp, err := c.DeleteWorkItemType(ctx, slug, reqEditors...)
+func (c *ClientWithResponses) DeleteWorkItemTypeWithResponse(ctx context.Context, slug string, params *DeleteWorkItemTypeParams, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeResponse, error) {
+	rsp, err := c.DeleteWorkItemType(ctx, slug, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -22295,8 +25958,8 @@ func (c *ClientWithResponses) DeleteWorkItemTypeWithResponse(ctx context.Context
 }
 
 // GetWorkItemTypeWithResponse request returning *GetWorkItemTypeResponse
-func (c *ClientWithResponses) GetWorkItemTypeWithResponse(ctx context.Context, slug string, reqEditors ...RequestEditorFn) (*GetWorkItemTypeResponse, error) {
-	rsp, err := c.GetWorkItemType(ctx, slug, reqEditors...)
+func (c *ClientWithResponses) GetWorkItemTypeWithResponse(ctx context.Context, slug string, params *GetWorkItemTypeParams, reqEditors ...RequestEditorFn) (*GetWorkItemTypeResponse, error) {
+	rsp, err := c.GetWorkItemType(ctx, slug, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -22304,16 +25967,16 @@ func (c *ClientWithResponses) GetWorkItemTypeWithResponse(ctx context.Context, s
 }
 
 // UpdateWorkItemTypeWithBodyWithResponse request with arbitrary body returning *UpdateWorkItemTypeResponse
-func (c *ClientWithResponses) UpdateWorkItemTypeWithBodyWithResponse(ctx context.Context, slug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error) {
-	rsp, err := c.UpdateWorkItemTypeWithBody(ctx, slug, contentType, body, reqEditors...)
+func (c *ClientWithResponses) UpdateWorkItemTypeWithBodyWithResponse(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error) {
+	rsp, err := c.UpdateWorkItemTypeWithBody(ctx, slug, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateWorkItemTypeResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateWorkItemTypeWithResponse(ctx context.Context, slug string, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error) {
-	rsp, err := c.UpdateWorkItemType(ctx, slug, body, reqEditors...)
+func (c *ClientWithResponses) UpdateWorkItemTypeWithResponse(ctx context.Context, slug string, params *UpdateWorkItemTypeParams, body UpdateWorkItemTypeJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeResponse, error) {
+	rsp, err := c.UpdateWorkItemType(ctx, slug, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -22321,16 +25984,16 @@ func (c *ClientWithResponses) UpdateWorkItemTypeWithResponse(ctx context.Context
 }
 
 // CreateWorkItemTypeTransitionWithBodyWithResponse request with arbitrary body returning *CreateWorkItemTypeTransitionResponse
-func (c *ClientWithResponses) CreateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error) {
-	rsp, err := c.CreateWorkItemTypeTransitionWithBody(ctx, typeSlug, contentType, body, reqEditors...)
+func (c *ClientWithResponses) CreateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error) {
+	rsp, err := c.CreateWorkItemTypeTransitionWithBody(ctx, typeSlug, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateWorkItemTypeTransitionResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error) {
-	rsp, err := c.CreateWorkItemTypeTransition(ctx, typeSlug, body, reqEditors...)
+func (c *ClientWithResponses) CreateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, params *CreateWorkItemTypeTransitionParams, body CreateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkItemTypeTransitionResponse, error) {
+	rsp, err := c.CreateWorkItemTypeTransition(ctx, typeSlug, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -22338,8 +26001,8 @@ func (c *ClientWithResponses) CreateWorkItemTypeTransitionWithResponse(ctx conte
 }
 
 // DeleteWorkItemTypeTransitionWithResponse request returning *DeleteWorkItemTypeTransitionResponse
-func (c *ClientWithResponses) DeleteWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeTransitionResponse, error) {
-	rsp, err := c.DeleteWorkItemTypeTransition(ctx, typeSlug, transitionId, reqEditors...)
+func (c *ClientWithResponses) DeleteWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, params *DeleteWorkItemTypeTransitionParams, reqEditors ...RequestEditorFn) (*DeleteWorkItemTypeTransitionResponse, error) {
+	rsp, err := c.DeleteWorkItemTypeTransition(ctx, typeSlug, transitionId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -22347,16 +26010,16 @@ func (c *ClientWithResponses) DeleteWorkItemTypeTransitionWithResponse(ctx conte
 }
 
 // UpdateWorkItemTypeTransitionWithBodyWithResponse request with arbitrary body returning *UpdateWorkItemTypeTransitionResponse
-func (c *ClientWithResponses) UpdateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, transitionId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error) {
-	rsp, err := c.UpdateWorkItemTypeTransitionWithBody(ctx, typeSlug, transitionId, contentType, body, reqEditors...)
+func (c *ClientWithResponses) UpdateWorkItemTypeTransitionWithBodyWithResponse(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error) {
+	rsp, err := c.UpdateWorkItemTypeTransitionWithBody(ctx, typeSlug, transitionId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateWorkItemTypeTransitionResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error) {
-	rsp, err := c.UpdateWorkItemTypeTransition(ctx, typeSlug, transitionId, body, reqEditors...)
+func (c *ClientWithResponses) UpdateWorkItemTypeTransitionWithResponse(ctx context.Context, typeSlug string, transitionId int64, params *UpdateWorkItemTypeTransitionParams, body UpdateWorkItemTypeTransitionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkItemTypeTransitionResponse, error) {
+	rsp, err := c.UpdateWorkItemTypeTransition(ctx, typeSlug, transitionId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -22373,16 +26036,16 @@ func (c *ClientWithResponses) GetWorkflowRolesWithResponse(ctx context.Context, 
 }
 
 // UpdateGroupWorkflowRoleWithBodyWithResponse request with arbitrary body returning *UpdateGroupWorkflowRoleResponse
-func (c *ClientWithResponses) UpdateGroupWorkflowRoleWithBodyWithResponse(ctx context.Context, groupId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error) {
-	rsp, err := c.UpdateGroupWorkflowRoleWithBody(ctx, groupId, contentType, body, reqEditors...)
+func (c *ClientWithResponses) UpdateGroupWorkflowRoleWithBodyWithResponse(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error) {
+	rsp, err := c.UpdateGroupWorkflowRoleWithBody(ctx, groupId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateGroupWorkflowRoleResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateGroupWorkflowRoleWithResponse(ctx context.Context, groupId int64, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error) {
-	rsp, err := c.UpdateGroupWorkflowRole(ctx, groupId, body, reqEditors...)
+func (c *ClientWithResponses) UpdateGroupWorkflowRoleWithResponse(ctx context.Context, groupId int64, params *UpdateGroupWorkflowRoleParams, body UpdateGroupWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateGroupWorkflowRoleResponse, error) {
+	rsp, err := c.UpdateGroupWorkflowRole(ctx, groupId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -22390,16 +26053,16 @@ func (c *ClientWithResponses) UpdateGroupWorkflowRoleWithResponse(ctx context.Co
 }
 
 // UpdateUserWorkflowRoleWithBodyWithResponse request with arbitrary body returning *UpdateUserWorkflowRoleResponse
-func (c *ClientWithResponses) UpdateUserWorkflowRoleWithBodyWithResponse(ctx context.Context, userId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error) {
-	rsp, err := c.UpdateUserWorkflowRoleWithBody(ctx, userId, contentType, body, reqEditors...)
+func (c *ClientWithResponses) UpdateUserWorkflowRoleWithBodyWithResponse(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error) {
+	rsp, err := c.UpdateUserWorkflowRoleWithBody(ctx, userId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateUserWorkflowRoleResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateUserWorkflowRoleWithResponse(ctx context.Context, userId int64, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error) {
-	rsp, err := c.UpdateUserWorkflowRole(ctx, userId, body, reqEditors...)
+func (c *ClientWithResponses) UpdateUserWorkflowRoleWithResponse(ctx context.Context, userId int64, params *UpdateUserWorkflowRoleParams, body UpdateUserWorkflowRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateUserWorkflowRoleResponse, error) {
+	rsp, err := c.UpdateUserWorkflowRole(ctx, userId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -24217,6 +27880,100 @@ func ParseUpdateLandingSettingsResponse(rsp *http.Response) (*UpdateLandingSetti
 	return response, nil
 }
 
+// ParseListModulesResponse parses an HTTP response from a ListModulesWithResponse call
+func ParseListModulesResponse(rsp *http.Response) (*ListModulesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListModulesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateModuleResponse parses an HTTP response from a UpdateModuleWithResponse call
+func ParseUpdateModuleResponse(rsp *http.Response) (*UpdateModuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateModuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListPageTypesResponse parses an HTTP response from a ListPageTypesWithResponse call
 func ParseListPageTypesResponse(rsp *http.Response) (*ListPageTypesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -25321,6 +29078,13 @@ func ParseUnarchivePageResponse(rsp *http.Response) (*UnarchivePageResponse, err
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest ProblemDetail
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -26380,6 +30144,114 @@ func ParseMovePageResponse(rsp *http.Response) (*MovePageResponse, error) {
 	}
 
 	response := &MovePageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMoveToSpaceResponse parses an HTTP response from a MoveToSpaceWithResponse call
+func ParseMoveToSpaceResponse(rsp *http.Response) (*MoveToSpaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MoveToSpaceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewMoveToSpaceResponse parses an HTTP response from a PreviewMoveToSpaceWithResponse call
+func ParsePreviewMoveToSpaceResponse(rsp *http.Response) (*PreviewMoveToSpaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewMoveToSpaceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -28241,6 +32113,941 @@ func ParseGetReleaseNoteByVersionResponse(rsp *http.Response) (*GetReleaseNoteBy
 	return response, nil
 }
 
+// ParseListSpacesResponse parses an HTTP response from a ListSpacesWithResponse call
+func ParseListSpacesResponse(rsp *http.Response) (*ListSpacesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListSpacesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateSpaceResponse parses an HTTP response from a CreateSpaceWithResponse call
+func ParseCreateSpaceResponse(rsp *http.Response) (*CreateSpaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateSpaceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteSpaceResponse parses an HTTP response from a DeleteSpaceWithResponse call
+func ParseDeleteSpaceResponse(rsp *http.Response) (*DeleteSpaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteSpaceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetSpaceResponse parses an HTTP response from a GetSpaceWithResponse call
+func ParseGetSpaceResponse(rsp *http.Response) (*GetSpaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetSpaceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateSpaceResponse parses an HTTP response from a UpdateSpaceWithResponse call
+func ParseUpdateSpaceResponse(rsp *http.Response) (*UpdateSpaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateSpaceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetSpaceAccessResponse parses an HTTP response from a GetSpaceAccessWithResponse call
+func ParseGetSpaceAccessResponse(rsp *http.Response) (*GetSpaceAccessResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetSpaceAccessResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateSpaceAccessResponse parses an HTTP response from a UpdateSpaceAccessWithResponse call
+func ParseUpdateSpaceAccessResponse(rsp *http.Response) (*UpdateSpaceAccessResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateSpaceAccessResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewSpaceAccessImpactResponse parses an HTTP response from a PreviewSpaceAccessImpactWithResponse call
+func ParsePreviewSpaceAccessImpactResponse(rsp *http.Response) (*PreviewSpaceAccessImpactResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewSpaceAccessImpactResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMakeSpaceDefaultResponse parses an HTTP response from a MakeSpaceDefaultWithResponse call
+func ParseMakeSpaceDefaultResponse(rsp *http.Response) (*MakeSpaceDefaultResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MakeSpaceDefaultResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListSpaceEnumsResponse parses an HTTP response from a ListSpaceEnumsWithResponse call
+func ParseListSpaceEnumsResponse(rsp *http.Response) (*ListSpaceEnumsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListSpaceEnumsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateSpaceEnumResponse parses an HTTP response from a CreateSpaceEnumWithResponse call
+func ParseCreateSpaceEnumResponse(rsp *http.Response) (*CreateSpaceEnumResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateSpaceEnumResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSetSpaceHiddenResponse parses an HTTP response from a SetSpaceHiddenWithResponse call
+func ParseSetSpaceHiddenResponse(rsp *http.Response) (*SetSpaceHiddenResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SetSpaceHiddenResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetSpaceLandingResponse parses an HTTP response from a GetSpaceLandingWithResponse call
+func ParseGetSpaceLandingResponse(rsp *http.Response) (*GetSpaceLandingResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetSpaceLandingResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateSpaceLandingResponse parses an HTTP response from a UpdateSpaceLandingWithResponse call
+func ParseUpdateSpaceLandingResponse(rsp *http.Response) (*UpdateSpaceLandingResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateSpaceLandingResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListSpacePageTypesResponse parses an HTTP response from a ListSpacePageTypesWithResponse call
+func ParseListSpacePageTypesResponse(rsp *http.Response) (*ListSpacePageTypesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListSpacePageTypesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateSpacePageTypeResponse parses an HTTP response from a CreateSpacePageTypeWithResponse call
+func ParseCreateSpacePageTypeResponse(rsp *http.Response) (*CreateSpacePageTypeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateSpacePageTypeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePurgeSpaceResponse parses an HTTP response from a PurgeSpaceWithResponse call
+func ParsePurgeSpaceResponse(rsp *http.Response) (*PurgeSpaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PurgeSpaceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListSpaceWorkItemTypesResponse parses an HTTP response from a ListSpaceWorkItemTypesWithResponse call
+func ParseListSpaceWorkItemTypesResponse(rsp *http.Response) (*ListSpaceWorkItemTypesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListSpaceWorkItemTypesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateSpaceWorkItemTypeResponse parses an HTTP response from a CreateSpaceWorkItemTypeWithResponse call
+func ParseCreateSpaceWorkItemTypeResponse(rsp *http.Response) (*CreateSpaceWorkItemTypeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateSpaceWorkItemTypeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListUsersResponse parses an HTTP response from a ListUsersWithResponse call
 func ParseListUsersResponse(rsp *http.Response) (*ListUsersResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -28814,6 +33621,53 @@ func ParseSendUserActivationEmailResponse(rsp *http.Response) (*SendUserActivati
 	}
 
 	response := &SendUserActivationEmailResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest ProblemDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGrantUserSysAdminResponse parses an HTTP response from a GrantUserSysAdminWithResponse call
+func ParseGrantUserSysAdminResponse(rsp *http.Response) (*GrantUserSysAdminResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GrantUserSysAdminResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}

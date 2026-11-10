@@ -17,8 +17,9 @@ import (
 	"github.com/42BV/normatik-cli/internal/problem"
 )
 
-// RateLimitRetryObserver is notified before each HTTP 429 retry. attempt is
-// 1..3. A nil observer (clients created outside command.Build) stays silent.
+// RateLimitRetryObserver is notified before each HTTP 429 retry or GET/HEAD 503 retry.
+// attempt is 1..4; wait is the actual delay: max(Retry-After, backoff with jitter).
+// A nil observer (clients created outside command.Build) stays silent.
 type RateLimitRetryObserver func(wait time.Duration, attempt int)
 
 // DefaultSleep waits during 429 backoff when Client.Sleep is nil. Tests replace
@@ -32,7 +33,7 @@ type Client struct {
 	apiKey  string
 	// Sleep, if non-nil, replaces DefaultSleep during 429 backoff.
 	Sleep func(time.Duration)
-	// OnRetry, if non-nil, is called before each 429 retry.
+	// OnRetry, if non-nil, is called before each 429 retry or GET/HEAD 503 retry.
 	OnRetry RateLimitRetryObserver
 }
 
@@ -129,9 +130,10 @@ func decodeError(status int, body []byte) *APIError {
 }
 
 // ListPages — GET /public/v1/pages (paginated). Empty Pageable + pageableEditor
-// avoids the broken object-styling; the */* body is read raw by Do.
-func (c *Client) ListPages(ctx context.Context, page, size int, sort []string, pageTypeID *int64) (*api.PagePageListResult, *APIError) {
-	params := &api.ListPagesParams{}
+// avoids the broken object-styling; the */* body is read raw by Do. space, when
+// non-empty, is the lowercase space key of the ?space= filter.
+func (c *Client) ListPages(ctx context.Context, page, size int, sort []string, pageTypeID *int64, space string) (*api.PagePageListResult, *APIError) {
+	params := &api.ListPagesParams{Space: spaceParam(space)}
 	if pageTypeID != nil {
 		params.PageTypeId = pageTypeID
 	}
@@ -143,8 +145,8 @@ func (c *Client) ListPages(ctx context.Context, page, size int, sort []string, p
 // SearchPages — GET /public/v1/pages/search?query=. Raw body. allowedPageTypeID,
 // when non-nil, scopes the candidates to a page type (used by --property
 // PAGE_OUTGOING name resolution).
-func (c *Client) SearchPages(ctx context.Context, query string, page, size int, allowedPageTypeID *int64) ([]byte, *APIError) {
-	params := &api.SearchPagesParams{Query: query}
+func (c *Client) SearchPages(ctx context.Context, query string, page, size int, allowedPageTypeID *int64, space string) ([]byte, *APIError) {
+	params := &api.SearchPagesParams{Query: query, Space: spaceParam(space)}
 	if allowedPageTypeID != nil {
 		params.AllowedPageTypeId = allowedPageTypeID
 	}
@@ -172,16 +174,26 @@ func (c *Client) GetPage(ctx context.Context, id int64, expand []string, resolve
 // optional parent/content). For the full form incl. propertyValues use the
 // -f form.json route via CreatePageForm.
 func (c *Client) CreatePage(ctx context.Context, name string, pageTypeID int64, parentID *int64, content *string) ([]byte, *APIError) {
-	return c.CreatePageForm(ctx, api.PageCreateForm{Name: name, PageTypeId: pageTypeID, ParentId: parentID, Content: content})
+	return c.CreatePageForm(ctx, api.PageCreateForm{Name: name, PageTypeId: pageTypeID, ParentId: parentID, Content: content}, "")
 }
 
 // CreatePageForm — POST /public/v1/pages with a full PageCreateForm (the
 // -f form.json route). propertyValues[] are sent verbatim; the server validates
-// dataType↔value. No client-side semantic validation.
-func (c *Client) CreatePageForm(ctx context.Context, form api.PageCreateForm) ([]byte, *APIError) {
+// dataType↔value. No client-side semantic validation. space, when non-empty,
+// is the lowercase space key a ROOT page lands in (a child lives in its parent's space).
+func (c *Client) CreatePageForm(ctx context.Context, form api.PageCreateForm, space string) ([]byte, *APIError) {
+	params := &api.CreatePageParams{Space: spaceParam(space)}
 	return c.DoRaw(func() (*http.Response, error) {
-		return c.api.CreatePage(ctx, form)
+		return c.api.CreatePage(ctx, params, form)
 	})
+}
+
+// spaceParam maps an empty space key to "no ?space= parameter".
+func spaceParam(space string) *string {
+	if space == "" {
+		return nil
+	}
+	return &space
 }
 
 // Me — GET /public/v1/users/me (self-discovery of the API-key owner).

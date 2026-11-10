@@ -86,6 +86,7 @@ func newRoot() *cobra.Command {
 	for _, c := range command.Commands() {
 		root.AddCommand(c)
 	}
+	applySpaceScope(root)     // --space contract of the space-bound page/workflow commands
 	annotateURLHelp(root)     // group-help discoverability for the local --url flag
 	registerCompletions(root) // static shell-completion for known flag values
 	return root

@@ -69,6 +69,31 @@ func AdminDomainEnum(id int64) string { return fmt.Sprintf("/admin/domain-enums/
 // slug; this function does not validate or encode it.
 func AdminWorkItemType(slug string) string { return "/admin/work-item-types/" + slug }
 
+// ---- space settings paths (NORM-jxgyeifw) ----
+
+// A definition local to a space lives in the settings of that space, not in
+// the global administration. The caller supplies the origin space key from
+// the definition response (originSpaceKey); these builders only substitute.
+
+// SpacePageType returns the page-type detail route inside the settings of
+// space key: /spaces/{key}/settings/types/{id}. The bare id is a valid
+// segment of that route (Space/links.ts toSpacePageTypeDetail).
+func SpacePageType(key string, id int64) string {
+	return fmt.Sprintf("/spaces/%s/settings/types/%d", key, id)
+}
+
+// SpaceDomainEnum returns the enumeration detail route inside the settings
+// of space key: /spaces/{key}/settings/enums/{id}.
+func SpaceDomainEnum(key string, id int64) string {
+	return fmt.Sprintf("/spaces/%s/settings/enums/%d", key, id)
+}
+
+// SpaceWorkItemType returns the work-item-type detail route inside the
+// settings of space key: /spaces/{key}/settings/wits/{slug}.
+func SpaceWorkItemType(key, slug string) string {
+	return "/spaces/" + key + "/settings/wits/" + slug
+}
+
 // ---- static list URLs ----
 
 // Pages returns the page list/tree route (pages list, pages tree).

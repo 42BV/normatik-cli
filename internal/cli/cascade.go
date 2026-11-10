@@ -139,6 +139,7 @@ func newPagesCascadeImpactCmd() *cobra.Command {
 // addArchiveCascadeWrites attaches cascade-unarchive under archive.
 func addArchiveCascadeWrites(c *cobra.Command) {
 	var includeSubtree bool
+	var target restoreTargetFlags
 	unarchive := &cobra.Command{
 		Use:     "cascade-unarchive <pageId>",
 		Short:   "Cascade-unarchive a page and optionally its cancelled descendants (admin)",
@@ -156,13 +157,18 @@ func addArchiveCascadeWrites(c *cobra.Command) {
 			if e := confirmSoft(cmd, d); e != nil {
 				return e
 			}
-			f := api.CascadeSubtreeForm{IncludeSubtree: boolPtr(includeSubtree)}
+			to, terr := resolveRestoreTarget(cmd, d, &target)
+			if terr != nil {
+				return terr
+			}
+			f := api.CascadeUnarchiveToSpaceForm{IncludeSubtree: boolPtr(includeSubtree), TargetSpaceId: to.SpaceID, TargetParentId: to.ParentID, TargetRoot: to.Root}
 			return runWrite(cmd, "normatik archive cascade-unarchive", "Cascade unarchive completed.", func(d *command.Deps) ([]byte, *client.APIError) {
 				return d.Client.CascadeUnarchivePage(cmd.Context(), id, f)
 			}, "correlationId")
 		},
 	}
 	addSoftConfirm(unarchive)
+	addRestoreTargetFlags(unarchive, &target)
 	includeSubtreeFlag(unarchive, &includeSubtree)
 	addWriteCommands(c, unarchive)
 }
@@ -193,6 +199,7 @@ func newArchiveCascadeImpactCmd() *cobra.Command {
 func addTrashCascadeWrites(c *cobra.Command) {
 	var includeSubtree bool
 	var cascadeRestoreReason string
+	var target restoreTargetFlags
 	restore := &cobra.Command{
 		Use:   "cascade-restore <pageId>",
 		Short: "Cascade-restore a page from trash and optionally its cancelled descendants (admin)",
@@ -212,7 +219,11 @@ func addTrashCascadeWrites(c *cobra.Command) {
 			if e := confirmSoft(cmd, d); e != nil {
 				return e
 			}
-			f := api.CascadeRestoreForm{IncludeSubtree: boolPtr(includeSubtree)}
+			to, terr := resolveRestoreTarget(cmd, d, &target)
+			if terr != nil {
+				return terr
+			}
+			f := api.CascadeRestoreToSpaceForm{IncludeSubtree: boolPtr(includeSubtree), TargetSpaceId: to.SpaceID, TargetParentId: to.ParentID, TargetRoot: to.Root}
 			if strings.TrimSpace(cascadeRestoreReason) != "" {
 				r := cascadeRestoreReason
 				f.Reason = &r
@@ -223,6 +234,7 @@ func addTrashCascadeWrites(c *cobra.Command) {
 		},
 	}
 	addSoftConfirm(restore)
+	addRestoreTargetFlags(restore, &target)
 	includeSubtreeFlag(restore, &includeSubtree)
 	restore.Flags().StringVar(&cascadeRestoreReason, "reason", "", "reason when restoring to archive (required by server if parent is archived)")
 

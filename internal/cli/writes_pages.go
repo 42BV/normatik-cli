@@ -79,7 +79,7 @@ func addPagesWrites(parent *cobra.Command) {
 					return command.Handled(2)
 				}
 				if f.Content != nil {
-					if err := validateContent(cmd, d, *f.Content, i64Ptr(id), nil, false); err != nil {
+					if err := validateContent(cmd, d, *f.Content, i64Ptr(id), nil, "", false); err != nil {
 						return err
 					}
 				}
@@ -284,7 +284,7 @@ func addPagesWrites(parent *cobra.Command) {
 	}
 	command.URLFlag(migrateSortChildren)
 
-	addWriteCommands(parent, update, del, archive, move, sortCh, migrateSortRoot, migrateSortChildren)
+	addWriteCommands(parent, update, del, archive, move, newPagesMoveToSpaceCmd(), sortCh, migrateSortRoot, migrateSortChildren)
 }
 
 // buildPropertyPatch resolves --property / --unset-property against the page's
@@ -301,7 +301,7 @@ func buildPropertyPatch(cmd *cobra.Command, d *command.Deps, id int64, f api.Pag
 	if tz == "" {
 		tz = localZoneName()
 	}
-	pd := propertyDispatcher{lookup: newCachingLookup(newClientLookup(d.Client)), timezone: tz}
+	pd := propertyDispatcher{lookup: newCachingLookup(newClientLookup(d.Client, spaceOf(cmd))), timezone: tz}
 	values, unsetIDs, pferr := applyPropertyFlagsPatch(
 		cmd.Context(), derefEditValues(f.PropertyValues), props, unsets,
 		page.AvailablePropertyDescriptors, pd)
@@ -744,26 +744,37 @@ func newRestrictionAccessCmd(group bool) *cobra.Command {
 // addTrashWrites extends the trash subtree with restore/purge and cascade writes.
 func addTrashWrites(c *cobra.Command) {
 	var restoreReason string
+	var target restoreTargetFlags
 	restore := &cobra.Command{
 		Use:   "restore <pageId>",
 		Short: "Restore a page from the trash (optional --reason when parent is archived)",
 		Args:  cobra.ExactArgs(1),
 		Example: "  normatik trash restore 42\n" +
-			"  normatik trash restore 42 --reason \"Nieuwe reden\"",
+			"  normatik trash restore 42 --reason \"Nieuwe reden\"\n" +
+			"  normatik trash restore 42 --target-space home --target-root   # only when the original space was deleted",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id, perr := command.ParseID(args[0])
 			if perr != nil {
 				return command.Handled(2)
 			}
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			to, err := resolveRestoreTarget(cmd, d, &target)
+			if err != nil {
+				return err
+			}
 			return runWriteURL(cmd, "normatik trash restore", "Page restored.",
 				func(d *command.Deps) ([]byte, *client.APIError) {
-					return d.Client.RestoreFromTrash(cmd.Context(), id, restoreReason)
+					return d.Client.RestoreFromTrash(cmd.Context(), id, restoreReason, to)
 				},
 				func([]byte) string { return weburl.Page(id) },
 			)
 		},
 	}
 	restore.Flags().StringVar(&restoreReason, "reason", "", "reason when restoring to archive (required by server if parent is archived)")
+	addRestoreTargetFlags(restore, &target)
 	command.URLFlag(restore)
 	// Purge points at the bare trash list route (mapping table: "trash
 	// list / purge" -> /admin/trash), the same pattern as users delete.
@@ -778,10 +789,34 @@ func addTrashWrites(c *cobra.Command) {
 // addArchiveWrites extends the archive subtree with restore, delete and cascade-unarchive.
 // Restore maps to server unarchive; delete moves the page to trash (soft).
 func addArchiveWrites(c *cobra.Command) {
-	restore := idWriteURL("restore <pageId>", "Restore an archived page (unarchive)", "normatik archive restore", "Page restored from the archive.", "none",
-		func(d *command.Deps, ctx context.Context, id int64) ([]byte, *client.APIError) {
-			return d.Client.UnarchivePage(ctx, id)
-		}, weburl.Page)
+	var target restoreTargetFlags
+	restore := &cobra.Command{
+		Use:   "restore <pageId>",
+		Short: "Restore an archived page (unarchive)",
+		Args:  cobra.ExactArgs(1),
+		Example: "  normatik archive restore 42\n" +
+			"  normatik archive restore 42 --target-space home --target-root   # only when the original space was deleted",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			to, err := resolveRestoreTarget(cmd, d, &target)
+			if err != nil {
+				return err
+			}
+			return runWriteURL(cmd, "normatik archive restore", "Page restored from the archive.",
+				func(d *command.Deps) ([]byte, *client.APIError) {
+					return d.Client.UnarchivePage(cmd.Context(), id, to)
+				}, func([]byte) string { return weburl.Page(id) })
+		},
+	}
+	addRestoreTargetFlags(restore, &target)
+	command.URLFlag(restore)
 	// No confirm flag: machine-call convention for admin archive→trash (same as
 	// archive restore). Points --url at the trash list after the move.
 	del := idWriteURL("delete <pageId>", "Move an archived page to the trash", "normatik archive delete", "Page moved from the archive to the trash.", "none",
@@ -797,6 +832,7 @@ func newContentCmd() *cobra.Command {
 	c := &cobra.Command{Use: "content", Short: "Content tools (validate)", RunE: command.UnknownSub}
 	var content, file string
 	var targetPageID, targetPageTypeID int64
+	var targetSpace string
 	validate := &cobra.Command{
 		Use: "validate", Short: "Validate markdown content (dry-run, READ_ONLY-safe)",
 		Example: "  normatik content validate --content '::children{depth=1}' --target-page-type-id 199",
@@ -826,13 +862,14 @@ func newContentCmd() *cobra.Command {
 			if cmd.Flags().Changed("target-page-type-id") {
 				tpt = i64Ptr(targetPageTypeID)
 			}
-			return validateContent(cmd, d, body, tp, tpt, true)
+			return validateContent(cmd, d, body, tp, tpt, strings.ToLower(strings.TrimSpace(targetSpace)), true)
 		},
 	}
 	validate.Flags().StringVar(&content, "content", "", "markdown content")
 	validate.Flags().StringVarP(&file, "file", "f", "", "file with content")
 	validate.Flags().Int64Var(&targetPageID, "target-page-id", 0, "validate in the context of an existing page")
 	validate.Flags().Int64Var(&targetPageTypeID, "target-page-type-id", 0, "validate in the context of a page type")
+	validate.Flags().StringVar(&targetSpace, "target-space", "", "space key the content is meant for: a page type name in a macro means the global type or the one local to that space. With --target-page-id the space of that page applies. Without a space only global definitions are recognised and a local name is reported as unknown in this context")
 	c.AddCommand(validate)
 	return c
 }
@@ -844,8 +881,11 @@ func newContentCmd() *cobra.Command {
 // exit (3) on at least one ERROR-severity diagnostic. The --dry-run reuse passes
 // announce=false to keep its preview semantics (diagnostics shown, exit 0).
 // JSON output stays verbatim so `... -o json | jq` is unaffected.
-func validateContent(cmd *cobra.Command, d *command.Deps, content string, targetPageID, targetPageTypeID *int64, announce bool) error {
+func validateContent(cmd *cobra.Command, d *command.Deps, content string, targetPageID, targetPageTypeID *int64, targetSpace string, announce bool) error {
 	f := api.PublicContentValidationForm{Content: content, TargetPageId: targetPageID, TargetPageTypeId: targetPageTypeID}
+	if targetSpace != "" {
+		f.TargetSpace = &targetSpace
+	}
 	body, apiErr := d.Client.ValidateContent(cmd.Context(), f)
 	if apiErr != nil {
 		return command.RenderError(d.Printer, apiErr, "normatik content validate")
@@ -895,4 +935,66 @@ func validateContent(cmd *cobra.Command, d *command.Deps, content string, target
 		return command.Handled(3)
 	}
 	return nil
+}
+
+// newPagesMoveToSpaceCmd is the explicit cross-space move: the page and its whole
+// subtree go to another space, atomically. It keeps its own source/target
+// choice (the source is the page itself, the target is --target-space) and
+// is therefore not scoped by --space. It needs the Spaces module.
+func newPagesMoveToSpaceCmd() *cobra.Command {
+	var targetSpace string
+	var targetParent int64
+	var preview bool
+	cmd := &cobra.Command{
+		Use:   "move-to-space <id> --target-space <key>",
+		Short: "Move a page and its child pages to another space (needs the Spaces module)",
+		Args:  cobra.ExactArgs(1),
+		Long: "Moves the whole subtree to the target space; any blocker refuses the move as a whole (PAGE_MOVE_TO_SPACE_BLOCKED).\n" +
+			"A page whose parent stays behind is detached: --target-parent is the page it lands under in the target space, without it the page becomes a root page there.\n" +
+			"--preview reports what would block or change, without moving anything.",
+		Example: "  normatik pages move-to-space 42 --target-space privacy\n" +
+			"  normatik pages move-to-space 42 --target-space privacy --target-parent 77 --preview",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id, perr := command.ParseID(args[0])
+			if perr != nil {
+				return command.Handled(2)
+			}
+			d, err := command.Build(cmd)
+			if err != nil {
+				return err
+			}
+			// The target must be a space the caller can see, so the visible listing is enough.
+			sp, ok, apiErr := d.Client.ResolveSpace(cmd.Context(), targetSpace, false)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik pages move-to-space")
+			}
+			if !ok {
+				return command.RenderError(d.Printer, spaceNotFoundErr(targetSpace), "normatik pages move-to-space")
+			}
+			f := api.PageMoveToSpaceForm{TargetSpaceId: sp.Id, TargetParentId: changedI64(cmd, "target-parent", targetParent)}
+			if preview {
+				body, apiErr := d.Client.PreviewMoveToSpace(cmd.Context(), id, f)
+				if apiErr != nil {
+					return command.RenderError(d.Printer, apiErr, "normatik pages move-to-space")
+				}
+				d.Printer.MoveToSpaceImpact(body)
+				return nil
+			}
+			body, apiErr := d.Client.MoveToSpace(cmd.Context(), id, f)
+			if apiErr != nil {
+				return command.RenderError(d.Printer, apiErr, "normatik pages move-to-space")
+			}
+			if strings.TrimSpace(string(body)) == "" {
+				d.Printer.Message("Page moved to space.")
+				return nil
+			}
+			d.Printer.MoveToSpaceImpact(body)
+			return nil
+		},
+	}
+	cmd.Flags().StringVar(&targetSpace, "target-space", "", "key of the space the page moves to")
+	cmd.Flags().Int64Var(&targetParent, "target-parent", 0, "id of the page it lands under in the target space (omit for a root page)")
+	cmd.Flags().BoolVar(&preview, "preview", false, "show what the move would do or be blocked by, without moving")
+	_ = cmd.MarkFlagRequired("target-space")
+	return cmd
 }
